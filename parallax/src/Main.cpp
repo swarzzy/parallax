@@ -17,6 +17,8 @@
 #include <filesystem>
 #include <algorithm>
 #include "../../../hypermath/hypermath.h";
+#include <ft2build.h>
+#include "freetype-gl.h"
 
 #define PARALLAX_MAIN 1
 std::vector<std::string> getTexPaths(std::string_view path) {
@@ -34,17 +36,13 @@ std::vector<std::string> getTexPaths(std::string_view path) {
 #if PARALLAX_MAIN
 
 int main(int argc, char *argv[]) {
-
+	texture_atlas_new(12, 23,3);
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
 	window.setClearColor(prx::Color::HEXtoGLVec("#000000"));
 
 	auto shader = new prx::Shader("res/shaders/simple.vs", "res/shaders/simple.fs");
-
-	hpm::vec4 colorv(1.0, 3.4, 4.5, 5.6);
-	std::cout << colorv.x << " " << colorv.y << " " << colorv.z << "" << colorv.w << std::endl;
-	std::cout << colorv.r << " " << colorv.g << " " << colorv.b << "" << colorv.a << std::endl;
 
 	prx::SceneLayer layer(shader);
 

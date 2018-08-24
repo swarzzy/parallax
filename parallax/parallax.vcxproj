@@ -19,6 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="res\third_party\freetype-gl\distance-field.c" />
+    <ClCompile Include="res\third_party\freetype-gl\edtaa3func.c" />
+    <ClCompile Include="res\third_party\freetype-gl\font-manager.c" />
+    <ClCompile Include="res\third_party\freetype-gl\platform.c" />
+    <ClCompile Include="res\third_party\freetype-gl\text-buffer.c" />
+    <ClCompile Include="res\third_party\freetype-gl\texture-atlas.c" />
+    <ClCompile Include="res\third_party\freetype-gl\texture-font.c" />
+    <ClCompile Include="res\third_party\freetype-gl\utf8-utils.c" />
+    <ClCompile Include="res\third_party\freetype-gl\vector.c" />
+    <ClCompile Include="res\third_party\freetype-gl\vertex-attribute.c" />
+    <ClCompile Include="res\third_party\freetype-gl\vertex-buffer.c" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
@@ -42,6 +53,21 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="res\third_party\freetype-gl\distance-field.h" />
+    <ClInclude Include="res\third_party\freetype-gl\edtaa3func.h" />
+    <ClInclude Include="res\third_party\freetype-gl\font-manager.h" />
+    <ClInclude Include="res\third_party\freetype-gl\freetype-gl.h" />
+    <ClInclude Include="res\third_party\freetype-gl\markup.h" />
+    <ClInclude Include="res\third_party\freetype-gl\opengl.h" />
+    <ClInclude Include="res\third_party\freetype-gl\platform.h" />
+    <ClInclude Include="res\third_party\freetype-gl\text-buffer.h" />
+    <ClInclude Include="res\third_party\freetype-gl\texture-atlas.h" />
+    <ClInclude Include="res\third_party\freetype-gl\texture-font.h" />
+    <ClInclude Include="res\third_party\freetype-gl\utf8-utils.h" />
+    <ClInclude Include="res\third_party\freetype-gl\vec234.h" />
+    <ClInclude Include="res\third_party\freetype-gl\vector.h" />
+    <ClInclude Include="res\third_party\freetype-gl\vertex-attribute.h" />
+    <ClInclude Include="res\third_party\freetype-gl\vertex-buffer.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="src\renderer\layers\Layer.h" />
@@ -125,13 +151,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\res\third_party\freetype-gl;$(SolutionDir)parallax\res\include\freetype;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
+    <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\res\third_party\freetype-gl;$(SolutionDir)parallax\res\include\freetype;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
     <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>
@@ -159,11 +185,11 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -192,8 +218,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <UndefinePreprocessorDefinitions>/DGLEW_STATIC</UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -203,7 +230,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>FreeImage.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
