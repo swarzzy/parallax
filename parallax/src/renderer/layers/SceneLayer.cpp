@@ -1,9 +1,7 @@
 #include "SceneLayer.h"
 #include "../BatchRenderer2D.h"
 #include "../../resources/Resources.h"
-#include <glm/gtc/matrix_transform.hpp>
 #include "../../utils/SimpleHash.h"
-#include "glm/glm.hpp"
 
 namespace prx {
 	SceneLayer::SceneLayer(Shader* shader) 

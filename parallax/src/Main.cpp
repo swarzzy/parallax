@@ -52,14 +52,14 @@ int main(int argc, char *argv[]) {
 
 	prx::Sprite sprite(hpm::vec3(0.5, 0.6, 1.0), hpm::vec2(200), hpm::vec4(1.0));
 
-	std::string dir = argv[0];
+	/*std::string dir = argv[0];
 	int p = dir.find_last_of('\\');
 	dir.erase(p, dir.size());
 	dir += "\\res\\textures";
 
 	auto paths = getTexPaths(dir);
 	for (auto elem : paths)
-		std::cout << elem << std::endl;
+		std::cout << elem << std::endl;*/
 
 	std::knuth_b rand;
 	std::uniform_real_distribution<double> distribX(0.0, 700.0);
