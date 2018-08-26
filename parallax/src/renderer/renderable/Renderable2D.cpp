@@ -10,12 +10,10 @@
 namespace prx {
 
 	Renderable2D::Renderable2D()
-		: m_Position(hpm::vec3(0.0)), m_Size(hpm::vec2(0.0)), m_Color(hpm::vec4(0.0)) 
-	{ setDefaultUVs(); }
+		: m_Position(hpm::vec3(0.0)), m_Size(hpm::vec2(0.0)), m_Color(hpm::vec4(0.0)), m_Texture(nullptr) {}
 
 	prx::Renderable2D::Renderable2D(hpm::vec3 position, hpm::vec2 size, hpm::vec4 color)
-		: m_Position(position), m_Size(size), m_Color(color), m_Texture(nullptr)
-	{ setDefaultUVs(); }
+		: m_Position(position), m_Size(size), m_Color(color), m_Texture(nullptr) {}
 
 	Renderable2D::Renderable2D(hpm::vec3 position, hpm::vec2 size, Texture& texture) 
 		: m_Position(position), m_Size(size), m_Color(hpm::vec4(1.0)), m_Texture(&texture)

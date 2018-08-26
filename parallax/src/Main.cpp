@@ -1,3 +1,4 @@
+
 #include "Window.h"
 #include "utils/Color.h"
 #include "utils/log/Log.h"
@@ -36,7 +37,6 @@ std::vector<std::string> getTexPaths(std::string_view path) {
 #if PARALLAX_MAIN
 
 int main(int argc, char *argv[]) {
-	texture_atlas_new(12, 23,3);
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
@@ -89,11 +89,12 @@ int main(int argc, char *argv[]) {
 		shader->bind();
 		shader->setUniform("u_lightPos", cursorPos);
 
-		layer.draw();
-		//renderer.begin();
+		//layer.draw();
+		renderer.begin();
 		//renderer.submit(sprite);
-		//renderer.end();
-		//renderer.flush();
+		renderer.drawString("", hpm::vec3(0.0), hpm::vec4(0.0));
+		renderer.end();
+		renderer.flush();
 
 		window.update();
 		//std::cout << timer.elapsed() << std::endl;
@@ -103,3 +104,4 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 #endif
+
