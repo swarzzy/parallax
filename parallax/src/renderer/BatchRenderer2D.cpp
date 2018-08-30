@@ -60,6 +60,8 @@ namespace prx {
 			c = a << 24 | b << 16 | g << 8 | r;
 		}
 
+
+
 		m_Buffer->vertex = m_TransformationStackBack * position;
 		m_Buffer->texCoords.x = UVs[0];
 		m_Buffer->texCoords.y = UVs[1];
@@ -113,65 +115,6 @@ namespace prx {
 		m_IndexCount = 0;
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {
-		
-		Texture texture("test.png");
-		/*float ts = 0.0f;
-		bool found = false;
-		for (int i = 0; i < m_TextureSlots.size(); i++) {
-			if (m_TextureSlots[i] == m_FTAtlas->id) {
-				found = true;
-				ts = static_cast<float>(i + 1);
-				break;
-			}
-		}
-		if (!found) {
-			if (m_TextureSlots.size() >= 32) {
-				end();
-				flush();
-				begin();
-				m_TextureSlots.clear();
-				m_TextureSlots.resize(0);
-			}
-			m_TextureSlots.push_back(m_FTAtlas->id);
-			ts = static_cast<float>(m_TextureSlots.size());
-		}*/
-		m_TextureSlots.push_back(0);
-		m_TextureSlots[0] = m_FTAtlas->id;
-			float ts = 1.0f;
-
-			m_Buffer->vertex = hpm::vec3(0, 0, 1);
-			m_Buffer->texCoords.x = 0.0;
-			m_Buffer->texCoords.y = 1.0;
-			m_Buffer->texID = ts;
-			m_Buffer->color = 4284608801;
-			m_Buffer++;
-
-			m_Buffer->vertex = hpm::vec3(0, 300, 1);
-			m_Buffer->texCoords.x = 0.0;
-			m_Buffer->texCoords.y = 0.0;
-			m_Buffer->texID = ts;
-			m_Buffer->color = 4284608801;
-			m_Buffer++;
-
-			m_Buffer->vertex = hpm::vec3(300, 300, 1);
-			m_Buffer->texCoords.x = 1.0;
-			m_Buffer->texCoords.y = 0.0;
-			m_Buffer->texID = ts;
-			m_Buffer->color = 4284608801;
-			m_Buffer++;
-
-			m_Buffer->vertex = hpm::vec3(300, 0, 1);
-			m_Buffer->texCoords.x = 1.0;
-			m_Buffer->texCoords.y = 1.0;
-			m_Buffer->texID = ts;
-			m_Buffer->color = 4284608801;
-			m_Buffer++;
-
-			m_IndexCount += 6;
-		
-	}
-
 	void BatchRenderer2D::init() {
 		GLCall(glGenVertexArrays(1, &m_VAO));
 		GLCall(glGenBuffers(1, &m_VBO));
@@ -220,13 +163,5 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
-
-		m_FTAtlas = ftgl::texture_atlas_new(512, 512, 1);
-		m_FTFont  = ftgl::texture_font_new_from_file(m_FTAtlas, 20, "arial.ttf");
-		const char t = 'f';
-		ftgl::texture_font_get_glyph(m_FTFont, "A");
-		ftgl::texture_font_get_glyph(m_FTFont, &t);
-		ftgl::texture_font_get_glyph(m_FTFont, "c");
-		ftgl::texture_font_get_glyph(m_FTFont, "b");
 	}
 }

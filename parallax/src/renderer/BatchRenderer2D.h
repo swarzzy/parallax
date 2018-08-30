@@ -4,8 +4,6 @@
 
 #include "Renderer2D.h"
 
-#include <freetype-gl.h>
-
 namespace prx {
 	
 	constexpr unsigned int BATCH_RENDERER_MAX_SPRITES	=	60000;
@@ -22,15 +20,13 @@ namespace prx {
 	
 	class BatchRenderer2D : public Renderer2D {
 	private:
+
 		unsigned int				 m_VAO;
 		unsigned int				 m_VBO;
 		std::unique_ptr<IndexBuffer> m_IBO;
 		std::vector<unsigned int>	 m_TextureSlots;
 		int							 m_IndexCount;
 		VertexData*					 m_Buffer;
-
-		ftgl::texture_atlas_t*	m_FTAtlas;
-		ftgl::texture_font_t*	m_FTFont;
 
 	public:
 		BatchRenderer2D();
@@ -39,8 +35,6 @@ namespace prx {
 		void submit(const Renderable2D& renderable) override;
 		void end() override;
 		void flush() override;
-
-		virtual void drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) override;
 
 	private:
 		void init();

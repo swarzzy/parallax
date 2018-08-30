@@ -111,9 +111,6 @@
     <ClCompile Include="res\third_party\freetype-gl\vertex-buffer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\renderable\Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Color.h">
@@ -231,9 +228,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\third_party\freetype-gl\vertex-buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\renderer\renderable\Label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
