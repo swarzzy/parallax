@@ -83,6 +83,7 @@ struct inflate_blocks_state {
 #define OUTBYTE(a) {*q++=(Byte)(a);m--;}
 /*   load local pointers */
 #define LOAD {LOADIN LOADOUT}
+
 /* masks for lower bits (size given to avoid silly warnings with Visual C++) */
 #ifndef NO_INFLATE_MASK
 local uInt inflate_mask[17];

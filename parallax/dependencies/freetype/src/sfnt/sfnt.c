@@ -19,17 +19,17 @@
 #define FT_MAKE_OPTION_SINGLE_OBJECT
 #include <ft2build.h>
 
-//#include "pngshim.c"
-//#include "sfdriver.c"
-//#include "sfntpic.c"
-//#include "sfobjs.c"
-//#include "ttbdf.c"
-//#include "ttcmap.c"
-//#include "ttkern.c"
-//#include "ttload.c"
-//#include "ttmtx.c"
-//#include "ttpost.c"
-//#include "ttsbit.c"
+#include "pngshim.c"
+#include "sfdriver.c"
+#include "sfntpic.c"
+#include "sfobjs.c"
+#include "ttbdf.c"
+#include "ttcmap.c"
+#include "ttkern.c"
+#include "ttload.c"
+#include "ttmtx.c"
+#include "ttpost.c"
+#include "ttsbit.c"
 
 
 /* END */

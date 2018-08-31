@@ -19,7 +19,7 @@
 /*  understand and accept it fully.                                        */
 /*                                                                         */
 /***************************************************************************/
-#define FT_ADVANCES_H  <freetype/ftadvanc.h>
+
 
 #include FT_ADVANCES_H
 

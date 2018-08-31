@@ -1,5 +1,5 @@
 /***************************************************************************/
-/*                                                                         */
+/*                                                                     t    */
 /*  ftbase.c                                                               */
 /*                                                                         */
 /*    Single object library component (body only).                         */
@@ -19,22 +19,22 @@
 #include <ft2build.h>
 #define  FT_MAKE_OPTION_SINGLE_OBJECT
 
-//#include "basepic.c"
-//#include "ftadvanc.c"
-//#include "ftcalc.c"
-//#include "ftdbgmem.c"
-//#include "ftgloadr.c"
-//#include "fthash.c"
-//#include "ftmac.c"
-//#include "ftobjs.c"
-//#include "ftoutln.c"
-//#include "ftpic.c"
-//#include "ftpsprop.c"
-//#include "ftrfork.c"
-//#include "ftsnames.c"
-//#include "ftstream.c"
-//#include "fttrigon.c"
-//#include "ftutil.c"
+#include "basepic.c"
+#include "ftadvanc.c"
+#include "ftcalc.c"
+#include "ftdbgmem.c"
+#include "ftgloadr.c"
+#include "fthash.c"
+#include "ftmac.c"
+#include "ftobjs.c"
+#include "ftoutln.c"
+#include "ftpic.c"
+#include "ftpsprop.c"
+#include "ftrfork.c"
+#include "ftsnames.c"
+#include "ftstream.c"
+#include "fttrigon.c"
+#include "ftutil.c"
 
 
 /* END */
