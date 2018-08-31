@@ -28,6 +28,12 @@
     <Filter Include="Source Files\dependencies\freetype\FT_MODULES">
       <UniqueIdentifier>{bc76843f-c660-41ce-a8ed-1d57524fd04d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\dependencies\freetype-gl">
+      <UniqueIdentifier>{d7766dbc-8512-461c-89cc-a4e437b66dbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dependencies\freetype-gl">
+      <UniqueIdentifier>{ffe09a02-6852-47b4-a843-3bf0a89882ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -210,6 +216,30 @@
     <ClCompile Include="dependencies\freetype\src\base\ftfntfmt.c">
       <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
     </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\distance-field.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\edtaa3func.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\font-manager.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\platform.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\texture-atlas.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\texture-font.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\utf8-utils.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\freetype-gl\vector.c">
+      <Filter>Source Files\dependencies\freetype-gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Color.h">
@@ -304,6 +334,42 @@
     </ClInclude>
     <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h">
       <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\distance-field.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\edtaa3func.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\font-manager.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\freetype-gl.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\markup.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\opengl.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\platform.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\texture-atlas.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\texture-font.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\utf8-utils.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\vec234.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\freetype-gl\vector.h">
+      <Filter>Header Files\dependencies\freetype-gl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
