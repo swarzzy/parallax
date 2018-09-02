@@ -2,6 +2,7 @@
 #include "window.h"
 #include <iostream>
 #include "utils/log/Log.h"
+#include "utils/GLErrorHandler.h"
 
 namespace prx {
 
@@ -47,6 +48,9 @@ namespace prx {
 		}
 
 		std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 		return true;
 	}

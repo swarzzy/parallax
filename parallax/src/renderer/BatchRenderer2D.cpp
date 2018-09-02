@@ -1,10 +1,14 @@
 #include "BatchRenderer2D.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 
 		: Renderer2D() {
 		
 		init();
+		loadFont();
 	}
 
 	BatchRenderer2D::~BatchRenderer2D() {
@@ -15,56 +19,77 @@ namespace prx {
 	}
 
 	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {
-		
-		Texture texture("crate.png");
-		
-		float ts = 0.0f;
-		bool found = false;
-		for (int i = 0; i < m_TextureSlots.size(); i++) {
-			if (m_TextureSlots[i] == m_FTAtlas->id) {
-				found = true;
-				ts = static_cast<float>(i + 1);
-				break;
+
+		float cursor = 0.0;
+
+		for (auto& character : text) {
+			Character ch = m_Characters[character];
+			float ts = 0.0f;
+			bool found = false;
+			for (int i = 0; i < m_TextureSlots.size(); i++) {
+				if (m_TextureSlots[i] == ch.TexID) {
+					found = true;
+					ts = static_cast<float>(i + 1);
+					break;
+				}
 			}
-		}
-		if (!found) {
-			if (m_TextureSlots.size() >= 32) {
-				end();
-				flush();
-				begin();
-				m_TextureSlots.clear();
-				m_TextureSlots.resize(0);
+			if (!found) {
+				if (m_TextureSlots.size() >= 32) {
+					end();
+					flush();
+					begin();
+					m_TextureSlots.clear();
+					m_TextureSlots.resize(0);
+				}
+
+				m_TextureSlots.push_back(ch.TexID);
+				ts = static_cast<float>(m_TextureSlots.size());
 			}
 
-			m_TextureSlots.push_back(m_FTAtlas->id);
-			ts = static_cast<float>(m_TextureSlots.size());
+			float xpos = position.x + cursor + ch.Bearing.x;
+			float ypos = position.y - (ch.Size.y - ch.Bearing.y);
+
+			float w = ch.Size.x;
+			float h = ch.Size.y;
+
+			int r = color.r * 255.0;
+			int g = color.g * 255.0;
+			int b = color.b * 255.0;
+			int a = color.a * 255.0;
+			
+			unsigned int c = a << 24 | b << 16 | g << 8 | r;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
+			m_Buffer->texCoords.x = 0.0;
+			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = c;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, 0);
+			m_Buffer->texCoords.x = 0.0;
+			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = c;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, 0);
+			m_Buffer->texCoords.x = 1.0;
+			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = c;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, 0);
+			m_Buffer->texCoords.x = 1.0;
+			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = c;
+			m_Buffer++;
+
+			m_IndexCount += 6;
+			cursor += (ch.Advance >> 6);
 		}
-		//ts = 0.0f;
-		m_Buffer->vertex = hpm::vec3(0.0, 0.0, 0.0);
-		m_Buffer->texCoords.x = 0.0;
-		m_Buffer->texCoords.y = 1.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(0.0 , 200, 0);
-		m_Buffer->texCoords.x = 0.0;
-		m_Buffer->texCoords.y = 0.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(200, 200, 0);
-		m_Buffer->texCoords.x = 1.0;
-		m_Buffer->texCoords.y = 0.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(200, 0, 0);
-		m_Buffer->texCoords.x = 1.0;
-		m_Buffer->texCoords.y = 1.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_IndexCount += 6;
 	}
 
 	void BatchRenderer2D::begin() {
@@ -80,7 +105,7 @@ namespace prx {
 		const float*		UVs			= renderable.getUVs();
 		const unsigned int	texID		= renderable.getTexID();
 		
-		unsigned int c = 0;
+		unsigned int c = 255 << 24 | 255 << 16 | 255 << 8 | 255;
 		float ts = 0.0f;
 		if (texID > 0) {
 			bool found = false;
@@ -215,11 +240,73 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
+	}
 
-		//m_FTAtlas = ftgl::texture_atlas_new(512, 512, 1);
-		m_FTFont = ftgl::texture_font_new_from_file(m_FTAtlas, 40, "arial.ttf");
-		ftgl::texture_font_get_glyph(m_FTFont,"A");
-		m_FTAtlas->data;
+	void BatchRenderer2D::loadFont() {
+		// TODO: Freetype error handler
+		FT_Library ft;
+		int error;
+		error = FT_Init_FreeType(&ft);
 		
+		if (error) {
+			Log::message("FREETYPE: Could not init FreeType Library", LOG_ERROR);
+			ASSERT(false);
+		}
+
+		FT_Face face;
+		error = FT_New_Face(ft, "res/fonts/squad.otf", 0, &face);
+
+		if (error) {
+			Log::message("FREETYPE: Failed to load font", LOG_ERROR);
+			ASSERT(false);
+		}
+
+		FT_Set_Pixel_Sizes(face, 0, 90);
+
+		error = FT_Load_Char(face, 'B', FT_LOAD_RENDER);
+
+		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+
+		for (int i = 0; i < 128; i++) {
+			error = FT_Load_Char(face, static_cast<char>(i), FT_LOAD_RENDER);
+
+			if (error) {
+				Log::message("FREETYTPE: Failed to load Glyph", LOG_ERROR);
+				ASSERT(false);
+			}
+
+			unsigned int texture;
+			GLCall(glGenTextures(1, &texture));
+			GLCall(glBindTexture(GL_TEXTURE_2D, texture));
+			GLCall(glTexImage2D(GL_TEXTURE_2D,
+							0,
+							GL_RED,
+							face->glyph->bitmap.width,
+							face->glyph->bitmap.rows,
+							0,
+							GL_RED,
+							GL_UNSIGNED_BYTE,
+							face->glyph->bitmap.buffer));
+			int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
+			GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
+
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+
+			Character character = {
+				texture,
+				hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+				hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+				face->glyph->advance.x
+			};
+			m_Characters.insert(std::pair<char, Character>(static_cast<char>(i), character));
+
+		}
+			FT_Done_Face(face);
+			FT_Done_FreeType(ft);
+
+			
 	}
 }

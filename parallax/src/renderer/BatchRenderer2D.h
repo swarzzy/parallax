@@ -3,10 +3,19 @@
 #define _BATCHRENDERER2D_H_
 
 #include "Renderer2D.h"
-#include <freetype-gl.h>
 
 namespace prx {
 	
+	// TODO: move it into font manager or else
+	struct Character {
+		unsigned int TexID;
+		// TODO: ivec
+		hpm::vec2	 Size;
+		hpm::vec2	 Bearing;
+		unsigned int Advance;
+	};
+	// until this
+
 	constexpr unsigned int BATCH_RENDERER_MAX_SPRITES	=	60000;
 	constexpr unsigned int BATCH_RENDERER_VERTEX_SIZE	=	sizeof(VertexData);
 	constexpr unsigned int BATCH_RENDERER_SPRITE_SIZE	=	BATCH_RENDERER_VERTEX_SIZE * 4;
@@ -29,8 +38,7 @@ namespace prx {
 		int							 m_IndexCount;
 		VertexData*					 m_Buffer;
 
-		ftgl::texture_atlas_t* m_FTAtlas;
-		ftgl::texture_font_t* m_FTFont;
+		std::map<char, Character>	 m_Characters;
 
 	public:
 		BatchRenderer2D();
@@ -44,6 +52,7 @@ namespace prx {
 
 	private:
 		void init();
+		void loadFont();
 	};
 }
 #endif
