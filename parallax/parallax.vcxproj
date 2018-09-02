@@ -72,7 +72,6 @@
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
     <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
     <ClCompile Include="src\renderer\renderable\Group.cpp" />
-    <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\renderable\Sprite.cpp" />
     <ClCompile Include="src\renderer\renderable\StaticSprite.cpp" />
@@ -114,7 +113,6 @@
     <ClInclude Include="src\renderer\layers\Layer.h" />
     <ClInclude Include="src\renderer\layers\SceneLayer.h" />
     <ClInclude Include="src\renderer\renderable\Group.h" />
-    <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
     <ClInclude Include="src\renderer\renderable\Sprite.h" />
     <ClInclude Include="src\renderer\renderable\StaticSprite.h" />
@@ -193,13 +191,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(SolutionDir)parallax\dependencies\freetype-gl;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype-gl;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
     <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>

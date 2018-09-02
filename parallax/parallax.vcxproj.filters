@@ -240,9 +240,6 @@
     <ClCompile Include="dependencies\freetype-gl\vector.c">
       <Filter>Source Files\dependencies\freetype-gl</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\renderable\Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\Color.h">
@@ -373,9 +370,6 @@
     </ClInclude>
     <ClInclude Include="dependencies\freetype-gl\vector.h">
       <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\renderer\renderable\Label.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
