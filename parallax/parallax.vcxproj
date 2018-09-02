@@ -19,14 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dependencies\freetype-gl\distance-field.c" />
-    <ClCompile Include="dependencies\freetype-gl\edtaa3func.c" />
-    <ClCompile Include="dependencies\freetype-gl\font-manager.c" />
-    <ClCompile Include="dependencies\freetype-gl\platform.c" />
-    <ClCompile Include="dependencies\freetype-gl\texture-atlas.c" />
-    <ClCompile Include="dependencies\freetype-gl\texture-font.c" />
-    <ClCompile Include="dependencies\freetype-gl\utf8-utils.c" />
-    <ClCompile Include="dependencies\freetype-gl\vector.c" />
     <ClCompile Include="dependencies\freetype\src\autofit\autofit.c" />
     <ClCompile Include="dependencies\freetype\src\base\ftbase.c" />
     <ClCompile Include="dependencies\freetype\src\base\ftbbox.c" />
@@ -89,18 +81,6 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dependencies\freetype-gl\distance-field.h" />
-    <ClInclude Include="dependencies\freetype-gl\edtaa3func.h" />
-    <ClInclude Include="dependencies\freetype-gl\font-manager.h" />
-    <ClInclude Include="dependencies\freetype-gl\freetype-gl.h" />
-    <ClInclude Include="dependencies\freetype-gl\markup.h" />
-    <ClInclude Include="dependencies\freetype-gl\opengl.h" />
-    <ClInclude Include="dependencies\freetype-gl\platform.h" />
-    <ClInclude Include="dependencies\freetype-gl\texture-atlas.h" />
-    <ClInclude Include="dependencies\freetype-gl\texture-font.h" />
-    <ClInclude Include="dependencies\freetype-gl\utf8-utils.h" />
-    <ClInclude Include="dependencies\freetype-gl\vec234.h" />
-    <ClInclude Include="dependencies\freetype-gl\vector.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftconfig.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftheader.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftmodule.h" />
@@ -225,7 +205,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;WIN32;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;NDEBUG;WIN32;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
     </ClCompile>
     <Link>
@@ -260,7 +240,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
