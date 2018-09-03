@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -66,6 +66,7 @@
     <ClCompile Include="dependencies\freetype\src\type1\type1.c" />
     <ClCompile Include="dependencies\freetype\src\type42\type42.c" />
     <ClCompile Include="dependencies\freetype\src\winfonts\winfnt.c" />
+    <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftstdlib.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h" />
     <ClInclude Include="dependencies\freetype\include\ft2build.h" />
+    <ClInclude Include="src\Fonts\Font.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="src\renderer\layers\Layer.h" />
@@ -124,11 +126,14 @@
     <ClInclude Include="src\renderer\buffer\VertexBuffer.h" />
     <ClInclude Include="src\renderer\buffer\VertexBufferLayout.h" />
     <ClInclude Include="src\resources\FileReader.h" />
+    <ClInclude Include="src\resources\fonts\Font.h" />
     <ClInclude Include="src\resources\ImageLoader.h" />
     <ClInclude Include="src\resources\Resources.h" />
     <ClInclude Include="src\shading\Shader.h" />
     <ClInclude Include="src\shading\Texture.h" />
     <ClInclude Include="src\utils\Color.h" />
+    <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
+    <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="src\utils\GLErrorHandler.h" />
     <ClInclude Include="src\utils\log\Log.h" />
     <ClInclude Include="src\utils\Timer.h" />

@@ -19,6 +19,6 @@ void main() {
 	}
 		//texColor = vec4(v_texID / 2.5, 0.0, 0.0, 1.0);
 
-	color = texColor;// * intensity;
+	color = vec4(texColor.rgb * intensity, texColor.a);
 	//color = vec4(0.0, 0.0, 0.0, texColor);
 }

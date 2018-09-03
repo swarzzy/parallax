@@ -6,16 +6,6 @@
 
 namespace prx {
 	
-	// TODO: move it into font manager or else
-	struct Character {
-		unsigned int TexID;
-		// TODO: ivec
-		hpm::vec2	 Size;
-		hpm::vec2	 Bearing;
-		unsigned int Advance;
-	};
-	// until this
-
 	constexpr unsigned int BATCH_RENDERER_MAX_SPRITES	=	60000;
 	constexpr unsigned int BATCH_RENDERER_VERTEX_SIZE	=	sizeof(VertexData);
 	constexpr unsigned int BATCH_RENDERER_SPRITE_SIZE	=	BATCH_RENDERER_VERTEX_SIZE * 4;
@@ -38,21 +28,18 @@ namespace prx {
 		int							 m_IndexCount;
 		VertexData*					 m_Buffer;
 
-		std::map<char, Character>	 m_Characters;
-
 	public:
 		BatchRenderer2D();
 		~BatchRenderer2D();
 
 		void begin() override;
-		void drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) override;
+		void drawString(std::string_view text, hpm::vec3 position, const Font& font, hpm::vec4 color) override;
 		void submit(const Renderable2D& renderable) override;
 		void end() override;
 		void flush() override;
 
 	private:
 		void init();
-		void loadFont();
 	};
 }
 #endif

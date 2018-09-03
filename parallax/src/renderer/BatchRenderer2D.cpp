@@ -1,14 +1,10 @@
 #include "BatchRenderer2D.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 
 		: Renderer2D() {
 		
 		init();
-		loadFont();
 	}
 
 	BatchRenderer2D::~BatchRenderer2D() {
@@ -18,12 +14,14 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font& font, hpm::vec4 color) {
+
+		auto characters = font.getCharacters();
 
 		float cursor = 0.0;
 
 		for (auto& character : text) {
-			Character ch = m_Characters[character];
+			Character ch = characters[character];
 			float ts = 0.0f;
 			bool found = false;
 			for (int i = 0; i < m_TextureSlots.size(); i++) {
@@ -240,73 +238,5 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
-	}
-
-	void BatchRenderer2D::loadFont() {
-		// TODO: Freetype error handler
-		FT_Library ft;
-		int error;
-		error = FT_Init_FreeType(&ft);
-		
-		if (error) {
-			Log::message("FREETYPE: Could not init FreeType Library", LOG_ERROR);
-			ASSERT(false);
-		}
-
-		FT_Face face;
-		error = FT_New_Face(ft, "res/fonts/squad.otf", 0, &face);
-
-		if (error) {
-			Log::message("FREETYPE: Failed to load font", LOG_ERROR);
-			ASSERT(false);
-		}
-
-		FT_Set_Pixel_Sizes(face, 0, 90);
-
-		error = FT_Load_Char(face, 'B', FT_LOAD_RENDER);
-
-		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
-
-		for (int i = 0; i < 128; i++) {
-			error = FT_Load_Char(face, static_cast<char>(i), FT_LOAD_RENDER);
-
-			if (error) {
-				Log::message("FREETYTPE: Failed to load Glyph", LOG_ERROR);
-				ASSERT(false);
-			}
-
-			unsigned int texture;
-			GLCall(glGenTextures(1, &texture));
-			GLCall(glBindTexture(GL_TEXTURE_2D, texture));
-			GLCall(glTexImage2D(GL_TEXTURE_2D,
-							0,
-							GL_RED,
-							face->glyph->bitmap.width,
-							face->glyph->bitmap.rows,
-							0,
-							GL_RED,
-							GL_UNSIGNED_BYTE,
-							face->glyph->bitmap.buffer));
-			int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
-			GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
-
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-
-			Character character = {
-				texture,
-				hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-				hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-				face->glyph->advance.x
-			};
-			m_Characters.insert(std::pair<char, Character>(static_cast<char>(i), character));
-
-		}
-			FT_Done_Face(face);
-			FT_Done_FreeType(ft);
-
-			
 	}
 }
