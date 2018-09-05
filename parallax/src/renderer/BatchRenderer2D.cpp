@@ -135,8 +135,6 @@ namespace prx {
 			c = a << 24 | b << 16 | g << 8 | r;
 		}
 
-
-
 		m_Buffer->vertex = m_TransformationStackBack * position;
 		m_Buffer->texCoords.x = UVs[0];
 		m_Buffer->texCoords.y = UVs[1];

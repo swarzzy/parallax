@@ -7,6 +7,7 @@
 
 #include "../shading/Shader.h"
 #include "../Fonts/Font.h"
+#include "../shading/Texture.h"
 
 namespace prx {
 	// TODO: Do that actually needs constexpr?
@@ -14,6 +15,7 @@ namespace prx {
 	constexpr const unsigned int	RESOURCES_DEFAULT_FONT_SIZE = 80;
 	static constexpr const char*	RESOURCES_DEFAULT_FONT_PATH = "res/fonts/NotoSans-Regular.ttf";
 
+	class
 
 	class Resources {
 	private:
@@ -21,8 +23,12 @@ namespace prx {
 
 		static std::map<unsigned int, Shader> m_Shaders;
 		static std::map<unsigned int, Font> m_Fonts;
+		static std::map<unsigned int, std::shared_ptr<Texture>> m_Textures;
+
+		static std::map<unsigned int, bool> m_TextureStatus;
 
 		static Font* m_DefaultFontPointer;
+
 
 	public:
 		static bool init();
@@ -45,6 +51,15 @@ namespace prx {
 		
 		static void	 deleteFont(std::string_view name);
 		static void  deleteFont(unsigned int hashName);
+
+		// TEXTURES
+		static std::shared_ptr<Texture> loadTexture(std::string_view name, std::string_view path);
+
+		//static Texture* getTexture(std::string_view name);
+		//static Texture* getTexture(unsigned int hashName);
+
+		//static void deleteTexture(std::string_view name);
+		//static void deleteTexture(unsigned int hashName);
 
 		// Clear all resources, even defaults
 		static void ternimate();

@@ -35,22 +35,28 @@ int main(int argc, char *argv[]) {
 	hpm::vec4 color;
 	float step = 0.1;
 	int counter = 0;
+	auto texture = prx::Resources::loadTexture("crate", "crate.png");
+	std::cout << "PTR " << texture.use_count() << std::endl;
 	prx::Group* group = new prx::Group(hpm::mat4::identity());
 	for (float x = 0; x < 800; x += 3) {// 3, 1.0
 		for (float y = 0; y < 600; y += 3) {
 			color = hpm::vec4(colorDistrib(rand), colorDistrib(rand), colorDistrib(rand), 1.0);
-			group->add(new prx::Sprite(hpm::vec3(x, y, 1.0), hpm::vec2(2), color));
+			group->add(new prx::Sprite(hpm::vec3(x, y, 1.0), hpm::vec2(2), *texture));
 			step += 0.0001f;
 			counter++;
 		}
 	}
-	auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
+	/*auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
 	auto font2 = *prx::Resources::loadFont("AbrilFatface-Regular", "res/fonts/AbrilFatface-Regular.ttf", 50);
-
-	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#c62828"), 1.0)));
+	prx::Group* text = new prx::Group(hpm::mat4::rotation(45.0, hpm::vec3(0.0, 0.0, 1.0)));
+	text->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#c62828"), 1.0)));
 	layer.add(group);
-	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#ffa000"), 1.0)));
-
+	layer.add(text);
+	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#ffa000"), 1.0)));*/
+	prx::Group* testGroup = new prx::Group(hpm::mat4::identity());
+	layer.add(group);
+	testGroup->add(new prx::Sprite(hpm::vec3(200.0, 300.0, 1.0), hpm::vec2(100, 150), *texture));
+	layer2.add(testGroup);
 	while (!window.isClosed()) {
 		window.clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 
@@ -59,9 +65,10 @@ int main(int argc, char *argv[]) {
 		
 		shader->bind();
 		shader->setUniform("u_lightPos", cursorPos);
-		
+		//shaderNoLight->bind();
+		//shaderNoLight->setUniform("u_ModelMatrix", hpm::mat4::rotation(glfwGetTime() * 50, hpm::vec3(0.0, 0.0, 1.0)));
 		layer.draw();
-		layer2.draw();
+		//layer2.draw();
 
 		window.update();
 	}
