@@ -64,6 +64,7 @@
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
     <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
+    <ClCompile Include="src\renderer\renderable\FPSCounter.cpp" />
     <ClCompile Include="src\renderer\renderable\Group.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="src\renderer\layers\Layer.h" />
     <ClInclude Include="src\renderer\layers\SceneLayer.h" />
+    <ClInclude Include="src\renderer\renderable\FPSCounter.h" />
     <ClInclude Include="src\renderer\renderable\Group.h" />
     <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
@@ -118,6 +120,8 @@
     <ClInclude Include="src\utils\log\Log.h" />
     <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\SimpleHash.h" />
+    <ClInclude Include="src\utils\timing\ScopedTimer.h" />
+    <ClInclude Include="src\utils\timing\SimpleTimer.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>

@@ -9,11 +9,11 @@
 #include "renderer/layers/SceneLayer.h"
 #include <filesystem>
 #include "../../../hypermath/hypermath.h";
-#include "renderer/BatchRenderer2D.h"
 #include "renderer/renderable/Label.h"
 #include "renderer/renderable/Group.h"
 #include "resources/Resources.h"
-
+#include <thread>
+#include "renderer/renderable/FPSCounter.h"
 
 int main(int argc, char *argv[]) {
 
@@ -50,9 +50,13 @@ int main(int argc, char *argv[]) {
 	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#c62828"), 1.0)));
 	layer.add(group);
 	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#ffa000"), 1.0)));
+	
+	prx::FPSCounter* FPS = new prx::FPSCounter();
+	layer2.add(FPS);
 
 	while (!window.isClosed()) {
 		window.clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
+		FPS->update();
 
 		hpm::vec2 cursorPos = window.getCursorPos();
 		cursorPos.y = 600 - cursorPos.y;
@@ -62,7 +66,14 @@ int main(int argc, char *argv[]) {
 		
 		layer.draw();
 		layer2.draw();
-
+		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+			std::cout << "hello" << std::endl;
+		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+			std::cout << "hello1" << std::endl;
+		if (window.isMouseButtonReleased(GLFW_MOUSE_BUTTON_1))
+			std::cout << "bye" << std::endl;
+		if (window.isMouseButtonHeld(GLFW_MOUSE_BUTTON_1))
+			std::cout << "holded" << std::endl;
 		window.update();
 	}
 	prx::Resources::ternimate();

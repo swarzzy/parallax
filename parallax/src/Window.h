@@ -10,8 +10,8 @@
 
 namespace prx {
 
-#define MAX_KEYS			1024
-#define MAX_MOUSE_BUTTONS	32
+	constexpr unsigned int PARALLAX_INPUT_MAX_KEYS = 1024;
+	constexpr unsigned int PARALLAX_INPUT_MAX_MOUSE_BUTTONS = 32;
 
 	enum ClearFlags {
 		COLOR_BUFFER = 1,		//0000
@@ -25,25 +25,44 @@ namespace prx {
 		GLFWwindow* m_Window;
 		hpm::vec3 m_ClearColor;
 
-		bool m_Keys[MAX_KEYS];
-		bool m_MouseButtons[MAX_MOUSE_BUTTONS];
+		bool m_KeysCurrentState[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysPrevState[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysPressed[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysReleased[PARALLAX_INPUT_MAX_KEYS];
+
+		bool m_MouseButtonsCurrentState	[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
+		bool m_MouseButtonsPrevState	[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
+		bool m_MouseButtonsPressed		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
+		bool m_MouseButtonsReleased		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
+
 		double m_CursorX, m_CursorY;
 		double m_ScrollOffsetX, m_ScrollOffsetY;
 
 	public:
 		Window(std::string_view title, int width, int height);
 		~Window();
-		void update() const;
+
+		void update();
 		void clear(unsigned int flags) const;
-		// TODO: void closeWindow() thing to close window and terminate it on GLFW side
+
 		bool isClosed() const;
-		bool isKeyPressed(unsigned int key) const;
-		bool isMouseButtonPressed(unsigned int button) const;
+
+		bool isKeyHeld		(GLenum key) const;
+		bool isKeyPressed	(GLenum key) const;
+		bool isKeyReleased	(GLenum key) const;
+
+		bool isMouseButtonHeld		(GLenum button) const;
+		bool isMouseButtonPressed	(GLenum button) const;
+		bool isMouseButtonReleased	(GLenum button) const;
+
 		inline GLFWwindow* getWindowPointer() const { return m_Window; };
+		
 		inline unsigned int getWidth() const { return m_Width; };
 		inline unsigned int getHeight() const { return m_Height; };
+		
 		inline hpm::vec2 getCursorPos() const { return hpm::vec2(m_CursorX, m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };
+		
 		void setClearColor(const hpm::vec3& color);
 
 	private:

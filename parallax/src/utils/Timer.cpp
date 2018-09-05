@@ -1,5 +1,5 @@
 #include "Timer.h"
-
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
 namespace prx {
 
 	Timer::Timer() {
@@ -21,3 +21,4 @@ namespace prx {
 		return static_cast<float>(cycles * m_Fequrency * 1000);
 	}
 }
+#endif

@@ -7,11 +7,11 @@
 
 namespace prx {
 	class Label : public Renderable2D {
-	private:
+	protected:
 		std::string m_Text;
-		Font&		m_Font;
+		const Font&	m_Font;
 	public:
-		Label(std::string_view text, hpm::vec3 position, Font& font,  hpm::vec4 color);
+		Label(std::string_view text, hpm::vec3 position, const Font& font,  hpm::vec4 color);
 		void submit(Renderer2D* renderer) const override;
 	};
 }

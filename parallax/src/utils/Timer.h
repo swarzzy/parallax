@@ -1,4 +1,5 @@
 #pragma once
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
@@ -15,4 +16,5 @@ namespace prx {
 		float elapsed();
 	};
 }
+#endif
 #endif

@@ -11,7 +11,7 @@
 namespace prx {
 	// TODO: Do that actually needs constexpr?
 	constexpr const char*			RESOURCES_DEFAULT_FONT_NAME = "parallax_default_font";
-	constexpr const unsigned int	RESOURCES_DEFAULT_FONT_SIZE = 80;
+	constexpr const unsigned int	RESOURCES_DEFAULT_FONT_SIZE = 30;
 	static constexpr const char*	RESOURCES_DEFAULT_FONT_PATH = "res/fonts/NotoSans-Regular.ttf";
 
 
@@ -21,6 +21,7 @@ namespace prx {
 
 		static std::map<unsigned int, Shader> m_Shaders;
 		static std::map<unsigned int, Font> m_Fonts;
+
 
 		static Font* m_DefaultFontPointer;
 
