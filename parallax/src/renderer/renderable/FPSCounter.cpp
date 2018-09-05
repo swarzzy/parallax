@@ -1,7 +1,6 @@
 #include "FPSCounter.h"
 
 #include "../../resources/Resources.h"
-#include "../../utils/Timer.h"
 
 namespace prx {
 

@@ -80,7 +80,7 @@
     <ClCompile Include="src\shading\Texture.cpp" />
     <ClCompile Include="src\utils\Color.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
-    <ClCompile Include="src\utils\Timer.cpp" />
+    <ClCompile Include="src\utils\timing\Timer.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -116,12 +116,12 @@
     <ClInclude Include="src\utils\Color.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
-    <ClInclude Include="src\utils\GLErrorHandler.h" />
+    <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />
     <ClInclude Include="src\utils\log\Log.h" />
-    <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\SimpleHash.h" />
     <ClInclude Include="src\utils\timing\ScopedTimer.h" />
     <ClInclude Include="src\utils\timing\SimpleTimer.h" />
+    <ClInclude Include="src\utils\timing\Timer.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>

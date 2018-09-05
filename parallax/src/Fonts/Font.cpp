@@ -6,7 +6,7 @@
 #include "../utils/log/Log.h"
 
 #include "../utils/error_handling/FTErrorHandler.h"
-#include "../utils/GLErrorHandler.h"
+#include "../utils/error_handling//GLErrorHandler.h"
 
 namespace prx {
 	Font::Font(std::string_view filepath, int size) 

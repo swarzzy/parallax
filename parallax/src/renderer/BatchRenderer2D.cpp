@@ -104,6 +104,7 @@ namespace prx {
 		const unsigned int	texID		= renderable.getTexID();
 		
 		unsigned int c = 255 << 24 | 255 << 16 | 255 << 8 | 255;
+
 		float ts = 0.0f;
 		if (texID > 0) {
 			bool found = false;

@@ -5,7 +5,6 @@
 #include "shading/Shader.h"
 #include "renderer/renderable/Sprite.h"
 #include <random>
-#include "utils/Timer.h"
 #include "renderer/layers/SceneLayer.h"
 #include <filesystem>
 #include "../../../hypermath/hypermath.h";

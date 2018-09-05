@@ -7,7 +7,7 @@
 #include <sstream>
 
 #include <gl/glew.h>
-#include "log/Log.h"
+#include "../log/Log.h"
 
 // Define PARALLAX_DEBUG to enable debug macros
 

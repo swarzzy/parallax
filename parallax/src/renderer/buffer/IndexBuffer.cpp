@@ -1,5 +1,5 @@
 #include "IndexBuffer.h"
-#include "../../utils/GLErrorHandler.h"
+#include "../../utils/error_handling//GLErrorHandler.h"
 
 #include <gl/glew.h>
 

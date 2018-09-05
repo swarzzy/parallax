@@ -2,7 +2,7 @@
 #include "window.h"
 #include <iostream>
 #include "utils/log/Log.h"
-#include "utils/GLErrorHandler.h"
+#include "utils/error_handling//GLErrorHandler.h"
 
 namespace prx {
 
