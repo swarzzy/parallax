@@ -6,9 +6,6 @@ namespace prx {
 	std::map<unsigned int, Shader>	Resources::m_Shaders			= std::map<unsigned int, Shader>();
 	std::map<unsigned int, Font>	Resources::m_Fonts				= std::map<unsigned int, Font>();
 	Font*							Resources::m_DefaultFontPointer = nullptr;
-	std::map<unsigned int, std::shared_ptr<Texture>> Resources::m_Textures = std::map<unsigned int, std::shared_ptr<Texture>>();
-
-	std::map<unsigned int, bool> Resources::m_TextureStatus = std::map<unsigned int, bool>();
 
 	bool Resources::init() {
 		
@@ -103,22 +100,6 @@ namespace prx {
 
 	void Resources::deleteFont(unsigned hashName) {
 		m_Fonts.erase(hashName);
-	}
-
-	std::shared_ptr<Texture> Resources::loadTexture(std::string_view name, std::string_view path) {
-		
-		unsigned int id = SimpleHash::hashString(name);
-
-		if (m_TextureStatus[id] == false)
-			return nullptr;
-
-		auto texture = m_Textures.find(id);
-		if (texture != m_Textures.end())
-			return texture->second;
-
-		auto result = m_Textures.insert(std::pair<unsigned int, std::shared_ptr<Texture>>(id, std::make_shared<Texture>(path)));
-		m_TextureStatus[id] = true;
-		return result.first->second;
 	}
 
 	void Resources::ternimate() {

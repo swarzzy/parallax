@@ -28,8 +28,10 @@ namespace prx {
 		m_Height = image->getHeight();
 
 		unsigned int result;
-
+		std::string res;
 		GLCall(glGenTextures(1, &result));
+		res.push_back(result);
+		std::cout << result << std::endl;
 		GLCall(glBindTexture(GL_TEXTURE_2D, result));
 
 		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
