@@ -3,9 +3,9 @@
 namespace prx {
 
 	StaticSprite::StaticSprite() 
-		: Renderable2D(hpm::vec3(0.0), hpm::vec2(0.0), hpm::vec4(0.0)), m_Shader(nullptr) {}
+		: Renderable2D(hpm::vec3(0.0), hpm::vec2(0.0), 0xffffffff), m_Shader(nullptr) {}
 
-	StaticSprite::StaticSprite(hpm::vec3 position, hpm::vec2 size, hpm::vec4 color, Shader* shader)
+	StaticSprite::StaticSprite(hpm::vec3 position, hpm::vec2 size, unsigned int color, Shader* shader)
 		: Renderable2D(position, size, color), m_Shader(shader) {
 
 		m_VertexArray = std::make_shared<VertexArray>();

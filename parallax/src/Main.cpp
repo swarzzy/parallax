@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	prx::SceneLayer layer2(shaderNoLight);
 
 	std::knuth_b rand;
-	std::uniform_real_distribution<double> colorDistrib(0.0, 1.0);
+	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 
 	hpm::vec4 color;
 	float step = 0.1;
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	prx::Group* group = new prx::Group(hpm::mat4::identity());
 	for (float x = 0; x < 800; x += 3) {// 3, 1.0
 		for (float y = 0; y < 600; y += 3) {
-			color = hpm::vec4(colorDistrib(rand), colorDistrib(rand), colorDistrib(rand), 1.0);
+			unsigned int color = 255 << 24 | colorDistrib(rand) << 16 | colorDistrib(rand) << 8 | colorDistrib(rand);
 			group->add(new prx::Sprite(hpm::vec3(x, y, 1.0), hpm::vec2(2), color));
 			step += 0.0001f;
 			counter++;
@@ -46,9 +46,12 @@ int main(int argc, char *argv[]) {
 	auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
 	auto font2 = *prx::Resources::loadFont("AbrilFatface-Regular", "res/fonts/AbrilFatface-Regular.ttf", 50);
 
-	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#c62828"), 1.0)));
+	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), 0xff568745));
 	layer.add(group);
-	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), hpm::vec4(prx::Color::HEXtoGLVec("#ffa000"), 1.0)));
+	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), 0xff3456ff));
+	prx::Texture* texture = new prx::Texture("crate.png");
+	layer2.add(new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), *texture));
+	layer2.add(new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff));
 	
 	prx::FPSCounter* FPS = new prx::FPSCounter();
 	layer2.add(FPS);

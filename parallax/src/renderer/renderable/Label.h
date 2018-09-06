@@ -11,7 +11,7 @@ namespace prx {
 		std::string m_Text;
 		const Font&	m_Font;
 	public:
-		Label(std::string_view text, hpm::vec3 position, const Font& font,  hpm::vec4 color);
+		Label(std::string_view text, hpm::vec3 position, const Font& font, unsigned int color);
 		void submit(Renderer2D* renderer) const override;
 	};
 }
