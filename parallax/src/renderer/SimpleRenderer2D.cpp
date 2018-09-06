@@ -1,4 +1,7 @@
 #include "SimpleRenderer2D.h"
+
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
+
 #include "../utils/error_handling/GLErrorHandler.h"
 
 namespace prx {
@@ -27,3 +30,4 @@ namespace prx {
 		}
 	}
 }
+#endif

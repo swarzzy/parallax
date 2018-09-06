@@ -2,6 +2,8 @@
 #ifndef _STATICSPRITE_H_
 #define _STATICSPRITE_H_
 
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
+
 #include "Renderable2D.h"
 
 namespace prx {
@@ -20,4 +22,5 @@ namespace prx {
 		inline Shader* getShader() const { return m_Shader; };
 	};
 }
-#endif 
+#endif
+#endif

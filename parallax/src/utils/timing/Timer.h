@@ -1,7 +1,9 @@
 #pragma once
+
+#ifndef _PARALLAX_UTILS_TIMER_H_
+#define _PARALLAX_UTILS_TIMER_H_
+
 #ifdef PARALLAX_USE_DEPRECATED_FEATURES
-#ifndef _TIMER_H_
-#define _TIMER_H_
 
 #include<windows.h>
 

@@ -69,6 +69,7 @@
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\renderable\Sprite.cpp" />
+    <ClCompile Include="src\renderer\renderable\StaticSprite.cpp" />
     <ClCompile Include="src\renderer\Renderer2D.cpp" />
     <ClCompile Include="src\renderer\SimpleRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\VertexArray.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
     <ClInclude Include="src\renderer\renderable\Sprite.h" />
+    <ClInclude Include="src\renderer\renderable\StaticSprite.h" />
     <ClInclude Include="src\renderer\Renderer2D.h" />
     <ClInclude Include="src\renderer\SimpleRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\VertexArray.h" />
