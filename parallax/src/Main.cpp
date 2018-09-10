@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "utils/Color.h"
 #include "utils/log/Log.h"
 #include <iostream>
 #include "shading/Shader.h"
@@ -10,27 +9,35 @@
 #include "../../../hypermath/hypermath.h";
 #include "renderer/renderable/Label.h"
 #include "renderer/renderable/Group.h"
-#include "resources/Resources.h"
+//#include "resources/Resources.h"
 #include <thread>
 #include "renderer/renderable/FPSCounter.h"
+#include "utils/colors/ColorFormatCoverter.h"
+//#include "resources/Resources.h"
 
+#define PARALLAX_MAIN
+#ifdef PARALLAX_MAIN
 int main(int argc, char *argv[]) {
 
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
-	window.setClearColor(prx::Color::HEXtoGLVec("#000000"));
-	prx::Resources::init();
-
-	auto shader = prx::Resources::loadShader("default_light", "res/shaders/default.vs", "res/shaders/default_light.fs");
-	auto shaderNoLight = prx::Resources::loadShader("default_nolight", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
-
-	prx::SceneLayer layer(shader);
-	prx::SceneLayer layer2(shaderNoLight);
-
+	window.setClearColor(0xff000000);
+	//prx::Resources::init();
+	prx::Texture* texture = new prx::Texture("crate.png");
+	unsigned int shaderID = prx::Resources::loadShader("shader", "res/shaders/default.vs", "res/shaders/default_light.fs");
+	unsigned int shaderNoLightID = prx::Resources::loadShader("shaderNoLight", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
+	prx::SceneLayer layer(prx::Resources::get<prx::Shader>(shaderID));
+	prx::SceneLayer layer2(prx::Resources::get<prx::Shader>(shaderNoLightID));
+	{
+		auto shader = prx::Resources::get<prx::Shader>(shaderID);
+		auto shaderNoLight = prx::Resources::get<prx::Shader>(shaderNoLightID);
+		prx::SceneLayer layer1(shader);
+		prx::SceneLayer layer2(shaderNoLight);
+	}
 	std::knuth_b rand;
 	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
-
+	
 	hpm::vec4 color;
 	float step = 0.1;
 	int counter = 0;
@@ -43,13 +50,13 @@ int main(int argc, char *argv[]) {
 			counter++;
 		}
 	}
-	auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
-	auto font2 = *prx::Resources::loadFont("AbrilFatface-Regular", "res/fonts/AbrilFatface-Regular.ttf", 50);
+	//auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
+	//auto font2 = *prx::Resources::loadFont("AbrilFatface-Regular", "res/fonts/AbrilFatface-Regular.ttf", 50);
 
-	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), 0xff568745));
+	//group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), 0xff568745));
 	layer.add(group);
-	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), 0xff3456ff));
-	prx::Texture* texture = new prx::Texture("crate.png");
+	//layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), 0xff3456ff));
+	//prx::Texture* texture = new prx::Texture("crate.png");
 	layer2.add(new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), *texture));
 	layer2.add(new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff));
 	
@@ -63,8 +70,8 @@ int main(int argc, char *argv[]) {
 		hpm::vec2 cursorPos = window.getCursorPos();
 		cursorPos.y = 600 - cursorPos.y;
 		
-		shader->bind();
-		shader->setUniform("u_lightPos", cursorPos);
+		//shader->bind();
+		//shader->setUniform("u_lightPos", cursorPos);
 		
 		layer.draw();
 		layer2.draw();
@@ -78,6 +85,19 @@ int main(int argc, char *argv[]) {
 			std::cout << "holded" << std::endl;
 		window.update();
 	}
-	prx::Resources::ternimate();
+	//prx::Resources::ternimate();
 	return 0;
 }
+#endif
+
+
+#ifndef PARALLAX_MAIN
+int main() {
+	prx::Window window("window", 800, 600);
+	while (true) {
+		auto texture = new prx::Texture("crate.png");
+		delete texture;
+		std::cout << "shader created" << std::endl;
+	}
+}
+#endif

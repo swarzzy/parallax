@@ -12,10 +12,10 @@ namespace prx {
 
 		readShaderFromFile(vertexPath, fragmentPath);
 
+		// TODO: Fix memory leak?
 		compileShader();
 
 		loadUniforms();
-
 	}
 
 	Shader::~Shader() {
@@ -24,17 +24,17 @@ namespace prx {
 
 	void Shader::readShaderFromFile(std::string_view vertexPath, std::string_view fragmentPath) {
 
-		std::optional<std::string> vertSrc = prx::FileReader::readTextFile(vertexPath);
-		std::optional<std::string> fragSrc = prx::FileReader::readTextFile(fragmentPath);
+		auto vertSrc = prx::FileReader::readTextFile(vertexPath);
+		auto fragSrc = prx::FileReader::readTextFile(fragmentPath);
 		if (vertSrc)
-			m_ShaderSource.vertexSource = vertSrc.value();
+			m_ShaderSource.vertexSource = std::string(*vertSrc);
 		else {
 			prx::Log::message("Can not read vertex shader source", prx::LOG_ERROR);
 			// TODO: exceptions
 			ASSERT(false);
 		}
 		if (fragSrc)
-			m_ShaderSource.fragmentSource = fragSrc.value();
+			m_ShaderSource.fragmentSource = std::string(*fragSrc);
 		else {
 			prx::Log::message("Can not read fragment shader source", prx::LOG_ERROR);
 			// TODO: exceptions

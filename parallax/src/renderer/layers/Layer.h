@@ -4,6 +4,7 @@
 
 #include "../Renderer2D.h"
 #include "../renderable/Renderable2D.h"
+#include "../../resources/Resources.h"
 
 
 namespace prx {
@@ -11,10 +12,10 @@ namespace prx {
 	protected:
 		Renderer2D* m_Renderer;
 		std::vector<Renderable2D*> m_Renderables;
-		Shader* m_Shader;
+		ResourceHandler<Shader> m_Shader;
 		hpm::mat4 m_ProjectionMatrix;
 	protected:
-		Layer(Renderer2D* renderer, Shader* shader, hpm::mat4 projectionMatrix);
+		Layer(Renderer2D* renderer, ResourceHandler<Shader> shader, hpm::mat4 projectionMatrix);
 	public:
 		virtual ~Layer();
 		virtual void add(Renderable2D* renderable);

@@ -6,7 +6,7 @@
 
 namespace prx {
 
-	std::optional<std::string> FileReader::readTextFile(std::string_view path)
+	std::shared_ptr<std::string> FileReader::readTextFile(std::string_view path)
 	{
 		std::ifstream file;
 		std::stringstream ss;
@@ -16,7 +16,7 @@ namespace prx {
 			file.open(static_cast<std::string>(path));
 			if (!file.is_open()) {
 				prx::Log::message(std::string("Can not open file: ") + static_cast<std::string>(path), prx::LOG_WARNING);
-				return std::nullopt;
+				return nullptr;
 			}
 
 			ss << file.rdbuf();
@@ -25,9 +25,9 @@ namespace prx {
 		}
 		catch (std::ifstream::failure e) {
 			prx::Log::message("File is not succsesfully read", prx::LOG_WARNING);
-			return std::nullopt;
+			return nullptr;
 		}
-		return ss.str();
+		return std::make_shared<std::string>(ss.str());
 	}
 }
 

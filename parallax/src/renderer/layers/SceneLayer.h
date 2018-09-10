@@ -5,9 +5,9 @@
 #include "Layer.h"
 
 namespace prx {
-	class SceneLayer : public Layer{
+	class SceneLayer : public Layer {
 	public:
-		SceneLayer(Shader* shader);
+		SceneLayer(ResourceHandler<Shader> shader);
 		~SceneLayer();
 	};
 }
