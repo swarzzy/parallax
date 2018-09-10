@@ -1,70 +1,112 @@
-//#include "Resources.h"
-//
-//#include "../utils/SimpleHash.h"
-//
-//namespace prx {
-//	
-//	std::map<unsigned int, Shader>	Resources::m_Shaders = std::map<unsigned int, Shader>();
-//
-//	ResourceHandler<Shader> Resources::loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath) {
-//		unsigned int id = SimpleHash::hashString(name);
-//		auto element = m_Shaders.find(id);
-//		if (element != m_Shaders.end())
-//			return ResourceHandler<Shader>(&element->second, id);
-//
-//		auto result = m_Shaders.emplace(std::piecewise_construct, std::forward_as_tuple(id),
-//			std::forward_as_tuple(vertexPath, fragmentPath));
-//		return ResourceHandler<Shader>(&result.first->second, id);
-//	}
-//
-//	template<typename T>
-//	ResourceHandler<T> Resources::get(unsigned int id) {
-//		Log::message("RESOURCE MANAGER: Incompatible resource type.", LOG_ERROR);
-//		// TODO: use parallax debugger for this
-//		static_assert(false);
-//	}
-//
-//	template<>
-//	ResourceHandler<Shader> Resources::get<Shader>(unsigned int id) {
-//		auto element = m_Shaders.find(id);
-//		if (element != m_Shaders.end())
-//			return ResourceHandler<Shader>(&element->second, id);
-//		Log::message("Resources: requested shaer object does not exist", LOG_WARNING);
-//		return ResourceHandler<Shader>(nullptr, 0);
-//	}
-//
-//	template<typename T>
-//	void Resources::deleteRes(unsigned int id) {
-//		Log::message("RESOURCE MANAGER: Incompatible resource type.", LOG_ERROR);
-//		// TODO: use parallax debugger for this
-//		static_assert(false);
-//	}
-//
-//	template<>
-//	void Resources::deleteRes<Shader>(unsigned int id) {
-//#ifdef PARALLAX_DEBUG
-//		unsigned int result = m_Shaders.erase(id);
-//		if (result == 0)
-//			Log::message("RESOURCE MANAGER: Can`t delete element. Element already deleted or never exist.", LOG_WARNING);
-//#else
-//		m_Shaders.erase(id);
-//#endif
-//	}
-//}
 #include "Resources.h"
-namespace prx {
-	std::map<unsigned int, internal::ResourceStorage<Shader>>	Resources::m_Shaders = std::map<unsigned int, internal::ResourceStorage<Shader>>();
+#include "../utils/SimpleHash.h"
 
-	unsigned int Resources::loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath) {
-		unsigned int id = SimpleHash::hashString(name);
+namespace prx {
+
+	std::map<unsigned int, Shader>	Resources::m_Shaders			= std::map<unsigned int, Shader>();
+	std::map<unsigned int, Font>	Resources::m_Fonts				= std::map<unsigned int, Font>();
+	Font*							Resources::m_DefaultFontPointer = nullptr;
+
+	bool Resources::init() {
+		
+		unsigned int id = SimpleHash::hashString(RESOURCES_DEFAULT_FONT_NAME);
+		
+		Font font(RESOURCES_DEFAULT_FONT_PATH, RESOURCES_DEFAULT_FONT_SIZE);
+		// TODO: That needs exceptions or some error handling to check font load status
+		
+		auto result = m_Fonts.insert(std::pair<unsigned int, Font>(id, font));
+		// TODO: Better error handling bacause this is almost meaningless
+		m_DefaultFontPointer = &(result.first->second);
+		
+		return result.second;
+	}
+
+	 Shader* Resources::loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath) {
+		unsigned int id =  SimpleHash::hashString(name);
 		auto element = m_Shaders.find(id);
-		if (element != m_Shaders.end()) {
-			Log::message("RESOURCE MANAGER: Shader already has been loaded.", LOG_WARNING);
-			return id;
-		}
-		Shader* shader = new Shader(vertexPath, fragmentPath);
+		if (element != m_Shaders.end())
+			return &element->second;
+
 		auto result = m_Shaders.emplace(std::piecewise_construct, std::forward_as_tuple(id),
-			std::forward_as_tuple(id, shader));
-		return id;
+			std::forward_as_tuple(vertexPath, fragmentPath));
+		return &result.first->second;
+	}
+
+	 Shader* Resources::getShader(std::string_view name) {
+		auto element = m_Shaders.find( SimpleHash::hashString(name));
+		if (element != m_Shaders.end())
+			return &element->second;
+		 Log::message("Resources: requested shader object does not exist",  LOG_WARNING);
+		return nullptr;
+	}
+
+	Shader* Resources::getShader(unsigned hashName) {
+		auto element = m_Shaders.find(hashName);
+		if (element != m_Shaders.end())
+			return &element->second;
+		 Log::message("Resources: requested shaer object does not exist",  LOG_WARNING);
+		return nullptr;
+	}
+
+	void Resources::deleteShader(std::string_view name) {
+		m_Shaders.erase( SimpleHash::hashString(name));
+	}
+
+	void Resources::deleteShader(unsigned hashName) {
+		m_Shaders.erase(hashName);
+	}
+
+	Font* Resources::loadFont(std::string_view name, std::string_view fontPath, unsigned int size) {
+		unsigned int id = SimpleHash::hashString(name);
+
+		auto font = m_Fonts.find(id);
+		if (font != m_Fonts.end())
+			return &(font->second);
+		// TODO: Exceptions or smth to catch and handle font constructon errors
+		auto result = m_Fonts.emplace(std::piecewise_construct, 
+										std::forward_as_tuple(id), std::forward_as_tuple(fontPath, size));
+		return &(result.first->second);
+	}
+
+	Font* Resources::getFont(std::string_view name) {
+		unsigned int id = SimpleHash::hashString(name);
+
+		auto font = m_Fonts.find(id);
+		if (font != m_Fonts.end())
+			return &(font->second);
+
+		std::stringstream msg;
+		msg << "RESOURCE MANAGER: Requested font: " << name << " doesn`t exist. Default font is loaded.";
+		 Log::message(msg.str(), LOG_WARNING);
+
+		return m_DefaultFontPointer;
+	}
+
+	Font* Resources::getFont(unsigned hashName) {
+		auto font = m_Fonts.find(hashName);
+		if (font != m_Fonts.end())
+			return &(font->second);
+
+		std::stringstream msg;
+		msg << "RESOURCE MANAGER: Requested font with hashhed name: " << hashName << "doesn`t exist. Default font is loaded.";
+		 Log::message(msg.str(), LOG_WARNING);
+
+		return m_DefaultFontPointer;
+	}
+
+	void Resources::deleteFont(std::string_view name) {
+		m_Fonts.erase(SimpleHash::hashString(name));
+	}
+
+	void Resources::deleteFont(unsigned hashName) {
+		m_Fonts.erase(hashName);
+	}
+
+	void Resources::ternimate() {
+		// TODO:: Maybe check for initialization in every method in debug mode;
+		m_DefaultFontPointer = nullptr;
+		m_Shaders.clear();
+		m_Fonts.clear();
 	}
 }
+

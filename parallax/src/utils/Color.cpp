@@ -1,8 +1,4 @@
 #include "Color.h"
-
-// DEPRECATED
-#ifdef PARALLAX_USE_DEPRECATED_FEATURES
-
 #include <iostream>
 #include <sstream>
 
@@ -33,4 +29,3 @@ namespace prx {
 		return hpm::vec3(r / 255.0, g / 255.0, b / 255.0);
 	}
 }
-#endif

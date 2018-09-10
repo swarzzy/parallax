@@ -11,7 +11,7 @@ namespace prx {
 	private:
 		FileReader();
 	public:
-		static std::shared_ptr<std::string> readTextFile(std::string_view path);
+		static std::optional<std::string> readTextFile(std::string_view path);
 	};
 }
 

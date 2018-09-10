@@ -4,7 +4,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include <math.h>
+#include<math.h>
 
 namespace hpm {
 	inline float degToRad(float degrees) {

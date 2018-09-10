@@ -10,7 +10,7 @@ namespace prx {
 	}
 
 	Texture::~Texture() {
-		GLCall(glDeleteTextures(1, &m_TexID));
+		
 	}
 
 	void Texture::bind() const {

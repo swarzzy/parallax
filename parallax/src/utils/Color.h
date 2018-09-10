@@ -2,9 +2,6 @@
 #ifndef _COLOR_H_
 #define _COLOR_H_
 
-// DEPRECATED
-#ifdef PARALLAX_USE_DEPRECATED_FEATURES
-
 #include <string_view>
 
 #include "../../../hypermath/hypermath.h";
@@ -22,5 +19,4 @@ namespace prx {
 	};
 
 }
-#endif
 #endif
