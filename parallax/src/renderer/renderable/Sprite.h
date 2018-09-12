@@ -10,7 +10,7 @@ namespace prx {
 
 		public:
 			Sprite(hpm::vec3 position, hpm::vec2 size, unsigned int color);
-			Sprite(hpm::vec3 position, hpm::vec2 size, Texture& texture);
+			Sprite(hpm::vec3 position, hpm::vec2 size, std::shared_ptr<Texture> texture);
 		};
 	}
 #endif

@@ -33,7 +33,7 @@ namespace prx {
 		~BatchRenderer2D();
 
 		void begin() override;
-		void drawString(std::string_view text, hpm::vec3 position, const Font& font, unsigned int color) override;
+		void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) override;
 		void submit(const Renderable2D& renderable) override;
 		void end() override;
 		void flush() override;

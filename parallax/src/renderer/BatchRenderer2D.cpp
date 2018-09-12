@@ -14,9 +14,9 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font& font, unsigned int color) {
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
-		auto characters = font.getCharacters();
+		auto characters = font->getCharacters();
 
 		float cursor = 0.0;
 

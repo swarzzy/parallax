@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
 	window.setClearColor(prx::Color::HEXtoGLVec("#000000"));
 	prx::Resources::init();
 
-	auto shader = prx::Resources::loadShader("default_light", "res/shaders/default.vs", "res/shaders/default_light.fs");
-	auto shaderNoLight = prx::Resources::loadShader("default_nolight", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
+	auto shader = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_light.fs");
+	auto shaderNoLight = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_nolight.fs");
 
 	prx::SceneLayer layer(shader);
 	prx::SceneLayer layer2(shaderNoLight);
@@ -43,14 +43,14 @@ int main(int argc, char *argv[]) {
 			counter++;
 		}
 	}
-	auto font = prx::Resources::loadFont("NotoSans-Regular", "res/fonts/NotoSans-Regular.ttf", 80);
-	auto font2 = *prx::Resources::loadFont("AbrilFatface-Regular", "res/fonts/AbrilFatface-Regular.ttf", 50);
+	auto NotoSans = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80);
+	auto AbrilFatface = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50);
 
-	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), *prx::Resources::getFont("NotoSans-Regular"), 0xff568745));
+	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), NotoSans, 0xff568745));
 	layer.add(group);
-	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), *prx::Resources::getFont("AbrilFatface-Regular"), 0xff3456ff));
-	prx::Texture* texture = new prx::Texture("crate.png");
-	layer2.add(new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), *texture));
+	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), AbrilFatface, 0xff3456ff));
+	auto texture = prx::Resources::loadTexture("crate.png");
+	layer2.add(new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture));
 	layer2.add(new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff));
 	
 	prx::FPSCounter* FPS = new prx::FPSCounter();
@@ -78,6 +78,5 @@ int main(int argc, char *argv[]) {
 			std::cout << "holded" << std::endl;
 		window.update();
 	}
-	prx::Resources::ternimate();
 	return 0;
 }
