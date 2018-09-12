@@ -28,12 +28,6 @@
     <Filter Include="Source Files\dependencies\freetype\FT_MODULES">
       <UniqueIdentifier>{bc76843f-c660-41ce-a8ed-1d57524fd04d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\dependencies\freetype-gl">
-      <UniqueIdentifier>{d7766dbc-8512-461c-89cc-a4e437b66dbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\dependencies\freetype-gl">
-      <UniqueIdentifier>{ffe09a02-6852-47b4-a843-3bf0a89882ec}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -54,9 +48,6 @@
     <ClCompile Include="src\shading\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\Resources.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\SimpleRenderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,13 +66,7 @@
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\renderable\StaticSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\renderable\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\layers\Layer.cpp">
@@ -216,31 +201,22 @@
     <ClCompile Include="dependencies\freetype\src\base\ftfntfmt.c">
       <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\distance-field.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\edtaa3func.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\font-manager.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\platform.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\texture-atlas.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\texture-font.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\utf8-utils.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype-gl\vector.c">
-      <Filter>Source Files\dependencies\freetype-gl</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\renderable\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fonts\Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\renderable\FPSCounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\timing\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\renderable\StaticSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,9 +227,6 @@
     <ClInclude Include="src\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\GLErrorHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\log\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -261,9 +234,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\shading\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resources\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\SimpleHash.h">
@@ -293,13 +263,7 @@
     <ClInclude Include="src\renderer\BatchRenderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\renderable\StaticSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\renderable\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer\layers\Layer.h">
@@ -338,43 +302,40 @@
     <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h">
       <Filter>Header Files\dependencies\freetype</Filter>
     </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\distance-field.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\edtaa3func.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\font-manager.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\freetype-gl.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\markup.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\opengl.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\platform.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\texture-atlas.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\texture-font.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\utf8-utils.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\vec234.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype-gl\vector.h">
-      <Filter>Header Files\dependencies\freetype-gl</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\renderable\Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\fonts\Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fonts\Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\error_handling\FTErrorHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\error_handling\ErrorHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\timing\SimpleTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\timing\ScopedTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\renderable\FPSCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\timing\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\error_handling\GLErrorHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\renderable\StaticSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

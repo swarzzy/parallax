@@ -1,30 +1,34 @@
 #pragma once
-#ifndef _RESOURCES_H_
-#define _RESOURCES_H_
+#ifndef _PARALLAX_RESOURCES_RESOURCES_H_
+#define _PARALLAX_RESOURCES_RESOURCES_H_
 
-#include <map>
-#include <string_view>
+#include <memory>
 
+#include "../shading/Texture.h"
+#include "../Fonts/Font.h"
+#include "../utils/log/Log.h"
 #include "../shading/Shader.h"
 
 namespace prx {
 
+	static const char*			RESOURCES_DEFAULT_TEXTURE_PATH	= "res/textures/default.jpg";
+	static const char*			RESOURCES_DEFAULT_FONT_PATH		= "res/fonts/NotoSans-Regular.ttf";
+	static const unsigned int	RESOURCES_DEFAULT_FONT_SIZE		= 30;
+
 	class Resources {
 	private:
-		Resources();
-
-		static std::map<unsigned int, Shader> m_Shaders;
-
+		static std::shared_ptr<Texture>	 m_DefaultTexture;
+		static std::shared_ptr<Font>	 m_DefaultFont;
 	public:
-		// Creates shader if it`s doesn`t exist yet and returns pointer to new created shader or existing shader from map.
-		static prx::Shader* loadShader(std::string_view name, const std::string& vertexPath,
-			const std::string& fragmentPath);
-		// If shader exists returns pointer on it, otherwise returns nullptr
-		static Shader* getShader(std::string_view name);
-		static Shader* getShader(unsigned int hashName);
+		Resources() = delete;
 
-		static void deleteShader(std::string_view name);
-		static void deleteShader(unsigned int hashName);
+		static void init();
+
+		static std::shared_ptr<Texture> loadTexture	(std::string_view path = RESOURCES_DEFAULT_TEXTURE_PATH);
+		static std::shared_ptr<Font>	loadFont	(std::string_view path = RESOURCES_DEFAULT_FONT_PATH, unsigned int size = RESOURCES_DEFAULT_FONT_SIZE);
+		static std::shared_ptr<Shader>	loadShader	(std::string_view vertPath, std::string_view fragPath);
+
+
 	};
 }
 #endif

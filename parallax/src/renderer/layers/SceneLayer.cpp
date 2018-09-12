@@ -4,7 +4,7 @@
 #include "../../utils/SimpleHash.h"
 
 namespace prx {
-	SceneLayer::SceneLayer(Shader* shader) 
+	SceneLayer::SceneLayer(std::shared_ptr<Shader> shader)
 		: Layer(new BatchRenderer2D, shader, hpm::mat4::ortho(0.0, 800.0, 600.0, 0.0, -10.0, 100.0)) {
 	}
 

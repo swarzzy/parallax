@@ -2,6 +2,7 @@
 #include "window.h"
 #include <iostream>
 #include "utils/log/Log.h"
+#include "utils/error_handling//GLErrorHandler.h"
 
 namespace prx {
 
@@ -40,6 +41,19 @@ namespace prx {
 
 		glfwSetWindowUserPointer(m_Window, this);
 
+		memset(m_KeysCurrentState,  false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		memset(m_KeysPrevState,		false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		memset(m_KeysPressed,		false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		memset(m_KeysReleased,		false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		
+		memset(m_MouseButtonsCurrentState,  false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
+		memset(m_MouseButtonsPrevState,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
+		memset(m_MouseButtonsPressed,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
+		memset(m_MouseButtonsReleased,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
+
+		m_CursorX = m_Width / 2;
+		m_CursorY = m_Width / 2;
+
 		if (glewInit() != GLEW_OK) {
 			prx::Log::message("Failed to initialize GLEW", prx::LOG_ERROR);
 			glfwTerminate();
@@ -47,6 +61,9 @@ namespace prx {
 		}
 
 		std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 		return true;
 	}
@@ -58,27 +75,73 @@ namespace prx {
 		return glfwWindowShouldClose(m_Window);
 	}
 
-	bool Window::isKeyPressed(unsigned key) const {
-		if (key >= MAX_KEYS) {
+	bool Window::isKeyHeld(GLenum key) const {
+		if (key >= PARALLAX_INPUT_MAX_KEYS) {
 			prx::Log::message("Invalid key number", prx::LOG_WARNING);
 			return false;
 		}
-		return m_Keys[key];
+		return m_KeysCurrentState[key];
 	}
 
-	bool Window::isMouseButtonPressed(unsigned button) const {
-		if (button >= MAX_MOUSE_BUTTONS) {
+	bool Window::isKeyPressed(GLenum key) const {
+		if (key >= PARALLAX_INPUT_MAX_KEYS) {
+			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			return false;
+		}
+		return m_KeysPressed[key];
+	}
+
+	bool Window::isKeyReleased(GLenum key) const {
+		if (key >= PARALLAX_INPUT_MAX_KEYS) {
+			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			return false;
+		}
+		return m_KeysReleased[key];
+	}
+
+	bool Window::isMouseButtonHeld(GLenum button) const {
+		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
 			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
 			return false;
 		}
-		return m_MouseButtons[button];
+		return m_MouseButtonsCurrentState[button];
+	}
+
+	bool Window::isMouseButtonPressed(GLenum button) const {
+		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
+			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
+			return false;
+		}
+		return m_MouseButtonsPressed[button];
+	}
+
+	bool Window::isMouseButtonReleased(GLenum button) const {
+		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
+			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
+			return false;
+		}
+		return m_MouseButtonsReleased[button];
 	}
 
 	void Window::setClearColor(const hpm::vec3& color) {
 		glClearColor(color.r, color.g, color.b, 1.0);
 	}
 
-	void Window::update() const {
+	void Window::update() {
+		
+		for (int i = 0; i < PARALLAX_INPUT_MAX_KEYS; i++) {
+			m_KeysPressed[i]	= m_KeysCurrentState[i]	 && !m_KeysPrevState[i];
+			m_KeysReleased[i]	= !m_KeysCurrentState[i] && m_KeysPrevState[i];
+		}
+
+		for (int i = 0; i < PARALLAX_INPUT_MAX_MOUSE_BUTTONS; i++) {
+			m_MouseButtonsPressed[i]	= m_MouseButtonsCurrentState[i]  && !m_MouseButtonsPrevState[i];
+			m_MouseButtonsReleased[i]	= !m_MouseButtonsCurrentState[i] && m_MouseButtonsPrevState[i];
+		}
+
+		memcpy(m_KeysPrevState, m_KeysCurrentState, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		memcpy(m_MouseButtonsPrevState, m_MouseButtonsCurrentState, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
+		
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
@@ -92,11 +155,11 @@ namespace prx {
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
-		if (key >= 0 && key < MAX_KEYS) {
+		if (key >= 0 && key < PARALLAX_INPUT_MAX_KEYS) {
 			if (action == GLFW_PRESS)
-				win->m_Keys[key] = true;
+				win->m_KeysCurrentState[key] = true;
 			else if (action == GLFW_RELEASE)
-				win->m_Keys[key] = false;
+				win->m_KeysCurrentState[key] = false;
 		}
 		else {
 			prx::Log::message("Invalid key number", prx::LOG_WARNING);
@@ -111,11 +174,11 @@ namespace prx {
 
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
-		if (button >= 0 && button < MAX_MOUSE_BUTTONS) {
+		if (button >= 0 && button < PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
 			if (action == GLFW_PRESS)
-				win->m_MouseButtons[button] = true;
+				win->m_MouseButtonsCurrentState[button] = true;
 			else if (action == GLFW_RELEASE)
-				win->m_MouseButtons[button] = false;
+				win->m_MouseButtonsCurrentState[button] = false;
 		}
 		else {
 			prx::Log::message("Invalid mouse key number", prx::LOG_WARNING);

@@ -1,7 +1,7 @@
 #include "FileReader.h"
 #include <fstream>
 #include <sstream>
-#include "../utils/GLErrorHandler.h"
+#include "../utils/error_handling//GLErrorHandler.h"
 #include "../utils/log/Log.h"
 
 namespace prx {

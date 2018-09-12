@@ -2,6 +2,8 @@
 #ifndef _SIMPLERENDERER2D_H_
 #define _SIMPLERENDERER2D_H_
 
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
+
 #include <deque>
 
 #include "Renderer2D.h"
@@ -19,4 +21,5 @@ namespace prx {
 		void flush() override;
 	};
 }
+#endif
 #endif

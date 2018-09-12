@@ -2,6 +2,8 @@
 #ifndef _STATICSPRITE_H_
 #define _STATICSPRITE_H_
 
+#ifdef PARALLAX_USE_DEPRECATED_FEATURES
+
 #include "Renderable2D.h"
 
 namespace prx {
@@ -13,11 +15,12 @@ namespace prx {
 	public:
 		
 		StaticSprite();
-		StaticSprite(hpm::vec3 position, hpm::vec2 size, hpm::vec4 color, Shader* shader);
+		StaticSprite(hpm::vec3 position, hpm::vec2 size, unsigned int color, Shader* shader);
 		
 		inline const VertexArray& getVAO() const { return *m_VertexArray; };
 		inline unsigned int getIndexCount() const { return m_IndexCount; };
 		inline Shader* getShader() const { return m_Shader; };
 	};
 }
-#endif 
+#endif
+#endif

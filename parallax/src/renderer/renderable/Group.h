@@ -11,6 +11,7 @@ namespace prx {
 		hpm::mat4 m_TransformationMatrix;
 	public:
 		Group(const hpm::mat4& transformation);
+		~Group();
 		void add(Renderable2D* renderable);
 		void submit(Renderer2D* renderer) const override;
 	};

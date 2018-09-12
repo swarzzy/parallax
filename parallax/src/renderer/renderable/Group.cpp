@@ -6,6 +6,11 @@ namespace prx {
 		: m_TransformationMatrix(transformation){
 	}
 
+	Group::~Group() {
+		for (auto* renderable : m_Renderables)
+			delete renderable;
+	}
+
 	void Group::add(Renderable2D* renderable) {
 		// TODO: Make it emplace_back
 		m_Renderables.push_back(renderable);

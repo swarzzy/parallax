@@ -3,7 +3,6 @@
 #define _BATCHRENDERER2D_H_
 
 #include "Renderer2D.h"
-#include <freetype-gl.h>
 
 namespace prx {
 	
@@ -29,15 +28,12 @@ namespace prx {
 		int							 m_IndexCount;
 		VertexData*					 m_Buffer;
 
-		ftgl::texture_atlas_t* m_FTAtlas;
-		ftgl::texture_font_t* m_FTFont;
-
 	public:
 		BatchRenderer2D();
 		~BatchRenderer2D();
 
 		void begin() override;
-		void drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) override;
+		void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) override;
 		void submit(const Renderable2D& renderable) override;
 		void end() override;
 		void flush() override;

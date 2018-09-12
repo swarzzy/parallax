@@ -1,5 +1,5 @@
 #include "VertexArray.h"
-#include "../../utils/GLErrorHandler.h"
+#include "../../utils/error_handling//GLErrorHandler.h"
 
 namespace prx {
 

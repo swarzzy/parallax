@@ -27,20 +27,24 @@ namespace prx {
 	protected:
 			hpm::vec3					m_Position;
 			hpm::vec2					m_Size;
-			hpm::vec4					m_Color;
+			unsigned int				m_Color;
 			float						m_UVs[8];
-			Texture*					m_Texture;
+			std::shared_ptr<Texture>	m_Texture;
 	protected:
 			Renderable2D();
 	public:
-			Renderable2D(hpm::vec3 position, hpm::vec2 size, hpm::vec4 color);
-			Renderable2D(hpm::vec3 position, hpm::vec2 size, Texture& texture);
+			virtual ~Renderable2D() {};
+
+			Renderable2D(hpm::vec3 position, hpm::vec2 size, unsigned int color);
+			Renderable2D(hpm::vec3 position, hpm::vec2 size, std::shared_ptr<Texture> texture);
 
 			virtual void submit(Renderer2D* renderer) const;
 
+			inline void	setColor(unsigned int color) { if (m_Texture != nullptr) m_Color = color; };
+
 			inline const hpm::vec3&					getPosition()	const { return m_Position; };
 			inline const hpm::vec2&					getSize()		const { return m_Size; };
-			inline const hpm::vec4&					getColor()		const { return m_Color; };
+			inline unsigned int						getColor()		const { return m_Color; };
 			inline const float*						getUVs()		const { return m_UVs; };
 			
 			inline const unsigned int getTexID() const { return m_Texture == nullptr ? 0 : m_Texture->getID(); }

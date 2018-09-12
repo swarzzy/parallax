@@ -8,7 +8,7 @@
 #include <string_view>
 #include <gl/glew.h>
 
-#include "../utils/GLErrorHandler.h"
+#include "../utils/error_handling/GLErrorHandler.h"
 #include "../../../hypermath/hypermath.h";
 
 namespace prx {

@@ -3,6 +3,7 @@
 #define _RENDERER_H_
 
 #include "renderable/Renderable2D.h"
+#include "../Fonts/Font.h";
 
 namespace prx {
 	class Renderer2D {
@@ -16,7 +17,7 @@ namespace prx {
 		void push(const hpm::mat4& matrix);
 		void pop();
 
-		virtual void drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {};
+		virtual void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {};
 
 		virtual void begin() {};
 		virtual void submit(const Renderable2D& renderable) = 0;

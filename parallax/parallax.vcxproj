@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,14 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dependencies\freetype-gl\distance-field.c" />
-    <ClCompile Include="dependencies\freetype-gl\edtaa3func.c" />
-    <ClCompile Include="dependencies\freetype-gl\font-manager.c" />
-    <ClCompile Include="dependencies\freetype-gl\platform.c" />
-    <ClCompile Include="dependencies\freetype-gl\texture-atlas.c" />
-    <ClCompile Include="dependencies\freetype-gl\texture-font.c" />
-    <ClCompile Include="dependencies\freetype-gl\utf8-utils.c" />
-    <ClCompile Include="dependencies\freetype-gl\vector.c" />
     <ClCompile Include="dependencies\freetype\src\autofit\autofit.c" />
     <ClCompile Include="dependencies\freetype\src\base\ftbase.c" />
     <ClCompile Include="dependencies\freetype\src\base\ftbbox.c" />
@@ -66,11 +58,13 @@
     <ClCompile Include="dependencies\freetype\src\type1\type1.c" />
     <ClCompile Include="dependencies\freetype\src\type42\type42.c" />
     <ClCompile Include="dependencies\freetype\src\winfonts\winfnt.c" />
+    <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
     <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
+    <ClCompile Include="src\renderer\renderable\FPSCounter.cpp" />
     <ClCompile Include="src\renderer\renderable\Group.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
@@ -86,22 +80,10 @@
     <ClCompile Include="src\shading\Texture.cpp" />
     <ClCompile Include="src\utils\Color.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
-    <ClCompile Include="src\utils\Timer.cpp" />
+    <ClCompile Include="src\utils\timing\Timer.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dependencies\freetype-gl\distance-field.h" />
-    <ClInclude Include="dependencies\freetype-gl\edtaa3func.h" />
-    <ClInclude Include="dependencies\freetype-gl\font-manager.h" />
-    <ClInclude Include="dependencies\freetype-gl\freetype-gl.h" />
-    <ClInclude Include="dependencies\freetype-gl\markup.h" />
-    <ClInclude Include="dependencies\freetype-gl\opengl.h" />
-    <ClInclude Include="dependencies\freetype-gl\platform.h" />
-    <ClInclude Include="dependencies\freetype-gl\texture-atlas.h" />
-    <ClInclude Include="dependencies\freetype-gl\texture-font.h" />
-    <ClInclude Include="dependencies\freetype-gl\utf8-utils.h" />
-    <ClInclude Include="dependencies\freetype-gl\vec234.h" />
-    <ClInclude Include="dependencies\freetype-gl\vector.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftconfig.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftheader.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftmodule.h" />
@@ -109,10 +91,12 @@
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftstdlib.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h" />
     <ClInclude Include="dependencies\freetype\include\ft2build.h" />
+    <ClInclude Include="src\Fonts\Font.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="src\renderer\layers\Layer.h" />
     <ClInclude Include="src\renderer\layers\SceneLayer.h" />
+    <ClInclude Include="src\renderer\renderable\FPSCounter.h" />
     <ClInclude Include="src\renderer\renderable\Group.h" />
     <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
@@ -124,15 +108,20 @@
     <ClInclude Include="src\renderer\buffer\VertexBuffer.h" />
     <ClInclude Include="src\renderer\buffer\VertexBufferLayout.h" />
     <ClInclude Include="src\resources\FileReader.h" />
+    <ClInclude Include="src\resources\fonts\Font.h" />
     <ClInclude Include="src\resources\ImageLoader.h" />
     <ClInclude Include="src\resources\Resources.h" />
     <ClInclude Include="src\shading\Shader.h" />
     <ClInclude Include="src\shading\Texture.h" />
     <ClInclude Include="src\utils\Color.h" />
-    <ClInclude Include="src\utils\GLErrorHandler.h" />
+    <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
+    <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
+    <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />
     <ClInclude Include="src\utils\log\Log.h" />
-    <ClInclude Include="src\utils\Timer.h" />
     <ClInclude Include="src\utils\SimpleHash.h" />
+    <ClInclude Include="src\utils\timing\ScopedTimer.h" />
+    <ClInclude Include="src\utils\timing\SimpleTimer.h" />
+    <ClInclude Include="src\utils\timing\Timer.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +182,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(SolutionDir)parallax\dependencies\freetype-gl;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -227,8 +216,9 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;WIN32;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>

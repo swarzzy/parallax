@@ -14,57 +14,73 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {
-		
-		Texture texture("crate.png");
-		
-		float ts = 0.0f;
-		bool found = false;
-		for (int i = 0; i < m_TextureSlots.size(); i++) {
-			if (m_TextureSlots[i] == m_FTAtlas->id) {
-				found = true;
-				ts = static_cast<float>(i + 1);
-				break;
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
+
+		auto characters = font->getCharacters();
+
+		float cursor = 0.0;
+
+		for (auto& character : text) {
+			Character ch = characters[character];
+			float ts = 0.0f;
+			bool found = false;
+			for (int i = 0; i < m_TextureSlots.size(); i++) {
+				if (m_TextureSlots[i] == ch.TexID) {
+					found = true;
+					ts = static_cast<float>(i + 1);
+					break;
+				}
 			}
-		}
-		if (!found) {
-			if (m_TextureSlots.size() >= 32) {
-				end();
-				flush();
-				begin();
-				m_TextureSlots.clear();
-				m_TextureSlots.resize(0);
+			if (!found) {
+				if (m_TextureSlots.size() >= 32) {
+					end();
+					flush();
+					begin();
+					m_TextureSlots.clear();
+					m_TextureSlots.resize(0);
+				}
+
+				m_TextureSlots.push_back(ch.TexID);
+				ts = static_cast<float>(m_TextureSlots.size());
 			}
 
-			m_TextureSlots.push_back(m_FTAtlas->id);
-			ts = static_cast<float>(m_TextureSlots.size());
+			float xpos = position.x + cursor + ch.Bearing.x;
+			float ypos = position.y - (ch.Size.y - ch.Bearing.y);
+
+			float w = ch.Size.x;
+			float h = ch.Size.y;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
+			m_Buffer->texCoords.x = 0.0;
+			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, 0);
+			m_Buffer->texCoords.x = 0.0;
+			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, 0);
+			m_Buffer->texCoords.x = 1.0;
+			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, 0);
+			m_Buffer->texCoords.x = 1.0;
+			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texID = ts;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_IndexCount += 6;
+			cursor += (ch.Advance >> 6);
 		}
-		//ts = 0.0f;
-		m_Buffer->vertex = hpm::vec3(0.0, 0.0, 0.0);
-		m_Buffer->texCoords.x = 0.0;
-		m_Buffer->texCoords.y = 1.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(0.0 , 200, 0);
-		m_Buffer->texCoords.x = 0.0;
-		m_Buffer->texCoords.y = 0.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(200, 200, 0);
-		m_Buffer->texCoords.x = 1.0;
-		m_Buffer->texCoords.y = 0.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_Buffer->vertex = hpm::vec3(200, 0, 0);
-		m_Buffer->texCoords.x = 1.0;
-		m_Buffer->texCoords.y = 1.0;
-		m_Buffer->texID = ts;
-		m_Buffer++;
-
-		m_IndexCount += 6;
 	}
 
 	void BatchRenderer2D::begin() {
@@ -76,11 +92,10 @@ namespace prx {
 	{
 		const hpm::vec3&	position	= renderable.getPosition();
 		const hpm::vec2&	size		= renderable.getSize();
-		const hpm::vec4&	color		= renderable.getColor();
+		unsigned int		color		= renderable.getColor();
 		const float*		UVs			= renderable.getUVs();
-		const unsigned int	texID		= renderable.getTexID();
-		
-		unsigned int c = 0;
+		unsigned int		texID		= renderable.getTexID();
+
 		float ts = 0.0f;
 		if (texID > 0) {
 			bool found = false;
@@ -103,43 +118,34 @@ namespace prx {
 				m_TextureSlots.push_back(texID);
 				ts = static_cast<float>(m_TextureSlots.size());
 			}
-		} else {
-			
-			int r = color.r * 255.0;
-			int g = color.g * 255.0;
-			int b = color.b * 255.0;
-			int a = color.a * 255.0;
-			c = a << 24 | b << 16 | g << 8 | r;
 		}
-
-
 
 		m_Buffer->vertex = m_TransformationStackBack * position;
 		m_Buffer->texCoords.x = UVs[0];
 		m_Buffer->texCoords.y = UVs[1];
 		m_Buffer->texID = ts;
-		m_Buffer->color = c;
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x, position.y + size.y, position.z);
 		m_Buffer->texCoords.x = UVs[2];
 		m_Buffer->texCoords.y = UVs[3];
 		m_Buffer->texID = ts;
-		m_Buffer->color = c;
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x + size.x, position.y + size.y, position.z);
 		m_Buffer->texCoords.x = UVs[4];
 		m_Buffer->texCoords.y = UVs[5];
 		m_Buffer->texID = ts;
-		m_Buffer->color = c;
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x + size.x, position.y, position.z);
 		m_Buffer->texCoords.x = UVs[6];
 		m_Buffer->texCoords.y = UVs[7];
 		m_Buffer->texID = ts;
-		m_Buffer->color = c;
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_IndexCount += 6;
@@ -215,11 +221,5 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
-
-		//m_FTAtlas = ftgl::texture_atlas_new(512, 512, 1);
-		m_FTFont = ftgl::texture_font_new_from_file(m_FTAtlas, 40, "arial.ttf");
-		ftgl::texture_font_get_glyph(m_FTFont,"A");
-		m_FTAtlas->data;
-		
 	}
 }

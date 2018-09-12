@@ -24,6 +24,7 @@ namespace prx {
 			: m_Width(width), m_Height(height), m_Format(format), m_Pixels(pixels) {
 		}
 		~Image() { stbi_image_free(m_Pixels); }
+
 		inline const unsigned int	getWigth()	const { return m_Width;  }
 		inline const unsigned int	getHeight() const { return m_Height; }
 		inline const GLenum			getFormat() const { return m_Format; }
