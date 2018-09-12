@@ -1,8 +1,8 @@
 
 #include "window.h"
 #include <iostream>
-#include "utils/log/Log.h"
-#include "utils/error_handling//GLErrorHandler.h"
+#include "../utils/log/Log.h"
+#include "../utils/error_handling//GLErrorHandler.h"
 
 namespace prx {
 
@@ -123,8 +123,16 @@ namespace prx {
 		return m_MouseButtonsReleased[button];
 	}
 
-	void Window::setClearColor(const hpm::vec3& color) {
-		glClearColor(color.r, color.g, color.b, 1.0);
+	void Window::setClearColor(unsigned int color) {
+		
+		auto mask = static_cast<unsigned int>(0x000000ff);
+
+		float r = (color & mask) / 255.0;
+		float g = ((color >> 8)  & mask) / 255.0;
+		float b = ((color >> 16) & mask) / 255.0;
+		float a = ((color >> 24) & mask) / 255.0;
+		
+		glClearColor(r, g, b, a);
 	}
 
 	void Window::update() {

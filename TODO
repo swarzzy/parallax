@@ -1,8 +1,5 @@
- --- Timer on c++ chrono lib;
  --- Font Atlas
  --- Window resizing
- --- Resource management system
  --- SSE in hypermath ???
  --- constants header ???
- --- setters for renderables
- --- coor utils refactoring 
+ --- vector templates

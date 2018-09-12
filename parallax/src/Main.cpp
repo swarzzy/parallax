@@ -1,5 +1,4 @@
-#include "Window.h"
-#include "utils/Color.h"
+#include "window/Window.h"
 #include "utils/log/Log.h"
 #include <iostream>
 #include "shading/Shader.h"
@@ -19,7 +18,7 @@ int main(int argc, char *argv[]) {
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
-	window.setClearColor(prx::Color::HEXtoGLVec("#000000"));
+	window.setClearColor(0xff000000);
 	prx::Resources::init();
 
 	auto shader = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_light.fs");
@@ -35,6 +34,7 @@ int main(int argc, char *argv[]) {
 	float step = 0.1;
 	int counter = 0;
 	prx::Group* group = new prx::Group(hpm::mat4::identity());
+	group->setTransformationMatrix(hpm::mat4::rotation(30, hpm::vec3(0, 0, 1)));
 	for (float x = 0; x < 800; x += 3) {// 3, 1.0
 		for (float y = 0; y < 600; y += 3) {
 			unsigned int color = 255 << 24 | colorDistrib(rand) << 16 | colorDistrib(rand) << 8 | colorDistrib(rand);
@@ -48,11 +48,21 @@ int main(int argc, char *argv[]) {
 
 	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), NotoSans, 0xff568745));
 	layer.add(group);
-	layer2.add(new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), AbrilFatface, 0xff3456ff));
+	auto text = new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), AbrilFatface, 0xff3456ff);
+	text->setText("sfasdf");
+	prx::FPSCounter counterf;
+
+	layer2.add(text);
 	auto texture = prx::Resources::loadTexture("crate.png");
-	layer2.add(new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture));
-	layer2.add(new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff));
-	
+	auto texture2 = prx::Resources::loadTexture("test.png");
+	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture);
+	layer2.add(texSprite);
+	auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
+	layer2.add(sprite);
+	sprite->setColor(0xff654743);
+	texSprite->setTexture(texture2);
+	texSprite->setPosition(hpm::vec3(400, 300, 1));
+	texSprite->setSize(hpm::vec2(100, 600));
 	prx::FPSCounter* FPS = new prx::FPSCounter();
 	layer2.add(FPS);
 

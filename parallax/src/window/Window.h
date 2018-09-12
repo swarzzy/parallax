@@ -6,7 +6,7 @@
 #include <gl\glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../../../hypermath/hypermath.h";
+#include "../../../../hypermath/hypermath.h";
 
 namespace prx {
 
@@ -63,7 +63,7 @@ namespace prx {
 		inline hpm::vec2 getCursorPos() const { return hpm::vec2(m_CursorX, m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };
 		
-		void setClearColor(const hpm::vec3& color);
+		void setClearColor(unsigned int color);
 
 	private:
 		bool init();

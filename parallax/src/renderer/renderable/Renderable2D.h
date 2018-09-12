@@ -40,12 +40,13 @@ namespace prx {
 
 			virtual void submit(Renderer2D* renderer) const;
 
-			inline void	setColor(unsigned int color) { if (m_Texture != nullptr) m_Color = color; };
+			inline void	setColor	(unsigned int color) { if (m_Texture == nullptr) m_Color = color; };
+			inline void	setPosition	(hpm::vec3 position) { m_Position = position; };
 
-			inline const hpm::vec3&					getPosition()	const { return m_Position; };
-			inline const hpm::vec2&					getSize()		const { return m_Size; };
-			inline unsigned int						getColor()		const { return m_Color; };
-			inline const float*						getUVs()		const { return m_UVs; };
+			inline const hpm::vec3&	getPosition()	const { return m_Position; };
+			inline const hpm::vec2&	getSize()		const { return m_Size; };
+			inline unsigned int		getColor()		const { return m_Color; };
+			inline const float*		getUVs()		const { return m_UVs; };
 			
 			inline const unsigned int getTexID() const { return m_Texture == nullptr ? 0 : m_Texture->getID(); }
 	private:

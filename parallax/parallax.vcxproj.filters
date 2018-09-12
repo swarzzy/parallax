@@ -33,12 +33,6 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\utils\log\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -219,14 +213,11 @@
     <ClCompile Include="src\resources\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\window\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\utils\Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\log\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -336,6 +327,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\resources\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\color\ColorFormatConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\window\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

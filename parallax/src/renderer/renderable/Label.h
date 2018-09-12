@@ -12,6 +12,11 @@ namespace prx {
 		std::shared_ptr<Font>	m_Font;
 	public:
 		Label(std::string_view text, hpm::vec3 position, std::shared_ptr<Font> font, unsigned int color);
+
+		inline void setText(std::string_view text) { m_Text = text; }
+
+		inline std::string_view getText() const { return m_Text; }
+
 		void submit(Renderer2D* renderer) const override;
 	};
 }

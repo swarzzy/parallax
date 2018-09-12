@@ -78,10 +78,9 @@
     <ClCompile Include="src\resources\Resources.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\shading\Texture.cpp" />
-    <ClCompile Include="src\utils\Color.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
     <ClCompile Include="src\utils\timing\Timer.cpp" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftconfig.h" />
@@ -113,7 +112,7 @@
     <ClInclude Include="src\resources\Resources.h" />
     <ClInclude Include="src\shading\Shader.h" />
     <ClInclude Include="src\shading\Texture.h" />
-    <ClInclude Include="src\utils\Color.h" />
+    <ClInclude Include="src\utils\color\ColorFormatConverter.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />
@@ -122,7 +121,7 @@
     <ClInclude Include="src\utils\timing\ScopedTimer.h" />
     <ClInclude Include="src\utils\timing\SimpleTimer.h" />
     <ClInclude Include="src\utils\timing\Timer.h" />
-    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hypermath\hypermath.vcxproj">
