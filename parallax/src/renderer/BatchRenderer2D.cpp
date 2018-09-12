@@ -14,6 +14,59 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, hpm::vec4 color) {
+		
+		Texture texture("crate.png");
+		
+		float ts = 0.0f;
+		bool found = false;
+		for (int i = 0; i < m_TextureSlots.size(); i++) {
+			if (m_TextureSlots[i] == m_FTAtlas->id) {
+				found = true;
+				ts = static_cast<float>(i + 1);
+				break;
+			}
+		}
+		if (!found) {
+			if (m_TextureSlots.size() >= 32) {
+				end();
+				flush();
+				begin();
+				m_TextureSlots.clear();
+				m_TextureSlots.resize(0);
+			}
+
+			m_TextureSlots.push_back(m_FTAtlas->id);
+			ts = static_cast<float>(m_TextureSlots.size());
+		}
+		//ts = 0.0f;
+		m_Buffer->vertex = hpm::vec3(0.0, 0.0, 0.0);
+		m_Buffer->texCoords.x = 0.0;
+		m_Buffer->texCoords.y = 1.0;
+		m_Buffer->texID = ts;
+		m_Buffer++;
+
+		m_Buffer->vertex = hpm::vec3(0.0 , 200, 0);
+		m_Buffer->texCoords.x = 0.0;
+		m_Buffer->texCoords.y = 0.0;
+		m_Buffer->texID = ts;
+		m_Buffer++;
+
+		m_Buffer->vertex = hpm::vec3(200, 200, 0);
+		m_Buffer->texCoords.x = 1.0;
+		m_Buffer->texCoords.y = 0.0;
+		m_Buffer->texID = ts;
+		m_Buffer++;
+
+		m_Buffer->vertex = hpm::vec3(200, 0, 0);
+		m_Buffer->texCoords.x = 1.0;
+		m_Buffer->texCoords.y = 1.0;
+		m_Buffer->texID = ts;
+		m_Buffer++;
+
+		m_IndexCount += 6;
+	}
+
 	void BatchRenderer2D::begin() {
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
 		GLCall(m_Buffer = static_cast<VertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
@@ -46,7 +99,6 @@ namespace prx {
 					m_TextureSlots.clear();
 					m_TextureSlots.resize(0);
 				}
-				// mb clear vector
 				
 				m_TextureSlots.push_back(texID);
 				ts = static_cast<float>(m_TextureSlots.size());
@@ -163,5 +215,11 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
+
+		//m_FTAtlas = ftgl::texture_atlas_new(512, 512, 1);
+		m_FTFont = ftgl::texture_font_new_from_file(m_FTAtlas, 40, "arial.ttf");
+		ftgl::texture_font_get_glyph(m_FTFont,"A");
+		m_FTAtlas->data;
+		
 	}
 }

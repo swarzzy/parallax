@@ -3,65 +3,28 @@
 #include "utils/log/Log.h"
 #include <iostream>
 #include "shading/Shader.h"
-#include <vector>
-#include <string>
-#include "resources/Resources.h"
-#include "renderer/SimpleRenderer2D.h"
-#include "renderer/BatchRenderer2D.h"
 #include "renderer/renderable/Sprite.h"
 #include <random>
 #include "utils/Timer.h"
 #include "renderer/layers/SceneLayer.h"
-#include "renderer/renderable/Group.h"
-#include "shading/Texture.h"
 #include <filesystem>
-#include <algorithm>
 #include "../../../hypermath/hypermath.h";
-#include <ft2build.h>
-#include "freetype-gl.h"
+#include "renderer/BatchRenderer2D.h"
 
-#define PARALLAX_MAIN 1
-std::vector<std::string> getTexPaths(std::string_view path) {
-	std::vector<std::string> vec;
-	for (auto& p : std::filesystem::directory_iterator(path)) {
-		std::string name = p.path().string();
-		int pos = name.find_last_of('\\');
-		name.erase(0, pos);
-		std::string result = "res\\textures";
-		result += name;
-		vec.push_back(result);
-	}
-	return vec;
-}
-#if PARALLAX_MAIN
 
 int main(int argc, char *argv[]) {
-	texture_atlas_new(12, 23,3);
+
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
-	window.setClearColor(prx::Color::HEXtoGLVec("#000000"));
+	window.setClearColor(prx::Color::HEXtoGLVec("#ffffff"));
 
 	auto shader = new prx::Shader("res/shaders/simple.vs", "res/shaders/simple.fs");
 
 	prx::SceneLayer layer(shader);
-
 	prx::BatchRenderer2D renderer;
 
-	prx::Sprite sprite(hpm::vec3(0.5, 0.6, 1.0), hpm::vec2(200), hpm::vec4(1.0));
-
-	/*std::string dir = argv[0];
-	int p = dir.find_last_of('\\');
-	dir.erase(p, dir.size());
-	dir += "\\res\\textures";
-
-	auto paths = getTexPaths(dir);
-	for (auto elem : paths)
-		std::cout << elem << std::endl;*/
-
 	std::knuth_b rand;
-	std::uniform_real_distribution<double> distribX(0.0, 700.0);
-	std::uniform_real_distribution<double> distribY(0.0, 500.0);
 	std::uniform_real_distribution<double> colorDistrib(0.0, 1.0);
 
 	hpm::vec4 color;
@@ -78,9 +41,7 @@ int main(int argc, char *argv[]) {
 
 	std::cout << counter << std::endl;
 
-	//prx::Timer timer;
 	while (!window.isClosed()) {
-		//timer.reset();
 		window.clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 
 		hpm::vec2 cursorPos = window.getCursorPos();
@@ -88,18 +49,14 @@ int main(int argc, char *argv[]) {
 		
 		shader->bind();
 		shader->setUniform("u_lightPos", cursorPos);
-
-		layer.draw();
-		//renderer.begin();
-		//renderer.submit(sprite);
-		//renderer.end();
-		//renderer.flush();
+		renderer.begin();
+		renderer.drawString("sd", hpm::vec3(0.0), hpm::vec4(0.0));
+		renderer.end();
+		renderer.flush();
+		//layer.draw();
 
 		window.update();
-		//std::cout << timer.elapsed() << std::endl;
-		
 	}
 	delete shader;
 	return 0;
 }
-#endif
