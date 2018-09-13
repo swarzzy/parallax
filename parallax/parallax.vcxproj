@@ -58,6 +58,39 @@
     <ClCompile Include="dependencies\freetype\src\type1\type1.c" />
     <ClCompile Include="dependencies\freetype\src\type42\type42.c" />
     <ClCompile Include="dependencies\freetype\src\winfonts\winfnt.c" />
+    <ClCompile Include="dependencies\gorilla-audio\common\gc_common.c" />
+    <ClCompile Include="dependencies\gorilla-audio\common\gc_thread.c" />
+    <ClCompile Include="dependencies\gorilla-audio\devices\ga_openal.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libogg\src\bitwise.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libogg\src\framing.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\analysis.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\barkmel.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\bitrate.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\block.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\codebook.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\envelope.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\floor0.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\floor1.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\info.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lpc.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lsp.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\mapping0.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\mdct.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\psy.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\psytune.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\registry.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\res0.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\sharedbook.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\smallft.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\synthesis.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\tone.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\vorbisenc.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\vorbisfile.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\window.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ga.c" />
+    <ClCompile Include="dependencies\gorilla-audio\gau.c" />
+    <ClCompile Include="dependencies\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
@@ -90,6 +123,64 @@
     <ClInclude Include="dependencies\freetype\include\freetype\config\ftstdlib.h" />
     <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h" />
     <ClInclude Include="dependencies\freetype\include\ft2build.h" />
+    <ClInclude Include="dependencies\gorilla-audio\common\gc_common.h" />
+    <ClInclude Include="dependencies\gorilla-audio\common\gc_thread.h" />
+    <ClInclude Include="dependencies\gorilla-audio\common\gc_types.h" />
+    <ClInclude Include="dependencies\gorilla-audio\devices\ga_openal.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\config_types.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\ogg.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\os_types.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\codec.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\vorbisenc.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\vorbisfile.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\backends.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\bitrate.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\coupled\res_books_stereo.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\floor\floor_books.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\uncoupled\res_books_uncoupled.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\codebook.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\codec_internal.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\envelope.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\highlevel.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup_data.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lpc.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lsp.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\masking.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\mdct.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\misc.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\floor_all.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_11.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_16.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_44.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_8.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_16.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_44.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_44u.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_8.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_11.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_16.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_22.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_32.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_44.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_44u.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_8.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_X.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\os.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\psy.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\registry.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\scales.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\smallft.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\window.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\al.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\alc.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\efx-creative.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\EFX-Util.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\efx.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\xram.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ga.h" />
+    <ClInclude Include="dependencies\gorilla-audio\gau.h" />
+    <ClInclude Include="dependencies\gorilla-audio\ga_internal.h" />
     <ClInclude Include="src\Fonts\Font.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
@@ -181,13 +272,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\freetype-gl;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
     <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>
