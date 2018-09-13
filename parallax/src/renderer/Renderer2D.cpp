@@ -19,7 +19,6 @@ namespace prx {
 			m_TransformationStackBack = m_TransformationStack.back();
 		}
 		else
-			Log::message("Trying to pop matrix from empty transformation stack.", LOG_WARNING);
-		// TODO: Better log
+			Log::message("RENDERER2D: Trying to pop matrix from empty transformation stack.", LOG_WARNING);
 	}
 }

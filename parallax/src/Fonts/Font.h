@@ -13,7 +13,7 @@ namespace prx {
 		hpm::vec2	 Size;
 		hpm::vec2	 Bearing;
 		long		 Advance;
-		// TODO: solve problem with piecewise construction in map
+
 		Character(unsigned int tid, hpm::vec2 size, hpm::vec2 bearing, long advance)
 			: TexID(tid), Size(size), Bearing(bearing), Advance(advance) {};
 		Character() {};
