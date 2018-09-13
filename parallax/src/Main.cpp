@@ -13,8 +13,11 @@
 #include <thread>
 #include "renderer/renderable/FPSCounter.h"
 
-int main(int argc, char *argv[]) {
+#define PARALLAX_GRAPHICS_TEST
 
+#ifdef PARALLAX_GRAPHICS_TEST
+int main(int argc, char *argv[]) {
+	
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
 	std::cout << argv[0] << std::endl;
@@ -23,7 +26,6 @@ int main(int argc, char *argv[]) {
 
 	auto shader = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_light.fs");
 	auto shaderNoLight = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_nolight.fs");
-
 	prx::SceneLayer layer(shader);
 	prx::SceneLayer layer2(shaderNoLight);
 
@@ -53,8 +55,8 @@ int main(int argc, char *argv[]) {
 	prx::FPSCounter counterf;
 
 	layer2.add(text);
-	auto texture = prx::Resources::loadTexture("crate.png");
-	auto texture2 = prx::Resources::loadTexture("test.png");
+	auto texture = prx::Resources::loadTexture("res/textures/crate.png");
+	auto texture2 = prx::Resources::loadTexture("res/textures/test.png");
 	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture);
 	layer2.add(texSprite);
 	auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
@@ -90,3 +92,57 @@ int main(int argc, char *argv[]) {
 	}
 	return 0;
 }
+#endif
+
+#ifdef PARALLAX_SOUND_TEST
+#include "../dependencies/gorilla-audio/ga.h"
+#include "../dependencies/gorilla-audio/gau.h"
+#include <stdio.h>
+
+static void setFlagAndDestroyOnFinish(ga_Handle* in_handle, void* in_context)
+{
+	gc_int32* flag = (gc_int32*)(in_context);
+	*flag = 1;
+	ga_handle_destroy(in_handle);
+}
+
+int main() {
+	gau_Manager* mgr;
+	ga_Mixer* mixer;
+	ga_Sound* sound;
+	ga_Handle* handle;
+	gau_SampleSourceLoop* loopSrc = 0;
+	gau_SampleSourceLoop** pLoopSrc = &loopSrc;
+	gc_int32 loop = 0;
+	gc_int32 quit = 0;
+
+	/* Initialize library + manager */
+	gc_initialize(0);
+	mgr = gau_manager_create();
+	mixer = gau_manager_mixer(mgr);
+
+	/* Create and play shared sound */
+	if (!loop)
+		pLoopSrc = 0;
+	sound = gau_load_sound_file("res/audio/test.ogg", "ogg");
+	handle = gau_create_handle_sound(mixer, sound, &setFlagAndDestroyOnFinish, &quit, pLoopSrc);
+	ga_handle_play(handle);
+
+	/* Bounded mix/queue/dispatch loop */
+	while (!quit)
+	{
+		gau_manager_update(mgr);
+		printf("%d / %d\n", ga_handle_tell(handle, GA_TELL_PARAM_CURRENT), ga_handle_tell(handle, GA_TELL_PARAM_TOTAL));
+		gc_thread_sleep(1);
+	}
+
+	/* Clean up sound */
+	ga_sound_release(sound);
+
+	/* Clean up library + manager */
+	gau_manager_destroy(mgr);
+	gc_shutdown();
+
+	return 0;
+}
+#endif

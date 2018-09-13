@@ -11,7 +11,6 @@
  ********************************************************************
 
   function: LPC low level routines
-  last mod: $Id: lpc.h,v 1.8 2008-02-02 15:53:53 richardash1981 Exp $
 
  ********************************************************************/
 
@@ -24,6 +23,6 @@
 extern float vorbis_lpc_from_data(float *data,float *lpc,int n,int m);
 
 extern void vorbis_lpc_predict(float *coeff,float *prime,int m,
-			       float *data,long n);
+                               float *data,long n);
 
 #endif

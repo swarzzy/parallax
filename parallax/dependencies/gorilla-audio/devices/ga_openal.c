@@ -44,7 +44,7 @@ ga_DeviceImpl_OpenAl* gaX_device_open_openAl(gc_int32 in_numBuffers,
   memcpy(&ret->format, in_format, sizeof(ga_Format));
   ret->nextBuffer = 0;
   ret->emptyBuffers = ret->numBuffers;
-#ifdef _WIN32
+#if 0 //_WIN32
   ret->dev = alcOpenDevice("DirectSound");
 #else
   ret->dev = alcOpenDevice(0);

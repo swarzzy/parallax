@@ -249,16 +249,10 @@
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\analysis.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\barkmel.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\bitrate.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libogg\src\bitwise.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\block.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\codebook.c">
@@ -297,9 +291,6 @@
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\psy.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\psytune.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\registry.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
@@ -315,9 +306,6 @@
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\synthesis.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\tone.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\vorbisenc.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
     </ClCompile>
@@ -326,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\window.c">
       <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\block.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
