@@ -12,8 +12,10 @@
 #include "resources/Resources.h"
 #include <thread>
 #include "renderer/renderable/FPSCounter.h"
+#include "audio/Sound.h"
 
 #define PARALLAX_GRAPHICS_TEST
+//#define PARALLAX_SOUND_TEST
 
 #ifdef PARALLAX_GRAPHICS_TEST
 int main(int argc, char *argv[]) {
@@ -67,7 +69,9 @@ int main(int argc, char *argv[]) {
 	texSprite->setSize(hpm::vec2(100, 600));
 	prx::FPSCounter* FPS = new prx::FPSCounter();
 	layer2.add(FPS);
-
+	auto sound = prx::Resources::loadSound("res/audio/test.ogg");
+	
+	
 	while (!window.isClosed()) {
 		window.clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 		FPS->update();
@@ -80,16 +84,18 @@ int main(int argc, char *argv[]) {
 		
 		layer.draw();
 		layer2.draw();
+		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {;
+		sound->stop();
+		}
 		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
-			std::cout << "hello" << std::endl;
-		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
-			std::cout << "hello1" << std::endl;
+			sound->loop();
 		if (window.isMouseButtonReleased(GLFW_MOUSE_BUTTON_1))
-			std::cout << "bye" << std::endl;
+			sound->pause();
 		if (window.isMouseButtonHeld(GLFW_MOUSE_BUTTON_1))
 			std::cout << "holded" << std::endl;
-		window.update();
+			window.update();
 	}
+	prx::Resources::terminate();
 	return 0;
 }
 #endif
@@ -113,7 +119,7 @@ int main() {
 	ga_Handle* handle;
 	gau_SampleSourceLoop* loopSrc = 0;
 	gau_SampleSourceLoop** pLoopSrc = &loopSrc;
-	gc_int32 loop = 0;
+	gc_int32 loop = 1;
 	gc_int32 quit = 0;
 
 	/* Initialize library + manager */
@@ -124,13 +130,17 @@ int main() {
 	/* Create and play shared sound */
 	if (!loop)
 		pLoopSrc = 0;
-	sound = gau_load_sound_file("res/audio/test.ogg", "ogg");
+	sound = gau_load_sound_file("res/audio/shotgun.wav", "wav");
 	handle = gau_create_handle_sound(mixer, sound, &setFlagAndDestroyOnFinish, &quit, pLoopSrc);
-	ga_handle_play(handle);
 
 	/* Bounded mix/queue/dispatch loop */
+	bool flag = true;
 	while (!quit)
 	{
+		if (flag) {
+			ga_handle_play(handle);
+			flag = false;
+		}
 		gau_manager_update(mgr);
 		printf("%d / %d\n", ga_handle_tell(handle, GA_TELL_PARAM_CURRENT), ga_handle_tell(handle, GA_TELL_PARAM_TOTAL));
 		gc_thread_sleep(1);

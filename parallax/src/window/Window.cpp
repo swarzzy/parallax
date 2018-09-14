@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../utils/log/Log.h"
 #include "../utils/error_handling//GLErrorHandler.h"
+#include "../resources/Resources.h"
 
 namespace prx {
 
@@ -20,6 +21,7 @@ namespace prx {
 
 
 	bool Window::init() {
+	
 		if (!glfwInit()) {
 			prx::Log::message("Failed to init GLFW", prx::LOG_ERROR);
 			return false;
@@ -136,7 +138,7 @@ namespace prx {
 	}
 
 	void Window::update() {
-		
+		// Key states update
 		for (int i = 0; i < PARALLAX_INPUT_MAX_KEYS; i++) {
 			m_KeysPressed[i]	= m_KeysCurrentState[i]	 && !m_KeysPrevState[i];
 			m_KeysReleased[i]	= !m_KeysCurrentState[i] && m_KeysPrevState[i];
@@ -149,7 +151,11 @@ namespace prx {
 
 		memcpy(m_KeysPrevState, m_KeysCurrentState, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
 		memcpy(m_MouseButtonsPrevState, m_MouseButtonsCurrentState, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
-		
+
+		// Gorilla-audio update
+		gau_manager_update(Resources::m_gaManager);
+
+		// OpenGl update
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}

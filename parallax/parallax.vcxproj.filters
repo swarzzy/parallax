@@ -318,6 +318,9 @@
     <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\block.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\audio\Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\log\Log.h">
@@ -610,6 +613,9 @@
     </ClInclude>
     <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\xram.h">
       <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audio\Sound.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

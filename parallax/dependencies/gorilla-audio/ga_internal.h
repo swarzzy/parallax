@@ -13,6 +13,7 @@
 #define _GORILLA_GA_INTERNAL_H
 
 #include "common/gc_common.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -197,6 +198,7 @@ struct ga_Handle {
   gc_Mutex* handleMutex;
   ga_SampleSource* sampleSrc;
   volatile gc_int32 finished;
+  uintptr_t sound;
 };
 
 /************/

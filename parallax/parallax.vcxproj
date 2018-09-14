@@ -88,6 +88,7 @@
     <ClCompile Include="dependencies\gorilla-audio\ga.c" />
     <ClCompile Include="dependencies\gorilla-audio\gau.c" />
     <ClCompile Include="dependencies\gorilla-audio\ga_stream.c" />
+    <ClCompile Include="src\audio\Sound.cpp" />
     <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="dependencies\gorilla-audio\ga.h" />
     <ClInclude Include="dependencies\gorilla-audio\gau.h" />
     <ClInclude Include="dependencies\gorilla-audio\ga_internal.h" />
+    <ClInclude Include="src\audio\Sound.h" />
     <ClInclude Include="src\Fonts\Font.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
@@ -269,13 +271,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib;$(SolutionDir)parallax\res\lib\EFX-Util_MT;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\dependencies;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\res\include;$(SolutionDir)parallax\dependencies\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\dependencies\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\res\lib\EFX-Util_MT;$(SolutionDir)parallax\res\lib;$(LibraryPath)</LibraryPath>
     <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
     <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>
@@ -303,7 +305,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;ENABLE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;ENABLE_OPENAL;PARALLAX_ENABLE_AUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
@@ -339,7 +341,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;ENABLE_OPENAL;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;ENABLE_OPENAL;_LIB;PARALLAX_ENABLE_AUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>

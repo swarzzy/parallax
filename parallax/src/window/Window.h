@@ -10,8 +10,8 @@
 
 namespace prx {
 
-	constexpr unsigned int PARALLAX_INPUT_MAX_KEYS = 1024;
-	constexpr unsigned int PARALLAX_INPUT_MAX_MOUSE_BUTTONS = 32;
+	const unsigned int PARALLAX_INPUT_MAX_KEYS = 1024;
+	const unsigned int PARALLAX_INPUT_MAX_MOUSE_BUTTONS = 32;
 
 	enum ClearFlags {
 		COLOR_BUFFER = 1,		//0000
@@ -20,24 +20,27 @@ namespace prx {
 
 	class Window {
 	private:
-		std::string m_Title;
+		std::string	 m_Title;
 		unsigned int m_Width, m_Height;
-		GLFWwindow* m_Window;
-		hpm::vec3 m_ClearColor;
+		GLFWwindow*	 m_Window;
+		hpm::vec3	 m_ClearColor;
 
-		bool m_KeysCurrentState[PARALLAX_INPUT_MAX_KEYS];
-		bool m_KeysPrevState[PARALLAX_INPUT_MAX_KEYS];
-		bool m_KeysPressed[PARALLAX_INPUT_MAX_KEYS];
-		bool m_KeysReleased[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysCurrentState	[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysPrevState	[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysPressed		[PARALLAX_INPUT_MAX_KEYS];
+		bool m_KeysReleased		[PARALLAX_INPUT_MAX_KEYS];
 
 		bool m_MouseButtonsCurrentState	[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 		bool m_MouseButtonsPrevState	[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 		bool m_MouseButtonsPressed		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 		bool m_MouseButtonsReleased		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 
-		double m_CursorX, m_CursorY;
-		double m_ScrollOffsetX, m_ScrollOffsetY;
-
+		double	m_CursorX, 
+				m_CursorY;
+		
+		double	m_ScrollOffsetX, 
+				m_ScrollOffsetY;
+		
 	public:
 		Window(std::string_view title, int width, int height);
 		~Window();
