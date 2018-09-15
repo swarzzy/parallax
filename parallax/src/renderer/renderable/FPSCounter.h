@@ -12,7 +12,7 @@ namespace prx {
 		unsigned int				 m_FrameRate;
 		unsigned int				 m_FrameCounter;
 	public:
-		FPSCounter(hpm::vec3 position, unsigned int color, std::shared_ptr<Font> font);
+		FPSCounter(hpm::vec3 position, unsigned int color, Font* font);
 		FPSCounter();
 		void update();
 	};

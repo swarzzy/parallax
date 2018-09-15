@@ -13,11 +13,17 @@ namespace prx {
 	class Sound {
 	private:
 		std::string			m_FilePath;
-		mutable bool		m_Playing;
+		
 		ga_Mixer*			m_gaMixer;
-
+		
 		ga_Sound*			m_Sound;
 		mutable ga_Handle*	m_Handle;
+
+		float				m_Gain;
+		float				m_Pan;
+		float				m_Pitch;
+
+		mutable bool		m_Playing;
 
 
 	public:
@@ -28,6 +34,30 @@ namespace prx {
 		void loop() const;
 		void pause() const;
 		void stop() const;
+
+		inline void setGain	(float gain) {
+			if (gain > 1.0) {
+				m_Gain = 1.0;
+				return;
+			}
+			if (gain < 0.0) {
+				m_Gain = 0.0;
+				return;
+			}
+			m_Gain = gain;
+		}
+		inline void setPan	(float pan)	{
+			if (pan > 1.0) {
+				m_Pan = 1.0;
+				return;
+			}
+			if (pan < -1.0) {
+				m_Pan = 0.0;
+				return;
+			}
+			m_Pan = pan;
+		}
+		inline void setPitch(float pitch) { m_Pitch = pitch; }
 
 		inline std::string_view getFilePath() const { return m_FilePath; }
 

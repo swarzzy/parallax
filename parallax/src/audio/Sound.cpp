@@ -7,7 +7,7 @@ namespace prx {
 	void set_flag_and_destroy_on_finish(ga_Handle* in_handle, void* in_context);
 
 	Sound::Sound(std::string_view filepath, ga_Mixer* gaMixer)
-		:m_FilePath(filepath), m_Playing(false), m_gaMixer(gaMixer) {
+		:m_FilePath(filepath), m_gaMixer(gaMixer), m_Gain(1.0f), m_Pan(0.0), m_Pitch(1.0), m_Playing(false) {
 		int dotPos = filepath.find_last_of('.');
 		std::string path(filepath);
 		
@@ -22,6 +22,8 @@ namespace prx {
 	}
 
 	Sound::~Sound() {
+		if (m_Playing)
+			stop();
 		ga_sound_release(m_Sound);
 	}
 
@@ -29,10 +31,15 @@ namespace prx {
 		if (!m_Playing) {
 			gc_int32 quit = 0;
 			m_Handle = gau_create_handle_sound(m_gaMixer, m_Sound, &set_flag_and_destroy_on_finish, &quit, nullptr);
-			m_Handle->sound = reinterpret_cast<uintptr_t>(this);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_GAIN, m_Gain);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_PAN, m_Pan);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_PITCH, m_Pitch);
+			// It might be extremely dangerous but who knows 
+			m_Handle->soundClassInstanceAddress = reinterpret_cast<uintptr_t>(this);
 			m_Playing = true;
 		}
-		ga_handle_play(m_Handle);
+			ga_handle_play(m_Handle);
+			
 	}
 
 	void Sound::loop() const {
@@ -40,15 +47,19 @@ namespace prx {
 			gau_SampleSourceLoop* loopSrc;
 			gc_int32 quit = 0;
 			m_Handle = gau_create_handle_sound(m_gaMixer, m_Sound, &set_flag_and_destroy_on_finish, &quit, &loopSrc);
-			m_Handle->sound = reinterpret_cast<uintptr_t>(this);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_GAIN,	m_Gain);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_PAN, m_Pan);
+			ga_handle_setParamf(m_Handle, GA_HANDLE_PARAM_PITCH, m_Pitch);
+			m_Handle->soundClassInstanceAddress = reinterpret_cast<uintptr_t>(this);
 			m_Playing = true;
 		}
 		ga_handle_play(m_Handle);
 	}
 
 	void Sound::pause() const {
-		if (m_Playing == true)
+		if (m_Playing == true) {
 			ga_handle_stop(m_Handle);
+		}
 	}
 
 	void Sound::stop() const {
@@ -60,7 +71,7 @@ namespace prx {
 	}
 
 	void set_flag_and_destroy_on_finish(ga_Handle* in_handle, void* in_context) {
-		Sound* ptr = reinterpret_cast<Sound*>(in_handle->sound);
+		Sound* ptr = reinterpret_cast<Sound*>(in_handle->soundClassInstanceAddress);
 		ptr->stop();
 	}
 }

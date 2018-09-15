@@ -19,15 +19,17 @@
 
 #ifdef PARALLAX_GRAPHICS_TEST
 int main(int argc, char *argv[]) {
-	
+	prx::Resources::initAudioSystem();
 	prx::Log::setLevel(prx::LOG_DEFAULT);
 	prx::Window window("window", 800, 600);
+	prx::Resources::init();
 	std::cout << argv[0] << std::endl;
 	window.setClearColor(0xff000000);
-	prx::Resources::init();
 
-	auto shader = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_light.fs");
-	auto shaderNoLight = prx::Resources::loadShader("res/shaders/default.vs", "res/shaders/default_nolight.fs");
+	unsigned int shaderID = prx::Resources::loadShader("base_shader", "res/shaders/default.vs", "res/shaders/default_light.fs");
+	unsigned int shaderNoLightID = prx::Resources::loadShader("UI_shader", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
+	prx::Shader* shader = prx::Resources::getShader(shaderID);
+	prx::Shader* shaderNoLight = prx::Resources::getShader(shaderNoLightID);
 	prx::SceneLayer layer(shader);
 	prx::SceneLayer layer2(shaderNoLight);
 
@@ -47,8 +49,11 @@ int main(int argc, char *argv[]) {
 			counter++;
 		}
 	}
-	auto NotoSans = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80);
-	auto AbrilFatface = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50);
+	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80);
+	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50);
+
+	prx::Font* NotoSans = prx::Resources::getFont(NotoSansID);
+	prx::Font* AbrilFatface = prx::Resources::getFont(AbrilFatfaceID);
 
 	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), NotoSans, 0xff568745));
 	layer.add(group);
@@ -57,44 +62,57 @@ int main(int argc, char *argv[]) {
 	prx::FPSCounter counterf;
 
 	layer2.add(text);
-	auto texture = prx::Resources::loadTexture("res/textures/crate.png");
-	auto texture2 = prx::Resources::loadTexture("res/textures/test.png");
+	unsigned int textureID = prx::Resources::loadTexture("res/textures/crate.png");
+	prx::Texture* texture = prx::Resources::getTexture(textureID);
+	//auto texture2 = prx::Resources::loadTexture("res/textures/test.png");
 	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture);
 	layer2.add(texSprite);
 	auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
 	layer2.add(sprite);
 	sprite->setColor(0xff654743);
-	texSprite->setTexture(texture2);
-	texSprite->setPosition(hpm::vec3(400, 300, 1));
-	texSprite->setSize(hpm::vec2(100, 600));
+	//texSprite->setTexture(texture2);
+	//texSprite->setPosition(hpm::vec3(400, 300, 1));
+	//texSprite->setSize(hpm::vec2(100, 600));
 	prx::FPSCounter* FPS = new prx::FPSCounter();
 	layer2.add(FPS);
-	auto sound = prx::Resources::loadSound("res/audio/test.ogg");
+	unsigned int sound2ID = prx::Resources::loadSound("test", "res/audio/test.ogg");
+	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/shotgun.wav");
+	prx::Sound* sound2 = prx::Resources::getSound(sound2ID);
+	prx::Sound* sound = prx::Resources::getSound(soundID);
 	
-	
+	float gain = 1.0;
+		sound->play();
 	while (!window.isClosed()) {
 		window.clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 		FPS->update();
-
 		hpm::vec2 cursorPos = window.getCursorPos();
 		cursorPos.y = 600 - cursorPos.y;
-		
+		if (window.isKeyPressed(GLFW_KEY_P))
+			sound->pause();
+		if (window.isKeyPressed(GLFW_KEY_S))
+			sound->play();
+		if (window.isKeyPressed(GLFW_KEY_R))
+			sound->stop();
+		if (window.isKeyPressed(GLFW_KEY_L))
+			sound->loop();
+		if (window.isKeyPressed(GLFW_KEY_UP)) {
+			gain += 0.1;
+			sound->setGain(gain);
+		}
+		if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+			gain -= 0.1;
+			sound->setGain(gain);
+		}
 		shader->bind();
 		shader->setUniform("u_lightPos", cursorPos);
-		
+		//if (window.isKeyPressed(GLFW_KEY_P))
+			//sound2->loop();
 		layer.draw();
 		layer2.draw();
-		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {;
-		sound->stop();
-		}
-		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
-			sound->loop();
-		if (window.isMouseButtonReleased(GLFW_MOUSE_BUTTON_1))
-			sound->pause();
-		if (window.isMouseButtonHeld(GLFW_MOUSE_BUTTON_1))
-			std::cout << "holded" << std::endl;
-			window.update();
+		
+		window.update();
 	}
+	
 	prx::Resources::terminate();
 	return 0;
 }

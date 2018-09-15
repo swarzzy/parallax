@@ -4,7 +4,7 @@
 
 namespace prx {
 
-	Layer::Layer(Renderer2D* renderer, std::shared_ptr<Shader> shader, hpm::mat4 projectionMatrix)
+	Layer::Layer(Renderer2D* renderer, Shader* shader, hpm::mat4 projectionMatrix)
 		: m_Renderer(renderer), m_Shader(shader), m_ProjectionMatrix(projectionMatrix) {
 		
 		int samplerIndices[32];

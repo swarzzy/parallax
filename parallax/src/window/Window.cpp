@@ -70,7 +70,7 @@ namespace prx {
 		return true;
 	}
 	Window::~Window() {
-		glfwTerminate();
+		//glfwTerminate();
 	}
 
 	bool Window::isClosed() const {

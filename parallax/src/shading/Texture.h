@@ -13,6 +13,7 @@ namespace prx {
 		unsigned int m_TexID;
 		unsigned int m_Width, m_Height;
 	public:
+		Texture() {};
 		Texture(std::string_view path);
 		~Texture();
 

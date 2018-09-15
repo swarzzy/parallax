@@ -26,6 +26,7 @@ namespace prx {
 		std::map<char, Character> m_Characters;
 	
 	public:
+		Font() {};
 		Font(std::string_view filepath, int size);
 		~Font();
 

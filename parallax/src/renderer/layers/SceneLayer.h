@@ -7,7 +7,7 @@
 namespace prx {
 	class SceneLayer : public Layer{
 	public:
-		SceneLayer(std::shared_ptr<Shader> shader);
+		SceneLayer(Shader* shader);
 		~SceneLayer();
 	};
 }

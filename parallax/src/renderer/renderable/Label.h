@@ -8,10 +8,10 @@
 namespace prx {
 	class Label : public Renderable2D {
 	protected:
-		std::string				m_Text;
-		std::shared_ptr<Font>	m_Font;
+		std::string	m_Text;
+		Font*		m_Font;
 	public:
-		Label(std::string_view text, hpm::vec3 position, std::shared_ptr<Font> font, unsigned int color);
+		Label(std::string_view text, hpm::vec3 position, Font* font, unsigned int color);
 
 		inline void setText(std::string_view text) { m_Text = text; }
 

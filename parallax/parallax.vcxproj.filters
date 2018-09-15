@@ -222,9 +222,6 @@
     <ClCompile Include="src\renderer\renderable\StaticSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\Resources.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\window\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -319,6 +316,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\audio\Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -429,9 +429,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer\renderable\StaticSprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resources\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\color\ColorFormatConverter.h">
@@ -615,6 +612,9 @@
       <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
     </ClInclude>
     <ClInclude Include="src\audio\Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

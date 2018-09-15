@@ -4,12 +4,12 @@
 
 namespace prx {
 
-	FPSCounter::FPSCounter(hpm::vec3 position, unsigned int color, std::shared_ptr<Font> font)
+	FPSCounter::FPSCounter(hpm::vec3 position, unsigned int color, Font* font)
 		: Label("0", position, font, color),
 		m_Timer(std::make_unique<SimpleTimer>()), m_FrameRate(0), m_FrameCounter(0) {}
 
 	FPSCounter::FPSCounter() 
-		: Label("0", hpm::vec3(10.0, 570.0, 0.0), Resources::loadFont(), 0xffffffff),
+		: Label("0", hpm::vec3(10.0, 570.0, 0.0), Resources::getFont(RESOURCES_DEFAULT_FONT_ID), 0xffffffff),
 			m_Timer(std::make_unique<SimpleTimer>()), m_FrameRate(0), m_FrameCounter(0) {}
 
 	void FPSCounter::update() {
