@@ -87,123 +87,6 @@
     <ClCompile Include="src\shading\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\autofit\autofit.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\bdf\bdf.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\cff\cff.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftbase.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftbitmap.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\cache\ftcache.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftdebug.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftfstype.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftgasp.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftglyph.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\gzip\ftgzip.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftinit.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\lzw\ftlzw.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftstroke.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftsystem.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\smooth\smooth.c">
-      <Filter>Source Files\dependencies\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftbbox.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftgxval.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftlcdfil.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftmm.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftotval.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftpatent.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftpfr.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftsynth.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\fttype1.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftwinfnt.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\pcf\pcf.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\pfr\pfr.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\psaux\psaux.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\pshinter\pshinter.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\psnames\psmodule.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\raster\raster.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\sfnt\sfnt.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\truetype\truetype.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\type1\type1.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\cid\type1cid.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\type42\type42.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\winfonts\winfnt.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\freetype\src\base\ftfntfmt.c">
-      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer\renderable\Label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,113 +105,221 @@
     <ClCompile Include="src\window\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ga.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\devices\ga_openal.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ga_stream.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\gau.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\common\gc_common.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\common\gc_thread.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\analysis.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\bitrate.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libogg\src\bitwise.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\codebook.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\envelope.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\floor1.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\floor0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libogg\src\framing.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\info.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lpc.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\lsp.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\mapping0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\mdct.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\psy.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\registry.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\res0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\sharedbook.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\smallft.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\synthesis.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\vorbisenc.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\vorbisfile.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\window.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="dependencies\gorilla-audio\ext\libvorbis\lib\block.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\audio\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\resources\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main_.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Parallax.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\autofit\autofit.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftbase.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftbbox.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftbitmap.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftdebug.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftfntfmt.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftfstype.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftgasp.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftglyph.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftgxval.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftinit.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftlcdfil.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftmm.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftotval.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftpatent.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftpfr.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftstroke.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftsynth.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftsystem.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\fttype1.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\base\ftwinfnt.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\bdf\bdf.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\cache\ftcache.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\cff\cff.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\cid\type1cid.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\gzip\ftgzip.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\lzw\ftlzw.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\pcf\pcf.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\pfr\pfr.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\psaux\psaux.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\pshinter\pshinter.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\psnames\psmodule.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\raster\raster.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\sfnt\sfnt.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\smooth\smooth.c">
+      <Filter>Source Files\dependencies\freetype</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\truetype\truetype.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\type1\type1.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\type42\type42.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\freetype\src\winfonts\winfnt.c">
+      <Filter>Source Files\dependencies\freetype\FT_MODULES</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\common\gc_common.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\common\gc_thread.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\devices\ga_openal.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\bitwise.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\framing.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\analysis.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\bitrate.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\block.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\codebook.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\envelope.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor0.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor1.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\info.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lookup.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lpc.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lsp.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mapping0.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mdct.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\psy.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\registry.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\res0.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\sharedbook.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\smallft.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\synthesis.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisenc.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisfile.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\window.c">
+      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ga.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\ga_stream.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\gorilla-audio\gau.c">
+      <Filter>Source Files\dependencies\gorilla-audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,27 +377,6 @@
     <ClInclude Include="src\resources\ImageLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\ft2build.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\config\ftconfig.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\config\ftheader.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\config\ftmodule.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\config\ftoption.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\config\ftstdlib.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\freetype\include\freetype\ftfntfmt.h">
-      <Filter>Header Files\dependencies\freetype</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer\renderable\Label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -446,191 +416,209 @@
     <ClInclude Include="src\window\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ga.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ga_internal.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\devices\ga_openal.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\gau.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\common\gc_common.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\common\gc_thread.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\common\gc_types.h">
-      <Filter>Header Files\dependencies\gorilla-audio</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\al.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\alc.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\backends.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\bitrate.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\codebook.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\codec.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\codec_internal.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\config_types.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\efx.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\efx-creative.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\EFX-Util.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\envelope.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\floor_all.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\floor\floor_books.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\highlevel.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lookup_data.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lpc.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\lsp.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\masking.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\mdct.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\misc.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\ogg.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\os.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libogg\include\ogg\os_types.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\psy.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_8.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_11.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_16.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\psych_44.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\registry.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\coupled\res_books_stereo.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\books\uncoupled\res_books_uncoupled.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_8.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_16.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_44.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\residue_44u.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\scales.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_8.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_11.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_16.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_22.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_32.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_44.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_44u.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\modes\setup_X.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\lib\smallft.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\vorbisenc.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\libvorbis\include\vorbis\vorbisfile.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
-    <ClInclude Include="dependencies\gorilla-audio\ext\OpenAL\include\xram.h">
-      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
-    </ClInclude>
     <ClInclude Include="src\audio\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\resources\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Parallax.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\config\ftconfig.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\config\ftheader.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\config\ftmodule.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\config\ftoption.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\config\ftstdlib.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\freetype\ftfntfmt.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\freetype\include\ft2build.h">
+      <Filter>Header Files\dependencies\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\common\gc_common.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\common\gc_thread.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\common\gc_types.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\devices\ga_openal.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\config_types.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\ogg.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\os_types.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\include\vorbis\codec.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\include\vorbis\vorbisenc.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\include\vorbis\vorbisfile.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\books\coupled\res_books_stereo.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\books\floor\floor_books.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\books\uncoupled\res_books_uncoupled.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\floor_all.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\psych_8.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\psych_11.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\psych_16.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\psych_44.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\residue_8.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\residue_16.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\residue_44.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\residue_44u.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_8.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_11.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_16.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_22.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_32.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_44.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_44u.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\modes\setup_X.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\backends.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\bitrate.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\codebook.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\codec_internal.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\envelope.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\highlevel.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\lookup.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\lookup_data.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\lpc.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\lsp.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\masking.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\mdct.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\misc.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\os.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\psy.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\registry.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\scales.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\smallft.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\libvorbis\lib\window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\al.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\alc.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\efx.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\efx-creative.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\EFX-Util.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ext\OpenAL\include\xram.h">
+      <Filter>Header Files\dependencies\gorilla-audio\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ga.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\ga_internal.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\gau.h">
+      <Filter>Header Files\dependencies\gorilla-audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

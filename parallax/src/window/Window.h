@@ -5,7 +5,7 @@
 #include <gl\glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../../../../hypermath/hypermath.h";
+#include <hypermath.h>;
 
 namespace prx {
 
