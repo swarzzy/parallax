@@ -3,8 +3,6 @@ namespace prx {
 	Window* Application::parallaxInit(std::string_view title, int width, int height,
 		LOG_LEVEL logLevel, unsigned int clearColor) {
 		prx::Log::setLevel(logLevel);
-		// It`s better ti initialize audio before window because of gorilla-audio crashes
-		// TODO: Solve the problem with gorilla-audio crash
 		Resources::initAudioSystem();
 		m_Window = new Window(title, width, height);
 		m_Window->setClearColor(clearColor);
