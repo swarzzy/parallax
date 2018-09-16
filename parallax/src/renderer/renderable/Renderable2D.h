@@ -48,7 +48,7 @@ namespace prx {
 			inline unsigned int		getColor()		const { return m_Color; };
 			inline const float*		getUVs()		const { return m_UVs; };
 			
-			inline const unsigned int getTexID() const { return m_Texture == nullptr ? 0 : m_Texture->getID(); }
+			inline unsigned int getTexID() const { return m_Texture == nullptr ? 0 : m_Texture->getID(); }
 	private:
 		void setDefaultUVs();
 	};

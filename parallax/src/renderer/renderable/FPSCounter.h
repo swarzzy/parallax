@@ -4,16 +4,15 @@
 
 #include "Label.h"
 #include "../../utils/timing/SimpleTimer.h"
+#include "../../Parallax.h"
 
 namespace prx {
 	class FPSCounter : public Label {
 	private:
-		std::unique_ptr<SimpleTimer> m_Timer;
-		unsigned int				 m_FrameRate;
-		unsigned int				 m_FrameCounter;
+		const Application&	m_Application;
 	public:
-		FPSCounter(hpm::vec3 position, unsigned int color, Font* font);
-		FPSCounter();
+		FPSCounter(const Application& application);
+		FPSCounter(hpm::vec3 position, unsigned int color, Font* font, const Application& application);
 		void update();
 	};
 }

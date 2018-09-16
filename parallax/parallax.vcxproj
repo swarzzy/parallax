@@ -90,7 +90,10 @@
     <ClCompile Include="dependencies\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\audio\Sound.cpp" />
     <ClCompile Include="src\Fonts\Font.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Main_.cpp" />
+    <ClCompile Include="src\Parallax.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
@@ -181,6 +184,8 @@
     <ClInclude Include="dependencies\gorilla-audio\ga_internal.h" />
     <ClInclude Include="src\audio\Sound.h" />
     <ClInclude Include="src\Fonts\Font.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Parallax.h" />
     <ClInclude Include="src\renderer\BatchRenderer2D.h" />
     <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="src\renderer\layers\Layer.h" />

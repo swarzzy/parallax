@@ -1,7 +1,6 @@
 #pragma once
 #ifndef _WINDOW_H_
 #define _WINDOW_H
-#include <string_view>
 
 #include <gl\glew.h>
 #include <GLFW/glfw3.h>

@@ -62,7 +62,9 @@ namespace prx {
 			return false;
 		}
 
-		std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+		std::stringstream ss;
+		ss << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+		Log::message(ss.str(), LOG_INIT);
 
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));

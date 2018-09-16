@@ -13,10 +13,11 @@ namespace prx {
 		SimpleTimer() 
 			: m_StartTime(std::chrono::high_resolution_clock::now()) {};
 
-		void reset() {
+		inline void reset() {
 			m_StartTime = std::chrono::high_resolution_clock::now();
 		}
-		float elapsed() {
+
+		inline float elapsed() {
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<float, std::ratio<1, 1000>> timeElapsed = currentTime - m_StartTime;
 			return timeElapsed.count();
