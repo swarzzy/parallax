@@ -1,6 +1,6 @@
-#include "Sound.h"
-#include "../resources/Resources.h"
-#include "../window/Window.h"
+#include <audio/Sound.h>
+#include <resources/Resources.h>
+#include <window/Window.h>
 
 namespace prx {
 	

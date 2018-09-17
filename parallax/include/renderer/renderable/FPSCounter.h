@@ -3,7 +3,6 @@
 #define _PARALLAX_GRAPHICS_FPS_COUNTER_H_
 
 #include "Label.h"
-#include "../../utils/timing/SimpleTimer.h"
 #include "../../Parallax.h"
 
 namespace prx {

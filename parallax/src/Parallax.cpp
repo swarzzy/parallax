@@ -1,4 +1,5 @@
-#include "Parallax.h"
+#include <Parallax.h>
+
 namespace prx {
 	Window* Application::parallaxInit(std::string_view title, int width, int height,
 		LOG_LEVEL logLevel, unsigned int clearColor) {

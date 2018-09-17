@@ -3,7 +3,7 @@
 #define _PARALLAX_GRAPHICS_FONT_H_
 
 #include <map>
-#include "../../../hypermath/hypermath.h";
+#include <hypermath.h>;
 
 namespace prx {
 	

@@ -1,5 +1,5 @@
-#include "Label.h"
-#include "../Renderer2D.h"
+#include <renderer/renderable/Label.h>
+#include <renderer/Renderer2D.h>
 
 namespace prx {
 	Label::Label(std::string_view text, hpm::vec3 position, Font* font,  unsigned int color)

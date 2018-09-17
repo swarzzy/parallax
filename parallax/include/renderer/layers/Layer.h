@@ -2,8 +2,9 @@
 #ifndef _LAYER_H_
 #define _LAYER_H_
 
+#include <shading/Shader.h>
 #include "../Renderer2D.h"
-#include "../renderable/Renderable2D.h"
+//#include "../renderable/Renderable2D.h"
 
 
 namespace prx {

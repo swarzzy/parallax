@@ -1,4 +1,4 @@
-#include "SimpleRenderer2D.h"
+#include <renderer/SimpleRenderer2D.h>
 
 #ifdef PARALLAX_USE_DEPRECATED_FEATURES
 

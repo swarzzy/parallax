@@ -2,14 +2,8 @@
 #ifndef _RENDERABLE2D_H_
 #define _RENDERABLE2D_H_
 
-#include <memory>
-#include <array>
+#include <hypermath.h>;
 
-#include "../../../hypermath/hypermath.h";
-
-#include"../buffer/VertexArray.h"
-#include"../buffer/VertexBuffer.h"
-#include "../../shading/Shader.h"
 #include "../../shading/Texture.h"
 
 namespace prx {

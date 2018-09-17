@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include <renderer/renderable/Sprite.h>
 
 namespace prx {
 

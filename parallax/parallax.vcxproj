@@ -107,10 +107,10 @@
     <ClCompile Include="src\renderer\buffer\VertexBuffer.cpp" />
     <ClCompile Include="src\resources\FileReader.cpp" />
     <ClCompile Include="src\resources\Resources.cpp" />
+    <ClCompile Include="src\resources\ResourcesDeprec.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\shading\Texture.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
-    <ClCompile Include="src\utils\timing\Timer.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,40 +179,45 @@
     <ClInclude Include="ext\gorilla-audio\ga.h" />
     <ClInclude Include="ext\gorilla-audio\gau.h" />
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
-    <ClInclude Include="src\audio\Sound.h" />
-    <ClInclude Include="src\Fonts\Font.h" />
-    <ClInclude Include="src\Parallax.h" />
-    <ClInclude Include="src\renderer\BatchRenderer2D.h" />
-    <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
-    <ClInclude Include="src\renderer\layers\Layer.h" />
-    <ClInclude Include="src\renderer\layers\SceneLayer.h" />
-    <ClInclude Include="src\renderer\renderable\FPSCounter.h" />
-    <ClInclude Include="src\renderer\renderable\Group.h" />
-    <ClInclude Include="src\renderer\renderable\Label.h" />
-    <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
-    <ClInclude Include="src\renderer\renderable\Sprite.h" />
-    <ClInclude Include="src\renderer\renderable\StaticSprite.h" />
-    <ClInclude Include="src\renderer\Renderer2D.h" />
-    <ClInclude Include="src\renderer\SimpleRenderer2D.h" />
-    <ClInclude Include="src\renderer\buffer\VertexArray.h" />
-    <ClInclude Include="src\renderer\buffer\VertexBuffer.h" />
-    <ClInclude Include="src\renderer\buffer\VertexBufferLayout.h" />
-    <ClInclude Include="src\resources\FileReader.h" />
+    <ClInclude Include="include\audio\Sound.h" />
+    <ClInclude Include="include\Fonts\Font.h" />
+    <ClInclude Include="include\Parallax.h" />
+    <ClInclude Include="include\renderer\BatchRenderer2D.h" />
+    <ClInclude Include="include\renderer\buffer\IndexBuffer.h" />
+    <ClInclude Include="include\renderer\buffer\VertexArray.h" />
+    <ClInclude Include="include\renderer\buffer\VertexBuffer.h" />
+    <ClInclude Include="include\renderer\buffer\VertexBufferLayout.h" />
+    <ClInclude Include="include\renderer\layers\Layer.h" />
+    <ClInclude Include="include\renderer\layers\SceneLayer.h" />
+    <ClInclude Include="include\renderer\renderable\FPSCounter.h" />
+    <ClInclude Include="include\renderer\renderable\Group.h" />
+    <ClInclude Include="include\renderer\renderable\Label.h" />
+    <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
+    <ClInclude Include="include\renderer\renderable\Sprite.h" />
+    <ClInclude Include="include\renderer\renderable\StaticSprite.h" />
+    <ClInclude Include="include\renderer\Renderer2D.h" />
+    <ClInclude Include="include\renderer\SimpleRenderer2D.h" />
+    <ClInclude Include="include\resources\FileReader.h" />
+    <ClInclude Include="include\resources\ImageLoader.h" />
+    <ClInclude Include="include\resources\Resources.h" />
+    <ClInclude Include="include\resources\ResourcesDeprec.h" />
+    <ClInclude Include="include\shading\Shader.h" />
+    <ClInclude Include="include\shading\Texture.h" />
+    <ClInclude Include="include\utils\color\ColorFormatConverter.h" />
+    <ClInclude Include="include\utils\error_handling\ErrorHandler.h" />
+    <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
+    <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />
+    <ClInclude Include="include\utils\log\Log.h" />
+    <ClInclude Include="include\utils\SimpleHash.h" />
+    <ClInclude Include="include\utils\timing\ScopedTimer.h" />
+    <ClInclude Include="include\utils\timing\SimpleTimer.h" />
+    <ClInclude Include="include\window\Window.h" />
     <ClInclude Include="src\resources\fonts\Font.h" />
-    <ClInclude Include="src\resources\ImageLoader.h" />
-    <ClInclude Include="src\resources\Resources.h" />
-    <ClInclude Include="src\shading\Shader.h" />
-    <ClInclude Include="src\shading\Texture.h" />
-    <ClInclude Include="src\utils\color\ColorFormatConverter.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />
-    <ClInclude Include="src\utils\log\Log.h" />
-    <ClInclude Include="src\utils\SimpleHash.h" />
     <ClInclude Include="src\utils\timing\ScopedTimer.h" />
     <ClInclude Include="src\utils\timing\SimpleTimer.h" />
-    <ClInclude Include="src\utils\timing\Timer.h" />
-    <ClInclude Include="src\window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hypermath\hypermath.vcxproj">
@@ -272,7 +277,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\dev\parallax engine\parallax\hypermath;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\lib\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\lib\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>

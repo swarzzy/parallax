@@ -1,6 +1,6 @@
-#include "Layer.h"
-#include "../../resources/Resources.h"
-#include "../../utils/SimpleHash.h"
+#include <renderer/layers/Layer.h>
+#include <resources/Resources.h>
+#include <utils/SimpleHash.h>
 
 namespace prx {
 

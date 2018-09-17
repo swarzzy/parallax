@@ -1,10 +1,8 @@
 #include "Game.h"
 #include <random>
-#include "../parallax/src/renderer/layers/SceneLayer.h"
-#include "../parallax/src/renderer/renderable/Group.h"
-#include "../parallax/src/renderer/renderable/Sprite.h"
-#include "../parallax/src/renderer/renderable/Label.h"
-#include "../parallax/src/renderer/renderable/FPSCounter.h"
+
+#include "../parallax/include/renderer/renderable/Group.h"
+#include "../parallax/include/renderer/renderable/Sprite.h"
 //#include "GLFW/glfw3.h>
 
 void Game::init() {

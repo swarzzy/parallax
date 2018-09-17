@@ -1,4 +1,4 @@
-#include "StaticSprite.h"
+#include <renderer/renderable/StaticSprite.h>
 #ifdef PARALLAX_USE_DEPRECATED_FEATURES
 namespace prx {
 

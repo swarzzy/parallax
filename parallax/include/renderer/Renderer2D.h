@@ -5,6 +5,8 @@
 #include "renderable/Renderable2D.h"
 #include "../Fonts/Font.h";
 
+#include <vector>
+
 namespace prx {
 	class Renderer2D {
 	protected:

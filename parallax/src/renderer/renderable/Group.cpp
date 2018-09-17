@@ -1,5 +1,6 @@
-#include "Group.h"
-#include "../Renderer2D.h"
+#include <renderer/renderable/Group.h>
+#include <renderer/Renderer2D.h>
+
 namespace prx {
 
 	Group::Group(const hpm::mat4 & transformation) 

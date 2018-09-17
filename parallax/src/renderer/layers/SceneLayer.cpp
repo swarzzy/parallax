@@ -1,7 +1,6 @@
-#include "SceneLayer.h"
-#include "../BatchRenderer2D.h"
-#include "../../resources/Resources.h"
-#include "../../utils/SimpleHash.h"
+#include <renderer/layers/SceneLayer.h>
+#include <renderer/BatchRenderer2D.h>
+#include <resources/Resources.h>
 
 namespace prx {
 	SceneLayer::SceneLayer(Shader* shader)

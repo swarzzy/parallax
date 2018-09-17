@@ -1,4 +1,5 @@
-#include "BatchRenderer2D.h"
+#include <renderer/BatchRenderer2D.h>
+#include <utils/error_handling/GLErrorHandler.h>
 
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 

@@ -2,7 +2,7 @@
 #ifndef _PARALLAX_UTILS_COLOR_FORMAT_CONVERTER_H_
 #define _PARALLAX_UTILS_COLOR_FORMAT_CONVERTER_H_
 
-#include "../../../hypermath/hypermath.h"
+#include <hypermath.h>
 #include "../log/Log.h"
 
 namespace prx {

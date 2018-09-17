@@ -2,7 +2,6 @@
 #ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
-#include<GL/glew.h>
 #include <string_view>
 
 namespace prx {

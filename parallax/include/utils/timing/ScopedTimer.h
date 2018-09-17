@@ -3,7 +3,6 @@
 #define _PARALLAX_UTILS_SCOPED_TIMER_H_
 
 #include <chrono>
-#include <string>
 #include <iostream>
 
 #include "../log/Log.h"

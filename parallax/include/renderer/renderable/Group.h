@@ -3,6 +3,7 @@
 #define _GROUP_H_
 
 #include "Renderable2D.h"
+#include <vector>
 
 namespace prx {
 	class Group : public Renderable2D {

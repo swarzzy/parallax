@@ -6,10 +6,10 @@
 #include <vector>
 #include <optional>
 #include <string_view>
-#include <gl/glew.h>
+//#include <gl/glew.h>
 
 #include "../utils/error_handling/GLErrorHandler.h"
-#include "../../../hypermath/hypermath.h";
+#include <hypermath.h>;
 
 namespace prx {
 	struct Uniform {

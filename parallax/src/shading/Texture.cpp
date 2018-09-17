@@ -1,6 +1,7 @@
-#include "Texture.h"
-#include "../resources/ImageLoader.h"
-#include "../utils/error_handling/GLErrorHandler.h"
+#include <shading/Texture.h>
+
+#include <resources/ImageLoader.h>
+#include <utils/error_handling/GLErrorHandler.h>
 
 
 namespace prx {

@@ -2,8 +2,6 @@
 #ifndef _INDEXBUFFER_H_
 #define _INDEXBUFFER_H_
 
-
-
 namespace prx {
 
 	class IndexBuffer {

@@ -3,6 +3,9 @@
 #define _BATCHRENDERER2D_H_
 
 #include "Renderer2D.h"
+#include "buffer/IndexBuffer.h"
+
+#include <vector>
 
 namespace prx {
 	

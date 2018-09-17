@@ -8,6 +8,7 @@
 
 #include <sstream>
 #include "../log/Log.h"
+
 #define USE_PARALLAX_FREETYPE_DEBUGGER int ParallaxFreeTypeDebuggerErrorCode; /* 
 // Scope sensetive. It`s recommended to declare it all time inside function that uses freetype. */
 #define FTCall(x) ParallaxFreeTypeDebuggerErrorCode =  x; ASSERT(FTLogCall(ParallaxFreeTypeDebuggerErrorCode, #x, __FILE__, __LINE__)) 

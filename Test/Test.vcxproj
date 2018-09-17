@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\test</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
-    <IncludePath>D:\dev\parallax engine\parallax\parallax\ext;D:\dev\parallax engine\parallax\parallax\lib\include;D:\dev\parallax engine\parallax\parallax\src;D:\dev\parallax engine\parallax\hypermath;$(IncludePath)</IncludePath>
+    <IncludePath>D:\dev\parallax engine\parallax\parallax\ext;D:\dev\parallax engine\parallax\parallax\lib\include;D:\dev\parallax engine\parallax\parallax\include;D:\dev\parallax engine\parallax\parallax\src;D:\dev\parallax engine\parallax\hypermath;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

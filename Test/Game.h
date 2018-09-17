@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../parallax/src/Parallax.h"
-#include "../parallax/src/renderer/layers/Layer.h"
-#include "../parallax/src/renderer/layers/SceneLayer.h"
-#include "../parallax/src/renderer/renderable/FPSCounter.h"
+
+#include "../parallax/include/Parallax.h"
+#include "../parallax/include/renderer/layers/SceneLayer.h"
+#include "../parallax/include/renderer/renderable/FPSCounter.h"
 
 class Game : public prx::Application {
 private:

@@ -1,11 +1,8 @@
-#include "Renderable2D.h"
+#include <renderer/renderable/Renderable2D.h>
 
 #include<iterator>;
 
-#include"../buffer/IndexBuffer.h"
-#include"../buffer/VertexBufferLayout.h"
-#include "../../utils/log/Log.h"
-#include "../Renderer2D.h"
+#include <renderer/Renderer2D.h>
 
 namespace prx {
 

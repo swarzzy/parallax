@@ -1,12 +1,12 @@
-#include "Font.h"
+#include <Fonts/Font.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include "../utils/log/Log.h"
+#include <utils/log/Log.h>
 
-#include "../utils/error_handling/FTErrorHandler.h"
-#include "../utils/error_handling//GLErrorHandler.h"
+#include <utils/error_handling/FTErrorHandler.h>
+#include <utils/error_handling/GLErrorHandler.h>
 
 namespace prx {
 	Font::Font(std::string_view filepath, int size) 

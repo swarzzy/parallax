@@ -3,6 +3,7 @@
 #define _SCENE_LAYER_H__
 
 #include "Layer.h"
+#include <shading/Shader.h>
 
 namespace prx {
 	class SceneLayer : public Layer{

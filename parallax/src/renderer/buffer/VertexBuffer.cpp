@@ -1,5 +1,6 @@
-#include "VertexBuffer.h"
-#include "../../utils/error_handling/GLErrorHandler.h"
+#include <renderer/buffer/VertexBuffer.h>
+
+#include <utils/error_handling/GLErrorHandler.h>
 
 #include <GL\glew.h>
 

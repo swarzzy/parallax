@@ -5,6 +5,7 @@
 
 #include <string_view>
 #include <iterator>
+#include <gl/glew.h>
 
 #include "../utils/log/Log.h"
 

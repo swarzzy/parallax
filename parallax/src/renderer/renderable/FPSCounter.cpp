@@ -1,6 +1,6 @@
-#include "FPSCounter.h"
+#include <renderer/renderable/FPSCounter.h>
 
-#include "../../resources/Resources.h"
+#include <resources/Resources.h>
 
 namespace prx {
 
