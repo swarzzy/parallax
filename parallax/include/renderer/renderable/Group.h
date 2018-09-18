@@ -2,8 +2,9 @@
 #ifndef _GROUP_H_
 #define _GROUP_H_
 
-#include "Renderable2D.h"
 #include <vector>
+
+#include "Renderable2D.h"
 
 namespace prx {
 	class Group : public Renderable2D {

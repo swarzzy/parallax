@@ -3,6 +3,7 @@
 #define _PARALLAX_UTILS_COLOR_FORMAT_CONVERTER_H_
 
 #include <hypermath.h>
+
 #include "../log/Log.h"
 
 namespace prx {
@@ -78,7 +79,7 @@ namespace prx {
 		unsigned int hex(std::string_view hex)
 		{
 			if (hex[0] != '#' || (hex.length() != 7 || hex.length() != 9)) {
-				Log::message("Invalid hex color code", LOG_WARNING);
+				Log::message("COLOR_FORMAT_CONVERTER: Invalid hex color code", LOG_WARNING);
 				return 255 << 24 | 255 << 16 | 255 << 8 | 255;
 			}
 

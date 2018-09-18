@@ -5,16 +5,15 @@
 #include <map>
 #include <string_view>
 
-#include "../utils/log/Log.h"
-
 #include "../shading/Texture.h"
 #include "../Fonts/Font.h"
 #include "../shading/Shader.h"
 #include "../audio/Sound.h"
 
+#include "../utils/SimpleHash.h"
+
 #include <gorilla-audio/ga.h>
 #include <gorilla-audio/gau.h>
-#include "../utils/SimpleHash.h"
 
 namespace prx {
 

@@ -4,13 +4,12 @@
 #define _IMAGELOADER_H_
 
 #include <string_view>
-#include <iterator>
-#include <gl/glew.h>
-
-#include "../utils/log/Log.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb/stb_image.h"
+#include "../ext/stb/stb_image.h"
+#include "../ext/GL/glew.h"
+
+#include "../utils/log/Log.h"
 
 namespace prx {
 	

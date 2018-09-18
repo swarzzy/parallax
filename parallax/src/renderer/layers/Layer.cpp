@@ -1,4 +1,7 @@
 #include <renderer/layers/Layer.h>
+
+#include <renderer/Renderer2D.h>
+#include <shading/Shader.h>
 #include <resources/Resources.h>
 #include <utils/SimpleHash.h>
 

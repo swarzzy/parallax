@@ -277,7 +277,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\lib\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>

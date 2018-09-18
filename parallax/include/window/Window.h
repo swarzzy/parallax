@@ -2,8 +2,8 @@
 #ifndef _WINDOW_H_
 #define _WINDOW_H
 
-#include <gl\glew.h>
-#include <GLFW/glfw3.h>
+#include "ext/GL/glew.h"
+#include "ext/GLFW/glfw3.h"
 
 #include <hypermath.h>;
 

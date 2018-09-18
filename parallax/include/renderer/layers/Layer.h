@@ -2,12 +2,15 @@
 #ifndef _LAYER_H_
 #define _LAYER_H_
 
-#include <shading/Shader.h>
-#include "../Renderer2D.h"
-//#include "../renderable/Renderable2D.h"
-
+#include <vector>
+#include <hypermath.h>
 
 namespace prx {
+
+	class Renderer2D;
+	class Renderable2D;
+	class Shader;
+
 	class Layer {
 	protected:
 				   Renderer2D*	m_Renderer;

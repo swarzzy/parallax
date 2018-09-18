@@ -4,12 +4,15 @@
 
 
 #include <vector>
+// TODO: get rid of this
 #include <optional>
 #include <string_view>
-//#include <gl/glew.h>
+
+#include <ext/GL/glew.h>
+
+#include <hypermath.h>;
 
 #include "../utils/error_handling/GLErrorHandler.h"
-#include <hypermath.h>;
 
 namespace prx {
 	struct Uniform {

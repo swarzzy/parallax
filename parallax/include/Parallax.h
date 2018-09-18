@@ -5,6 +5,7 @@
 #include "window/Window.h"
 #include "utils/timing/SimpleTimer.h";
 #include "resources/Resources.h"
+namespace prx {
 /*
  *		Basic application interface of parallax engine. It manages initialization and main game loop.
  *		You can write you game by overriding init, tick, update and render methods. Init method runs 
@@ -14,7 +15,6 @@
  *		method because of specific realization. Parallax init method creates window and initializes all
  *		parallax systems (resources manager, audio system, logging system, etc.).
  */
-namespace prx {
 	class Application {
 	private:
 		Window*			m_Window;
