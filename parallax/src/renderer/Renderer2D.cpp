@@ -1,4 +1,5 @@
 #include <renderer/Renderer2D.h>
+
 #include "utils/log/Log.h"
 
 namespace prx {

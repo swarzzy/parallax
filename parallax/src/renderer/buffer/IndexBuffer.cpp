@@ -1,7 +1,7 @@
 #include <renderer/buffer/IndexBuffer.h>
 #include <utils/error_handling/GLErrorHandler.h>
 
-#include <ext/GL/glew.h>
+#include <GL/glew.h>
 
 namespace prx {
 

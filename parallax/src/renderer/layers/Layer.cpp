@@ -2,8 +2,6 @@
 
 #include <renderer/Renderer2D.h>
 #include <shading/Shader.h>
-#include <resources/Resources.h>
-#include <utils/SimpleHash.h>
 
 namespace prx {
 

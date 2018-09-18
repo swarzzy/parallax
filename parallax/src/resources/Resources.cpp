@@ -1,4 +1,5 @@
 #include <resources/Resources.h>
+
 #include <utils/SimpleHash.h>
 
 namespace prx {

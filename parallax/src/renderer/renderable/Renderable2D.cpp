@@ -1,7 +1,5 @@
 #include <renderer/renderable/Renderable2D.h>
 
-#include<iterator>;
-
 #include <renderer/Renderer2D.h>
 
 namespace prx {

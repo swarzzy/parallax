@@ -6,8 +6,8 @@
 #include <string_view>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../ext/stb/stb_image.h"
-#include "../ext/GL/glew.h"
+#include <stb/stb_image.h>
+#include <GL/glew.h>
 
 #include "../utils/log/Log.h"
 

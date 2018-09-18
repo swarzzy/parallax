@@ -3,7 +3,7 @@
 #define _VERTEXBUFFERLAYOUT_H_
 
 #include<vector>
-#include "../ext/GL/glew.h"
+#include <GL/glew.h>
 
 namespace prx {
 
