@@ -19,20 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hypermath.h" />
-    <ClInclude Include="linear_algebra\mat\mat4.h" />
-    <ClInclude Include="linear_algebra\vector.h" />
-    <ClInclude Include="linear_algebra\vec\vec2.h" />
-    <ClInclude Include="linear_algebra\vec\vec3.h" />
-    <ClInclude Include="linear_algebra\vec\vec4.h" />
-    <ClInclude Include="linear_algebra\matrix.h" />
-    <ClInclude Include="trigonometry\trig_functions.h" />
+    <ClInclude Include="include\hypermath.h" />
+    <ClInclude Include="include\linear_algebra\matrix.h" />
+    <ClInclude Include="include\linear_algebra\mat\mat4.h" />
+    <ClInclude Include="include\linear_algebra\vector.h" />
+    <ClInclude Include="include\linear_algebra\vec\vec2.h" />
+    <ClInclude Include="include\linear_algebra\vec\vec3.h" />
+    <ClInclude Include="include\linear_algebra\vec\vec4.h" />
+    <ClInclude Include="include\trigonometry\trig_functions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="linear_algebra\mat\mat4.cpp" />
-    <ClCompile Include="linear_algebra\vec\vec2.cpp" />
-    <ClCompile Include="linear_algebra\vec\vec3.cpp" />
-    <ClCompile Include="linear_algebra\vec\vec4.cpp" />
+    <ClCompile Include="src\linear_algebra\mat\mat4.cpp" />
+    <ClCompile Include="src\linear_algebra\vec\vec2.cpp" />
+    <ClCompile Include="src\linear_algebra\vec\vec3.cpp" />
+    <ClCompile Include="src\linear_algebra\vec\vec4.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -86,11 +86,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)hypermath;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath</IntDir>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

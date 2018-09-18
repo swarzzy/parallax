@@ -12,8 +12,8 @@
 
 #include "../utils/SimpleHash.h"
 
-#include <gorilla-audio/ga.h>
-#include <gorilla-audio/gau.h>
+#include "../ext/gorilla-audio/ga.h"
+#include "../ext/gorilla-audio/gau.h"
 
 namespace prx {
 

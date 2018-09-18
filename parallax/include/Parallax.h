@@ -19,6 +19,8 @@ namespace prx {
 	private:
 		Window*			m_Window;
 		SimpleTimer*	m_Timer;
+		float			m_DeltaTime;
+		float			m_LastFrameTime;
 		unsigned int	m_FPS;
 		unsigned int	m_UPS;
 	
@@ -46,6 +48,7 @@ namespace prx {
 	public:
 		inline unsigned int getFPS() const { return m_FPS; }
 		inline unsigned int getUPS() const { return m_UPS; }
+		inline float		getDeltaTime() const { return m_DeltaTime; }
 		
 		inline void start() { init(); run(); }
 	};

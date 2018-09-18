@@ -1,7 +1,7 @@
-#include "vec4.h"
+#include <linear_algebra/vec/vec4.h>
 
-#include "vec2.h"
-#include "vec3.h"
+#include <linear_algebra/vec/vec2.h>
+#include <linear_algebra/vec/vec3.h>
 
 namespace hpm {
 	vec4::vec4()

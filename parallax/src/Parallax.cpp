@@ -14,8 +14,9 @@ namespace prx {
 	void Application::run() {
 		m_Timer = new SimpleTimer();
 
-		unsigned int updateTime = m_Timer->elapsed();
-		unsigned int tickTime = m_Timer->elapsed();
+		float updateTime = m_Timer->elapsed();
+		float tickTime = m_Timer->elapsed();
+		float frameTime = m_Timer->elapsed();
 
 		unsigned int frameCounter = 0;
 		unsigned int updateCounter = 0;
@@ -39,12 +40,16 @@ namespace prx {
 			}
 
 			render();
+			frameTime = m_Timer->elapsed();
+			m_DeltaTime = frameTime - m_LastFrameTime;
+			m_LastFrameTime = frameTime;
 			frameCounter++;
 			m_Window->update();
 		}
 	}
 
-	Application::Application() : m_FPS(0), m_UPS(0) {};
+	Application::Application() 
+	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0) {};
 
 	Application::~Application() {
 		Resources::terminate();

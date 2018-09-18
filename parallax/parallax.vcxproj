@@ -65,7 +65,6 @@
     <ClCompile Include="ext\gorilla-audio\ext\libogg\src\framing.c" />
     <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\analysis.c" />
     <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\bitrate.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\block.c" />
     <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\codebook.c" />
     <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\envelope.c" />
     <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor0.c" />
@@ -180,23 +179,6 @@
     <ClInclude Include="ext\gorilla-audio\gau.h" />
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="include\audio\Sound.h" />
-    <ClInclude Include="include\ext\gorilla-audio\common\gc_common.h" />
-    <ClInclude Include="include\ext\gorilla-audio\common\gc_thread.h" />
-    <ClInclude Include="include\ext\gorilla-audio\common\gc_types.h" />
-    <ClInclude Include="include\ext\gorilla-audio\devices\ga_openal.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\libogg\include\ogg\config_types.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\libogg\include\ogg\os_types.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\libvorbis\include\vorbis\codec.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\libvorbis\include\vorbis\vorbisenc.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\libvorbis\include\vorbis\vorbisfile.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\OpenAL\include\alc.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\OpenAL\include\efx-creative.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\OpenAL\include\EFX-Util.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\OpenAL\include\efx.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ext\OpenAL\include\xram.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ga.h" />
-    <ClInclude Include="include\ext\gorilla-audio\gau.h" />
-    <ClInclude Include="include\ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="include\Fonts\Font.h" />
     <ClInclude Include="include\Parallax.h" />
     <ClInclude Include="include\renderer\BatchRenderer2D.h" />
@@ -294,17 +276,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\freetype\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
     <ReferencePath>$(SolutionDir)parallax\bin;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\lib\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
-    <IntDir>C:\dev\parallax engine\out\intermediates\$(Configuration)\</IntDir>
-    <OutDir>C:\dev\parallax engine\out\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -381,6 +363,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,42 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="linear_algebra\vec\vec2.h">
+    <ClInclude Include="include\linear_algebra\mat\mat4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="linear_algebra\vec\vec3.h">
+    <ClInclude Include="include\linear_algebra\vec\vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="linear_algebra\vec\vec4.h">
+    <ClInclude Include="include\linear_algebra\vec\vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="linear_algebra\vector.h">
+    <ClInclude Include="include\linear_algebra\vec\vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="linear_algebra\mat\mat4.h">
+    <ClInclude Include="include\linear_algebra\matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="trigonometry\trig_functions.h">
+    <ClInclude Include="include\linear_algebra\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="linear_algebra\matrix.h">
+    <ClInclude Include="include\trigonometry\trig_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hypermath.h">
+    <ClInclude Include="include\hypermath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="linear_algebra\vec\vec2.cpp">
+    <ClCompile Include="src\linear_algebra\mat\mat4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="linear_algebra\vec\vec3.cpp">
+    <ClCompile Include="src\linear_algebra\vec\vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="linear_algebra\vec\vec4.cpp">
+    <ClCompile Include="src\linear_algebra\vec\vec3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="linear_algebra\mat\mat4.cpp">
+    <ClCompile Include="src\linear_algebra\vec\vec4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

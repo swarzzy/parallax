@@ -73,7 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\test</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
-    <IncludePath>D:\dev\parallax engine\parallax\parallax\ext;D:\dev\parallax engine\parallax\parallax\lib\include;D:\dev\parallax engine\parallax\parallax\include;D:\dev\parallax engine\parallax\parallax\src;D:\dev\parallax engine\parallax\hypermath;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\parallax\ext;$(SolutionDir)parallax\parallax\include;$(SolutionDir)hypermath\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)hypermath\include;$(SolutionDir)parallax\parallax\include;$(SolutionDir)parallax\parallax\ext;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\test</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -114,6 +119,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -123,7 +132,6 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Main_.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

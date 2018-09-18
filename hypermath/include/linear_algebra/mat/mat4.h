@@ -2,7 +2,7 @@
 #ifndef _HYPERMATH_MAT4_H_
 #define _HYPERMATH_MAT4_H_
 
-#include "../vector.h"
+#include <linear_algebra/vector.h>
 
 namespace hpm {
 	struct mat4 {
