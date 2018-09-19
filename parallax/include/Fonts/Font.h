@@ -4,18 +4,19 @@
 
 #include <map>
 #include <hypermath.h>;
+#include "../ext/ftgl/texture-atlas.h"
+#include "../textures/TextureAtlas.h"
 
 namespace prx {
 	
 	struct Character {
-		unsigned int TexID;
-		// TODO: ivec
-		hpm::vec2	 Size;
-		hpm::vec2	 Bearing;
-		long		 Advance;
+		hpm::vec4 AtlasCoords;
+		hpm::vec2 Size;
+		hpm::vec2 Bearing;
+		long	  Advance;
 
-		Character(unsigned int tid, hpm::vec2 size, hpm::vec2 bearing, long advance)
-			: TexID(tid), Size(size), Bearing(bearing), Advance(advance) {};
+		Character(hpm::vec4 coords, hpm::vec2 size, hpm::vec2 bearing, long advance)
+			: AtlasCoords(coords), Size(size), Bearing(bearing), Advance(advance) {};
 		Character() {};
 	};
 
@@ -24,10 +25,10 @@ namespace prx {
 		std::string					m_FilePath;
 		unsigned int				m_Size;
 		float						m_Scale;
-
 		std::map<char, Character>	m_Characters;
-	
+
 	public:
+		TextureAtlas*				m_FontAtlas;
 		Font() {};
 		Font(std::string_view filepath, int size, float scale = 1.0f);
 		~Font();
@@ -36,6 +37,7 @@ namespace prx {
 		inline unsigned int						getSize()		const { return m_Size;		 };
 		inline float							getScale()		const { return m_Scale;		 };
 		inline const std::map<char, Character>& getCharacters() const { return m_Characters; };
+		inline const TextureAtlas&				getFontAtlas()  const { return *m_FontAtlas; };
 
 	private:
 		void loadFont();

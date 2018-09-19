@@ -1,4 +1,9 @@
 #include <audio/Sound.h>
+
+#include <sstream>
+
+#include <utils/error_handling/ErrorHandler.h>
+#include <utils/log/Log.h>
 #include <resources/Resources.h>
 #include <window/Window.h>
 

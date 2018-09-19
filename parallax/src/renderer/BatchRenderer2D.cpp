@@ -4,13 +4,12 @@
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 
 		: Renderer2D() {
-		
 		init();
 	}
 
 	BatchRenderer2D::~BatchRenderer2D() {
 		
-		// Smart poiners care about heap allocted memory.
+		// Smart pointers care about heap allocated memory.
 		
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
@@ -18,64 +17,66 @@ namespace prx {
 	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
 		auto characters = font->getCharacters();
+		unsigned int atlasID = font->getFontAtlas().getID();
 		float scale = font->getScale();
 
 		float cursor = 0.0;
 
+		float ts = 0.0f;
+		bool found = false;
+		for (int i = 0; i < m_TextureSlots.size(); i++) {
+			if (m_TextureSlots[i] == atlasID) {
+				found = true;
+				ts = static_cast<float>(i + 1);
+				break;
+			}
+		}
+		if (!found) {
+			if (m_TextureSlots.size() >= 32) {
+				end();
+				flush();
+				begin();
+				m_TextureSlots.clear();
+				m_TextureSlots.resize(0);
+			}
+
+			m_TextureSlots.push_back(atlasID);
+			ts = static_cast<float>(m_TextureSlots.size());
+		}
+
 		for (auto& character : text) {
 			Character ch = characters[character];
-			float ts = 0.0f;
-			bool found = false;
-			for (int i = 0; i < m_TextureSlots.size(); i++) {
-				if (m_TextureSlots[i] == ch.TexID) {
-					found = true;
-					ts = static_cast<float>(i + 1);
-					break;
-				}
-			}
-			if (!found) {
-				if (m_TextureSlots.size() >= 32) {
-					end();
-					flush();
-					begin();
-					m_TextureSlots.clear();
-					m_TextureSlots.resize(0);
-				}
-
-				m_TextureSlots.push_back(ch.TexID);
-				ts = static_cast<float>(m_TextureSlots.size());
-			}
-
-			float xpos = (position.x + cursor + ch.Bearing.x) *scale;
-			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) *scale;
+			
+			float xpos = (position.x + cursor + ch.Bearing.x) * scale;
+			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) * scale;
 
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
 
 			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
-			m_Buffer->texCoords.x = 0.0;
-			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, 0);
-			m_Buffer->texCoords.x = 0.0;
-			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, 0);
-			m_Buffer->texCoords.x = 1.0;
-			m_Buffer->texCoords.y = 0.0;
+			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, 0);
-			m_Buffer->texCoords.x = 1.0;
-			m_Buffer->texCoords.y = 1.0;
+			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;

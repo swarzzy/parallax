@@ -2,8 +2,10 @@
 #include <random>
 
 #include "../parallax/include/renderer/renderable/Group.h"
+#include "../parallax/include/textures/TextureAtlas.h"
 #include "../parallax/include/renderer/renderable/Sprite.h"
 //#include "GLFW/glfw3.h>
+#include "../parallax/include/textures/Texture.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -30,8 +32,8 @@ void Game::init() {
 			counter++;
 		}
 	}
-	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80, 0.8);
-	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50, 0.5);
+	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 100, 1.0);
+	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50, 1.0);
 	
 	prx::Font* NotoSans = prx::Resources::getFont(NotoSansID);
 	prx::Font* AbrilFatface = prx::Resources::getFont(AbrilFatfaceID);
@@ -39,27 +41,44 @@ void Game::init() {
 	group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), NotoSans, 0xff568745));
 	m_Layer->add(group);
 	auto text = new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), AbrilFatface, 0xff3456ff);
-	text->setText("sfasdf");
+	text->setText("sfaggysdf");
 	m_FPSCounter = new prx::FPSCounter(*this);
 	m_Layer2->add(m_FPSCounter);
 	m_Layer2->add(text);
-	unsigned int textureID = prx::Resources::loadTexture("res/textures/crate.png");
-	prx::Texture* texture = prx::Resources::getTexture(textureID);
-	//auto texture2 = prx::Resources::loadTexture("res/textures/test.png");
-	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(20), texture);
-	m_Layer2->add(texSprite);
-	auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
+	unsigned int textureID1 = prx::Resources::loadTexture("res/textures/crate.png");
+	prx::Texture* texture1 = prx::Resources::getTexture(textureID1);
+	unsigned int textureID2 = prx::Resources::loadTexture("res/textures/default.jpg");
+	prx::Texture* texture2 = prx::Resources::getTexture(textureID2);
+	unsigned int textureID3 = prx::Resources::loadTexture("res/textures/test.png");
+	prx::Texture* texture3 = prx::Resources::getTexture(textureID3);
 	
-	m_Layer2->add(sprite);
-	sprite->setColor(0xff654743);
-	//texSprite->setTexture(texture2);
-	//texSprite->setPosition(hpm::vec3(400, 300, 1));
-	//texSprite->setSize(hpm::vec2(100, 600));
-	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
-	m_Sound = prx::Resources::getSound(soundID);
+	auto sprite1 = new prx::Sprite(hpm::vec3(0, 0, 1.0), hpm::vec2(100), texture1);
+	auto sprite2 = new prx::Sprite(hpm::vec3(100, 0, 1.0), hpm::vec2(100), texture2);
+	auto sprite3 = new prx::Sprite(hpm::vec3(200, 0, 1.0), hpm::vec2(100), texture3);
+
+	prx::TextureAtlas* atlas  = new prx::TextureAtlas(260, 260, prx::TextureFormat::RGB);
+	atlas->add("res/textures/crate.png");
+	atlas->update();
+
+	auto sprite4 = new prx::Sprite(hpm::vec3(300, 0, 1.0), hpm::vec2(260), atlas);
+
+	//m_Layer2->add(sprite1);
+	//m_Layer2->add(sprite2);
+	//m_Layer2->add(sprite3);
+	//m_Layer2->add(sprite4);
+
+	std::cout << NotoSans->m_FontAtlas->getUsage();
+	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(NotoSans->m_FontAtlas->getWidth()),NotoSans->m_FontAtlas);
+	m_Layer2->add(texSprite);
+	//auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
+	
+	//m_Layer2->add(sprite);
+	
+	//unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
+	//m_Sound = prx::Resources::getSound(soundID);
 	
 	float gain = 1.0;
-	m_Sound->play();
+	//m_Sound->play();
 }
 
 void Game::tick() {
@@ -75,14 +94,14 @@ void Game::update() {
 }
 
 void Game::render() {
-	if (m_Window->isKeyPressed(GLFW_KEY_P))
-		m_Sound->pause();
-	if (m_Window->isKeyPressed(GLFW_KEY_S))
-		m_Sound->play();
-	if (m_Window->isKeyPressed(GLFW_KEY_R))
-		m_Sound->stop();
-	if (m_Window->isKeyPressed(GLFW_KEY_L))
-		m_Sound->loop();
+	//if (m_Window->isKeyPressed(GLFW_KEY_P))
+		//m_Sound->pause();
+	//if (m_Window->isKeyPressed(GLFW_KEY_S))
+		//m_Sound->play();
+	//if (m_Window->isKeyPressed(GLFW_KEY_R))
+		//m_Sound->stop();
+	//if (m_Window->isKeyPressed(GLFW_KEY_L))
+		//m_Sound->loop();
 	
 	m_Layer->draw();
 	m_Layer2->draw();

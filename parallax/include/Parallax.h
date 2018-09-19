@@ -5,6 +5,9 @@
 #include "window/Window.h"
 #include "utils/timing/SimpleTimer.h";
 #include "resources/Resources.h"
+#include "utils/log/Log.h"
+#include "shading/Shader.h"
+
 namespace prx {
 /*
  *		Basic application interface of parallax engine. It manages initialization and main game loop.

@@ -87,7 +87,11 @@
     <ClCompile Include="ext\gorilla-audio\ga.c" />
     <ClCompile Include="ext\gorilla-audio\gau.c" />
     <ClCompile Include="ext\gorilla-audio\ga_stream.c" />
+    <ClCompile Include="src\resources\ImageLoader.cpp" />
+    <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
+    <ClCompile Include="src\ext\ftgl\texture-atlas.c" />
+    <ClCompile Include="src\ext\ftgl\vector.c" />
     <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Parallax.cpp" />
     <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
@@ -108,7 +112,7 @@
     <ClCompile Include="src\resources\Resources.cpp" />
     <ClCompile Include="src\resources\ResourcesDeprec.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
-    <ClCompile Include="src\shading\Texture.cpp" />
+    <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
@@ -179,6 +183,9 @@
     <ClInclude Include="ext\gorilla-audio\gau.h" />
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
     <ClInclude Include="include\audio\Sound.h" />
+    <ClInclude Include="include\ext\ftgl\texture-atlas.h" />
+    <ClInclude Include="include\ext\ftgl\vec234.h" />
+    <ClInclude Include="include\ext\ftgl\vector.h" />
     <ClInclude Include="include\Fonts\Font.h" />
     <ClInclude Include="include\Parallax.h" />
     <ClInclude Include="include\renderer\BatchRenderer2D.h" />
@@ -201,7 +208,9 @@
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\shading\Shader.h" />
-    <ClInclude Include="include\shading\Texture.h" />
+    <ClInclude Include="include\textures\Texture.h" />
+    <ClInclude Include="include\textures\TextureAtlas.h" />
+    <ClInclude Include="include\textures\TextureBase.h" />
     <ClInclude Include="include\utils\color\ColorFormatConverter.h" />
     <ClInclude Include="include\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />

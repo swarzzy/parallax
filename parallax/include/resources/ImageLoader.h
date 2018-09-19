@@ -5,10 +5,7 @@
 
 #include <string_view>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
-#include <GL/glew.h>
-
+#include "../../ext/GL/glew.h"
 #include "../utils/log/Log.h"
 
 namespace prx {
@@ -20,10 +17,8 @@ namespace prx {
 		GLenum			m_Format;
 		unsigned char*	m_Pixels;
 	public:
-		Image(unsigned int width, unsigned int height, GLenum format, unsigned char* pixels)
-			: m_Width(width), m_Height(height), m_Format(format), m_Pixels(pixels) {
-		}
-		~Image() { stbi_image_free(m_Pixels); }
+		Image(unsigned int width, unsigned int height, GLenum format, unsigned char* pixels);
+		~Image();
 
 		inline const unsigned int	getWigth()	const { return m_Width;  }
 		inline const unsigned int	getHeight() const { return m_Height; }
@@ -33,28 +28,7 @@ namespace prx {
 
 	class ImageLoader {
 	public:
-		static Image* loadImage(std::string_view path) {
-			stbi_set_flip_vertically_on_load(true);
-			
-			int width, height, componentsCount;
-			
-			unsigned char *data = stbi_load(path.data(), &width, &height, &componentsCount, 0);
-			
-			if (data) {
-				GLenum format;
-				if (componentsCount == 1)
-					format = GL_RED;
-				else if (componentsCount == 3)
-					format = GL_RGB;
-				else if (componentsCount == 4)
-					format = GL_RGBA;
-
-				return new Image(width, height, format, data);
-			} else {
-				Log::message("Image loader error! Can`t load image", LOG_ERROR);
-				return nullptr;
-			}
-		}
+		static Image* loadImage(std::string_view path);
 	};
 }
 #endif

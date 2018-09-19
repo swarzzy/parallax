@@ -5,17 +5,17 @@
 #include <map>
 #include <string_view>
 
-#include "../shading/Texture.h"
-#include "../Fonts/Font.h"
-#include "../shading/Shader.h"
-#include "../audio/Sound.h"
-
 #include "../utils/SimpleHash.h"
 
 #include "../ext/gorilla-audio/ga.h"
 #include "../ext/gorilla-audio/gau.h"
 
 namespace prx {
+
+	class Texture;
+	class Font;
+	class Shader;
+	class Sound;
 
 	static const char*			RESOURCES_DEFAULT_TEXTURE_PATH	= "res/textures/default.jpg";
 	static const char*			RESOURCES_DEFAULT_TEXTURE_NAME	= "parallax_default_texture";

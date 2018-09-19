@@ -8,16 +8,17 @@
 #include <utils/error_handling/FTErrorHandler.h>
 #include <utils/error_handling/GLErrorHandler.h>
 
+#include <ext/ftgl/texture-atlas.h>
+#include <textures/Texture.h>
+
 namespace prx {
 	Font::Font(std::string_view filepath, int size, float scale) 
-		: m_FilePath(filepath), m_Size(size), m_Scale(scale) {
+		: m_FilePath(filepath), m_Size(size), m_Scale(scale), m_FontAtlas(nullptr) {
 		loadFont();
 	}
 
 	Font::~Font() {
-		for (auto& character : m_Characters) {
-			GLCall(glDeleteTextures(1, &character.second.TexID));
-		}
+		delete m_FontAtlas;
 	}
 
 	void Font::loadFont() {
@@ -34,42 +35,41 @@ namespace prx {
 
 		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
+		m_FontAtlas = new TextureAtlas(512, 512, TextureFormat::RED);
+
+		// FreeType transformation matrix to flip glyph y-coords 
+		FT_Matrix matrix = {
+		static_cast<int>(((1.0) * 0x10000L)),
+		static_cast<int>(((0.0) * 0x10000L)),
+		static_cast<int>(((0.0) * 0x10000L)),
+		static_cast<int>(((-1.0) * 0x10000L)) };
+
+		FT_Set_Transform(face, &matrix, NULL);
+
 		for (int i = 0; i < 128; i++) {
-			
+
 			char ch = static_cast<char>(i);
-			
+
 			FTCall(FT_Load_Char(face, ch, FT_LOAD_RENDER));
-
-			unsigned int texture;
-			GLCall(glGenTextures(1, &texture));
-			GLCall(glBindTexture(GL_TEXTURE_2D, texture));
-			GLCall(glTexImage2D(
-								GL_TEXTURE_2D,
-								0,
-								GL_RED,
-								face->glyph->bitmap.width,
-								face->glyph->bitmap.rows,
-								0,
-								GL_RED,
-								GL_UNSIGNED_BYTE,
-								face->glyph->bitmap.buffer)
-								);
-
-			int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
-			GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
-
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			hpm::vec4 coords = m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
 
 			m_Characters.emplace(std::piecewise_construct, std::forward_as_tuple(ch), std::forward_as_tuple(
-									texture,
+									coords,
 									hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-									hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+									hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap.rows - face->glyph->bitmap_top),
 									face->glyph->advance.x
-			));
+								));
 		}
+		m_FontAtlas->update();
+
+		m_FontAtlas->bind();
+		// Passing red chanel value into other channels. So we get texture with white 
+		// non-transparent glyph and 100% transparent background. In shaders we can 
+		// just multiply each pixel of texture by a color to glyph color we need.
+		int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
+		GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
+		m_FontAtlas->unbind();
+
 		FTCall(FT_Done_Face(face));
 		FTCall(FT_Done_FreeType(ft));
 	}

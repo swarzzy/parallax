@@ -8,7 +8,7 @@
 #include <string.h>
 #include <assert.h>
 #include <limits.h>
-#include "texture-atlas.h"
+#include <ext/ftgl/texture-atlas.h>
 
 
 // ------------------------------------------------------ texture_atlas_new ---

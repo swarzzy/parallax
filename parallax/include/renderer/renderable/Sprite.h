@@ -8,10 +8,10 @@ namespace prx {
 		class Sprite: public Renderable2D {
 		public:
 			Sprite(hpm::vec3 position, hpm::vec2 size, unsigned int color);
-			Sprite(hpm::vec3 position, hpm::vec2 size, Texture* texture);
+			Sprite(hpm::vec3 position, hpm::vec2 size, TextureBase* texture);
 
 			inline void setSize(hpm::vec2 size) { m_Size = size; };
-			inline void setTexture(Texture* texture) { if (m_Texture != nullptr) m_Texture = texture; };
+			inline void setTexture(TextureBase* texture) { if (m_Texture != nullptr) m_Texture = texture; };
 		};
 	}
 #endif

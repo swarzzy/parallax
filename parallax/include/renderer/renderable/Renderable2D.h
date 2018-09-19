@@ -4,7 +4,7 @@
 
 #include <hypermath.h>;
 
-#include "../../shading/Texture.h"
+#include "../../textures/TextureBase.h"
 
 namespace prx {
 
@@ -23,14 +23,14 @@ namespace prx {
 			hpm::vec2					m_Size;
 			unsigned int				m_Color;
 			float						m_UVs[8];
-			Texture*					m_Texture;
+			TextureBase*				m_Texture;
 	protected:
 			Renderable2D();
 	public:
 			virtual ~Renderable2D() {};
 
 			Renderable2D(hpm::vec3 position, hpm::vec2 size, unsigned int color);
-			Renderable2D(hpm::vec3 position, hpm::vec2 size, Texture* texture);
+			Renderable2D(hpm::vec3 position, hpm::vec2 size, TextureBase* texture);
 
 			virtual void submit(Renderer2D* renderer) const;
 
