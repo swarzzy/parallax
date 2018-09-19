@@ -21,17 +21,20 @@ namespace prx {
 
 	class Font {
 	private: 
-		std::string		m_FilePath;
-		unsigned int	m_Size;
-		std::map<char, Character> m_Characters;
+		std::string					m_FilePath;
+		unsigned int				m_Size;
+		float						m_Scale;
+
+		std::map<char, Character>	m_Characters;
 	
 	public:
 		Font() {};
-		Font(std::string_view filepath, int size);
+		Font(std::string_view filepath, int size, float scale = 1.0f);
 		~Font();
 
 		inline const std::string&				getFilePath()	const { return m_FilePath;	 };
 		inline unsigned int						getSize()		const { return m_Size;		 };
+		inline float							getScale()		const { return m_Scale;		 };
 		inline const std::map<char, Character>& getCharacters() const { return m_Characters; };
 
 	private:

@@ -30,8 +30,8 @@ void Game::init() {
 			counter++;
 		}
 	}
-	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80);
-	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50);
+	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80, 0.8);
+	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50, 0.5);
 	
 	prx::Font* NotoSans = prx::Resources::getFont(NotoSansID);
 	prx::Font* AbrilFatface = prx::Resources::getFont(AbrilFatfaceID);
@@ -46,7 +46,7 @@ void Game::init() {
 	unsigned int textureID = prx::Resources::loadTexture("res/textures/crate.png");
 	prx::Texture* texture = prx::Resources::getTexture(textureID);
 	//auto texture2 = prx::Resources::loadTexture("res/textures/test.png");
-	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(200, 200), texture);
+	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(20), texture);
 	m_Layer2->add(texSprite);
 	auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
 	

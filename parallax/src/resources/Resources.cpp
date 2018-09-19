@@ -84,7 +84,7 @@ namespace prx {
 		m_Shaders.clear();
 	}
 
-	unsigned int Resources::loadFont(std::string_view fontPath, unsigned int size) {
+	unsigned int Resources::loadFont(std::string_view fontPath, unsigned int size, float scale) {
 		std::stringstream ss;
 		ss << fontPath << size;
 		unsigned int id = SimpleHash::hashString(ss.str());
@@ -97,7 +97,7 @@ namespace prx {
 		}
 		//m_Fonts.emplace(id, fontPath, size);
 		m_Fonts.emplace(std::piecewise_construct, 
-							std::forward_as_tuple(id), std::forward_as_tuple(fontPath, size));
+							std::forward_as_tuple(id), std::forward_as_tuple(fontPath, size, scale));
 		return id;
 	}
 

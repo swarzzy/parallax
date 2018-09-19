@@ -56,7 +56,7 @@ namespace prx {
 		static void clearShaders();
 
 		// FONTS
-		static unsigned int loadFont(std::string_view fontPath, unsigned int size);
+		static unsigned int loadFont(std::string_view fontPath, unsigned int size, float scale = 1.0f);
 		
 		static Font* getFont(unsigned int id);
 		

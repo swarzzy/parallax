@@ -9,8 +9,8 @@
 #include <utils/error_handling/GLErrorHandler.h>
 
 namespace prx {
-	Font::Font(std::string_view filepath, int size) 
-		: m_FilePath(filepath), m_Size(size){
+	Font::Font(std::string_view filepath, int size, float scale) 
+		: m_FilePath(filepath), m_Size(size), m_Scale(scale) {
 		loadFont();
 	}
 
@@ -54,7 +54,7 @@ namespace prx {
 								GL_UNSIGNED_BYTE,
 								face->glyph->bitmap.buffer)
 								);
-			
+
 			int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
 			GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
 

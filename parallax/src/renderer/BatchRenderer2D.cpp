@@ -18,6 +18,7 @@ namespace prx {
 	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
 		auto characters = font->getCharacters();
+		float scale = font->getScale();
 
 		float cursor = 0.0;
 
@@ -45,11 +46,11 @@ namespace prx {
 				ts = static_cast<float>(m_TextureSlots.size());
 			}
 
-			float xpos = position.x + cursor + ch.Bearing.x;
-			float ypos = position.y - (ch.Size.y - ch.Bearing.y);
+			float xpos = (position.x + cursor + ch.Bearing.x) *scale;
+			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) *scale;
 
-			float w = ch.Size.x;
-			float h = ch.Size.y;
+			float w = ch.Size.x * scale;
+			float h = ch.Size.y * scale;
 
 			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
 			m_Buffer->texCoords.x = 0.0;
