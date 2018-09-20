@@ -7,8 +7,8 @@
 
 #include "../utils/SimpleHash.h"
 
-#include "../ext/gorilla/ga.h"
-#include "../ext/gorilla/gau.h"
+#include "../ext/gorilla-audio/ga.h"
+#include "../ext/gorilla-audio/gau.h"
 
 #include "../audio/Sound.h"
 
