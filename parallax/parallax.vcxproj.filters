@@ -25,14 +25,8 @@
     <Filter Include="Header Files\dependencies\gorilla-audio">
       <UniqueIdentifier>{0b2bafbd-2883-4926-8451-013e012725e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\dependencies\gorilla-audio">
-      <UniqueIdentifier>{9a487728-6859-47b0-9517-69f595185147}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\dependencies\gorilla-audio\ext">
       <UniqueIdentifier>{53a99ffd-9d92-4ee7-90af-9dbe2876b603}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\dependencies\gorilla-audio\ext">
-      <UniqueIdentifier>{90ff9483-2a67-49aa-9889-a7fe15519d9b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,93 +95,6 @@
     </ClCompile>
     <ClCompile Include="src\Parallax.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\common\gc_common.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\common\gc_thread.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\devices\ga_openal.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\bitwise.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\framing.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\analysis.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\bitrate.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\codebook.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\envelope.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor1.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\info.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lookup.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lpc.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lsp.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mapping0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mdct.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\psy.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\registry.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\res0.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\sharedbook.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\smallft.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\synthesis.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisenc.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisfile.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\window.c">
-      <Filter>Source Files\dependencies\gorilla-audio\ext</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ga.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\ga_stream.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
-    </ClCompile>
-    <ClCompile Include="ext\gorilla-audio\gau.c">
-      <Filter>Source Files\dependencies\gorilla-audio</Filter>
     </ClCompile>
     <ClCompile Include="src\resources\ResourcesDeprec.cpp">
       <Filter>Source Files</Filter>
@@ -828,6 +735,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ext\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla-audio\devices\ga_xaudio2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\common\gc_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\common\gc_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\common\gc_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\devices\ga_openal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\devices\ga_xaudio2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\ga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\ga_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\gorilla\gau.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

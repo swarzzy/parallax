@@ -19,35 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ext\gorilla-audio\common\gc_common.c" />
-    <ClCompile Include="ext\gorilla-audio\common\gc_thread.c" />
-    <ClCompile Include="ext\gorilla-audio\devices\ga_openal.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\bitwise.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libogg\src\framing.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\analysis.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\bitrate.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\codebook.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\envelope.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor0.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\floor1.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\info.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lookup.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lpc.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\lsp.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mapping0.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\mdct.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\psy.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\registry.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\res0.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\sharedbook.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\smallft.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\synthesis.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisenc.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\vorbisfile.c" />
-    <ClCompile Include="ext\gorilla-audio\ext\libvorbis\lib\window.c" />
-    <ClCompile Include="ext\gorilla-audio\ga.c" />
-    <ClCompile Include="ext\gorilla-audio\gau.c" />
-    <ClCompile Include="ext\gorilla-audio\ga_stream.c" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
@@ -181,6 +152,7 @@
     <ClInclude Include="ext\gorilla-audio\common\gc_thread.h" />
     <ClInclude Include="ext\gorilla-audio\common\gc_types.h" />
     <ClInclude Include="ext\gorilla-audio\devices\ga_openal.h" />
+    <ClInclude Include="ext\gorilla-audio\devices\ga_xaudio2.h" />
     <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\config_types.h" />
     <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\ogg.h" />
     <ClInclude Include="ext\gorilla-audio\ext\libogg\include\ogg\os_types.h" />
@@ -235,6 +207,14 @@
     <ClInclude Include="ext\gorilla-audio\ga.h" />
     <ClInclude Include="ext\gorilla-audio\gau.h" />
     <ClInclude Include="ext\gorilla-audio\ga_internal.h" />
+    <ClInclude Include="ext\gorilla\common\gc_common.h" />
+    <ClInclude Include="ext\gorilla\common\gc_thread.h" />
+    <ClInclude Include="ext\gorilla\common\gc_types.h" />
+    <ClInclude Include="ext\gorilla\devices\ga_openal.h" />
+    <ClInclude Include="ext\gorilla\devices\ga_xaudio2.h" />
+    <ClInclude Include="ext\gorilla\ga.h" />
+    <ClInclude Include="ext\gorilla\gau.h" />
+    <ClInclude Include="ext\gorilla\ga_internal.h" />
     <ClInclude Include="include\audio\Sound.h" />
     <ClInclude Include="include\ext\ftgl\texture-atlas.h" />
     <ClInclude Include="include\ext\ftgl\vec234.h" />
@@ -388,7 +368,7 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>gorilla.lib;freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -432,7 +412,7 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gorilla.lib;freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
