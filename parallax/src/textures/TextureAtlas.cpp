@@ -41,6 +41,11 @@ namespace prx {
 			ASSERT(false);
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, width, height);
+		if (atl.x < 0) {
+			// TODO: Quiet logging
+			//Log::message("TEXTURE ATLAS: Atlas is full. Can not add new region.", LOG_WARNING);
+			return hpm::vec4(-1.0);
+		}
 		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, pixels, width);
 
 		return hpm::vec4(atl.x, atl.y, atl.width, atl.height);
@@ -54,9 +59,41 @@ namespace prx {
 			ASSERT(false);
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, image->getWigth(), image->getHeight());
-		// TODO: Add ifFull checking;
-		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, image->getPixels(), 0);
+		if (atl.x < 0) {
+			//Log::message("TEXTURE ATLAS: Atlas is full. Can not add new region.", LOG_WARNING);
+			return hpm::vec4(-1.0);
+		}
+		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, image->getPixels(), image->getWigth());
 		return hpm::vec4(atl.x, atl.y, atl.width, atl.height);
+	}
+
+	void TextureAtlas::resize(unsigned width, unsigned height) {
+		if (width < m_TextureAtlas->width || height < m_TextureAtlas->height) {
+			Log::message("TEXTURE ATLAS: Can not resize atlas. New size os less than old.", LOG_ERROR);
+			return;
+		}
+
+		unsigned int depth;
+		if (m_Format == TextureFormat::RED)
+			depth = 1;
+		if (m_Format == TextureFormat::RGB)
+			depth = 3;
+		if (m_Format == TextureFormat::RGBA)
+			depth = 4;
+		ftgl::texture_atlas_t* textureAtlasNew;
+		textureAtlasNew = ftgl::texture_atlas_new(width, height, depth);
+
+		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(textureAtlasNew, m_TextureAtlas->width, m_TextureAtlas->height);
+		if (atl.x < 0) {
+			Log::message("TEXTURE ATLAS: Can not resize atlas", LOG_ERROR);
+			return;
+		}
+		ftgl::texture_atlas_set_region(textureAtlasNew, atl.x, atl.y, atl.width, atl.height, m_TextureAtlas->data, m_TextureAtlas->width);
+		ftgl::texture_atlas_delete(m_TextureAtlas);
+		m_TextureAtlas = textureAtlasNew;
+
+		m_Width = m_TextureAtlas->width;
+		m_Height = m_TextureAtlas->height;
 	}
 
 	void TextureAtlas::update() {

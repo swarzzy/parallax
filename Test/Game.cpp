@@ -32,8 +32,8 @@ void Game::init() {
 			counter++;
 		}
 	}
-	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 100, 1.0);
-	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 50, 1.0);
+	unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80, 1.0);
+	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 300, 1.0);
 	
 	prx::Font* NotoSans = prx::Resources::getFont(NotoSansID);
 	prx::Font* AbrilFatface = prx::Resources::getFont(AbrilFatfaceID);
@@ -56,20 +56,10 @@ void Game::init() {
 	auto sprite2 = new prx::Sprite(hpm::vec3(100, 0, 1.0), hpm::vec2(100), texture2);
 	auto sprite3 = new prx::Sprite(hpm::vec3(200, 0, 1.0), hpm::vec2(100), texture3);
 
-	prx::TextureAtlas* atlas  = new prx::TextureAtlas(260, 260, prx::TextureFormat::RGB);
-	atlas->add("res/textures/crate.png");
-	atlas->update();
-
-	auto sprite4 = new prx::Sprite(hpm::vec3(300, 0, 1.0), hpm::vec2(260), atlas);
-
 	//m_Layer2->add(sprite1);
 	//m_Layer2->add(sprite2);
 	//m_Layer2->add(sprite3);
-	//m_Layer2->add(sprite4);
 
-	std::cout << NotoSans->m_FontAtlas->getUsage();
-	auto texSprite = new prx::Sprite(hpm::vec3(100, 100, 1.0), hpm::vec2(NotoSans->m_FontAtlas->getWidth()),NotoSans->m_FontAtlas);
-	m_Layer2->add(texSprite);
 	//auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
 	
 	//m_Layer2->add(sprite);

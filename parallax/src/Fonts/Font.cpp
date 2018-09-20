@@ -51,7 +51,20 @@ namespace prx {
 			char ch = static_cast<char>(i);
 
 			FTCall(FT_Load_Char(face, ch, FT_LOAD_RENDER));
-			hpm::vec4 coords = m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
+			hpm::vec4 coords =  m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
+			if (coords.x < 0.0f) {
+				m_FontAtlas->resize(m_FontAtlas->getWidth() * 1.5, m_FontAtlas->getHeight() * 1.5);
+				
+				// Shifting all old chars coords by 1 because of 
+				// texture atlas resize method implementation
+				
+				for (auto& ch : m_Characters) {
+					ch.second.AtlasCoords.x += 1;
+					ch.second.AtlasCoords.y += 1;
+				}
+
+				coords = m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
+			}
 
 			m_Characters.emplace(std::piecewise_construct, std::forward_as_tuple(ch), std::forward_as_tuple(
 									coords,
@@ -63,9 +76,11 @@ namespace prx {
 		m_FontAtlas->update();
 
 		m_FontAtlas->bind();
+
 		// Passing red chanel value into other channels. So we get texture with white 
 		// non-transparent glyph and 100% transparent background. In shaders we can 
-		// just multiply each pixel of texture by a color to glyph color we need.
+		// just multiply each pixel of texture by a color to get glyph color we need.
+
 		int swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_RED };
 		GLCall(glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask));
 		m_FontAtlas->unbind();

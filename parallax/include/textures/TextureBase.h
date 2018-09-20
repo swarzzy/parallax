@@ -24,9 +24,10 @@ namespace prx {
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		inline unsigned int  getID()	 const { return m_TexID; } 
-		inline unsigned int  getWidth()	 const { return m_Width; }
-		inline unsigned int  getHeight() const { return m_Height;}
+		inline unsigned int  getID()	 const { return m_TexID;  } 
+		inline unsigned int  getWidth()	 const { return m_Width;  }
+		inline unsigned int  getHeight() const { return m_Height; }
+		inline TextureFormat getFormat() const { return m_Format; }
 	
 	public:
 		static GLenum getGLFormat(TextureFormat format) {
