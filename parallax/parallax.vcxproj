@@ -19,45 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ext\freetype\src\autofit\autofit.c" />
-    <ClCompile Include="ext\freetype\src\base\ftbase.c" />
-    <ClCompile Include="ext\freetype\src\base\ftbbox.c" />
-    <ClCompile Include="ext\freetype\src\base\ftbitmap.c" />
-    <ClCompile Include="ext\freetype\src\base\ftdebug.c" />
-    <ClCompile Include="ext\freetype\src\base\ftfntfmt.c" />
-    <ClCompile Include="ext\freetype\src\base\ftfstype.c" />
-    <ClCompile Include="ext\freetype\src\base\ftgasp.c" />
-    <ClCompile Include="ext\freetype\src\base\ftglyph.c" />
-    <ClCompile Include="ext\freetype\src\base\ftgxval.c" />
-    <ClCompile Include="ext\freetype\src\base\ftinit.c" />
-    <ClCompile Include="ext\freetype\src\base\ftlcdfil.c" />
-    <ClCompile Include="ext\freetype\src\base\ftmm.c" />
-    <ClCompile Include="ext\freetype\src\base\ftotval.c" />
-    <ClCompile Include="ext\freetype\src\base\ftpatent.c" />
-    <ClCompile Include="ext\freetype\src\base\ftpfr.c" />
-    <ClCompile Include="ext\freetype\src\base\ftstroke.c" />
-    <ClCompile Include="ext\freetype\src\base\ftsynth.c" />
-    <ClCompile Include="ext\freetype\src\base\ftsystem.c" />
-    <ClCompile Include="ext\freetype\src\base\fttype1.c" />
-    <ClCompile Include="ext\freetype\src\base\ftwinfnt.c" />
-    <ClCompile Include="ext\freetype\src\bdf\bdf.c" />
-    <ClCompile Include="ext\freetype\src\cache\ftcache.c" />
-    <ClCompile Include="ext\freetype\src\cff\cff.c" />
-    <ClCompile Include="ext\freetype\src\cid\type1cid.c" />
-    <ClCompile Include="ext\freetype\src\gzip\ftgzip.c" />
-    <ClCompile Include="ext\freetype\src\lzw\ftlzw.c" />
-    <ClCompile Include="ext\freetype\src\pcf\pcf.c" />
-    <ClCompile Include="ext\freetype\src\pfr\pfr.c" />
-    <ClCompile Include="ext\freetype\src\psaux\psaux.c" />
-    <ClCompile Include="ext\freetype\src\pshinter\pshinter.c" />
-    <ClCompile Include="ext\freetype\src\psnames\psmodule.c" />
-    <ClCompile Include="ext\freetype\src\raster\raster.c" />
-    <ClCompile Include="ext\freetype\src\sfnt\sfnt.c" />
-    <ClCompile Include="ext\freetype\src\smooth\smooth.c" />
-    <ClCompile Include="ext\freetype\src\truetype\truetype.c" />
-    <ClCompile Include="ext\freetype\src\type1\type1.c" />
-    <ClCompile Include="ext\freetype\src\type42\type42.c" />
-    <ClCompile Include="ext\freetype\src\winfonts\winfnt.c" />
     <ClCompile Include="ext\gorilla-audio\common\gc_common.c" />
     <ClCompile Include="ext\gorilla-audio\common\gc_thread.c" />
     <ClCompile Include="ext\gorilla-audio\devices\ga_openal.c" />
@@ -117,6 +78,98 @@
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ext\freetype\freetype\config\ftconfig.h" />
+    <ClInclude Include="ext\freetype\freetype\config\ftheader.h" />
+    <ClInclude Include="ext\freetype\freetype\config\ftmodule.h" />
+    <ClInclude Include="ext\freetype\freetype\config\ftoption.h" />
+    <ClInclude Include="ext\freetype\freetype\config\ftstdlib.h" />
+    <ClInclude Include="ext\freetype\freetype\freetype.h" />
+    <ClInclude Include="ext\freetype\freetype\ftadvanc.h" />
+    <ClInclude Include="ext\freetype\freetype\ftbbox.h" />
+    <ClInclude Include="ext\freetype\freetype\ftbdf.h" />
+    <ClInclude Include="ext\freetype\freetype\ftbitmap.h" />
+    <ClInclude Include="ext\freetype\freetype\ftbzip2.h" />
+    <ClInclude Include="ext\freetype\freetype\ftcache.h" />
+    <ClInclude Include="ext\freetype\freetype\ftchapters.h" />
+    <ClInclude Include="ext\freetype\freetype\ftcid.h" />
+    <ClInclude Include="ext\freetype\freetype\ftdriver.h" />
+    <ClInclude Include="ext\freetype\freetype\fterrdef.h" />
+    <ClInclude Include="ext\freetype\freetype\fterrors.h" />
+    <ClInclude Include="ext\freetype\freetype\ftfntfmt.h" />
+    <ClInclude Include="ext\freetype\freetype\ftgasp.h" />
+    <ClInclude Include="ext\freetype\freetype\ftglyph.h" />
+    <ClInclude Include="ext\freetype\freetype\ftgxval.h" />
+    <ClInclude Include="ext\freetype\freetype\ftgzip.h" />
+    <ClInclude Include="ext\freetype\freetype\ftimage.h" />
+    <ClInclude Include="ext\freetype\freetype\ftincrem.h" />
+    <ClInclude Include="ext\freetype\freetype\ftlcdfil.h" />
+    <ClInclude Include="ext\freetype\freetype\ftlist.h" />
+    <ClInclude Include="ext\freetype\freetype\ftlzw.h" />
+    <ClInclude Include="ext\freetype\freetype\ftmac.h" />
+    <ClInclude Include="ext\freetype\freetype\ftmm.h" />
+    <ClInclude Include="ext\freetype\freetype\ftmodapi.h" />
+    <ClInclude Include="ext\freetype\freetype\ftmoderr.h" />
+    <ClInclude Include="ext\freetype\freetype\ftotval.h" />
+    <ClInclude Include="ext\freetype\freetype\ftoutln.h" />
+    <ClInclude Include="ext\freetype\freetype\ftparams.h" />
+    <ClInclude Include="ext\freetype\freetype\ftpfr.h" />
+    <ClInclude Include="ext\freetype\freetype\ftrender.h" />
+    <ClInclude Include="ext\freetype\freetype\ftsizes.h" />
+    <ClInclude Include="ext\freetype\freetype\ftsnames.h" />
+    <ClInclude Include="ext\freetype\freetype\ftstroke.h" />
+    <ClInclude Include="ext\freetype\freetype\ftsynth.h" />
+    <ClInclude Include="ext\freetype\freetype\ftsystem.h" />
+    <ClInclude Include="ext\freetype\freetype\fttrigon.h" />
+    <ClInclude Include="ext\freetype\freetype\fttypes.h" />
+    <ClInclude Include="ext\freetype\freetype\ftwinfnt.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\autohint.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\cffotypes.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\cfftypes.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftcalc.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftdebug.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftdrv.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\fthash.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftmemory.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftobjs.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftpic.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftpsprop.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftrfork.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftserv.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftstream.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\fttrace.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\ftvalid.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\internal.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\psaux.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\pshints.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svcfftl.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svcid.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svfntfmt.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svkern.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svmetric.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svmm.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svotval.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svprop.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\sfnt.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\t1types.h" />
+    <ClInclude Include="ext\freetype\freetype\internal\tttypes.h" />
+    <ClInclude Include="ext\freetype\freetype\t1tables.h" />
+    <ClInclude Include="ext\freetype\freetype\ttnameid.h" />
+    <ClInclude Include="ext\freetype\freetype\tttables.h" />
+    <ClInclude Include="ext\freetype\freetype\tttags.h" />
+    <ClInclude Include="ext\freetype\ft2build.h" />
     <ClInclude Include="ext\freetype\include\freetype\config\ftconfig.h" />
     <ClInclude Include="ext\freetype\include\freetype\config\ftheader.h" />
     <ClInclude Include="ext\freetype\include\freetype\config\ftmodule.h" />
@@ -186,6 +239,12 @@
     <ClInclude Include="include\ext\ftgl\texture-atlas.h" />
     <ClInclude Include="include\ext\ftgl\vec234.h" />
     <ClInclude Include="include\ext\ftgl\vector.h" />
+    <ClInclude Include="include\ext\GLFW\glfw3.h" />
+    <ClInclude Include="include\ext\GLFW\glfw3native.h" />
+    <ClInclude Include="include\ext\GL\eglew.h" />
+    <ClInclude Include="include\ext\GL\glew.h" />
+    <ClInclude Include="include\ext\GL\glxew.h" />
+    <ClInclude Include="include\ext\GL\wglew.h" />
     <ClInclude Include="include\Fonts\Font.h" />
     <ClInclude Include="include\Parallax.h" />
     <ClInclude Include="include\renderer\BatchRenderer2D.h" />
@@ -285,14 +344,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\freetype\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\include\ext\freetype;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
     <ReferencePath>$(SolutionDir)parallax\bin;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\ext\freetype\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\include;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\ext\gorilla-audio\ext\libogg\include;$(SolutionDir)parallax\ext\gorilla-audio\ext\libvorbis\include;$(SolutionDir)parallax\include\ext\freetype;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
@@ -321,7 +380,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;ENABLE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;ENABLE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
@@ -329,7 +388,7 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -360,7 +419,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_LIB;ENABLE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;ENABLE_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -373,7 +432,7 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

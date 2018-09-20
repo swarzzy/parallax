@@ -56,19 +56,19 @@ void Game::init() {
 	auto sprite2 = new prx::Sprite(hpm::vec3(100, 0, 1.0), hpm::vec2(100), texture2);
 	auto sprite3 = new prx::Sprite(hpm::vec3(200, 0, 1.0), hpm::vec2(100), texture3);
 
-	//m_Layer2->add(sprite1);
-	//m_Layer2->add(sprite2);
-	//m_Layer2->add(sprite3);
+	m_Layer2->add(sprite1);
+	m_Layer2->add(sprite2);
+	m_Layer2->add(sprite3);
 
 	//auto sprite = new prx::Sprite(hpm::vec3(300, 300, 1.0), hpm::vec2(200, 200), 0xffffffff);
 	
 	//m_Layer2->add(sprite);
 	
-	//unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
-	//m_Sound = prx::Resources::getSound(soundID);
+	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
+	m_Sound = prx::Resources::getSound(soundID);
 	
 	float gain = 1.0;
-	//m_Sound->play();
+	m_Sound->play();
 }
 
 void Game::tick() {
@@ -84,14 +84,14 @@ void Game::update() {
 }
 
 void Game::render() {
-	//if (m_Window->isKeyPressed(GLFW_KEY_P))
-		//m_Sound->pause();
-	//if (m_Window->isKeyPressed(GLFW_KEY_S))
-		//m_Sound->play();
-	//if (m_Window->isKeyPressed(GLFW_KEY_R))
-		//m_Sound->stop();
-	//if (m_Window->isKeyPressed(GLFW_KEY_L))
-		//m_Sound->loop();
+	if (m_Window->isKeyPressed(GLFW_KEY_P))
+		m_Sound->pause();
+	if (m_Window->isKeyPressed(GLFW_KEY_S))
+		m_Sound->play();
+	if (m_Window->isKeyPressed(GLFW_KEY_R))
+		m_Sound->stop();
+	if (m_Window->isKeyPressed(GLFW_KEY_L))
+		m_Sound->loop();
 	
 	m_Layer->draw();
 	m_Layer2->draw();

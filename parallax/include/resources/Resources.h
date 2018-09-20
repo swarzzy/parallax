@@ -10,12 +10,13 @@
 #include "../ext/gorilla-audio/ga.h"
 #include "../ext/gorilla-audio/gau.h"
 
+#include "../audio/Sound.h"
+
 namespace prx {
 
 	class Texture;
 	class Font;
 	class Shader;
-	class Sound;
 
 	static const char*			RESOURCES_DEFAULT_TEXTURE_PATH	= "res/textures/default.jpg";
 	static const char*			RESOURCES_DEFAULT_TEXTURE_NAME	= "parallax_default_texture";
