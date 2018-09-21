@@ -4,8 +4,8 @@
 
 #include <string>
 
-#include "../ext/gorilla-audio/ga.h"
-#include "../ext/gorilla-audio/gau.h"
+#include "../ext/gorilla/ga.h"
+#include "../ext/gorilla/gau.h"
 
 namespace prx {
 	class Window;
