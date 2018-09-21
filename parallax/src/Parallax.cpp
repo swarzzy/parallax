@@ -1,11 +1,11 @@
 #include <Parallax.h>
 
 namespace prx {
-	Window* Application::parallaxInit(std::string_view title, int width, int height,
+	Window* Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 		LOG_LEVEL logLevel, unsigned int clearColor) {
 		prx::Log::setLevel(logLevel);
 		Resources::initAudioSystem();
-		m_Window = new Window(title, width, height);
+		m_Window = new Window(title, width, height, fullscreen);
 		m_Window->setClearColor(clearColor);
 		Resources::init();
 		return m_Window;
@@ -60,7 +60,7 @@ namespace prx {
 	Window* Application::parallaxInit() {
 		prx::Log::setLevel(prx::LOG_DEFAULT);
 		Resources::initAudioSystem();
-		m_Window = new Window("parallax", 800, 600);
+		m_Window = new Window("parallax", 800, 600, false);
 		m_Window->setClearColor(0xff000000);
 		Resources::init();
 		return m_Window;

@@ -32,7 +32,7 @@ namespace prx {
 		virtual ~Application();
 		
 		Window* parallaxInit();
-		Window* parallaxInit(std::string_view title, int width, int height,
+		Window* parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 			LOG_LEVEL logLevel, unsigned int clearColor);
 		
 		// Once at start

@@ -11,23 +11,32 @@ namespace prx {
 	void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-	Window::Window(std::string_view title, int width, int height)
+	Window::Window(std::string_view title, int width, int height, bool fullscreen)
 		: m_Title(title), m_Width(width), m_Height(height), m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
-		m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
+		m_FullScreen(fullscreen), m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
 		if (!init())
 			glfwTerminate();
 	}
 
 
 	bool Window::init() {
-	
+		
+		// Initialize GLFW
 		if (!glfwInit()) {
 			prx::Log::message("Failed to init GLFW", prx::LOG_ERROR);
 			return false;
 		}
 
-		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+		//Getting monitor configuration
+		m_Monitor = glfwGetPrimaryMonitor();
+
+		if (m_FullScreen)
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), m_Monitor, nullptr);
+		else
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+
 		if (!m_Window) {
 			glfwTerminate();
 			prx::Log::message("Failed to create window", prx::LOG_ERROR);
@@ -39,10 +48,12 @@ namespace prx {
 		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
 		glfwSetScrollCallback(m_Window, scroll_callback);
+		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
 		glfwSwapInterval(0.0);
 
 		glfwSetWindowUserPointer(m_Window, this);
 
+		// Initialize keys events handling system
 		memset(m_KeysCurrentState,  false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
 		memset(m_KeysPrevState,		false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
 		memset(m_KeysPressed,		false, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
@@ -56,11 +67,15 @@ namespace prx {
 		m_CursorX = m_Width / 2;
 		m_CursorY = m_Width / 2;
 
+		// Initialize GLEW
 		if (glewInit() != GLEW_OK) {
 			prx::Log::message("Failed to initialize GLEW", prx::LOG_ERROR);
 			glfwTerminate();
 			return false;
 		}
+
+		// Setting GL viewport
+		GLCall(glViewport(0, 0, m_Width, m_Height));
 
 		std::stringstream ss;
 		ss << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
@@ -169,6 +184,25 @@ namespace prx {
 			glClear(GL_DEPTH_BUFFER_BIT);
 	}
 
+	void Window::resize(unsigned width, unsigned height) {
+		m_Width  = width;
+		m_Height = height;
+		glfwSetWindowSize(m_Window, width, height);
+		GLCall(glViewport(0, 0, width, height));
+	}
+
+	void Window::enableFullScreen(bool fullscreen) {
+		if (!m_FullScreen && fullscreen) {
+			const GLFWvidmode* mode = glfwGetVideoMode(m_Monitor);
+			glfwSetWindowMonitor(m_Window, m_Monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			m_FullScreen = true;
+		}
+		else if (m_FullScreen && !fullscreen) {
+			glfwSetWindowMonitor(m_Window, NULL, 0, 0, m_Width, m_Height, 0);
+			m_FullScreen = false;
+		}
+	}
+
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		if (key >= 0 && key < PARALLAX_INPUT_MAX_KEYS) {
@@ -205,6 +239,13 @@ namespace prx {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		win->m_ScrollOffsetX += xoffset;
 		win->m_ScrollOffsetY += yoffset;
+	}
+
+	void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+		win->m_Width = width;
+		win->m_Height = height;
+		GLCall(glViewport(0, 0, width, height));
 	}
 }
 

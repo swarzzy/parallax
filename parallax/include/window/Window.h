@@ -22,7 +22,9 @@ namespace prx {
 		std::string	 m_Title;
 		unsigned int m_Width, m_Height;
 		GLFWwindow*	 m_Window;
+		GLFWmonitor* m_Monitor;
 		hpm::vec3	 m_ClearColor;
+		bool		 m_FullScreen;
 
 		bool m_KeysCurrentState	[PARALLAX_INPUT_MAX_KEYS];
 		bool m_KeysPrevState	[PARALLAX_INPUT_MAX_KEYS];
@@ -41,11 +43,15 @@ namespace prx {
 				m_ScrollOffsetY;
 		
 	public:
-		Window(std::string_view title, int width, int height);
+		Window(std::string_view title, int width, int height, bool fullscreen);
 		~Window();
 
 		void update();
 		void clear(unsigned int flags) const;
+
+		void resize(unsigned int width, unsigned int height);
+
+		void enableFullScreen(bool fullscreen);
 
 		bool isClosed() const;
 
@@ -59,10 +65,10 @@ namespace prx {
 
 		inline GLFWwindow* getWindowPointer() const { return m_Window; };
 		
-		inline unsigned int getWidth() const { return m_Width; };
+		inline unsigned int getWidth() const  { return m_Width; };
 		inline unsigned int getHeight() const { return m_Height; };
 		
-		inline hpm::vec2 getCursorPos() const { return hpm::vec2(m_CursorX, m_CursorY); };
+		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };
 		
 		void setClearColor(unsigned int color);
@@ -73,6 +79,7 @@ namespace prx {
 		friend static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 		friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 		friend static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+		friend static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	};
 }
 

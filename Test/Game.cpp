@@ -73,11 +73,15 @@ void Game::init() {
 
 void Game::tick() {
 	m_FPSCounter->update();
+	std::cout << m_Window->getWidth() << std::endl;
+	std::cout << m_Window->getHeight() << std::endl;
+	m_Layer->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
+	m_Layer2->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
 }
 
 void Game::update() {
 	hpm::vec2 cursorPos = m_Window->getCursorPos();
-	cursorPos.y = 600 - cursorPos.y;
+	cursorPos.y = m_Window->getHeight() - cursorPos.y;
 
 	m_Shader->bind();
 	m_Shader->setUniform("u_lightPos", cursorPos);
@@ -92,6 +96,10 @@ void Game::render() {
 		m_Sound->stop();
 	if (m_Window->isKeyPressed(GLFW_KEY_L))
 		m_Sound->loop();
+	if (m_Window->isKeyPressed(GLFW_KEY_G))
+		m_Window->enableFullScreen(true);
+	if (m_Window->isKeyPressed(GLFW_KEY_F))
+		m_Window->enableFullScreen(false);
 	
 	m_Layer->draw();
 	m_Layer2->draw();
