@@ -8,6 +8,9 @@
 #include "../parallax/include/textures/Texture.h"
 #include <experimental/filesystem>
 #include <filesystem>
+#include "../parallax/include/renderer/layers/UILayer.h"
+#include "../parallax/include/renderer/renderable/UI/UIButton.h"
+#include "ButtonListener.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -66,8 +69,8 @@ void Game::init() {
 	//
 	////m_Layer2->add(sprite);
 	//
-	//unsigned int soundID = prx::Resources::loadSound("test", "res/audio/shotgun.wav");
-	//m_Sound = prx::Resources::getSound(soundID);
+	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
+	m_Sound = prx::Resources::getSound(soundID);
 	//
 	//float gain = 1.0;
 	//m_Sound->play();
@@ -77,23 +80,36 @@ void Game::init() {
 	std::uniform_int_distribution<unsigned int> DistribX(0, 750);
 	std::uniform_int_distribution<unsigned int> DistribY(0, 550);
 
-	for (int i = 0; i < 8; i++)
+	/*for (int i = 0; i < 8; i++)
 		m_Path.pop_back();
 	std::string path = m_Path + "res\\textures";
 	for (auto& p : std::filesystem::directory_iterator(path)) {
 		m_Layer2->add(new prx::Sprite(hpm::vec3(DistribX(engine), DistribY(engine), 1.0), hpm::vec2(100), new prx::Texture(p.path().string())));
 		
-	}
+	}*/
 
 	m_FPSCounter = new prx::FPSCounter(*this);
 	m_Layer2->add(m_FPSCounter);
-		
+	//m_Layer2->add(new prx::UIButton(hpm::vec3(100, 100, 0.0), 200, "Button"));
+	//auto buttonID = prx::Resources::loadTexture("res/textures/button.png");
+	//auto button = prx::Resources::getTexture(buttonID);
+	//m_Layer2->add(new prx::Label("button", hpm::vec3(200, 200, 0), prx::Resources::getFont(prx::Resources::loadFont("res/fonts/BMKIRANGHAERANG-TTF.ttf", 60)), 0xffffffff));
+	m_Ui = new prx::UILayer(m_Window);
+	auto button = new prx::UIButton(hpm::vec3(100, 300, 0.0), 200, "Play");
+	auto button2 = new prx::UIButton(hpm::vec3(500, 300, 0.0), 200, "Pause");
+	std::cout << button->getID() << std::endl;
+	std::cout << button2->getID() << std::endl;
+	auto listener = new prx::event::ButtonListener(this);
+	button->setOnClickListener(*listener);
+	button2->setOnClickListener(*listener);
+	m_Ui->addWidget(button);
+	m_Ui->addWidget(button2);
 }
 
 void Game::tick() {
 	m_FPSCounter->update();
-	std::cout << m_Window->getWidth() << std::endl;
-	std::cout << m_Window->getHeight() << std::endl;
+	//std::cout << m_Window->getWidth() << std::endl;
+	//std::cout << m_Window->getHeight() << std::endl;
 	//m_Layer->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
 	m_Layer2->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
 }
@@ -101,6 +117,7 @@ void Game::tick() {
 void Game::update() {
 	hpm::vec2 cursorPos = m_Window->getCursorPos();
 	cursorPos.y = m_Window->getHeight() - cursorPos.y;
+	//std::cout << m_Window->getCursorPos().x << " " << m_Window->getCursorPos().y << std::endl;
 
 	//m_Shader->bind();
 	//m_Shader->setUniform("u_lightPos", cursorPos);
@@ -117,9 +134,10 @@ void Game::render() {
 		m_Sound->loop();
 	if (m_Window->isKeyPressed(GLFW_KEY_G))
 		m_Window->enableFullScreen(true);
-	if (m_Window->isKeyPressed(GLFW_KEY_F))
-		m_Window->enableFullScreen(false);
-	
+	//if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+		//std::cout << "wow" << std::endl;
+	m_Ui->draw();
 	//m_Layer->draw();
 	m_Layer2->draw();
+	m_Ui->update();
 }

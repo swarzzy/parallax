@@ -68,7 +68,7 @@ namespace prx {
 		inline unsigned int getWidth() const  { return m_Width; };
 		inline unsigned int getHeight() const { return m_Height; };
 		
-		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_CursorY); };
+		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_Height - m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };
 		
 		void setClearColor(unsigned int color);

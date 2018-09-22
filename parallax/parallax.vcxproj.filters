@@ -111,6 +111,12 @@
     <ClCompile Include="src\ext\ftgl\texture-atlas.c">
       <Filter>Source Files\FTGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\layers\UILayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -537,6 +543,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ext\freetype\ft2build.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\layers\UILayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\renderable\UI\UIButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event\UI\Listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event\UI\OnClickListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\renderable\UI\UIWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

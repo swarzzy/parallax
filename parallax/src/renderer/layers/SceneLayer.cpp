@@ -10,11 +10,4 @@ namespace prx {
 
 	SceneLayer::~SceneLayer() {
 	}
-
-	void SceneLayer::setProjectionMatrix(const hpm::mat4& matrix) {
-		m_ProjectionMatrix = matrix;
-		m_Shader->bind();
-		m_Shader->setUniform("u_ProjectionMatrix", matrix);
-		m_Shader->unbind();
-	}
 }

@@ -9,8 +9,6 @@ namespace prx {
 	public:
 		SceneLayer(Shader* shader);
 		~SceneLayer();
-
-		void setProjectionMatrix(const hpm::mat4& matrix);
 	};
 }
 #endif

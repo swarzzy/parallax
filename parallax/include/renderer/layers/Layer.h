@@ -23,6 +23,8 @@ namespace prx {
 		virtual ~Layer();
 		virtual void add(Renderable2D* renderable);
 		virtual void draw();
+
+		void setProjectionMatrix(const hpm::mat4& matrix);
 	};
 }
 #endif

@@ -118,7 +118,7 @@ namespace prx {
 					flush();
 					begin();
 					m_TextureSlots.clear();
-					m_TextureSlots.resize(0);
+					//m_TextureSlots.resize(0);
 				}
 				
 				m_TextureSlots.push_back(texID);

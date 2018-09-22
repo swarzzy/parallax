@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp" />
+    <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
@@ -50,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\audio\Sound.h" />
+    <ClInclude Include="include\event\UI\Listener.h" />
+    <ClInclude Include="include\event\UI\OnClickListener.h" />
     <ClInclude Include="include\ext\freetype\freetype\config\ftconfig.h" />
     <ClInclude Include="include\ext\freetype\freetype\config\ftheader.h" />
     <ClInclude Include="include\ext\freetype\freetype\config\ftmodule.h" />
@@ -160,12 +164,15 @@
     <ClInclude Include="include\renderer\buffer\VertexBufferLayout.h" />
     <ClInclude Include="include\renderer\layers\Layer.h" />
     <ClInclude Include="include\renderer\layers\SceneLayer.h" />
+    <ClInclude Include="include\renderer\layers\UILayer.h" />
     <ClInclude Include="include\renderer\renderable\FPSCounter.h" />
     <ClInclude Include="include\renderer\renderable\Group.h" />
     <ClInclude Include="include\renderer\renderable\Label.h" />
     <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
     <ClInclude Include="include\renderer\renderable\Sprite.h" />
     <ClInclude Include="include\renderer\renderable\StaticSprite.h" />
+    <ClInclude Include="include\renderer\renderable\UI\UIButton.h" />
+    <ClInclude Include="include\renderer\renderable\UI\UIWidget.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
     <ClInclude Include="include\renderer\SimpleRenderer2D.h" />
     <ClInclude Include="include\resources\FileReader.h" />
