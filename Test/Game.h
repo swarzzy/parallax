@@ -15,8 +15,10 @@ private:
 	prx::SceneLayer* m_Layer;
 	prx::SceneLayer* m_Layer2;
 	prx::FPSCounter* m_FPSCounter;
+	std::string m_Path;
 public:
-	Game() {};
+	Game(std::string_view path) 
+		: m_Path(path) {};
 	~Game() {};
 
 	void init() override;

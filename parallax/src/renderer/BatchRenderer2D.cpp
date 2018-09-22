@@ -37,7 +37,8 @@ namespace prx {
 				flush();
 				begin();
 				m_TextureSlots.clear();
-				m_TextureSlots.resize(0);
+				//m_TextureSlots.resize(0);
+				//m_TextureSlots.reserve(32);
 			}
 
 			m_TextureSlots.push_back(atlasID);
@@ -89,6 +90,8 @@ namespace prx {
 	void BatchRenderer2D::begin() {
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
 		GLCall(m_Buffer = static_cast<VertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
+		// NOTE: Is that actually faster to clear slots?
+		m_TextureSlots.clear();
 	}
 
 	void BatchRenderer2D::submit(const Renderable2D & renderable)

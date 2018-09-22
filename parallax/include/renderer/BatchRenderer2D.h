@@ -32,6 +32,7 @@ namespace prx {
 		std::vector<unsigned int>	 m_TextureSlots;
 		int							 m_IndexCount;
 		VertexData*					 m_Buffer;
+		std::map<unsigned short, unsigned short> m_TextureBindings;
 
 	public:
 		BatchRenderer2D();
