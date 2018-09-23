@@ -1,9 +1,9 @@
 #include <resources/Resources.h>
 
-#include "../textures/Texture.h"
-#include "../Fonts/Font.h"
-#include "../shading/Shader.h"
-#include "../audio/Sound.h"
+#include <textures/Texture.h>
+#include <Fonts/Font.h>
+#include <shading/Shader.h>
+#include <audio/Sound.h>
 
 #include <utils/SimpleHash.h>
 
