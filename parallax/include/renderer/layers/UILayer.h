@@ -4,24 +4,23 @@
 
 #include "Layer.h"
 #include "../../window/Window.h"
-#include "../renderable/UI/UIWidget.h"
+#include "../renderable/UI/UIClickable.h"
+
 
 namespace prx {
 	class UILayer : public Layer {
 	private:
-		Window* m_Window;
 		std::vector<UIWidget*>	m_Widgets;
-		std::vector<UIWidget*>	m_ClickableWidgets;
 	
 	public:
-		UILayer(Window* window);
+		UILayer();
 		~UILayer();
 
-		void addWidget(UIWidget* widget);
-
-		void update();
+		void add(Renderable2D* renderable) override;
 
 		void draw() override;
+
+		void update();
 
 		void updateProjectionMatrix();
 

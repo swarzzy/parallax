@@ -9,8 +9,10 @@
 #include <experimental/filesystem>
 #include <filesystem>
 #include "../parallax/include/renderer/layers/UILayer.h"
-#include "../parallax/include/renderer/renderable/UI/UIButton.h"
+#include "../parallax/include/renderer/renderable/UI/UIButtonBase.h"
 #include "ButtonListener.h"
+#include "../parallax/include/renderer/renderable/UI/UIGroup.h"
+#include "../parallax/include/renderer/renderable/UI/UIButton.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -94,16 +96,21 @@ void Game::init() {
 	//auto buttonID = prx::Resources::loadTexture("res/textures/button.png");
 	//auto button = prx::Resources::getTexture(buttonID);
 	//m_Layer2->add(new prx::Label("button", hpm::vec3(200, 200, 0), prx::Resources::getFont(prx::Resources::loadFont("res/fonts/BMKIRANGHAERANG-TTF.ttf", 60)), 0xffffffff));
-	m_Ui = new prx::UILayer(m_Window);
-	auto button = new prx::UIButton(hpm::vec3(100, 300, 0.0), 200, "Play");
-	auto button2 = new prx::UIButton(hpm::vec3(500, 300, 0.0), 200, "Pause");
+	prx::Texture* bplr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_released.png"));
+	prx::Texture* bplp = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_pressed.png"));
+	prx::Texture* bpr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_released.png"));
+	prx::Texture* bpp = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_pressed.png"));
+	m_Ui = new prx::UILayer();
+	auto button = new prx::UIButton(hpm::vec3(200, 300, 0.0), 100, bplp, bplr);
+	auto button2 = new prx::UIButton(hpm::vec3(500, 300, 0.0), 100, bpp, bpr);
 	std::cout << button->getID() << std::endl;
 	std::cout << button2->getID() << std::endl;
 	auto listener = new prx::event::ButtonListener(this);
 	button->setOnClickListener(*listener);
 	button2->setOnClickListener(*listener);
-	m_Ui->addWidget(button);
-	m_Ui->addWidget(button2);
+	m_Ui->add(button);
+	m_Ui->add(button2);
+	
 }
 
 void Game::tick() {

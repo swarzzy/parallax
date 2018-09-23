@@ -5,7 +5,7 @@
 #include "../ext/GL/glew.h"
 #include "../ext/GLFW/glfw3.h"
 
-#include <hypermath.h>;
+#include <hypermath.h>
 
 namespace prx {
 
@@ -17,8 +17,12 @@ namespace prx {
 		DEPTH_BUFFER = 1 << 1	//0001
 	};
 
+	// Only one instance can exist at the same time.
 	class Window {
 	private:
+
+		static Window* m_CurrentWindow;
+		
 		std::string	 m_Title;
 		unsigned int m_Width, m_Height;
 		GLFWwindow*	 m_Window;
@@ -36,18 +40,22 @@ namespace prx {
 		bool m_MouseButtonsPressed		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 		bool m_MouseButtonsReleased		[PARALLAX_INPUT_MAX_MOUSE_BUTTONS];
 
-		double	m_CursorX, 
-				m_CursorY;
+		float m_CursorX, 
+			  m_CursorY;
 		
-		double	m_ScrollOffsetX, 
-				m_ScrollOffsetY;
+		float m_ScrollOffsetX, 
+			  m_ScrollOffsetY;
 		
 	public:
+		
+		// Only one instance can exist at the same time.
 		Window(std::string_view title, int width, int height, bool fullscreen);
 		~Window();
 
+		static inline const Window& getCurrentWindow() { return *m_CurrentWindow; };
+
 		void update();
-		void clear(unsigned int flags) const;
+		void clear(unsigned int flags);
 
 		void resize(unsigned int width, unsigned int height);
 
@@ -63,7 +71,7 @@ namespace prx {
 		bool isMouseButtonPressed	(GLenum button) const;
 		bool isMouseButtonReleased	(GLenum button) const;
 
-		inline GLFWwindow* getWindowPointer() const { return m_Window; };
+		inline GLFWwindow* getWindowPointer() { return m_Window; };
 		
 		inline unsigned int getWidth() const  { return m_Width; };
 		inline unsigned int getHeight() const { return m_Height; };

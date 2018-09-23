@@ -13,11 +13,19 @@ namespace prx {
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+	Window* Window::m_CurrentWindow = nullptr;
+
 	Window::Window(std::string_view title, int width, int height, bool fullscreen)
 		: m_Title(title), m_Width(width), m_Height(height), m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
 		m_FullScreen(fullscreen), m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
+		if (m_CurrentWindow != nullptr) {
+			Log::message("WINDOW: Only one window can exist at the same time.", LOG_ERROR);
+			ASSERT(m_CurrentWindow == nullptr);
+		}
+
 		if (!init())
 			glfwTerminate();
+		m_CurrentWindow = this;
 	}
 
 
@@ -88,6 +96,7 @@ namespace prx {
 	}
 	Window::~Window() {
 		glfwTerminate();
+		m_CurrentWindow = nullptr;
 	}
 
 	bool Window::isClosed() const {
@@ -177,7 +186,7 @@ namespace prx {
 		glfwSwapBuffers(m_Window);
 	}
 
-	void Window::clear(unsigned int flags) const {
+	void Window::clear(unsigned int flags) {
 		if (flags & COLOR_BUFFER)
 			glClear(GL_COLOR_BUFFER_BIT);
 		if (flags & DEPTH_BUFFER)

@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp" />
+    <ClCompile Include="src\renderer\renderable\UI\UIClickable.cpp" />
+    <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
     <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
@@ -172,6 +174,8 @@
     <ClInclude Include="include\renderer\renderable\Sprite.h" />
     <ClInclude Include="include\renderer\renderable\StaticSprite.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIButton.h" />
+    <ClInclude Include="include\renderer\renderable\UI\UIButtonBase.h" />
+    <ClInclude Include="include\renderer\renderable\UI\UIClickable.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIWidget.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
     <ClInclude Include="include\renderer\SimpleRenderer2D.h" />

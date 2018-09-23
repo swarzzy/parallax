@@ -29,8 +29,8 @@ namespace prx {
 	public:
 			virtual ~Renderable2D() {};
 
-			Renderable2D(hpm::vec3 position, hpm::vec2 size, unsigned int color);
-			Renderable2D(hpm::vec3 position, hpm::vec2 size, TextureBase* texture);
+			Renderable2D(const hpm::vec3& position, const hpm::vec2& size, unsigned int color);
+			Renderable2D(const hpm::vec3& position, const hpm::vec2& size, TextureBase* texture);
 
 			virtual void submit(Renderer2D* renderer) const;
 

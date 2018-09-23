@@ -2,6 +2,9 @@
 
 #include <textures/Texture.h>
 #include <Fonts/Font.h>
+
+#include <exception>
+
 #include <shading/Shader.h>
 #include <audio/Sound.h>
 
@@ -19,9 +22,12 @@ namespace prx {
 	ga_Mixer*		Resources::m_gaMixer	= nullptr;
 
 	bool Resources::initAudioSystem() {
+			
 		gc_result result = gc_initialize(NULL);
-		m_gaManager = gau_manager_create_custom(GA_DEVICE_TYPE_DEFAULT, GAU_THREAD_POLICY_MULTI, 4, 512);
-		m_gaMixer = gau_manager_mixer(m_gaManager);
+		
+			//m_gaManager = gau_manager_create();
+			m_gaManager = gau_manager_create_custom(GA_DEVICE_TYPE_OPENAL, GAU_THREAD_POLICY_MULTI, 4, 512);
+			m_gaMixer = gau_manager_mixer(m_gaManager);
 
 		if (result == GC_ERROR_GENERIC || m_gaMixer == nullptr || m_gaManager == nullptr) {
 			Log::message("RESOURCE MANAGER: Could not initialize audio system!", LOG_ERROR);
@@ -35,6 +41,13 @@ namespace prx {
 							std::forward_as_tuple(RESOURCES_DEFAULT_FONT_PATH, RESOURCES_DEFAULT_FONT_SIZE));
 		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_ID), 
 							std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_PATH));
+
+		// UI Default textures
+		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_ID),
+			std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_PATH));
+		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_ID),
+			std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH));
+
 		if (m_gaManager == nullptr) {
 			Log::message("RESOURCE MANAGER: Audio system is not initialized!", LOG_WARNING);
 			return false;

@@ -10,8 +10,8 @@ namespace prx {
 namespace prx::event {
 	class OnClickListener : public Listener {
 	public:
-		virtual void onClick(UIButton* widget) = 0;
-		virtual void onRelease(UIButton* widget) {};
+		virtual void onClick(UIButtonBase* widget) = 0;
+		virtual void onRelease(UIButtonBase* widget) {};
 	};
 }
 #endif

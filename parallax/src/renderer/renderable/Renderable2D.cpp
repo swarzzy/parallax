@@ -8,11 +8,11 @@ namespace prx {
 		: m_Position(hpm::vec3(0.0)), m_Size(hpm::vec2(0.0)), m_Color(0xffffffff), m_Texture(nullptr) 
 	{ setDefaultUVs(); }
 
-	prx::Renderable2D::Renderable2D(hpm::vec3 position, hpm::vec2 size, unsigned int color)
+	prx::Renderable2D::Renderable2D(const hpm::vec3& position, const hpm::vec2& size, unsigned int color)
 		: m_Position(position), m_Size(size), m_Color(color), m_Texture(nullptr)
 	{ setDefaultUVs(); }
 
-	Renderable2D::Renderable2D(hpm::vec3 position, hpm::vec2 size, TextureBase* texture)
+	Renderable2D::Renderable2D(const hpm::vec3& position, const hpm::vec2& size, TextureBase* texture)
 		: m_Position(position), m_Size(size), m_Color(0xffffffff), m_Texture(texture)
 	{ setDefaultUVs(); }
 		

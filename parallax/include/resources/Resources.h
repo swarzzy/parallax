@@ -26,6 +26,11 @@ namespace prx {
 	static const unsigned int	RESOURCES_DEFAULT_FONT_ID		= SimpleHash::hashString(RESOURCES_DEFAULT_FONT_NAME);
 	static const unsigned int	RESOURCES_DEFAULT_FONT_SIZE		= 30;
 
+	static const char*			UI_BUTTON_DEFAULT_TEXTURE_PRESSED_PATH = "res/textures/button_pressed.png";
+	static const unsigned int	UI_BUTTON_DEFAULT_TEXTURE_PRESSED_ID = SimpleHash::hashString(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_PATH);
+	static const char*			UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH = "res/textures/button_released.png";
+	static const unsigned int	UI_BUTTON_DEFAULT_TEXTURE_RELEASED_ID = SimpleHash::hashString(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH);
+
 	class Resources {
 	private:
 

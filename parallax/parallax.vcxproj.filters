@@ -114,6 +114,12 @@
     <ClCompile Include="src\renderer\layers\UILayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\renderable\UI\UIClickable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -548,9 +554,6 @@
     <ClInclude Include="include\renderer\layers\UILayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\renderer\renderable\UI\UIButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\event\UI\Listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -558,6 +561,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\renderer\renderable\UI\UIWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\renderable\UI\UIClickable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\renderable\UI\UIButtonBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\renderer\renderable\UI\UIButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
