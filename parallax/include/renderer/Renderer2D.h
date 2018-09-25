@@ -11,8 +11,7 @@ namespace prx {
 	class Renderer2D {
 	protected:
 		std::vector<hpm::mat4> m_TransformationStack;
-		// TODO: make this matrix pointer
-		hpm::mat4 m_TransformationStackBack;
+		hpm::mat4			   m_TransformationStackBack;
 	protected:
 		Renderer2D();
 	public:

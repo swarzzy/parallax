@@ -13,7 +13,7 @@ namespace prx {
 		UIButton(hpm::vec3 position, float size, std::string_view text, 
 				 Texture* customTexPressed, Texture* customTexReleased);
 
-		UIButton(hpm::vec3 position, float size, std::string_view text, Font* custonFont, 
+		UIButton(hpm::vec3 position, float size, std::string_view text, Font* customFont, 
 				 Texture* customTexPressed, Texture* customTexReleased);
 
 		UIButton(hpm::vec3 position, float size);

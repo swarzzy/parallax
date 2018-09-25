@@ -6,7 +6,7 @@
 
 namespace prx {
 	UIButtonBase::UIButtonBase(hpm::vec3 position, hpm::vec2 size, std::string_view text, Font* font, Texture* texPressed, Texture* texReleased)
-				 : UIClickable(position, size, texReleased, true),
+				 : UIClickable(position, size, texReleased, false),
 				   m_Label(text),
 				   m_Font(font),
 				   m_PressedTex(texPressed),

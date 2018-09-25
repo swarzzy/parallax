@@ -118,12 +118,12 @@ void Game::tick() {
 	//std::cout << m_Window->getWidth() << std::endl;
 	//std::cout << m_Window->getHeight() << std::endl;
 	//m_Layer->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
-	m_Layer2->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
+	//m_Layer2->setProjectionMatrix(hpm::mat4::ortho(0.0, m_Window->getWidth(), m_Window->getHeight(), 0.0, -10.0, 100.0));
 }
 
 void Game::update() {
-	hpm::vec2 cursorPos = m_Window->getCursorPos();
-	cursorPos.y = m_Window->getHeight() - cursorPos.y;
+	//hpm::vec2 cursorPos = m_Window->getCursorPos();
+	//cursorPos.y = m_Window->getHeight() - cursorPos.y;
 	//std::cout << m_Window->getCursorPos().x << " " << m_Window->getCursorPos().y << std::endl;
 
 	//m_Shader->bind();
@@ -131,16 +131,10 @@ void Game::update() {
 }
 
 void Game::render() {
-	if (m_Window->isKeyPressed(GLFW_KEY_P))
-		m_Sound->pause();
-	if (m_Window->isKeyPressed(GLFW_KEY_S))
-		m_Sound->play();
-	if (m_Window->isKeyPressed(GLFW_KEY_R))
-		m_Sound->stop();
-	if (m_Window->isKeyPressed(GLFW_KEY_L))
-		m_Sound->loop();
-	if (m_Window->isKeyPressed(GLFW_KEY_G))
-		m_Window->enableFullScreen(true);
+	if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+		std::cout << "clicked" << std::endl;
+		//m_Sound->pause();
+
 	//if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
 		//std::cout << "wow" << std::endl;
 	m_Ui->draw();
