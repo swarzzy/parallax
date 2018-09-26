@@ -19,6 +19,8 @@ public:
 	prx::FPSCounter* m_FPSCounter;
 	std::string m_Path;
 	prx::UILayer* m_Ui;
+	bool m_MouseState;
+	bool m_PrevState;
 public:
 	Game(std::string_view path) 
 		: m_Path(path) {};

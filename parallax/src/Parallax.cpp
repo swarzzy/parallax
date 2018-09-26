@@ -37,6 +37,8 @@ namespace prx {
 				updateTime = m_Timer->elapsed();
 				updateCounter++;
 				update();
+				m_Window->updateInput();
+				
 			}
 
 			render();
@@ -44,7 +46,7 @@ namespace prx {
 			m_DeltaTime = frameTime - m_LastFrameTime;
 			m_LastFrameTime = frameTime;
 			frameCounter++;
-			m_Window->update();
+			m_Window->updateRender();
 		}
 	}
 

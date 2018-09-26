@@ -10,7 +10,7 @@ namespace prx {
 		: Layer(new BatchRenderer2D,
 				new Shader("res/shaders/UI_shader.vs", "res/shaders/UI_shader.fs"),
 				hpm::mat4::ortho(0.0, Window::getCurrentWindow().getWidth(), 
-									Window::getCurrentWindow().getHeight(), 0.0, -10.0, 10.0)) {}
+									Window::getCurrentWindow().getHeight(), 10.0, 0.0, 10.0)) {}
 
 	UILayer::~UILayer() {
 		delete m_Shader;

@@ -7,7 +7,6 @@
 #include "Renderer2D.h"
 #include "buffer/IndexBuffer.h"
 
-
 namespace prx {
 	
 	constexpr unsigned int BATCH_RENDERER_MAX_SPRITES		=	60000;
@@ -39,7 +38,7 @@ namespace prx {
 		~BatchRenderer2D();
 
 		void begin() override;
-		void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) override;
+		void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color, Renderable2D* label = nullptr) override;
 		void submit(const Renderable2D& renderable) override;
 		void end() override;
 		void flush() override;

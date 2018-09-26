@@ -13,32 +13,34 @@
 #include "ButtonListener.h"
 #include "../parallax/include/renderer/renderable/UI/UIGroup.h"
 #include "../parallax/include/renderer/renderable/UI/UIButton.h"
+#include "../parallax/include/renderer/renderable/UI/UILabel.h"
+#include "../parallax/include/renderer/renderable/UI/UIPanel.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
 
-	//unsigned int shaderID = prx::Resources::loadShader("base_shader", "res/shaders/default.vs", "res/shaders/default_light.fs");
+	unsigned int shaderID = prx::Resources::loadShader("base_shader", "res/shaders/default.vs", "res/shaders/default_light.fs");
 	unsigned int shaderNoLightID = prx::Resources::loadShader("UI_shader", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
-	//m_Shader = prx::Resources::getShader(shaderID);
+	m_Shader = prx::Resources::getShader(shaderID);
 	m_ShaderUI = prx::Resources::getShader(shaderNoLightID);
-	//m_Layer = new prx::SceneLayer(m_Shader);
+	m_Layer = new prx::SceneLayer(m_Shader);
 	m_Layer2 = new prx::SceneLayer(m_ShaderUI);
 	
-	//std::random_device rd;
-	//std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
+	std::random_device rd;
+	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	
-	//hpm::vec4 color;
-	//float step = 0.1;
-	//int counter = 0;
-	//prx::Group* group = new prx::Group(hpm::mat4::identity());
-	//for (float x = 0; x < 800; x += 3) {// 3, 1.0
-	//	for (float y = 0; y < 600; y += 3) {
-	//		unsigned int color = 255 << 24 | colorDistrib(rd) << 16 | colorDistrib(rd) << 8 | colorDistrib(rd);
-	//		group->add(new prx::Sprite(hpm::vec3(x, y, 1.0), hpm::vec2(2), color));
-	//		step += 0.0001f;
-	//		counter++;
-	//	}
-	//}
+	hpm::vec4 color;
+	float step = 0.1;
+	int counter = 0;
+	prx::Group* group = new prx::Group(hpm::mat4::identity());
+	for (float x = 0; x < 800; x += 3) {// 3, 1.0
+		for (float y = 0; y < 600; y += 3) {
+			unsigned int color = 255 << 24 | colorDistrib(rd) << 16 | colorDistrib(rd) << 8 | colorDistrib(rd);
+			group->add(new prx::Sprite(hpm::vec3(x, y, 1.0), hpm::vec2(2), color));
+			step += 0.0001f;
+			counter++;
+		}
+	}
 	/*unsigned int NotoSansID = prx::Resources::loadFont("res/fonts/NotoSans-Regular.ttf", 80, 1.0);
 	unsigned int AbrilFatfaceID = prx::Resources::loadFont("res/fonts/AbrilFatface-Regular.ttf", 300, 1.0);
 	
@@ -46,7 +48,7 @@ void Game::init() {
 	prx::Font* AbrilFatface = prx::Resources::getFont(AbrilFatfaceID);*/
 	
 	//group->add(new prx::Label("Hello world!", hpm::vec3(200, 150, 0), NotoSans, 0xff568745));
-	//m_Layer->add(group);
+	m_Layer->add(group);
 	//auto text = new prx::Label("Text renderer!", hpm::vec3(20.0, 20.0, 0.0), AbrilFatface, 0xff3456ff);
 	//text->setText("sfaggysdf");
 	//m_FPSCounter = new prx::FPSCounter(*this);
@@ -108,8 +110,14 @@ void Game::init() {
 	auto listener = new prx::event::ButtonListener(this);
 	button->setOnClickListener(*listener);
 	button2->setOnClickListener(*listener);
+	auto label = new prx::UILabel("hello", hpm::vec3(300, 400, 1.0), prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
+	auto panel = new prx::UIPanel(hpm::vec3(200, 200, 1.0), nullptr, nullptr, nullptr, nullptr, false);
+	//panel->add(new prx::UIButton(hpm::vec3(0.0 ), 50, "df"));
+	//panel->add(new prx::UIButton(hpm::vec3(0.0), 50, "dfs"));
 	m_Ui->add(button);
 	m_Ui->add(button2);
+	m_Ui->add(label);
+	m_Ui->add(new prx::Sprite(hpm::vec3(200, 200, 1.0), hpm::vec2(300.0f, 20.0f), 0xfffdffff));
 	
 }
 
@@ -122,16 +130,18 @@ void Game::tick() {
 }
 
 void Game::update() {
-	//hpm::vec2 cursorPos = m_Window->getCursorPos();
-	//cursorPos.y = m_Window->getHeight() - cursorPos.y;
+	hpm::vec2 cursorPos = m_Window->getCursorPos();
 	//std::cout << m_Window->getCursorPos().x << " " << m_Window->getCursorPos().y << std::endl;
 
-	//m_Shader->bind();
-	//m_Shader->setUniform("u_lightPos", cursorPos);
+	m_Shader->bind();
+	m_Shader->setUniform("u_lightPos", cursorPos);
+	m_Ui->update();
 }
 
 void Game::render() {
-	if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+	m_PrevState = m_MouseState;
+	m_MouseState = m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1);
+	if (m_MouseState == true && m_PrevState == false) 
 		std::cout << "clicked" << std::endl;
 		//m_Sound->pause();
 
@@ -140,5 +150,4 @@ void Game::render() {
 	m_Ui->draw();
 	//m_Layer->draw();
 	m_Layer2->draw();
-	m_Ui->update();
 }
