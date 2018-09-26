@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\renderer\renderable\UI\UIPanel.cpp" />
-    <ClCompile Include="src\renderer\renderable\UI\UILabel.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIClickable.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
@@ -178,8 +176,6 @@
     <ClInclude Include="include\renderer\renderable\UI\UIButton.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIButtonBase.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIClickable.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UILabel.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UIPanel.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIWidget.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
     <ClInclude Include="include\renderer\SimpleRenderer2D.h" />

@@ -18,8 +18,7 @@ namespace prx {
 		void push(const hpm::mat4& matrix);
 		void pop();
 
-		// Pass renderable that has transformation cache to set proper world coords to it 
-		virtual void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color, Renderable2D* label = nullptr) {};
+		virtual void drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {};
 
 		virtual void begin() {};
 		virtual void submit(const Renderable2D& renderable) = 0;

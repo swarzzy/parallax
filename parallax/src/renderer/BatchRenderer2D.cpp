@@ -14,7 +14,7 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color, Renderable2D* label) {
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
 		auto characters = font->getCharacters();
 		unsigned int atlasID = font->getFontAtlas().getID();
@@ -45,8 +45,8 @@ namespace prx {
 			ts = static_cast<float>(m_TextureSlots.size());
 		}
 
-		for (int i = 0; i < text.size(); i++) {
-			Character ch = characters[text[i]];
+		for (auto& character : text) {
+			Character ch = characters[character];
 			
 			float xpos = (position.x + cursor + ch.Bearing.x) * scale;
 			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) * scale;
@@ -54,13 +54,7 @@ namespace prx {
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
 
-			if (label != nullptr && label->hasTransformCache() && i == 0) {
-				label->setWorldCoords(m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0));
-				m_Buffer->vertex = label->getWorldCoords();
-			} else {
-				m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
-			}
-			
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
 			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
 			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
@@ -132,26 +126,12 @@ namespace prx {
 			}
 		}
 
-		//m_Buffer->vertex = m_TransformationStackBack * position;
-		//m_Buffer->texCoords.x = UVs[0];
-		//m_Buffer->texCoords.y = UVs[1];
-		//m_Buffer->texID = ts;
-		//m_Buffer->color = color;
-		//m_Buffer++;
-
-		if (renderable.hasTransformCache()) {
-			renderable.setWorldCoords(m_TransformationStackBack * position);
-			m_Buffer->vertex = renderable.getWorldCoords();
-		} else {
-			m_Buffer->vertex = m_TransformationStackBack * position;
-		}
-
+		m_Buffer->vertex = m_TransformationStackBack * position;
 		m_Buffer->texCoords.x = UVs[0];
 		m_Buffer->texCoords.y = UVs[1];
 		m_Buffer->texID = ts;
 		m_Buffer->color = color;
 		m_Buffer++;
-			
 
 		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x, position.y + size.y, position.z);
 		m_Buffer->texCoords.x = UVs[2];

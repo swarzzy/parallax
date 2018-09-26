@@ -6,12 +6,12 @@
 
 namespace prx {
 	UIButtonBase::UIButtonBase(hpm::vec3 position, hpm::vec2 size, std::string_view text, Font* font, Texture* texPressed, Texture* texReleased)
-		: UIClickable(position, size, texReleased, false),
-		m_Label(text),
-		m_Font(font),
-		m_PressedTex(texPressed),
-		m_ReleasedTex(m_Texture),
-		m_OnClickListener(nullptr) {
+				 : UIClickable(position, size, texReleased, false),
+				   m_Label(text),
+				   m_Font(font),
+				   m_PressedTex(texPressed),
+				   m_ReleasedTex(m_Texture),
+				   m_OnClickListener(nullptr) {
 			
 		// Calculating label position on button
 		float lblSizeX = 0.0;
