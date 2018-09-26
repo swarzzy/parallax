@@ -163,27 +163,29 @@ namespace prx {
 		glClearColor(r, g, b, a);
 	}
 
-	void Window::update() {
-		// Key states update
-		for (int i = 0; i < PARALLAX_INPUT_MAX_KEYS; i++) {
-			m_KeysPressed[i]	= m_KeysCurrentState[i]	 && !m_KeysPrevState[i];
-			m_KeysReleased[i]	= !m_KeysCurrentState[i] && m_KeysPrevState[i];
-		}
-
-		for (int i = 0; i < PARALLAX_INPUT_MAX_MOUSE_BUTTONS; i++) {
-			m_MouseButtonsPressed[i]	= m_MouseButtonsCurrentState[i]  && !m_MouseButtonsPrevState[i];
-			m_MouseButtonsReleased[i]	= !m_MouseButtonsCurrentState[i] && m_MouseButtonsPrevState[i];
-		}
-
-		memcpy(m_KeysPrevState, m_KeysCurrentState, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
-		memcpy(m_MouseButtonsPrevState, m_MouseButtonsCurrentState, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
-
+	void Window::updateRender() {
 		// Gorilla-audio update
 		gau_manager_update(Resources::m_gaManager);
 
 		// OpenGl update
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
+	}
+
+	void Window::updateInput() {
+		// Key states update
+		for (int i = 0; i < PARALLAX_INPUT_MAX_KEYS; i++) {
+			m_KeysPressed[i] = m_KeysCurrentState[i] && !m_KeysPrevState[i];
+			m_KeysReleased[i] = !m_KeysCurrentState[i] && m_KeysPrevState[i];
+		}
+
+		for (int i = 0; i < PARALLAX_INPUT_MAX_MOUSE_BUTTONS; i++) {
+			m_MouseButtonsPressed[i] = m_MouseButtonsCurrentState[i] && !m_MouseButtonsPrevState[i];
+			m_MouseButtonsReleased[i] = !m_MouseButtonsCurrentState[i] && m_MouseButtonsPrevState[i];
+		}
+
+		memcpy(m_KeysPrevState, m_KeysCurrentState, PARALLAX_INPUT_MAX_KEYS * sizeof(bool));
+		memcpy(m_MouseButtonsPrevState, m_MouseButtonsCurrentState, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
 	}
 
 	void Window::clear(unsigned int flags) {

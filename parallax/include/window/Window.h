@@ -54,7 +54,10 @@ namespace prx {
 
 		static inline const Window& getCurrentWindow() { return *m_CurrentWindow; };
 
-		void update();
+		void updateRender();
+
+		void updateInput();
+
 		void clear(unsigned int flags);
 
 		void resize(unsigned int width, unsigned int height);

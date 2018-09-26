@@ -128,6 +128,8 @@ void Game::update() {
 
 	//m_Shader->bind();
 	//m_Shader->setUniform("u_lightPos", cursorPos);
+	m_Ui->update();
+
 }
 
 void Game::render() {
@@ -140,5 +142,4 @@ void Game::render() {
 	m_Ui->draw();
 	//m_Layer->draw();
 	m_Layer2->draw();
-	m_Ui->update();
 }
