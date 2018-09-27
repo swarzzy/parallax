@@ -13,6 +13,7 @@
 #include "ButtonListener.h"
 #include "../parallax/include/renderer/renderable/UI/UIGroup.h"
 #include "../parallax/include/renderer/renderable/UI/UIButton.h"
+#include "../parallax/include/renderer/renderable/UI/UIPanel.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -92,6 +93,7 @@ void Game::init() {
 
 	m_FPSCounter = new prx::FPSCounter(*this);
 	m_Layer2->add(m_FPSCounter);
+	//m_Layer2->add(new prx::Sprite(hpm::vec3(0, 0, 1.0), hpm::vec2(100, 40), 0xffffffff));
 	//m_Layer2->add(new prx::UIButton(hpm::vec3(100, 100, 0.0), 200, "Button"));
 	//auto buttonID = prx::Resources::loadTexture("res/textures/button.png");
 	//auto button = prx::Resources::getTexture(buttonID);
@@ -101,13 +103,14 @@ void Game::init() {
 	prx::Texture* bpr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_released.png"));
 	prx::Texture* bpp = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_pressed.png"));
 	m_Ui = new prx::UILayer();
-	auto button = new prx::UIButton(hpm::vec3(200, 300, 0.0), 100, bplp, bplr);
-	auto button2 = new prx::UIButton(hpm::vec3(500, 300, 0.0), 100, bpp, bpr);
+	auto button = new prx::UIButton(hpm::vec3(200, 300, 0.0), 100,"button",  bplp, bplr);
+	auto button2 = new prx::UIButton(hpm::vec3(500, 300, 0.0), 100,"aother button", bpp, bpr);
 	std::cout << button->getID() << std::endl;
 	std::cout << button2->getID() << std::endl;
 	auto listener = new prx::event::ButtonListener(this);
 	button->setOnClickListener(*listener);
 	button2->setOnClickListener(*listener);
+	
 	m_Ui->add(button);
 	m_Ui->add(button2);
 	
@@ -124,7 +127,7 @@ void Game::tick() {
 void Game::update() {
 	//hpm::vec2 cursorPos = m_Window->getCursorPos();
 	//cursorPos.y = m_Window->getHeight() - cursorPos.y;
-	//std::cout << m_Window->getCursorPos().x << " " << m_Window->getCursorPos().y << std::endl;
+	std::cout << m_Window->getCursorPos().x << " " << m_Window->getCursorPos().y << std::endl;
 
 	//m_Shader->bind();
 	//m_Shader->setUniform("u_lightPos", cursorPos);

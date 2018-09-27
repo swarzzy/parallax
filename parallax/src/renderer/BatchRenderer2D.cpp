@@ -3,7 +3,7 @@
 
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 
-		: Renderer2D() {
+		: Renderer2D(), m_IndexCount(0) {
 		init();
 	}
 
@@ -49,7 +49,7 @@ namespace prx {
 			Character ch = characters[character];
 			
 			float xpos = (position.x + cursor + ch.Bearing.x) * scale;
-			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) * scale;
+			float ypos = (position.y - (ch.Size.y + ch.Bearing.y)) * scale;
 
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
