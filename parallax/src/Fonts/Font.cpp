@@ -39,9 +39,9 @@ namespace prx {
 
 		// FreeType transformation matrix to flip glyph y-coords 
 		FT_Matrix matrix = {
-		static_cast<int>(((1.0)  * 0x10000L)),
-		static_cast<int>(((0.0)  * 0x10000L)),
-		static_cast<int>(((0.0)  * 0x10000L)),
+		static_cast<int>(((1.0) * 0x10000L)),
+		static_cast<int>(((0.0) * 0x10000L)),
+		static_cast<int>(((0.0) * 0x10000L)),
 		static_cast<int>(((-1.0) * 0x10000L)) };
 
 		FT_Set_Transform(face, &matrix, NULL);
@@ -68,8 +68,8 @@ namespace prx {
 
 			m_Characters.emplace(std::piecewise_construct, std::forward_as_tuple(ch), std::forward_as_tuple(
 									coords,
-									hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows), // uncomment if y axis flipped
-									hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap.rows),  // - face->glyph->bitmap.rows),
+									hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+									hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap.rows - face->glyph->bitmap_top),
 									face->glyph->advance.x
 								));
 		}

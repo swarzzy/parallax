@@ -13,7 +13,7 @@ namespace prx {
 	}
 
 	Image* ImageLoader::loadImage(std::string_view path) {
-		//stbi_set_flip_vertically_on_load(true);
+		stbi_set_flip_vertically_on_load(true);
 
 		int width, height, componentsCount;
 

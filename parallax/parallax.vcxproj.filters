@@ -572,8 +572,5 @@
     <ClInclude Include="include\renderer\renderable\UI\UIButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\renderer\renderable\UI\UIPanel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
