@@ -20,16 +20,21 @@ namespace prx {
  */
 	class Application {
 	private:
+		static Application* m_CurrentApplication;
+
 		Window*			m_Window;
 		SimpleTimer*	m_Timer;
 		float			m_DeltaTime;
 		float			m_LastFrameTime;
 		unsigned int	m_FPS;
 		unsigned int	m_UPS;
+		
+		unsigned long long m_Time;
 	
 	protected:
 		Application();
 		virtual ~Application();
+
 		
 		Window* parallaxInit();
 		Window* parallaxInit(std::string_view title, int width, int height, bool fullscreen,
@@ -49,9 +54,12 @@ namespace prx {
 		void run();
 	
 	public:
+		static inline const Application& getCurrentApplication() { return *m_CurrentApplication; }
+		
 		inline unsigned int getFPS() const { return m_FPS; }
 		inline unsigned int getUPS() const { return m_UPS; }
 		inline float		getDeltaTime() const { return m_DeltaTime; }
+		inline float		getTime() const { return m_Time; }
 		
 		inline void start() { init(); run(); }
 	};

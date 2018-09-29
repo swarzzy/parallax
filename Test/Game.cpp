@@ -13,6 +13,8 @@
 #include "ButtonListener.h"
 #include "../parallax/include/renderer/renderable/UI/UIGroup.h"
 #include "../parallax/include/renderer/renderable/UI/UIButton.h"
+#include "../parallax/include/textures/SpriteSheet.h"
+#include "../parallax/include/renderer/renderable/AnimatedSprite.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -89,6 +91,9 @@ void Game::init() {
 		m_Layer2->add(new prx::Sprite(hpm::vec3(DistribX(engine), DistribY(engine), 1.0), hpm::vec2(100), new prx::Texture(p.path().string())));
 		
 	}*/
+	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/sheet.jpg", 6, 6);
+	m_Layer2->add(new prx::AnimatedSprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
+	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
 
 	m_FPSCounter = new prx::FPSCounter(*this);
 	m_Layer2->add(m_FPSCounter);
@@ -139,7 +144,7 @@ void Game::render() {
 
 	//if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
 		//std::cout << "wow" << std::endl;
-	m_Ui->draw();
+	//m_Ui->draw();
 	//m_Layer->draw();
 	m_Layer2->draw();
 }

@@ -27,14 +27,6 @@ namespace prx {
 		GLCall(glDeleteTextures(1, &m_TexID));
 	}
 
-	void TextureAtlas::bind() const {
-		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
-	}
-
-	void TextureAtlas::unbind() const {
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-	}
-
 	hpm::vec4 TextureAtlas::add(unsigned char* pixels, unsigned width, unsigned height, TextureFormat format) {
 		if (format != m_Format) {
 			Log::message("TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format", LOG_ERROR);

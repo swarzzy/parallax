@@ -66,6 +66,7 @@ namespace prx {
 
 		bool isClosed() const;
 
+		// TODO: button defines
 		bool isKeyHeld		(GLenum key) const;
 		bool isKeyPressed	(GLenum key) const;
 		bool isKeyReleased	(GLenum key) const;

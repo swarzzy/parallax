@@ -18,9 +18,6 @@ namespace prx {
 		Texture(unsigned char* data, unsigned int width, unsigned int height, TextureFormat format);
 		~Texture();
 
-		void bind() const override;
-		void unbind() const override;
-
 	private:
 		unsigned int load();
 		unsigned int loadFromBitmap(unsigned char* data);

@@ -24,6 +24,7 @@
     <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
     <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
+    <ClCompile Include="src\textures\SpriteSheet.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
     <ClCompile Include="src\ext\ftgl\texture-atlas.c" />
@@ -167,6 +168,7 @@
     <ClInclude Include="include\renderer\layers\Layer.h" />
     <ClInclude Include="include\renderer\layers\SceneLayer.h" />
     <ClInclude Include="include\renderer\layers\UILayer.h" />
+    <ClInclude Include="include\renderer\renderable\AnimatedSprite.h" />
     <ClInclude Include="include\renderer\renderable\FPSCounter.h" />
     <ClInclude Include="include\renderer\renderable\Group.h" />
     <ClInclude Include="include\renderer\renderable\Label.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\shading\Shader.h" />
+    <ClInclude Include="include\textures\SpriteSheet.h" />
     <ClInclude Include="include\textures\Texture.h" />
     <ClInclude Include="include\textures\TextureAtlas.h" />
     <ClInclude Include="include\textures\TextureBase.h" />

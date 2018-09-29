@@ -1,6 +1,25 @@
 #include <Parallax.h>
 
 namespace prx {
+
+	Application* Application::m_CurrentApplication = nullptr;
+	
+	Application::Application() 
+	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0), m_Time(0) {
+		if (m_CurrentApplication != nullptr) {
+			Log::message("APPLICATION: Only one application can exist at the same time.", LOG_ERROR);
+			ASSERT(m_CurrentApplication == nullptr);
+		}
+		m_CurrentApplication = this;
+	};
+	
+	Application::~Application() {
+		Resources::terminate();
+		delete m_Timer;
+		delete m_Window;
+		m_CurrentApplication = nullptr;
+	}
+
 	Window* Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 		LOG_LEVEL logLevel, unsigned int clearColor) {
 		prx::Log::setLevel(logLevel);
@@ -13,23 +32,26 @@ namespace prx {
 
 	void Application::run() {
 		m_Timer = new SimpleTimer();
+		m_Time = m_Timer->elapsed();
 
-		float updateTime = m_Timer->elapsed();
-		float tickTime = m_Timer->elapsed();
-		float frameTime = m_Timer->elapsed();
+		float updateTime = m_Time;
+		float tickTime = m_Time;
+		float frameTime = m_Time;
 
-		unsigned int frameCounter = 0;
+		unsigned int framesPerTick = 0;
 		unsigned int updateCounter = 0;
 
 		while (!m_Window->isClosed()) {
+			m_Time = m_Timer->elapsed();
+			// TODO: maybe replace elapsed() with m_Time everywhere
 			m_Window->clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 
 			if (m_Timer->elapsed() - tickTime > 1000.0) {
 				tickTime = m_Timer->elapsed();
-				m_FPS = frameCounter;
+				m_FPS = framesPerTick;
 				m_UPS = updateCounter;
 				updateCounter = 0;
-				frameCounter = 0;
+				framesPerTick = 0;
 				tick();
 			}
 
@@ -40,23 +62,15 @@ namespace prx {
 				m_Window->updateInput();
 			}
 
-			render();
 			frameTime = m_Timer->elapsed();
 			m_DeltaTime = frameTime - m_LastFrameTime;
 			m_LastFrameTime = frameTime;
-			frameCounter++;
+			framesPerTick++;
+			render();
 			m_Window->updateRender();
 		}
 	}
 
-	Application::Application() 
-	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0) {};
-
-	Application::~Application() {
-		Resources::terminate();
-		delete m_Timer;
-		delete m_Window;
-	}
 
 	Window* Application::parallaxInit() {
 		prx::Log::setLevel(prx::LOG_DEFAULT);

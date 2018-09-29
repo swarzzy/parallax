@@ -22,9 +22,6 @@ namespace prx {
 		TextureAtlas(unsigned int width, unsigned int height, TextureFormat format);
 		~TextureAtlas();
 
-		void bind() const override;
-		void unbind() const override;
-
 		// Add a new region to the atlas. Does not affects on actual rendering API texture.
 		hpm::vec4 add(unsigned char* pixels, unsigned int width, unsigned int height, TextureFormat format);
 		// Add a new region to the atlas. Does not affects on actual rendering API texture.

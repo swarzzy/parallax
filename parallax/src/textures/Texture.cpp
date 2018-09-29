@@ -4,7 +4,7 @@
 
 namespace prx {
 	Texture::Texture(std::string_view path) 
-		: m_Path(path){
+		: m_Path(path) {
 		m_TexID = load();
 	}
 
@@ -18,14 +18,6 @@ namespace prx {
 
 	Texture::~Texture() {
 		GLCall(glDeleteTextures(1, &m_TexID));
-	}
-
-	void Texture::bind() const {
-		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
-	}
-
-	void Texture::unbind() const {
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 
 	unsigned Texture::load() {

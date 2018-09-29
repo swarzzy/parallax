@@ -2,7 +2,8 @@
 #ifndef _PARALLAX_TEXTURES_TEXTURE_BASE_H_
 #define _PARALLAX_TEXTURES_TEXTURE_BASE_H_
 
-#include "../../ext/GL/glew.h"
+#include "../ext/GL/glew.h"
+#include "../utils/error_handling/GLErrorHandler.h"
 
 namespace prx {
 
@@ -16,13 +17,15 @@ namespace prx {
 		unsigned int  m_Width;
 		unsigned int  m_Height;
 		TextureFormat m_Format;
-	
+
+		TextureBase() {};
+
 	public:
 		
 		virtual ~TextureBase() {};
 
-		virtual void bind() const = 0;
-		virtual void unbind() const = 0;
+		inline virtual void bind()	 const { GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID)); };
+		inline virtual void unbind() const { GLCall(glBindTexture(GL_TEXTURE_2D, 0)); };
 
 		inline unsigned int  getID()	 const { return m_TexID;  } 
 		inline unsigned int  getWidth()	 const { return m_Width;  }
