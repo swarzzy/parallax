@@ -57,7 +57,7 @@ namespace prx {
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
 		glfwSetScrollCallback(m_Window, scroll_callback);
 		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
-		glfwSwapInterval(0.0);
+		glfwSwapInterval(1.0);
 
 		glfwSetWindowUserPointer(m_Window, this);
 

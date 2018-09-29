@@ -5,33 +5,32 @@ namespace prx {
 
 	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows)
 		: m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
-		m_TexCoords(new TexCoords[m_Tiles]),m_TimePerState(1000 / m_Tiles), 
-		m_CurrentState(0), m_TimeElapsed(0) {
+		m_TexCoords(new TexCoords[m_Tiles]) {
 		
 		m_TexID = load();
 
 		// Calculate tex coords
-		unsigned int spriteWidth  = m_Width / m_Rows;
-		unsigned int spriteHeight = m_Height / m_Columns;
+		unsigned int spriteWidth  = m_Width / m_Columns;
+		unsigned int spriteHeight = m_Height / m_Rows;
 		
-		int coordCounter = (m_Columns * m_Rows) - 1;
+		int coordCounter = m_Tiles;
 		
-		for (int i = 0; i  < m_Width; i+= spriteWidth) {
 			for (int j = m_Height - spriteHeight; j >= 0; j-= spriteHeight) {
-				float leftBottomX = static_cast<float>(j) / m_Width;
-				float leftBottomY = static_cast<float>(i) / m_Height;
+		for (int i = 0; i  < m_Width; i+= spriteWidth) {
+				float leftBottomX = static_cast<float>(i) / m_Width;
+				float leftBottomY = static_cast<float>(j) / m_Height;
 				
-				m_TexCoords[coordCounter].lbX = leftBottomX;
-				m_TexCoords[coordCounter].lbY = leftBottomY;
+				m_TexCoords[m_Tiles - coordCounter].lbX = leftBottomX;
+				m_TexCoords[m_Tiles - coordCounter].lbY = leftBottomY;
 
-				m_TexCoords[coordCounter].ltX = leftBottomX;
-				m_TexCoords[coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_TexCoords[m_Tiles - coordCounter].ltX = leftBottomX;
+				m_TexCoords[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
-				m_TexCoords[coordCounter].rtX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_TexCoords[coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_TexCoords[m_Tiles - coordCounter].rtX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_TexCoords[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
-				m_TexCoords[coordCounter].rbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_TexCoords[coordCounter].rbY = leftBottomY;
+				m_TexCoords[m_Tiles - coordCounter].rbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_TexCoords[m_Tiles - coordCounter].rbY = leftBottomY;
 				coordCounter--;
 			}
 		}
@@ -42,14 +41,28 @@ namespace prx {
 		delete m_TexCoords;
 	}
 
-	const TexCoords& SpriteSheet::getTexCoords() const {
-		auto currentTime = Application::getCurrentApplication().getTime();
-		
-		if (currentTime - m_TimeElapsed > m_TimePerState) {
-			m_CurrentState == m_Tiles - 1 ? m_CurrentState = 0 : m_CurrentState++;
-			m_TimeElapsed = currentTime;
+	unsigned int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask) {
+		if (mask.size() > m_Tiles) {
+			std::stringstream ss;
+			ss << "SPRITE SHEET: Mask size mismatch. Texture: " << m_Path;
+			Log::message(ss.str(), LOG_ERROR);
+			ASSERT(mask.size() <= m_Tiles)
 		}
-		return m_TexCoords[m_CurrentState];
+		m_Animations.emplace_back(name, mask.size(), mask);
+		return m_Animations.size() - 1;
+	}
+
+	const TexCoords& SpriteSheet::getTexCoords(unsigned int animationID) const {
+		auto currentTime = Application::getCurrentApplication().getTime();
+		// TODO: handle error when passed id of not existing object
+		const Animation& animation = m_Animations[animationID];
+
+		if (currentTime - animation.timeElapsed > animation.timePerState) {
+			animation.currentState == animation.framesNumber - 1 ? 
+										animation.currentState= 0 : animation.currentState++;
+			animation.timeElapsed = currentTime;
+		}
+		return m_TexCoords[animation.UVIndices[animation.currentState]];
 	}
 
 	unsigned SpriteSheet::load() {

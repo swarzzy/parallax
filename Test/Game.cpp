@@ -14,7 +14,6 @@
 #include "../parallax/include/renderer/renderable/UI/UIGroup.h"
 #include "../parallax/include/renderer/renderable/UI/UIButton.h"
 #include "../parallax/include/textures/SpriteSheet.h"
-#include "../parallax/include/renderer/renderable/AnimatedSprite.h"
 
 void Game::init() {
 	m_Window = parallaxInit();
@@ -77,7 +76,7 @@ void Game::init() {
 	m_Sound = prx::Resources::getSound(soundID);
 	//
 	//float gain = 1.0;
-	//m_Sound->play();
+	m_Sound->play();
 
 	//std::random_device rd;
 	std::mt19937 engine;
@@ -91,8 +90,15 @@ void Game::init() {
 		m_Layer2->add(new prx::Sprite(hpm::vec3(DistribX(engine), DistribY(engine), 1.0), hpm::vec2(100), new prx::Texture(p.path().string())));
 		
 	}*/
-	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/sheet.jpg", 6, 6);
-	m_Layer2->add(new prx::AnimatedSprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
+	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
+	std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
+	std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
+	aID = sheet->addAnimation("1", mask);
+	aID2 = sheet->addAnimation("1", mask2);
+	hero = new prx::AnimatedSprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), sheet, aID);
+	//hero->playAnimation(aID2);
+	m_Layer2->add(hero);
+	m_Layer2->add(new prx::Label("WASD to move", hpm::vec3(400, 500, 0.0), prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff));
 	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
 
 	m_FPSCounter = new prx::FPSCounter(*this);
@@ -101,7 +107,7 @@ void Game::init() {
 	//auto buttonID = prx::Resources::loadTexture("res/textures/button.png");
 	//auto button = prx::Resources::getTexture(buttonID);
 	//m_Layer2->add(new prx::Label("button", hpm::vec3(200, 200, 0), prx::Resources::getFont(prx::Resources::loadFont("res/fonts/BMKIRANGHAERANG-TTF.ttf", 60)), 0xffffffff));
-	prx::Texture* bplr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_released.png"));
+	/*prx::Texture* bplr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_released.png"));
 	prx::Texture* bplp = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_pressed.png"));
 	prx::Texture* bpr = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_released.png"));
 	prx::Texture* bpp = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_pause_pressed.png"));
@@ -114,7 +120,7 @@ void Game::init() {
 	button->setOnClickListener(*listener);
 	button2->setOnClickListener(*listener);
 	m_Ui->add(button);
-	m_Ui->add(button2);
+	m_Ui->add(button2);*/
 	
 }
 
@@ -133,13 +139,28 @@ void Game::update() {
 
 	//m_Shader->bind();
 	//m_Shader->setUniform("u_lightPos", cursorPos);
-	m_Ui->update();
+	if (m_Window->isKeyHeld(GLFW_KEY_W)) {
+		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y + 3.0 , hero->getPosition().z));
+		hero->playAnimation(aID2);
+	} else if (m_Window->isKeyHeld(GLFW_KEY_S)) {
+		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y - 3.0 , hero->getPosition().z));
+		hero->playAnimation(aID2);
+	} else if (m_Window->isKeyHeld(GLFW_KEY_A)) {
+		hero->setPosition(hpm::vec3(hero->getPosition().x - 5.0 , hero->getPosition().y, hero->getPosition().z));
+		hero->playAnimation(aID2);
+	} else if (m_Window->isKeyHeld(GLFW_KEY_D)) {
+		hero->setPosition(hpm::vec3(hero->getPosition().x + 5.0 , hero->getPosition().y, hero->getPosition().z));
+		hero->playAnimation(aID2);
+	} else
+		hero->playAnimation(aID);
+
+	//m_Ui->update();
 
 }
 
 void Game::render() {
-	if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
-		std::cout << "clicked" << std::endl;
+	//if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+		
 		//m_Sound->pause();
 
 	//if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1))

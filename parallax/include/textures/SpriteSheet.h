@@ -24,6 +24,23 @@ namespace prx {
 		float rbY;
 	};
 
+	struct Animation {
+		std::string	 name;
+		unsigned int framesNumber;
+		unsigned int timePerState;
+		std::vector<unsigned int> UVIndices;
+		
+		mutable unsigned int		currentState;
+		mutable unsigned long long	timeElapsed;
+
+		Animation() {};
+		Animation(std::string_view _name, unsigned int _framesNumber, std::vector<unsigned int> _UVIndices)
+			: name(_name), framesNumber(_framesNumber), UVIndices(_UVIndices),
+			currentState(0), timeElapsed(0) {
+			timePerState = 1000 / framesNumber;
+		};
+	};
+
 	class SpriteSheet : public TextureBase {
 	private:
 		std::string		m_Path;
@@ -31,17 +48,17 @@ namespace prx {
 		unsigned int	m_Rows;
 		unsigned int	m_Tiles;
 		TexCoords*		m_TexCoords;
-		unsigned int	m_TimePerState;
+		std::vector<Animation> m_Animations;
 		
-		mutable unsigned int		m_CurrentState;
-		mutable unsigned long long	m_TimeElapsed;
 
 	public:
 		SpriteSheet() {};
 		SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows);
 		~SpriteSheet();
-		
-		const TexCoords& getTexCoords() const;
+
+		unsigned int addAnimation(std::string_view name, const std::vector<unsigned int>& mask);
+
+		const TexCoords& getTexCoords(unsigned int animationID) const;
 
 	private:
 		unsigned int load();
