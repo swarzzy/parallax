@@ -22,7 +22,9 @@ public:
 	prx::UILayer* m_Ui;
 	unsigned aID;
 	unsigned aID2;
+	unsigned aID3;
 	prx::AnimatedSprite* hero;
+	prx::Sprite* sp;
 public:
 	Game(std::string_view path) 
 		: m_Path(path) {};

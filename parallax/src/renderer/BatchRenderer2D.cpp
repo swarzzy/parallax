@@ -16,9 +16,9 @@ namespace prx {
 
 	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
-		auto& characters = font->getCharacters();
-		unsigned int atlasID = font->getFontAtlas().getID();
-		float scale = font->getScale();
+		auto&		 characters = font->getCharacters();
+		unsigned int atlasID	= font->getFontAtlas().getID();
+		float		 scale		= font->getScale();
 
 		float cursor = 0.0;
 

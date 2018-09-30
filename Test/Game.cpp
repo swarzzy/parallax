@@ -93,15 +93,20 @@ void Game::init() {
 	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
 	std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
 	std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
+	std::vector<unsigned int> mask3 = { 24, 25, 26, 27, 28, 29, 30 };
 	aID = sheet->addAnimation("1", mask);
-	aID2 = sheet->addAnimation("1", mask2);
+	aID2 = sheet->addAnimation("2", mask2);
+	aID3 = sheet->addAnimation("3", mask3);
 	hero = new prx::AnimatedSprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), sheet, aID);
 	//hero->playAnimation(aID2);
 	m_Layer2->add(hero);
-	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), sheet));
+	//m_Layer2->add();
 	m_Layer2->add(new prx::Label("WASD to move", hpm::vec3(400, 500, 0.0), prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff));
 	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
 
+	auto tex = prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/button_play_released.png"));
+	sp = new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), tex);
+	m_Layer2->add(sp);
 	m_FPSCounter = new prx::FPSCounter(*this);
 	m_Layer2->add(m_FPSCounter);
 	//m_Layer2->add(new prx::UIButton(hpm::vec3(100, 100, 0.0), 200, "Button"));
@@ -140,20 +145,27 @@ void Game::update() {
 
 	//m_Shader->bind();
 	//m_Shader->setUniform("u_lightPos", cursorPos);
+	if (m_Window->isMouseButtonPressed(GLFW_MOUSE_BUTTON_1)) {
+		hero->playAnimation(aID3);
+		return;
+	}
 	if (m_Window->isKeyHeld(GLFW_KEY_W)) {
 		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y + 3.0 , hero->getPosition().z));
-		hero->playAnimation(aID2);
+		hero->loopAnimation(aID2);
 	} else if (m_Window->isKeyHeld(GLFW_KEY_S)) {
 		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y - 3.0 , hero->getPosition().z));
-		hero->playAnimation(aID2);
+		hero->loopAnimation(aID2);
 	} else if (m_Window->isKeyHeld(GLFW_KEY_A)) {
 		hero->setPosition(hpm::vec3(hero->getPosition().x - 5.0 , hero->getPosition().y, hero->getPosition().z));
-		hero->playAnimation(aID2);
+		hero->loopAnimation(aID2);
+		hero->reflect(true);
 	} else if (m_Window->isKeyHeld(GLFW_KEY_D)) {
 		hero->setPosition(hpm::vec3(hero->getPosition().x + 5.0 , hero->getPosition().y, hero->getPosition().z));
-		hero->playAnimation(aID2);
-	} else
-		hero->playAnimation(aID);
+		hero->loopAnimation(aID2);
+		hero->reflect(false);
+	} //else
+		//hero->loopAnimation(aID);
+	
 
 	//m_Ui->update();
 

@@ -3,9 +3,12 @@
 
 namespace prx {
 
-	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows)
+	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected)
 		: m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
-		m_TexCoords(new TexCoords[m_Tiles]), 
+		m_TexCoords(new TexCoords[m_Tiles]),
+		m_ReflectedTexCoords(new TexCoords[m_Tiles]),
+		m_Reflected(reflected),
+		m_CurrentUVBuffer(m_TexCoords),
 		m_CurrentApplication(&Application::getCurrentApplication()) {
 		
 		m_TexID = load();
@@ -23,23 +26,34 @@ namespace prx {
 				
 				m_TexCoords[m_Tiles - coordCounter].lbX = leftBottomX;
 				m_TexCoords[m_Tiles - coordCounter].lbY = leftBottomY;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].rbX = leftBottomX;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].rbY = leftBottomY;
+
 
 				m_TexCoords[m_Tiles - coordCounter].ltX = leftBottomX;
 				m_TexCoords[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].rtX = leftBottomX;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
 				m_TexCoords[m_Tiles - coordCounter].rtX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
 				m_TexCoords[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].ltX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
 				m_TexCoords[m_Tiles - coordCounter].rbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
 				m_TexCoords[m_Tiles - coordCounter].rbY = leftBottomY;
-				coordCounter--;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].lbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_ReflectedTexCoords[m_Tiles - coordCounter].lbY = leftBottomY;
+				
+			coordCounter--;
 			}
 		}
 	}
 
 	SpriteSheet::~SpriteSheet() {
 		GLCall(glDeleteTextures(1, &m_TexID));
-		delete m_TexCoords;
+		delete[] m_TexCoords;
+		delete[] m_ReflectedTexCoords;
 	}
 
 	unsigned int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask) {
@@ -63,7 +77,22 @@ namespace prx {
 										animation.currentState= 0 : animation.currentState++;
 			animation.timeElapsed = currentTime;
 		}
-		return m_TexCoords[animation.UVIndices[animation.currentState]];
+		return m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
+	}
+
+	void SpriteSheet::resetAnimations() {
+		for (auto& animation : m_Animations)
+			animation.currentState = 0;
+	}
+
+	void SpriteSheet::reflect(bool reflect) {
+		if (m_Reflected && !reflect) {
+			m_Reflected = false;
+			m_CurrentUVBuffer = m_TexCoords;
+		} else if (!m_Reflected && reflect) {
+			m_Reflected = true;
+			m_CurrentUVBuffer = m_ReflectedTexCoords;
+		}
 	}
 
 	unsigned SpriteSheet::load() {

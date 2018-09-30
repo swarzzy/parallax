@@ -48,6 +48,10 @@ namespace prx {
 		unsigned int	m_Rows;
 		unsigned int	m_Tiles;
 		TexCoords*		m_TexCoords;
+		TexCoords*		m_ReflectedTexCoords;
+		bool			m_Reflected;
+		// Pointer to current selected UVs buffer to not check m_Reflected on every getTexCoords call
+		TexCoords*		m_CurrentUVBuffer;
 		std::vector<Animation> m_Animations;
 		// Caching current application pointer to not request it in every getTexCoords call.
 		// It`s assumed that the lifetime of sprite is not longer that the lifetime of application
@@ -56,15 +60,29 @@ namespace prx {
 
 	public:
 		SpriteSheet() {};
-		SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows);
+		SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected = false);
 		~SpriteSheet();
 
 		unsigned int addAnimation(std::string_view name, const std::vector<unsigned int>& mask);
 
 		const TexCoords& getTexCoords(unsigned int animationID) const;
+		inline unsigned int getAnimaionFrameCount(unsigned int animationID) const;
+		inline unsigned int getAnimationCurrentFrame(unsigned int animationID) const;
+
+		void resetAnimations();
+
+		void reflect(bool reflect);
 
 	private:
 		unsigned int load();
-	};	
+	};
+	
+	inline unsigned int SpriteSheet::getAnimaionFrameCount(unsigned int animationID) const {
+		return m_Animations[animationID].framesNumber;
+	}
+
+	inline unsigned int SpriteSheet::getAnimationCurrentFrame(unsigned int animationID) const {
+		return m_Animations[animationID].currentState;
+	}
 }
 #endif
