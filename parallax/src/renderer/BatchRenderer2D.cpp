@@ -16,7 +16,7 @@ namespace prx {
 
 	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
 
-		auto characters = font->getCharacters();
+		auto& characters = font->getCharacters();
 		unsigned int atlasID = font->getFontAtlas().getID();
 		float scale = font->getScale();
 
@@ -46,7 +46,17 @@ namespace prx {
 		}
 
 		for (auto& character : text) {
-			Character ch = characters[character];
+			Character ch;
+			// Try block may affects performance
+			try {
+				ch = characters.at(character);
+			} 
+			catch (std::out_of_range& e) {
+				std::stringstream ss;
+				ss << "RENDERER: Couldn`t find the character in the font: " << e.what();
+				Log::message(ss.str(), LOG_ERROR);
+				return;
+			}
 			
 			float xpos = (position.x + cursor + ch.Bearing.x) * scale;
 			float ypos = (position.y - (ch.Size.y - ch.Bearing.y)) * scale;

@@ -9,9 +9,12 @@ namespace prx {
 	class AnimatedSprite : public Sprite {
 	private:
 		unsigned int m_AnimationID;
+		// Store sprite sheet as dedicate sprite sheet pointer to not cast TextureBase 
+		// to the sheet every getUVs call
+		SpriteSheet* m_SpriteSheet;
 	public:
 		AnimatedSprite(hpm::vec3 position, hpm::vec2 size, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(position, size, texture), m_AnimationID(animationID) {};
+			: Sprite(position, size, texture), m_AnimationID(animationID), m_SpriteSheet(texture) {};
 
 		inline const float* getUVs() const override;
 
@@ -22,7 +25,7 @@ namespace prx {
 	};
 	
 	inline const float* AnimatedSprite::getUVs() const {
-		TexCoords tc = static_cast<SpriteSheet*>(m_Texture)->getTexCoords(m_AnimationID);
+		TexCoords tc = m_SpriteSheet->getTexCoords(m_AnimationID);
 
 		m_UVs[0] = tc.lbX;
 		m_UVs[1] = tc.lbY;

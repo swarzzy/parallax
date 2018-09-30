@@ -5,7 +5,8 @@ namespace prx {
 
 	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows)
 		: m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
-		m_TexCoords(new TexCoords[m_Tiles]) {
+		m_TexCoords(new TexCoords[m_Tiles]), 
+		m_CurrentApplication(&Application::getCurrentApplication()) {
 		
 		m_TexID = load();
 
@@ -53,7 +54,7 @@ namespace prx {
 	}
 
 	const TexCoords& SpriteSheet::getTexCoords(unsigned int animationID) const {
-		auto currentTime = Application::getCurrentApplication().getTime();
+		auto currentTime = m_CurrentApplication->getTime();
 		// TODO: handle error when passed id of not existing object
 		const Animation& animation = m_Animations[animationID];
 

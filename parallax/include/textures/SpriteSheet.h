@@ -49,6 +49,9 @@ namespace prx {
 		unsigned int	m_Tiles;
 		TexCoords*		m_TexCoords;
 		std::vector<Animation> m_Animations;
+		// Caching current application pointer to not request it in every getTexCoords call.
+		// It`s assumed that the lifetime of sprite is not longer that the lifetime of application
+		const Application* m_CurrentApplication;
 		
 
 	public:

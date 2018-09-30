@@ -98,6 +98,7 @@ void Game::init() {
 	hero = new prx::AnimatedSprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), sheet, aID);
 	//hero->playAnimation(aID2);
 	m_Layer2->add(hero);
+	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(100), sheet));
 	m_Layer2->add(new prx::Label("WASD to move", hpm::vec3(400, 500, 0.0), prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff));
 	//m_Layer2->add(new prx::Sprite(hpm::vec3(0.0, 0.0, 0.0), hpm::vec2(600), sheet));
 
