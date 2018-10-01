@@ -581,5 +581,8 @@
     <ClInclude Include="include\textures\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ParallaxKeys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

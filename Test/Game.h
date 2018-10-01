@@ -17,7 +17,8 @@ public:
 	prx::Sound*  m_Sound;
 	prx::SceneLayer* m_Layer;
 	prx::SceneLayer* m_Layer2;
-	prx::FPSCounter* m_FPSCounter;
+	prx::Label* m_FPSCounter;
+	prx::Label* m_UPSCounter;
 	std::string m_Path;
 	prx::UILayer* m_Ui;
 	unsigned aID;

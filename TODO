@@ -7,4 +7,6 @@
  --- delta time fix
  --- update unstable time fix
  --- kerning
+ --- sprite counsturctors
+ --- logging with std::forward (log refactoring)
  

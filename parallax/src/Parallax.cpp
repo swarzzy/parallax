@@ -46,8 +46,8 @@ namespace prx {
 			// TODO: maybe replace elapsed() with m_Time everywhere
 			m_Window->clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 
-			if (m_Timer->elapsed() - tickTime > 1000.0) {
-				tickTime = m_Timer->elapsed();
+			if (m_Time - tickTime > 1000.0) {
+				tickTime = m_Time;
 				m_FPS = framesPerTick;
 				m_UPS = updateCounter;
 				updateCounter = 0;
@@ -55,14 +55,16 @@ namespace prx {
 				tick();
 			}
 
-			if (m_Timer->elapsed() - updateTime > 1000.0 / 60.0) {
-				updateTime = m_Timer->elapsed();
+			m_Time = m_Timer->elapsed();
+			if (m_Time - updateTime > 1000.0 / 60.0) {
+				updateTime = m_Time;
 				updateCounter++;
 				update();
 				m_Window->updateInput();
 			}
 
-			frameTime = m_Timer->elapsed();
+			m_Time = m_Timer->elapsed();
+			frameTime = m_Time;
 			m_DeltaTime = frameTime - m_LastFrameTime;
 			m_LastFrameTime = frameTime;
 			framesPerTick++;

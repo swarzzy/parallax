@@ -3,8 +3,8 @@
 #define _WINDOW_H
 
 #include "../ext/GL/glew.h"
-#include "../ext/GLFW/glfw3.h"
-
+//#include "../ext/GLFW/glfw3.h"
+#include "../ParallaxKeys.h"
 #include <hypermath.h>
 
 namespace prx {

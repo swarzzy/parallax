@@ -39,6 +39,8 @@ namespace prx {
 
 		inline void	setColor	(unsigned int color) { if (m_Texture == nullptr) m_Color = color; };
 		inline void	setPosition	(hpm::vec3 position) { m_Position = position; };
+		inline void setSize(hpm::vec2 size) { m_Size = size; };
+		inline void setTexture(TextureBase* texture) { if (m_Texture != nullptr) m_Texture = texture; };
 
 		inline virtual void reflect(bool reflect);
 
@@ -50,8 +52,8 @@ namespace prx {
 		inline unsigned int getTexID() const { return m_Texture == nullptr ? 0 : m_Texture->getID(); }
 
 	private:
-		void setDefaultUVs();
-		void setReflectDefaultUVs();
+		virtual void setDefaultUVs();
+		virtual void setReflectDefaultUVs();
 	};
 	void Renderable2D::reflect(bool reflect) {
 		if (m_Reflected && !reflect) {

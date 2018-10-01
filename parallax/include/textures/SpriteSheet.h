@@ -68,6 +68,7 @@ namespace prx {
 		const TexCoords& getTexCoords(unsigned int animationID) const;
 		inline unsigned int getAnimaionFrameCount(unsigned int animationID) const;
 		inline unsigned int getAnimationCurrentFrame(unsigned int animationID) const;
+		inline const TexCoords&	getFrameUVs(unsigned int frame) const;
 
 		void resetAnimations();
 
@@ -83,6 +84,15 @@ namespace prx {
 
 	inline unsigned int SpriteSheet::getAnimationCurrentFrame(unsigned int animationID) const {
 		return m_Animations[animationID].currentState;
+	}
+
+	inline const TexCoords&	SpriteSheet::getFrameUVs(unsigned int frame) const {
+		if (frame < m_Tiles)
+			return m_TexCoords[frame];
+		else {
+			Log::message("SPRITE SHEET: Incorrect UV index", LOG_ERROR);
+			return m_TexCoords[0];
+		}
 	}
 }
 #endif

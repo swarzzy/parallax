@@ -9,9 +9,12 @@ namespace prx {
 		public:
 			Sprite(hpm::vec3 position, hpm::vec2 size, unsigned int color);
 			Sprite(hpm::vec3 position, hpm::vec2 size, TextureBase* texture);
+			Sprite(float x, float y, float z, float width, float height, unsigned int color);
+			Sprite(float x, float y, float z, float width, float height, TextureBase* texture);
+			// Sets position as (0.0, 0.0, 0.0) automatically
+			Sprite(float width, float height, unsigned int color);
+			Sprite(float width, float height, TextureBase* texture);
 
-			inline void setSize(hpm::vec2 size) { m_Size = size; };
-			inline void setTexture(TextureBase* texture) { if (m_Texture != nullptr) m_Texture = texture; };
 		};
 	}
 #endif

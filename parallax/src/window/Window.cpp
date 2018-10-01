@@ -217,9 +217,9 @@ namespace prx {
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		if (key >= 0 && key < PARALLAX_INPUT_MAX_KEYS) {
-			if (action == GLFW_PRESS)
+			if (action == PARALLAX_PRESS)
 				win->m_KeysCurrentState[key] = true;
-			else if (action == GLFW_RELEASE)
+			else if (action == PARALLAX_RELEASE)
 				win->m_KeysCurrentState[key] = false;
 		}
 		else {
@@ -236,9 +236,9 @@ namespace prx {
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		if (button >= 0 && button < PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			if (action == GLFW_PRESS)
+			if (action == PARALLAX_PRESS)
 				win->m_MouseButtonsCurrentState[button] = true;
-			else if (action == GLFW_RELEASE)
+			else if (action == PARALLAX_RELEASE)
 				win->m_MouseButtonsCurrentState[button] = false;
 		}
 		else {
