@@ -21,7 +21,7 @@ namespace prx {
 		if (m_Sound == nullptr) {
 			std::stringstream ss;
 			ss << "RESOURCE MANAGER: Failed to load audio from file: " << path;
-			Log::message(ss.str(), LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, ss.str());
 			ASSERT(false);
 		}
 	}

@@ -46,7 +46,7 @@ namespace prx {
 			m_Format = TextureFormat::RGBA;
 		}
 		else {
-			Log::message("TEXTURE: Could not create texture. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "TEXTURE: Could not create texture. Incorrect data format");
 			ASSERT(false);
 		}
 			
@@ -87,7 +87,7 @@ namespace prx {
 			format = GL_RED;
 		}
 		else {
-			Log::message("TEXTURE: Could not create texture. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "TEXTURE: Could not create texture. Incorrect data format");
 			ASSERT(false);
 		}
 

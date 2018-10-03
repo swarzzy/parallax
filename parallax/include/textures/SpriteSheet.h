@@ -90,7 +90,7 @@ namespace prx {
 		if (frame < m_Tiles)
 			return m_TexCoords[frame];
 		else {
-			Log::message("SPRITE SHEET: Incorrect UV index", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "SPRITE SHEET: Incorrect UV index");
 			return m_TexCoords[0];
 		}
 	}

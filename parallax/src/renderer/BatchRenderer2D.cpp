@@ -54,7 +54,7 @@ namespace prx {
 			catch (std::out_of_range& e) {
 				std::stringstream ss;
 				ss << "RENDERER: Couldn`t find the character in the font: " << e.what();
-				Log::message(ss.str(), LOG_ERROR);
+				Log::message(LOG_LEVEL::LOG_ERROR, ss.str());
 				return;
 			}
 			

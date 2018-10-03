@@ -30,7 +30,7 @@ namespace prx {
 			m_gaMixer = gau_manager_mixer(m_gaManager);
 
 		if (result == GC_ERROR_GENERIC || m_gaMixer == nullptr || m_gaManager == nullptr) {
-			Log::message("RESOURCE MANAGER: Could not initialize audio system!", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "RESOURCE MANAGER: Could not initialize audio system!");
 			return false;
 		}
 		return true;
@@ -49,7 +49,7 @@ namespace prx {
 			std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH));
 
 		if (m_gaManager == nullptr) {
-			Log::message("RESOURCE MANAGER: Audio system is not initialized!", LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_FATAL, "RESOURCE MANAGER: Audio system is not initialized!");
 			return false;
 		}
 		return true;
@@ -61,7 +61,7 @@ namespace prx {
 		if (element != m_Shaders.end()) {
 			std::stringstream ss;
 			ss << "RESOURCE MANAGER: Shader: " << name << " already exist!";
-			Log::message(ss.str(), LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 			return id;
 		}
 		//m_Shaders.emplace(id, vertexPath, fragmentPath);
@@ -76,7 +76,7 @@ namespace prx {
 			return &element->second;
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Shader (name: " << name << " does not exist!";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return nullptr;
 	}
 
@@ -86,7 +86,7 @@ namespace prx {
 			return &(element->second);
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Shader (ID: " << id << " does not exist!";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return nullptr;
 	}
 
@@ -110,7 +110,7 @@ namespace prx {
 		if (font != m_Fonts.end()) {
 			std::stringstream ss;
 			ss << "RESOURCE MANAGER: Font: " << fontPath << " already exist!";
-			Log::message(ss.str(), LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 			return id;
 		}
 		//m_Fonts.emplace(id, fontPath, size);
@@ -125,13 +125,13 @@ namespace prx {
 			return &(font->second);
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Font (ID: " << id << " does not exist! Using default font.";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return &m_Fonts[RESOURCES_DEFAULT_FONT_ID];
 	}
 
 	void Resources::deleteFont(unsigned int id) {
 		if (id == RESOURCES_DEFAULT_FONT_ID) {
-			Log::message("RESOURCE MANAGER: Can not delete default font!", LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, "RESOURCE MANAGER: Can not delete default font!");
 			return;
 		}
 		m_Fonts.erase(id);
@@ -149,7 +149,7 @@ namespace prx {
 		if (iterator != m_Textures.end()) {
 			std::stringstream ss;
 			ss << "RESOURCE MANAGER: Texture: " << path << " already exist!";
-			Log::message(ss.str(), LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 			return id;
 		}
 		//m_Textures.emplace(id, path);
@@ -164,13 +164,13 @@ namespace prx {
 			return &(texture->second);
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Texture (ID: " << id << " does not exist! Using default texture.";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return &m_Textures[RESOURCES_DEFAULT_TEXTURE_ID];
 	}
 
 	void Resources::deleteTexture(unsigned int id) {
 		if (id == RESOURCES_DEFAULT_TEXTURE_ID) {
-			Log::message("RESOURCE MANAGER: Can not delete default texture!", LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, "RESOURCE MANAGER: Can not delete default texture!");
 			return;
 		}
 		m_Textures.erase(id);
@@ -188,7 +188,7 @@ namespace prx {
 		if (sound != m_Sounds.end()) {
 			std::stringstream ss;
 			ss << "RESOURCE MANAGER: Sound: " << name << " already exist!";
-			Log::message(ss.str(), LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 			return id;
 		}
 		//m_Sounds.emplace(id, path);
@@ -203,7 +203,7 @@ namespace prx {
 			return &sound->second;
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Sound (name: " << name << " does not exist!";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return nullptr;
 	}
 
@@ -213,7 +213,7 @@ namespace prx {
 			return &(sound->second);
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Sound (ID: " << id << " does not exist!";
-		Log::message(ss.str(), LOG_WARNING);
+		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
 		return nullptr;
 	}
 

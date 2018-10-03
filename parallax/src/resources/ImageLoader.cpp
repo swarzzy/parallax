@@ -31,7 +31,7 @@ namespace prx {
 			return new Image(width, height, format, data);
 		}
 		else {
-			Log::message("Image loader error! Can`t load image", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "Image loader error! Can`t load image");
 			return nullptr;
 		}
 	}

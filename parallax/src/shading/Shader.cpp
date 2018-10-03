@@ -24,19 +24,19 @@ namespace prx {
 
 	void Shader::readShaderFromFile(std::string_view vertexPath, std::string_view fragmentPath) {
 
-		std::optional<std::string> vertSrc = prx::FileReader::readTextFile(vertexPath);
-		std::optional<std::string> fragSrc = prx::FileReader::readTextFile(fragmentPath);
+		std::optional<std::string> vertSrc = FileReader::readTextFile(vertexPath);
+		std::optional<std::string> fragSrc = FileReader::readTextFile(fragmentPath);
 		if (vertSrc)
 			m_ShaderSource.vertexSource = vertSrc.value();
 		else {
-			prx::Log::message("Can not read vertex shader source", prx::LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "Can not read vertex shader source");
 			// TODO: exceptions
 			ASSERT(false);
 		}
 		if (fragSrc)
 			m_ShaderSource.fragmentSource = fragSrc.value();
 		else {
-			prx::Log::message("Can not read fragment shader source", prx::LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "Can not read fragment shader source");
 			// TODO: exceptions
 			ASSERT(false);
 		}
@@ -59,7 +59,7 @@ namespace prx {
 			char* message = (char*)alloca(length * sizeof(char));
 			GLCall(glGetShaderInfoLog(vertexShader, length, &length, message));
 			std::string out = "Failed to compile vertex shader: " + std::string(message);
-			prx::Log::message(out, prx::LOG_WARNING);
+			Log::message(LOG_LEVEL::LOG_ERROR, out);
 			//ASSERT(false);
 		}
 
@@ -74,7 +74,7 @@ namespace prx {
 				char* message = (char*)alloca(length * sizeof(char));
 				GLCall(glGetShaderInfoLog(fragmentShader, length, &length, message));
 				std::string out = "Failed to compile fragment shader: " + std::string(message);
-				prx::Log::message(out, prx::LOG_WARNING);
+				prx::Log::message(LOG_LEVEL::LOG_FATAL, out);
 				//ASSERT(false);
 			}
 
@@ -89,7 +89,7 @@ namespace prx {
 			char* message = (char*)alloca(length * sizeof(char));
 			GLCall(glGetProgramInfoLog(m_ID, length, &length, message));
 			std::string out = "Failed to link shader program : " + std::string(message);
-			prx::Log::message(out, prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_FATAL, out);
 			//ASSERT(false);
 		}
 		GLCall(glDeleteShader(vertexShader));
@@ -126,7 +126,7 @@ namespace prx {
 			GLCall(glUniformMatrix4fv(loc.value(), 1, GL_FALSE, mat.elems));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 	
@@ -147,7 +147,7 @@ namespace prx {
 			GLCall(glUniform2f(loc.value(), vec.x, vec.y));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -158,7 +158,7 @@ namespace prx {
 			GLCall(glUniform3f(loc.value(), vec.x, vec.y, vec.z));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -169,7 +169,7 @@ namespace prx {
 			GLCall(glUniform4f(loc.value(), vec.x, vec.y, vec.z, vec.w));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -180,7 +180,7 @@ namespace prx {
 			GLCall(glUniform1f(loc.value(), floatNum));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -191,7 +191,7 @@ namespace prx {
 			GLCall(glUniform1i(loc.value(), intNum));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -202,7 +202,7 @@ namespace prx {
 			GLCall(glUniform1i(loc.value(), uintNum));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -212,7 +212,7 @@ namespace prx {
 			GLCall(glUniform1fv(loc.value(), count ,floatArr));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 
@@ -222,7 +222,7 @@ namespace prx {
 			GLCall(glUniform1iv(loc.value(), count, floatArr));
 		}
 		else {
-			prx::Log::message("Can not set uniform. Invalid uniform name.", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
 		}
 	}
 }

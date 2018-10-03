@@ -60,7 +60,7 @@ namespace prx {
 		if (mask.size() > m_Tiles) {
 			std::stringstream ss;
 			ss << "SPRITE SHEET: Mask size mismatch. Texture: " << m_Path;
-			Log::message(ss.str(), LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, ss.str());
 			ASSERT(mask.size() <= m_Tiles)
 		}
 		m_Animations.emplace_back(name, mask.size(), mask);
@@ -121,7 +121,7 @@ namespace prx {
 			m_Format = TextureFormat::RGBA;
 		}
 		else {
-			Log::message("TEXTURE: Could not create texture. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "TEXTURE: Could not create texture. Incorrect data format");
 			ASSERT(false);
 		}
 

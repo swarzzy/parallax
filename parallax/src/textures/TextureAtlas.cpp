@@ -29,7 +29,7 @@ namespace prx {
 
 	hpm::vec4 TextureAtlas::add(unsigned char* pixels, unsigned width, unsigned height, TextureFormat format) {
 		if (format != m_Format) {
-			Log::message("TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
 			ASSERT(false);
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, width, height);
@@ -47,7 +47,7 @@ namespace prx {
 		Image* image = ImageLoader::loadImage(path);
 
 		if (image->getFormat() != getGLFormat(m_Format)) {
-			Log::message("TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
 			ASSERT(false);
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, image->getWigth(), image->getHeight());
@@ -61,7 +61,7 @@ namespace prx {
 
 	void TextureAtlas::resize(unsigned width, unsigned height) {
 		if (width < m_TextureAtlas->width || height < m_TextureAtlas->height) {
-			Log::message("TEXTURE ATLAS: Can not resize atlas. New size os less than old.", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Can not resize atlas. New size os less than old.");
 			return;
 		}
 
@@ -77,7 +77,7 @@ namespace prx {
 
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(textureAtlasNew, m_TextureAtlas->width, m_TextureAtlas->height);
 		if (atl.x < 0) {
-			Log::message("TEXTURE ATLAS: Can not resize atlas", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Can not resize atlas");
 			return;
 		}
 		ftgl::texture_atlas_set_region(textureAtlasNew, atl.x, atl.y, atl.width, atl.height, m_TextureAtlas->data, m_TextureAtlas->width);
@@ -119,7 +119,7 @@ namespace prx {
 			format = GL_RED;
 		}
 		else {
-			Log::message("TEXTURE: Could not create texture. Incorrect data format", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE: Could not create texture. Incorrect data format");
 			ASSERT(false);
 		}
 

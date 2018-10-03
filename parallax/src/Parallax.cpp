@@ -7,7 +7,7 @@ namespace prx {
 	Application::Application() 
 	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0), m_Time(0) {
 		if (m_CurrentApplication != nullptr) {
-			Log::message("APPLICATION: Only one application can exist at the same time.", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "APPLICATION: Only one application can exist at the same time.");
 			ASSERT(m_CurrentApplication == nullptr);
 		}
 		m_CurrentApplication = this;
@@ -75,7 +75,7 @@ namespace prx {
 
 
 	Window* Application::parallaxInit() {
-		prx::Log::setLevel(prx::LOG_DEFAULT);
+		prx::Log::setLevel(LOG_LEVEL::LOG_INFO);
 		Resources::initAudioSystem();
 		m_Window = new Window("parallax", 800, 600, false);
 		m_Window->setClearColor(0xff000000);

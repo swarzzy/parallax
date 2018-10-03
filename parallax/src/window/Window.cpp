@@ -19,7 +19,7 @@ namespace prx {
 		: m_Title(title), m_Width(width), m_Height(height), m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
 		m_FullScreen(fullscreen), m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
 		if (m_CurrentWindow != nullptr) {
-			Log::message("WINDOW: Only one window can exist at the same time.", LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_ERROR, "WINDOW: Only one window can exist at the same time.");
 			ASSERT(m_CurrentWindow == nullptr);
 		}
 
@@ -33,7 +33,7 @@ namespace prx {
 		
 		// Initialize GLFW
 		if (!glfwInit()) {
-			prx::Log::message("Failed to init GLFW", prx::LOG_ERROR);
+			Log::message(LOG_LEVEL::LOG_FATAL, "Failed to init GLFW");
 			return false;
 		}
 
@@ -47,7 +47,7 @@ namespace prx {
 
 		if (!m_Window) {
 			glfwTerminate();
-			prx::Log::message("Failed to create window", prx::LOG_ERROR);
+			prx::Log::message(LOG_LEVEL::LOG_FATAL, "Failed to create window");
 			return false;
 		}
 		glfwMakeContextCurrent(m_Window);
@@ -77,7 +77,7 @@ namespace prx {
 
 		// Initialize GLEW
 		if (glewInit() != GLEW_OK) {
-			prx::Log::message("Failed to initialize GLEW", prx::LOG_ERROR);
+			prx::Log::message(LOG_LEVEL::LOG_FATAL, "Failed to initialize GLEW");
 			glfwTerminate();
 			return false;
 		}
@@ -86,8 +86,8 @@ namespace prx {
 		GLCall(glViewport(0, 0, m_Width, m_Height));
 
 		std::stringstream ss;
-		ss << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
-		Log::message(ss.str(), LOG_INIT);
+		ss << "OpenGL version: " << glGetString(GL_VERSION);
+		Log::message(LOG_LEVEL::LOG_INFO, ss.str());
 
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -105,7 +105,7 @@ namespace prx {
 
 	bool Window::isKeyHeld(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
 			return false;
 		}
 		return m_KeysCurrentState[key];
@@ -113,7 +113,7 @@ namespace prx {
 
 	bool Window::isKeyPressed(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
 			return false;
 		}
 		return m_KeysPressed[key];
@@ -121,7 +121,7 @@ namespace prx {
 
 	bool Window::isKeyReleased(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
 			return false;
 		}
 		return m_KeysReleased[key];
@@ -129,7 +129,7 @@ namespace prx {
 
 	bool Window::isMouseButtonHeld(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
 			return false;
 		}
 		return m_MouseButtonsCurrentState[button];
@@ -137,7 +137,7 @@ namespace prx {
 
 	bool Window::isMouseButtonPressed(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
 			return false;
 		}
 		return m_MouseButtonsPressed[button];
@@ -145,7 +145,7 @@ namespace prx {
 
 	bool Window::isMouseButtonReleased(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message("Invalid mouse button number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
 			return false;
 		}
 		return m_MouseButtonsReleased[button];
@@ -223,7 +223,7 @@ namespace prx {
 				win->m_KeysCurrentState[key] = false;
 		}
 		else {
-			prx::Log::message("Invalid key number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
 		}
 	}
 
@@ -242,7 +242,7 @@ namespace prx {
 				win->m_MouseButtonsCurrentState[button] = false;
 		}
 		else {
-			prx::Log::message("Invalid mouse key number", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse key number");
 		}
 	}
 

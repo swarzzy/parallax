@@ -16,7 +16,7 @@ namespace prx {
 		try {
 			file.open(static_cast<std::string>(path));
 			if (!file.is_open()) {
-				prx::Log::message(std::string("Can not open file: ") + static_cast<std::string>(path), prx::LOG_WARNING);
+				prx::Log::message(LOG_LEVEL::LOG_ERROR, std::string("Can not open file: ") + static_cast<std::string>(path));
 				return std::nullopt;
 			}
 
@@ -25,7 +25,7 @@ namespace prx {
 			file.close();
 		}
 		catch (std::ifstream::failure e) {
-			prx::Log::message("File is not succsesfully read", prx::LOG_WARNING);
+			prx::Log::message(LOG_LEVEL::LOG_ERROR, "File is not succsesfully read");
 			return std::nullopt;
 		}
 		return ss.str();

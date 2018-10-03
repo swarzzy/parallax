@@ -51,6 +51,7 @@
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\utils\log\Log.cpp" />
+    <ClCompile Include="src\utils\log\LogOld.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +196,9 @@
     <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />
     <ClInclude Include="include\utils\log\Log.h" />
+    <ClInclude Include="include\utils\log\LogOld.h" />
     <ClInclude Include="include\utils\SimpleHash.h" />
+    <ClInclude Include="include\utils\StringUtils.h" />
     <ClInclude Include="include\utils\timing\ScopedTimer.h" />
     <ClInclude Include="include\utils\timing\SimpleTimer.h" />
     <ClInclude Include="include\ParallaxKeys.h" />

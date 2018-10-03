@@ -47,8 +47,9 @@ void Game::init() {
 
 	m_UPSCounter = new prx::Label("", 10, 540, 0, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
 	m_Layer2->add(m_UPSCounter);
-	
-	
+
+	prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, "lol", std::string(" log works "), 87);
+	prx::Log::message(prx::LOG_LEVEL::LOG_WARN, "asdasdasdas");
 }
 
 void Game::tick() {
@@ -59,29 +60,39 @@ void Game::tick() {
 void Game::update() {
 	if (m_Window->isMouseButtonPressed(PARALLAX_MOUSE_BUTTON_1)) {
 		hero->playAnimation(aID3);
+		
 		return;
 	}
-	if (m_Window->isKeyHeld(PARALLAX_KEY_W)) {
-		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y + 3.0 , hero->getPosition().z));
-		hero->loopAnimation(aID2);
-	} else if (m_Window->isKeyHeld(PARALLAX_KEY_S)) {
-		hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y - 3.0 , hero->getPosition().z));
-		hero->loopAnimation(aID2);
-	} else if (m_Window->isKeyHeld(PARALLAX_KEY_A)) {
-		hero->setPosition(hpm::vec3(hero->getPosition().x - 5.0 , hero->getPosition().y, hero->getPosition().z));
-		hero->loopAnimation(aID2);
-		hero->reflect(true);
-	} else if (m_Window->isKeyHeld(PARALLAX_KEY_D)) {
-		hero->setPosition(hpm::vec3(hero->getPosition().x + 5.0 , hero->getPosition().y, hero->getPosition().z));
-		hero->loopAnimation(aID2);
-		hero->reflect(false);
-	} //else
-		//hero->loopAnimation(aID);
+	else {
+		if (m_Window->isKeyHeld(PARALLAX_KEY_W)) {
+			hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y + 3.0, hero->getPosition().z));
+			hero->loopAnimation(aID2);
+		}
+		else if (m_Window->isKeyHeld(PARALLAX_KEY_S)) {
+			hero->setPosition(hpm::vec3(hero->getPosition().x, hero->getPosition().y - 3.0, hero->getPosition().z));
+			hero->loopAnimation(aID2);
+		}
+		else if (m_Window->isKeyHeld(PARALLAX_KEY_A)) {
+			hero->setPosition(hpm::vec3(hero->getPosition().x - 5.0, hero->getPosition().y, hero->getPosition().z));
+			hero->loopAnimation(aID2);
+			hero->reflect(true);
+		}
+		else if (m_Window->isKeyHeld(PARALLAX_KEY_D)) {
+			hero->setPosition(hpm::vec3(hero->getPosition().x + 5.0, hero->getPosition().y, hero->getPosition().z));
+			hero->loopAnimation(aID2);
+			hero->reflect(false);
+		}
+		else
+		{
+			hero->loopAnimation(aID);
+		}
+	}
+		//else
+			//hero->loopAnimation(aID);
+	}
 	
 
 	//m_Ui->update();
-	
-}
 
 void Game::render() {
 	m_Layer2->draw();

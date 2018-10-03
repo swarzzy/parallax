@@ -17,7 +17,7 @@ static bool FTLogCall(int errorCode, const char* function, const char* file, int
 	if (errorCode) {
 		std::stringstream messageStream;
 		messageStream << "FREETYPE: Error:" << " : " << function << " " << file << " : " << line << std::endl;
-		prx::Log::message(messageStream.str(), prx::LOG_ERROR);
+		prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, messageStream.str());
 		return false;
 	}
 	return true;

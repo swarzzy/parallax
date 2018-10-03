@@ -26,7 +26,7 @@ static bool GLLogCall(const char* function, const char* file, int line) {
 	while (GLenum error = glGetError()) {
 		std::stringstream messageStream;
 		messageStream << error << " : " << function << " " << file << " : " << line << std::endl;
-		prx::Log::message(messageStream.str(), prx::LOG_ERROR);
+		prx::Log::message(prx::LOG_LEVEL::LOG_FATAL, messageStream.str());
 		return false;
 	}
 	return true;
