@@ -8,33 +8,37 @@ namespace prx::utils {
 	public:
 
 		StringUtils() = delete;
-		
-		inline static std::string toString(const std::string string) {
-			return string;
+
+		inline static std::string toString(const std::string& string) {
+			return std::string(string);
+		}
+
+		inline static std::string toString(char* str) {
+			return std::string(str);
 		}
 
 		inline static std::string toString(const char* str) {
-			return std::move(std::string(str));
+			return std::string(str);
 		}
 
 		inline static std::string toString(int num) {
-			return std::move(std::to_string(num));
+			return std::to_string(num);
 		}
 
 		inline static std::string toString(unsigned int num) {
-			return std::move(std::to_string(num));
+			return std::to_string(num);
 		}
 
 		inline static std::string toString(double num) {
-			return std::move(std::to_string(num));
+			return std::to_string(num);
 		}
 
 		inline static std::string toString(float num) {
-			return std::move(std::to_string(num));
+			return std::to_string(num);
 		}
 
 		inline static std::string toString(char ch) {
-			return std::move(std::to_string(ch));
+			return std::to_string(ch);
 		}
 	};
 }

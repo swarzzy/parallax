@@ -14,6 +14,7 @@ namespace prx {
 	};
 	
 	Application::~Application() {
+		Log::exportToFile(LOG_LEVEL::LOG_INFO, "log.txt");
 		Resources::terminate();
 		delete m_Timer;
 		delete m_Window;
@@ -22,7 +23,8 @@ namespace prx {
 
 	Window* Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 		LOG_LEVEL logLevel, unsigned int clearColor) {
-		prx::Log::setLevel(logLevel);
+		Log::init();
+		Log::setLevel(logLevel);
 		Resources::initAudioSystem();
 		m_Window = new Window(title, width, height, fullscreen);
 		m_Window->setClearColor(clearColor);
@@ -75,7 +77,8 @@ namespace prx {
 
 
 	Window* Application::parallaxInit() {
-		prx::Log::setLevel(LOG_LEVEL::LOG_INFO);
+		Log::init();
+		Log::setLevel(LOG_LEVEL::LOG_INFO);
 		Resources::initAudioSystem();
 		m_Window = new Window("parallax", 800, 600, false);
 		m_Window->setClearColor(0xff000000);

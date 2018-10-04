@@ -4,16 +4,32 @@
 
 #include <map>
 #include <vector>
+#include <array>
+#include <string>
+#include <string_view>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <typeinfo>
 
 // TODO: Make it platform independent
 #include <windows.h>
-#include <string>
-#include <iostream>
-#include <iomanip>
 
 #include "../StringUtils.h"
+#include <typeindex>
+
+//------------------------
+//	TODO:
+//------------------------
+// - printDirect method to print direct to the console
+// - direct file exporting to export messages in runtime
+// - rework type checking system
+// - colors in messages
 
 namespace prx {
+
+	static const unsigned int  LOG_SUPPORTRED_TYPES_COUNT = 8;
+
 	enum class LOG_LEVEL {
 		LOG_INFO	= 0,
 		LOG_WARN	= 1,
@@ -29,81 +45,163 @@ namespace prx {
 		RED		= 12
 	};
 
-	static CONSOLE_COLOR CONSOLE_COLORS[4] = { CONSOLE_COLOR::WHITE,
-											   CONSOLE_COLOR::YELLOW,
-											   CONSOLE_COLOR::RED,
-											   CONSOLE_COLOR::RED };
+	struct LogMessage {
+		LOG_LEVEL	m_Level;
+		std::string m_Message;
+
+		LogMessage(LOG_LEVEL level, std::string_view message)
+			: m_Level(level), m_Message(message) {};
+	};
+
+	static std::array<CONSOLE_COLOR, 4> CONSOLE_COLORS  = { CONSOLE_COLOR::GREEN,
+														    CONSOLE_COLOR::YELLOW,
+														    CONSOLE_COLOR::RED,
+														    CONSOLE_COLOR::RED };
+
+	static std::array<std::string, 4> LOG_LEVEL_STRINGS = { "INFO ",
+														    "WARN ",
+														    "ERROR",
+														    "FATAL" };
 
 	class Log {
 	private:
-		inline static LOG_LEVEL m_Level = LOG_LEVEL::LOG_INFO;
-		inline static HANDLE	m_consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-		//inline static std::map<LOG_LEVEL, std::vector<std::string>> m_LogBuffer;
+		static LOG_LEVEL m_Level;
+		static HANDLE	 m_ConsoleHandle;
+		// Might be slow
+		// TODO: Mb replace it to a raw array
+		inline static std::string			  m_MessageBuffer;
+		inline static std::vector<LogMessage> m_LogBuffer;
+
+		inline static std::ostream& m_DefaultStream = std::cout;
+		inline static std::vector<std::type_index> m_LoggableTypes;
 
 	public:
 		Log() = delete;
+
+		static void init();
+
 		template<typename... Args>
-		inline static void message(LOG_LEVEL level, Args... args);
-		inline static void setLevel(LOG_LEVEL level) {};
+		inline static void message(LOG_LEVEL level, Args&&... args);
+		
+		inline static void setLevel(LOG_LEVEL level);
+
+		inline static void exportToFile(LOG_LEVEL level, std::string_view path);
+
+		template<typename T>
+		static bool isLoggableType(T);
+
+		//inline static void print()
 
 	private:
 
-		template<typename Arg>
-		inline static void messageInternal(LOG_LEVEL level, Arg&& arg);
-
-		template<typename First, typename... Args>
-		inline static void messageInternal(LOG_LEVEL level, First&& first, Args&&... arg);
+		inline static void printBuffer(std::ostream& stream, LOG_LEVEL level);
 
 		template<typename T>
-		inline static void print(LOG_LEVEL level, const T& msg);
+		inline static void pushToBuffer(const T& msg);
 
-		inline static void printNewLine();
+		inline static void pushNewLineToBuffer();
 
-		inline static void printLevel(LOG_LEVEL level);
+		inline static void printLevel(std::ostream& stream, LOG_LEVEL level);
+
+		template<typename Arg>
+		inline static void handleMessage(Arg&& arg);
+		
+		template<typename First, typename... Args>
+		inline static void handleMessage(First&& first, Args&&... arg);
 
 	};
 
-	inline void Log::printNewLine() {
-		std::cout << std::endl;
-	}
-
-	inline void Log::printLevel(LOG_LEVEL level) {
-		SetConsoleTextAttribute(m_consoleHandle, static_cast<WORD>(CONSOLE_COLORS[static_cast<int>(level)]));
-		std::cout << "[";
-		//std::cout << std::setw(13);
-		std::cout.setf(std::ios::left);
-		std::cout << "PARALLAX";
-		std::cout.unsetf(std::ios::left);
-		std::cout << "] ";
-		SetConsoleTextAttribute(m_consoleHandle, static_cast<WORD>(CONSOLE_COLOR::WHITE));
-	}
-
 	template <typename ... Args>
-	void Log::message(LOG_LEVEL level, Args... args) {
-		printLevel(level);
-		messageInternal(level, std::forward<Args>(args)...);
-	}
-
-	template <typename Arg>
-	void Log::messageInternal(LOG_LEVEL level, Arg&& arg) {
-		//m_LogBuffer[level].emplace_back(utils::StringUtils::toString(std::forward<Arg>(arg)...));
+	void Log::message(LOG_LEVEL level, Args&&... args) {
 		if (level >= m_Level) {
-			print(level, std::forward<Arg>(arg));
-			printNewLine();
+			m_MessageBuffer.clear();
+			handleMessage(std::forward<Args>(args)...);
+			m_LogBuffer.emplace_back(level, m_MessageBuffer);
+			printBuffer(m_DefaultStream, level);
 		}
 	}
 
-	template <typename First, typename... Args>
-	void Log::messageInternal(LOG_LEVEL level, First&& first, Args&&... args) {
-		//m_LogBuffer[level].emplace_back(utils::StringUtils::toString(std::forward<Args>(args)...));
-		if (level >= m_Level)
-			print(level, std::forward<First>(first));
-		messageInternal(level, std::forward<Args>(args)...);
+	inline void Log::init() {
+		m_LoggableTypes.emplace_back(typeid(std::string));
+		m_LoggableTypes.emplace_back(typeid(char*));
+		m_LoggableTypes.emplace_back(typeid(const char*));
+		m_LoggableTypes.emplace_back(typeid(char));
+		m_LoggableTypes.emplace_back(typeid(int));
+		m_LoggableTypes.emplace_back(typeid(unsigned int));
+		m_LoggableTypes.emplace_back(typeid(double));
+		m_LoggableTypes.emplace_back(typeid(float));
+
+		m_MessageBuffer.reserve(128);
+
+		m_Level = LOG_LEVEL::LOG_INFO;
+		m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	}
+
+	inline void Log::setLevel(LOG_LEVEL level) {
+		m_Level = level;
+	}
+
+	inline void Log::exportToFile(LOG_LEVEL level, std::string_view path) {
+		std::ofstream stream;
+		stream.open(std::string(path));
+		if (!stream.is_open()) {
+			// TODO: Error handling
+		}
+		for (auto& msg : m_LogBuffer) {
+			if (msg.m_Level >= m_Level) {
+				stream << "[";
+				stream << LOG_LEVEL_STRINGS[static_cast<int>(msg.m_Level)];
+				stream << "] ";
+				stream << msg.m_Message;
+			}
+		}
+		stream.close();
+	}
+
+	inline void Log::printBuffer(std::ostream& stream, LOG_LEVEL level) {
+		printLevel(stream, level);
+		stream << m_MessageBuffer;
+	}
+
+	template <typename T>
+	bool Log::isLoggableType(T) {
+		auto type = std::type_index(typeid(T));
+		for (auto& t : m_LoggableTypes)
+			if (type == t)
+				return true;
+		return false;
 	}
 
 	template<typename T>
-	void Log::print(LOG_LEVEL level, const T& msg) {
-		std::cout << utils::StringUtils::toString(msg);
+	void Log::pushToBuffer(const T& msg) {
+		if (isLoggableType(msg))
+			m_MessageBuffer += utils::StringUtils::toString(msg);
+		else
+			m_MessageBuffer += " <unknown symbol> ";
+	}
+
+	inline void Log::pushNewLineToBuffer() {
+		m_MessageBuffer += '\n';
+	}
+
+	inline void Log::printLevel(std::ostream& stream, LOG_LEVEL level) {
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLORS[static_cast<int>(level)]));
+		stream << "[";
+		stream << LOG_LEVEL_STRINGS[static_cast<int>(level)];
+		stream << "] ";
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLOR::WHITE));
+	}
+
+	template <typename Arg>
+	void Log::handleMessage(Arg&& arg) {
+		pushToBuffer(std::forward<Arg>(arg));
+		pushNewLineToBuffer();
+	}
+	// Expand args with recursion
+	template <typename First, typename... Args>
+	void Log::handleMessage(First&& first, Args&&... args) {
+		pushToBuffer(std::forward<First>(first));
+		handleMessage(std::forward<Args>(args)...);
 	}
 }
 #endif

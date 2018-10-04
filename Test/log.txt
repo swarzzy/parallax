@@ -1,0 +1,6 @@
+[INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
+[ERROR]  log works 87
+[WARN ] asdasdasdas
+[INFO ] hello
+[FATAL] its fatal lolanother lol
+[FATAL] string

@@ -48,8 +48,12 @@ void Game::init() {
 	m_UPSCounter = new prx::Label("", 10, 540, 0, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
 	m_Layer2->add(m_UPSCounter);
 
-	prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, "lol", std::string(" log works "), 87);
+	prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, std::string(" log works "), 87);
 	prx::Log::message(prx::LOG_LEVEL::LOG_WARN, "asdasdasdas");
+	prx::Log::message(prx::LOG_LEVEL::LOG_INFO, "hello");
+	prx::Log::message(prx::LOG_LEVEL::LOG_FATAL, "its fatal lol" , "another lol");
+	prx::Log::message(prx::LOG_LEVEL::LOG_FATAL, std::string("string"));
+	prx::Log::message(prx::LOG_LEVEL::LOG_FATAL, prx::Label("zxc", prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff));
 }
 
 void Game::tick() {

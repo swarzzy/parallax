@@ -2,7 +2,6 @@
  --- constants header ???
  --- vector templates
  --- fatal errors in logging system
- --- button defenitions
  --- Texture loading failation handling
  --- kerning
  --- logging with std::forward (log refactoring)
