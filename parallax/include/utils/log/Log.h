@@ -2,7 +2,6 @@
 #ifndef _PARALLAX_UTILS_LOG_H_
 #define _PARALLAX_UTILS_LOG_H_
 
-#include <map>
 #include <vector>
 #include <array>
 #include <string>
@@ -10,31 +9,33 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <typeinfo>
 
 // TODO: Make it platform independent
 #include <windows.h>
 
 #include "../StringUtils.h"
-#include <typeindex>
 
 //------------------------
 //	TODO:
 //------------------------
 // - printDirect method to print direct to the console
 // - direct file exporting to export messages in runtime
-// - rework type checking system
-// - colors in messages
+// - export to file in PRX_FATAL and PRX_ASSERT
+// - log destinations
 
 namespace prx {
-
-	static const unsigned int  LOG_SUPPORTRED_TYPES_COUNT = 8;
 
 	enum class LOG_LEVEL {
 		LOG_INFO	= 0,
 		LOG_WARN	= 1,
 		LOG_ERROR	= 2,
 		LOG_FATAL	= 3
+	};
+
+	enum class LOG_TARGET {
+		BUFFER		= 1, 
+		CONSOLE		= 1 << 1,
+		DEBUG_LAYER = 1 << 2,
 	};
 
 	enum class CONSOLE_COLOR {
@@ -53,7 +54,7 @@ namespace prx {
 			: m_Level(level), m_Message(message) {};
 	};
 
-	static std::array<CONSOLE_COLOR, 4> CONSOLE_COLORS  = { CONSOLE_COLOR::GREEN,
+	static std::array<CONSOLE_COLOR, 4> CONSOLE_COLORS  = { CONSOLE_COLOR::WHITE,
 														    CONSOLE_COLOR::YELLOW,
 														    CONSOLE_COLOR::RED,
 														    CONSOLE_COLOR::RED };
@@ -65,15 +66,14 @@ namespace prx {
 
 	class Log {
 	private:
-		static LOG_LEVEL m_Level;
-		static HANDLE	 m_ConsoleHandle;
+		inline static LOG_LEVEL  m_Level;
+		inline static HANDLE	 m_ConsoleHandle;
 		// Might be slow
 		// TODO: Mb replace it to a raw array
 		inline static std::string			  m_MessageBuffer;
 		inline static std::vector<LogMessage> m_LogBuffer;
 
 		inline static std::ostream& m_DefaultStream = std::cout;
-		inline static std::vector<std::type_index> m_LoggableTypes;
 
 	public:
 		Log() = delete;
@@ -86,15 +86,11 @@ namespace prx {
 		inline static void setLevel(LOG_LEVEL level);
 
 		inline static void exportToFile(LOG_LEVEL level, std::string_view path);
-
-		template<typename T>
-		static bool isLoggableType(T);
-
-		//inline static void print()
-
+		
 	private:
 
-		inline static void printBuffer(std::ostream& stream, LOG_LEVEL level);
+		inline static void printBuffer(std::ostream& stream, LOG_LEVEL level, 
+									   CONSOLE_COLOR color = CONSOLE_COLOR::WHITE);
 
 		template<typename T>
 		inline static void pushToBuffer(const T& msg);
@@ -107,31 +103,63 @@ namespace prx {
 		inline static void handleMessage(Arg&& arg);
 		
 		template<typename First, typename... Args>
-		inline static void handleMessage(First&& first, Args&&... arg);
-
+		inline static void handleMessage(First&& first, Args&&... args);
 	};
+
+#ifndef PARALLAX_DISABLE_LOG
+
+#define PRX_INFO(...) prx::Log::message(prx::LOG_LEVEL::LOG_INFO, __VA_ARGS__)
+
+#define PRX_WARN(...) prx::Log::message(prx::LOG_LEVEL::LOG_WARN,  __VA_ARGS__, " : ", __FUNCSIG__, "\nFILE:  ", __FILE__, " LINE: ", __LINE__, ")")
+
+#define PRX_ERROR(...) prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, __VA_ARGS__, " : ", __FUNCSIG__, "\nFILE:  ", __FILE__, " LINE: ",  __LINE__, ")")
+
+#define PRX_FATAL(...)		do {\
+							prx::Log::message(prx::LOG_LEVEL::LOG_FATAL,	 \
+							"\n*********************************\n",		 \
+							"\t FATAL ERROR!\n",							 \
+							  "*********************************\n",		 \
+							__VA_ARGS__, " : ", __FUNCSIG__, "\n",			 \
+							"FILE:  ", __FILE__, " LINE: ",  __LINE__, ")"); \
+							__debugbreak();									 \
+							} while(false)
+
+#define PRX_ASSERT(x, ...)  do {											 \
+							if(!x) {										 \
+							prx::Log::message(prx::LOG_LEVEL::LOG_FATAL,	 \
+							"\n*********************************\n",		 \
+							"\t ASSERTION FAILED!\n",						 \
+							  "*********************************\n",		 \
+							__VA_ARGS__, " : ", __FUNCSIG__, "\n",			 \
+							"FILE:  ", __FILE__, " LINE: ",  __LINE__, ")"); \
+							__debugbreak();									 \
+							} } while(false)
+#else	
+
+#define PRX_INFO(...)   do{}while(false)
+#define PRX_WARN(...)   do{}while(false)
+#define PRX_ERROR(...)  do{}while(false)
+#define PRX_FATAL(...)  __debugbreak()
+#define PRX_ASSERT(...) __debugbreak()
+
+#endif
 
 	template <typename ... Args>
 	void Log::message(LOG_LEVEL level, Args&&... args) {
 		if (level >= m_Level) {
 			m_MessageBuffer.clear();
 			handleMessage(std::forward<Args>(args)...);
+			// TODO: add log destination flags
 			m_LogBuffer.emplace_back(level, m_MessageBuffer);
-			printBuffer(m_DefaultStream, level);
+			if (level == LOG_LEVEL::LOG_FATAL)
+				printBuffer(m_DefaultStream, level, CONSOLE_COLOR::RED);
+			else
+				printBuffer(m_DefaultStream, level);
 		}
 	}
 
 	inline void Log::init() {
-		m_LoggableTypes.emplace_back(typeid(std::string));
-		m_LoggableTypes.emplace_back(typeid(char*));
-		m_LoggableTypes.emplace_back(typeid(const char*));
-		m_LoggableTypes.emplace_back(typeid(char));
-		m_LoggableTypes.emplace_back(typeid(int));
-		m_LoggableTypes.emplace_back(typeid(unsigned int));
-		m_LoggableTypes.emplace_back(typeid(double));
-		m_LoggableTypes.emplace_back(typeid(float));
-
-		m_MessageBuffer.reserve(128);
+		m_MessageBuffer.reserve(256);
 
 		m_Level = LOG_LEVEL::LOG_INFO;
 		m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -145,7 +173,8 @@ namespace prx {
 		std::ofstream stream;
 		stream.open(std::string(path));
 		if (!stream.is_open()) {
-			// TODO: Error handling
+			PRX_ERROR("LOG: Can`t open output logging file: ", path);
+			return;
 		}
 		for (auto& msg : m_LogBuffer) {
 			if (msg.m_Level >= m_Level) {
@@ -158,26 +187,16 @@ namespace prx {
 		stream.close();
 	}
 
-	inline void Log::printBuffer(std::ostream& stream, LOG_LEVEL level) {
+	inline void Log::printBuffer(std::ostream& stream, LOG_LEVEL level, CONSOLE_COLOR color) {
 		printLevel(stream, level);
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(color));
 		stream << m_MessageBuffer;
-	}
-
-	template <typename T>
-	bool Log::isLoggableType(T) {
-		auto type = std::type_index(typeid(T));
-		for (auto& t : m_LoggableTypes)
-			if (type == t)
-				return true;
-		return false;
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLOR::WHITE));
 	}
 
 	template<typename T>
 	void Log::pushToBuffer(const T& msg) {
-		if (isLoggableType(msg))
-			m_MessageBuffer += utils::StringUtils::toString(msg);
-		else
-			m_MessageBuffer += " <unknown symbol> ";
+		m_MessageBuffer += utils::StringUtils::toString(msg);
 	}
 
 	inline void Log::pushNewLineToBuffer() {

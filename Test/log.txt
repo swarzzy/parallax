@@ -1,6 +1,6 @@
 [INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
-[ERROR]  log works 87
-[WARN ] asdasdasdas
-[INFO ] hello
-[FATAL] its fatal lolanother lol
-[FATAL] string
+[INFO ] sasd sdf23string
+[WARN ] asdasd 45 : void __cdecl Game::init(void)
+FILE:  d:\dev\parallax engine\parallax\test\game.cpp LINE: 52)
+[WARN ] warning sdfsdf : void __cdecl Game::init(void)
+FILE:  d:\dev\parallax engine\parallax\test\game.cpp LINE: 54)
