@@ -12,6 +12,7 @@ namespace prx {
 	private:
 		FileReader();
 	public:
+		// TODO: Make proper error handling
 		static std::optional<std::string> readTextFile(std::string_view path);
 	};
 }

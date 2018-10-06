@@ -4,7 +4,6 @@
 
 
 #include <vector>
-// TODO: get rid of this
 #include <optional>
 #include <string_view>
 
@@ -25,35 +24,40 @@ namespace prx {
 	struct ShaderSource {
 		std::string vertexSource;
 		std::string fragmentSource;
+
+		ShaderSource() {};
+		ShaderSource(const char* _vertexSource, const char* _fragmentSource)
+			: vertexSource(_vertexSource), fragmentSource(_fragmentSource) {}
 	};
 
 	class Shader {
 	private:
-		unsigned int m_ID;
-		ShaderSource m_ShaderSource;
+		unsigned int		 m_ID;
+		ShaderSource		 m_ShaderSource;
 		std::vector<Uniform> m_Uniforms;
 	
 	public:
 		Shader(std::string_view vertexPath, std::string_view fragmentPath);
+		Shader(const ShaderSource& source);
 		~Shader();
 
-		inline void bind() const { GLCall(glUseProgram(m_ID)); };
-		inline void unbind() const { GLCall(glUseProgram(0)); };
+		inline void bind()   const { GLCall(glUseProgram(m_ID)); };
+		inline void unbind() const { GLCall(glUseProgram(0));    };
 
 		inline unsigned int getID() const { return m_ID; };
 		inline std::vector<Uniform> getUniforms() const { return m_Uniforms; };
 		std::optional<int> getUniformLocation(std::string_view uniform) const;
 
-		void setUniform(const std::string& uniformName, hpm::mat4 mat);
+		void setUniform(std::string_view uniformName, hpm::mat4 mat);
+		void setUniform(std::string_view uniformName, hpm::vec2 vec);
+		void setUniform(std::string_view uniformName, hpm::vec3 vec);
+		void setUniform(std::string_view uniformName, hpm::vec4 vec);
+		void setUniform(std::string_view uniformName, float floatNum);
+		void setUniform(std::string_view uniformName, int intNum);
+		void setUniform(std::string_view uniformName, unsigned int uintNum);
+		void setUniform(std::string_view uniformName, float* floatArr, unsigned int count);
+		void setUniform(std::string_view uniformName, int* floatArr, unsigned int count);
 		//void setUniform(const std::string& uniformName, hpm::mat3 mat);
-		void setUniform(const std::string& uniformName, hpm::vec2 vec);
-		void setUniform(const std::string& uniformName, hpm::vec3 vec);
-		void setUniform(const std::string& uniformName, hpm::vec4 vec);
-		void setUniform(const std::string& uniformName, float floatNum);
-		void setUniform(const std::string& uniformName, int intNum);
-		void setUniform(const std::string& uniformName, unsigned int uintNum);
-		void setUniform(const std::string& uniformName, float* floatArr, unsigned int count);
-		void setUniform(const std::string& uniformName, int* floatArr, unsigned int count);
 	
 	private:
 		void loadUniforms();

@@ -11,21 +11,27 @@ namespace prx {
 	Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath) {
 
 		readShaderFromFile(vertexPath, fragmentPath);
-
 		compileShader();
-
 		loadUniforms();
 
 	}
 
+	Shader::Shader(const ShaderSource& source) 
+		: m_ShaderSource(source) {
+		
+		compileShader();
+		loadUniforms();
+	}
+
 	Shader::~Shader() {
-		glDeleteProgram(m_ID);
+		GLCall(glDeleteProgram(m_ID));
 	}
 
 	void Shader::readShaderFromFile(std::string_view vertexPath, std::string_view fragmentPath) {
 
 		std::optional<std::string> vertSrc = FileReader::readTextFile(vertexPath);
 		std::optional<std::string> fragSrc = FileReader::readTextFile(fragmentPath);
+		// TODO: handle file reading violation
 		if (vertSrc)
 			m_ShaderSource.vertexSource = vertSrc.value();
 		else {
@@ -58,9 +64,7 @@ namespace prx {
 			GLCall(glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &length));
 			char* message = (char*)alloca(length * sizeof(char));
 			GLCall(glGetShaderInfoLog(vertexShader, length, &length, message));
-			std::string out = "Failed to compile vertex shader: " + std::string(message);
-			Log::message(LOG_LEVEL::LOG_ERROR, out);
-			//ASSERT(false);
+			PRX_FATAL("(Shader): Failed to compile vertex shader. Error:\n", message, "\n");
 		}
 
 		unsigned int fragmentShader;
@@ -73,9 +77,7 @@ namespace prx {
 				GLCall(glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &length));
 				char* message = (char*)alloca(length * sizeof(char));
 				GLCall(glGetShaderInfoLog(fragmentShader, length, &length, message));
-				std::string out = "Failed to compile fragment shader: " + std::string(message);
-				prx::Log::message(LOG_LEVEL::LOG_FATAL, out);
-				//ASSERT(false);
+				PRX_FATAL("(Shader): Failed to compile fragment shader. Error:\n", message, "\n");
 			}
 
 		GLCall(m_ID = glCreateProgram());
@@ -88,9 +90,7 @@ namespace prx {
 			GLCall(glGetProgramiv(m_ID, GL_INFO_LOG_LENGTH, &length));
 			char* message = (char*)alloca(length * sizeof(char));
 			GLCall(glGetProgramInfoLog(m_ID, length, &length, message));
-			std::string out = "Failed to link shader program : " + std::string(message);
-			prx::Log::message(LOG_LEVEL::LOG_FATAL, out);
-			//ASSERT(false);
+			PRX_FATAL("(Shader): Failed to link shader program. Error:\n", message);
 		}
 		GLCall(glDeleteShader(vertexShader));
 		GLCall(glDeleteShader(fragmentShader));
@@ -120,13 +120,14 @@ namespace prx {
 
 	// Set uniform to a current bound shader
 	// !!!! BIND SHADER BEFORE CALL THIS !!!!
-	void Shader::setUniform(const std::string& uniformName, hpm::mat4 mat) {
+	void Shader::setUniform(std::string_view uniformName, hpm::mat4 mat) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniformMatrix4fv(loc.value(), 1, GL_FALSE, mat.elems));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName, 
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 	
@@ -141,88 +142,96 @@ namespace prx {
 		}
 	}*/
 
-	void Shader::setUniform(const std::string& uniformName, hpm::vec2 vec) {
+	void Shader::setUniform(std::string_view uniformName, hpm::vec2 vec) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform2f(loc.value(), vec.x, vec.y));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
 	// Set uniform to a current bound shader
-	void Shader::setUniform(const std::string& uniformName, hpm::vec3 vec) {
+	void Shader::setUniform(std::string_view uniformName, hpm::vec3 vec) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform3f(loc.value(), vec.x, vec.y, vec.z));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
 	// Set uniform to a current bound shader
-	void Shader::setUniform(const std::string & uniformName, hpm::vec4 vec) {
+	void Shader::setUniform(std::string_view uniformName, hpm::vec4 vec) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform4f(loc.value(), vec.x, vec.y, vec.z, vec.w));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
 	// Set uniform to a current bound shader
-	void Shader::setUniform(const std::string& uniformName, float floatNum) {
+	void Shader::setUniform(std::string_view uniformName, float floatNum) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform1f(loc.value(), floatNum));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
 	// Set uniform to a current bound shader
-	void Shader::setUniform(const std::string& uniformName, int intNum) {
+	void Shader::setUniform(std::string_view uniformName, int intNum) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform1i(loc.value(), intNum));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
 	// Set uniform to a current bound shader
-	void Shader::setUniform(const std::string& uniformName, unsigned int uintNum) {
+	void Shader::setUniform(std::string_view uniformName, unsigned int uintNum) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform1i(loc.value(), uintNum));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
-	void Shader::setUniform(const std::string& uniformName, float* floatArr, unsigned int count) {
+	void Shader::setUniform(std::string_view uniformName, float* floatArr, unsigned int count) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform1fv(loc.value(), count ,floatArr));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 
-	void Shader::setUniform(const std::string& uniformName, int* floatArr, unsigned int count) {
+	void Shader::setUniform(std::string_view uniformName, int* floatArr, unsigned int count) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {
 			GLCall(glUniform1iv(loc.value(), count, floatArr));
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Can not set uniform. Invalid uniform name.");
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+					  ". In shader with OpenGL ID = ", m_ID, ".");
 		}
 	}
 }

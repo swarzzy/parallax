@@ -20,8 +20,8 @@
 void Game::init() {
 	m_Window = parallaxInit();
 
-	unsigned int shaderNoLightID = prx::Resources::loadShader("UI_shader", "res/shaders/default.vs", "res/shaders/default_nolight.fs");
-	m_ShaderUI = prx::Resources::getShader(shaderNoLightID);
+	unsigned int shaderNoLightID = prx::ShaderManager::loadShader("UI_shader", prx::SHADER_SRC::DEFAULT);
+	m_ShaderUI = prx::ShaderManager::getShader(shaderNoLightID);
 	m_Layer2 = new prx::SceneLayer(m_ShaderUI);
 	
 	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
@@ -51,6 +51,7 @@ void Game::init() {
 	PRX_INFO("sasd", " sdf", 23, std::string("string"));
 	PRX_WARN("asdasd ", 45);
 	//PRX_FATAL("Its fatal ", 34.5f);
+	PRX_ERROR("warning ", std::string_view("sdfsdf"));
 	PRX_WARN("warning ", std::string_view("sdfsdf"));
 	//PRX_ASSERT(false, "lol assetts faled" );
 }

@@ -129,6 +129,9 @@
     <ClCompile Include="src\utils\log\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\shading\ShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -593,5 +596,12 @@
     <ClInclude Include="include\utils\StringUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\shading\ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
+    <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
   </ItemGroup>
 </Project>

@@ -24,6 +24,7 @@
     <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
     <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
+    <ClCompile Include="src\shading\ShaderManager.cpp" />
     <ClCompile Include="src\textures\SpriteSheet.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
+    <ClInclude Include="include\shading\ShaderManager.h" />
     <ClInclude Include="include\shading\Shader.h" />
     <ClInclude Include="include\textures\SpriteSheet.h" />
     <ClInclude Include="include\textures\Texture.h" />
@@ -214,6 +216,10 @@
     <ProjectReference Include="..\hypermath\hypermath.vcxproj">
       <Project>{3cf3a1b2-a53b-4b5a-b8bd-2c8877c9ac7d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
+    <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

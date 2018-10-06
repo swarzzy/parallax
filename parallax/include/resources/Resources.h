@@ -34,7 +34,7 @@ namespace prx {
 	class Resources {
 	private:
 
-		static std::map<unsigned int, Shader>	m_Shaders;
+		//static std::map<unsigned int, Shader>	m_Shaders;
 		static std::map<unsigned int, Font>		m_Fonts;
 		static std::map<unsigned int, Texture>	m_Textures;
 		static std::map<unsigned int, Sound>	m_Sounds;
@@ -50,16 +50,16 @@ namespace prx {
 
 		static bool init();
 
-		// SHADERS
-		static unsigned int loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath);
+		//// SHADERS
+		//static unsigned int loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath);
 
-		static Shader* getShader(std::string_view name);
-		static Shader* getShader(unsigned int id);
+		//static Shader* getShader(std::string_view name);
+		//static Shader* getShader(unsigned int id);
 
-		static void deleteShader(std::string_view name);
-		static void deleteShader(unsigned int id);
-		// Deletes all shaders
-		static void clearShaders();
+		//static void deleteShader(std::string_view name);
+		//static void deleteShader(unsigned int id);
+		//// Deletes all shaders
+		//static void clearShaders();
 
 		// FONTS
 		static unsigned int loadFont(std::string_view fontPath, unsigned int size, float scale = 1.0f);
