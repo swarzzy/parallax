@@ -20,10 +20,17 @@ namespace prx {
 	                 hpm::mat4	m_ProjectionMatrix;
 	protected:
 		Layer(Renderer2D* renderer, Shader* shader, hpm::mat4 projectionMatrix);
+		Layer(const Layer* other) = delete;
+		Layer& operator=(const Layer& other) = delete;
 	public:
 		virtual ~Layer();
+
 		virtual void add(Renderable2D* renderable);
 		virtual void draw();
+
+		// TODO: It`s temporary solution
+		inline Renderer2D* getRenderer() { return m_Renderer; }
+		
 		inline void setMask(Texture* mask) { m_Renderer->setMask(mask); }
 
 		void setMaskTransformation(const hpm::mat4& matrix);

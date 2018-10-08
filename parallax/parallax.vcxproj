@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIClickable.cpp" />
     <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="include\renderer\buffer\VertexArray.h" />
     <ClInclude Include="include\renderer\buffer\VertexBuffer.h" />
     <ClInclude Include="include\renderer\buffer\VertexBufferLayout.h" />
+    <ClInclude Include="include\renderer\FrameBuffer2D.h" />
     <ClInclude Include="include\renderer\layers\Layer.h" />
     <ClInclude Include="include\renderer\layers\SceneLayer.h" />
     <ClInclude Include="include\renderer\layers\UILayer.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="include\renderer\renderable\UI\UIButtonBase.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIClickable.h" />
     <ClInclude Include="include\renderer\renderable\UI\UIWidget.h" />
+    <ClInclude Include="include\renderer\FrameBufferBase.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
     <ClInclude Include="include\renderer\SimpleRenderer2D.h" />
     <ClInclude Include="include\resources\DefaultFont.h" />

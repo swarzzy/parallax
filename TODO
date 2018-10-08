@@ -5,4 +5,6 @@
  --- kerning
  --- check vector operators (they modify left operand)
  --- texture parameters
- 
+ --- shader manager should can load same shader many times
+ --- depth testing
+ --- cut filepath in logging macros

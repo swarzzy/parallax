@@ -6,6 +6,7 @@
 #include "../parallax/include/renderer/renderable/FPSCounter.h"
 #include "../parallax/include/renderer/layers/UILayer.h"
 #include "../parallax/include/renderer/renderable/AnimatedSprite.h"
+#include "../parallax/include/renderer/FrameBuffer2D.h"
 
 //#include "../parallax/include/shading/Shader.h"
 
@@ -25,7 +26,7 @@ public:
 	unsigned aID2;
 	unsigned aID3;
 	prx::AnimatedSprite* hero;
-	prx::Sprite* sp;
+	prx::FrameBuffer2D* m_FrameBuffer;
 public:
 	Game(std::string_view path) 
 		: m_Path(path) {};

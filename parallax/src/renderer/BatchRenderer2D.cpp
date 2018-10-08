@@ -3,8 +3,9 @@
 #include <textures/Texture.h>
 
 namespace prx {
-	prx::BatchRenderer2D::BatchRenderer2D() 
-		: Renderer2D() {
+	prx::BatchRenderer2D::BatchRenderer2D(RenderTarget rendertarget)
+		: Renderer2D(rendertarget), m_IBO(nullptr), m_Buffer(nullptr)
+	{
 		init();
 		defaultMask();
 	}
@@ -100,6 +101,7 @@ namespace prx {
 	}
 
 	void BatchRenderer2D::begin() {
+		m_IndexCount = 0;
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
 		GLCall(m_Buffer = static_cast<VertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 		// NOTE: Is that actually faster to clear slots?
@@ -185,12 +187,40 @@ namespace prx {
 		GLCall(glBindVertexArray(m_VAO));
 		m_IBO->Bind();
 
-		GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
+		if (m_RenderTarget == RenderTarget::BUFFER) {
+			m_FrameBuffer->bind();
+			//m_FrameBuffer->clear();
+
+			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
+
+			m_FrameBuffer->unbind();
+		} 
+		else
+			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
+
 
 		m_IBO->Unbind();
 		GLCall(glBindVertexArray(0));
 
-		m_IndexCount = 0;
+		// Moved this to begin while developing framebuffers
+		//m_IndexCount = 0;
+	}
+
+	void BatchRenderer2D::setFrameBuffer(FrameBuffer2D* framebuffer) {
+		if (framebuffer->validate()) {
+			m_FrameBuffer = framebuffer;
+			return;
+		}
+		PRX_ERROR("(Renderer): Failed to set framebuffer. Framebuffer is incomplte.");
+		// TODO: exceptions
+	}
+
+	void BatchRenderer2D::setRenderTarget(RenderTarget target) {
+		if (target == RenderTarget::BUFFER) {
+			PRX_ASSERT(m_FrameBuffer, "(Renderer): Trying no set render target as a buffer. Buffer is not set.");
+			// TODO: Exceptions and all that stuff to handle it properly
+		}
+		m_RenderTarget = target;
 	}
 
 	void BatchRenderer2D::init() {

@@ -91,6 +91,8 @@ namespace prx {
 
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		// TODO: Depth and blending modes
+		//GLCall(glEnable(GL_DEPTH_TEST));
 
 		return true;
 	}
@@ -160,7 +162,7 @@ namespace prx {
 		float b = ((color >> 16) & mask) / 255.0;
 		float a = ((color >> 24) & mask) / 255.0;
 		
-		glClearColor(r, g, b, a);
+		GLCall(glClearColor(r, g, b, a));
 	}
 
 	void Window::updateRender() {
@@ -193,6 +195,7 @@ namespace prx {
 			glClear(GL_COLOR_BUFFER_BIT);
 		if (flags & DEPTH_BUFFER)
 			glClear(GL_DEPTH_BUFFER_BIT);
+		// TODO: Join this two calls
 	}
 
 	void Window::resize(unsigned width, unsigned height) {

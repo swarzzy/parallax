@@ -5,8 +5,8 @@
 
 namespace prx {
 
-	Renderer2D::Renderer2D() 
-		: m_Mask(nullptr) {
+	Renderer2D::Renderer2D(RenderTarget rendertarget, FrameBuffer2D* frameBuffer)
+		: m_Mask(nullptr), m_RenderTarget(rendertarget), m_FrameBuffer(frameBuffer) {
 		m_TransformationStack.emplace_back(1.0f);
 		m_TransformationStackBack = hpm::mat4::identity();
 	
