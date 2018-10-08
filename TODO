@@ -1,9 +1,8 @@
  --- SSE in hypermath ???
  --- constants header ???
  --- vector templates
- --- fatal errors in logging system
  --- Texture loading failation handling
  --- kerning
- --- logging with std::forward (log refactoring)
  --- check vector operators (they modify left operand)
+ --- texture parameters
  

@@ -16,6 +16,7 @@ namespace prx {
 	Application::~Application() {
 		Log::exportToFile(LOG_LEVEL::LOG_INFO, "log.txt");
 		Resources::terminate();
+		ShaderManager::clear();
 		delete m_Timer;
 		delete m_Window;
 		m_CurrentApplication = nullptr;

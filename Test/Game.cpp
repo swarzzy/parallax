@@ -20,15 +20,17 @@
 void Game::init() {
 	m_Window = parallaxInit();
 
-	unsigned int shaderNoLightID = prx::ShaderManager::loadShader("UI_shader", prx::SHADER_SRC::DEFAULT);
-	m_ShaderUI = prx::ShaderManager::getShader(shaderNoLightID);
+	unsigned int shader = prx::ShaderManager::loadShader("shader", prx::SHADER_SRC::DEFAULT);
+	m_ShaderUI = prx::ShaderManager::getShader(shader);
+	
 	m_Layer2 = new prx::SceneLayer(m_ShaderUI);
+	//m_Layer2->setMask(prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/empty_mask.png")));
+	//m_Layer2->add(new prx::Sprite(100, 100, 1, 400, 400, prx::Resources::getTexture(prx::Resources::loadTexture("res/textures/mask.png"))));
 	
 	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
 	m_Sound = prx::Resources::getSound(soundID);
 	
 	m_Sound->play();
-
 
 	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
 	std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
@@ -47,13 +49,6 @@ void Game::init() {
 
 	m_UPSCounter = new prx::Label("", 10, 540, 0, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
 	m_Layer2->add(m_UPSCounter);
-
-	PRX_INFO("sasd", " sdf", 23, std::string("string"));
-	PRX_WARN("asdasd ", 45);
-	//PRX_FATAL("Its fatal ", 34.5f);
-	PRX_ERROR("warning ", std::string_view("sdfsdf"));
-	PRX_WARN("warning ", std::string_view("sdfsdf"));
-	//PRX_ASSERT(false, "lol assetts faled" );
 }
 
 void Game::tick() {
@@ -91,8 +86,6 @@ void Game::update() {
 			hero->loopAnimation(aID);
 		}
 	}
-		//else
-			//hero->loopAnimation(aID);
 	}
 	
 

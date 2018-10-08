@@ -4,12 +4,13 @@
 
 #include <vector>
 #include <hypermath.h>
+#include "../Renderer2D.h"
 
 namespace prx {
 
-	class Renderer2D;
 	class Renderable2D;
 	class Shader;
+	class Texture;
 
 	class Layer {
 	protected:
@@ -23,7 +24,9 @@ namespace prx {
 		virtual ~Layer();
 		virtual void add(Renderable2D* renderable);
 		virtual void draw();
+		inline void setMask(Texture* mask) { m_Renderer->setMask(mask); }
 
+		void setMaskTransformation(const hpm::mat4& matrix);
 		void setProjectionMatrix(const hpm::mat4& matrix);
 	};
 }

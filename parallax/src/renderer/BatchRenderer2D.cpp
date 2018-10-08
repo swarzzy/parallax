@@ -1,16 +1,18 @@
 #include <renderer/BatchRenderer2D.h>
 #include <utils/error_handling/GLErrorHandler.h>
+#include <textures/Texture.h>
 
 namespace prx {
 	prx::BatchRenderer2D::BatchRenderer2D() 
 		: Renderer2D() {
 		init();
+		defaultMask();
 	}
 
 	BatchRenderer2D::~BatchRenderer2D() {
-		
-		// Smart pointers care about heap allocated memory.
-		
+		delete m_Mask;
+		delete m_IBO;
+
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
@@ -32,7 +34,7 @@ namespace prx {
 			}
 		}
 		if (!found) {
-			if (m_TextureSlots.size() >= 32) {
+			if (m_TextureSlots.size() >= BATCH_RENDERER_MAX_TEXTURE_SLOTS){
 				end();
 				flush();
 				begin();
@@ -123,7 +125,7 @@ namespace prx {
 				}
 			}
 			if(!found) {
-				if(m_TextureSlots.size() >= 32) {
+				if(m_TextureSlots.size() >= BATCH_RENDERER_MAX_TEXTURE_SLOTS) {
 					end();
 					flush();
 					begin();
@@ -177,6 +179,8 @@ namespace prx {
 			GLCall(glActiveTexture(GL_TEXTURE0 + i));
 			GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]));
 		}
+		GLCall(glActiveTexture(GL_TEXTURE31));
+		m_Mask->bind();
 		
 		GLCall(glBindVertexArray(m_VAO));
 		m_IBO->Bind();
@@ -232,7 +236,7 @@ namespace prx {
 			offset += 4;
 		}
 
-		m_IBO = std::make_unique<IndexBuffer>(indices, BATCH_RENDERER_INDICES_SIZE);
+		m_IBO = new IndexBuffer(indices, BATCH_RENDERER_INDICES_SIZE);
 
 		delete[] indices;
 

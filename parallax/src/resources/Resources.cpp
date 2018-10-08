@@ -2,17 +2,14 @@
 
 #include <textures/Texture.h>
 #include <Fonts/Font.h>
-
-#include <exception>
-
 #include <shading/Shader.h>
 #include <audio/Sound.h>
-
 #include <utils/SimpleHash.h>
+
+#include <resources/DefaultFont.h>;
 
 namespace prx {
 
-	//std::map<unsigned int, Shader>	Resources::m_Shaders	= std::map<unsigned int, Shader>();
 	std::map<unsigned int, Font>	Resources::m_Fonts		= std::map<unsigned int, Font>();
 	std::map<unsigned int, Texture> Resources::m_Textures	= std::map<unsigned int, Texture>();
 	std::map<unsigned int, Sound>	Resources::m_Sounds		= std::map<unsigned int, Sound>();
@@ -37,10 +34,15 @@ namespace prx {
 	}
 
 	bool Resources::init() {
-		m_Fonts.emplace(std::piecewise_construct, std::forward_as_tuple(RESOURCES_DEFAULT_FONT_ID), 
-							std::forward_as_tuple(RESOURCES_DEFAULT_FONT_PATH, RESOURCES_DEFAULT_FONT_SIZE));
-		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_ID), 
-							std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_PATH));
+		m_Fonts.emplace(std::piecewise_construct, 
+						std::forward_as_tuple(RESOURCES_DEFAULT_FONT_ID), 
+						std::forward_as_tuple(internal::PARALLAX_DEFAULT_FONT_DATA, 
+											  internal::PARALLAX_DEFAULT_FONT_DATA_SIZE, 
+											  RESOURCES_DEFAULT_FONT_SIZE));
+
+		m_Textures.emplace(std::piecewise_construct, 
+						   std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_ID), 
+						   std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_PATH));
 
 		// UI Default textures
 		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_ID),
@@ -54,53 +56,6 @@ namespace prx {
 		}
 		return true;
 	}
-
-	// unsigned int Resources::loadShader(std::string_view name, std::string_view vertexPath, std::string_view fragmentPath) {
-	//	unsigned int id =  SimpleHash::hashString(name);
-	//	auto element = m_Shaders.find(id);
-	//	if (element != m_Shaders.end()) {
-	//		std::stringstream ss;
-	//		ss << "RESOURCE MANAGER: Shader: " << name << " already exist!";
-	//		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
-	//		return id;
-	//	}
-	//	//m_Shaders.emplace(id, vertexPath, fragmentPath);
-	//	 m_Shaders.emplace(std::piecewise_construct, std::forward_as_tuple(id),
-	//		std::forward_as_tuple(vertexPath, fragmentPath));
-	//	return id;
-	//}
-
-	// Shader* Resources::getShader(std::string_view name) {
-	//	auto element = m_Shaders.find( SimpleHash::hashString(name));
-	//	if (element != m_Shaders.end())
-	//		return &element->second;
-	//	std::stringstream ss;
-	//	ss << "RESOURCE MANAGER: Shader (name: " << name << " does not exist!";
-	//	Log::message(LOG_LEVEL::LOG_WARN, ss.str());
-	//	return nullptr;
-	//}
-
-	//Shader* Resources::getShader(unsigned id) {
-	//	auto element = m_Shaders.find(id);
-	//	if (element != m_Shaders.end())
-	//		return &(element->second);
-	//	std::stringstream ss;
-	//	ss << "RESOURCE MANAGER: Shader (ID: " << id << " does not exist!";
-	//	Log::message(LOG_LEVEL::LOG_WARN, ss.str());
-	//	return nullptr;
-	//}
-
-	//void Resources::deleteShader(std::string_view name) {
-	//	m_Shaders.erase( SimpleHash::hashString(name));
-	//}
-
-	//void Resources::deleteShader(unsigned int id) {
-	//	m_Shaders.erase(id);
-	//}
-
-	//void Resources::clearShaders() {
-	//	m_Shaders.clear();
-	//}
 
 	unsigned int Resources::loadFont(std::string_view fontPath, unsigned int size, float scale) {
 		std::stringstream ss;
@@ -139,8 +94,11 @@ namespace prx {
 
 	void Resources::clearFonts() {
 		m_Fonts.clear();
-		m_Fonts.emplace(std::piecewise_construct, std::forward_as_tuple(RESOURCES_DEFAULT_FONT_ID),
-			std::forward_as_tuple(RESOURCES_DEFAULT_FONT_PATH, RESOURCES_DEFAULT_FONT_SIZE));
+		m_Fonts.emplace(std::piecewise_construct,
+						std::forward_as_tuple(RESOURCES_DEFAULT_FONT_ID),
+						std::forward_as_tuple(internal::PARALLAX_DEFAULT_FONT_DATA,
+											  internal::PARALLAX_DEFAULT_FONT_DATA_SIZE,
+											  RESOURCES_DEFAULT_FONT_SIZE));
 	}
 
 	unsigned Resources::loadTexture(std::string_view path) {
