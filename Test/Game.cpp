@@ -22,17 +22,17 @@ void Game::init() {
 	m_Window = parallaxInit();
 
 	unsigned int shader = prx::ShaderManager::loadShader("shader", prx::SHADER_SRC::DEFAULT);
-	unsigned int shaderFB_ID = prx::ShaderManager::loadShader("shader", prx::SHADER_SRC::DEFAULT);
+	//unsigned int shaderFB_ID = prx::ShaderManager::loadShader("shader", prx::SHADER_SRC::DEFAULT);
 	m_ShaderUI = prx::ShaderManager::getShader(shader);
-	auto shaderFB = prx::ShaderManager::getShader(shaderFB_ID);
-	m_Layer = new prx::SceneLayer(shaderFB);
+	//auto shaderFB = prx::ShaderManager::getShader(shaderFB_ID);
+	//m_Layer = new prx::SceneLayer(shaderFB);
 	m_Layer2 = new prx::SceneLayer(m_ShaderUI);
-	auto renderer = m_Layer2->getRenderer();
-	auto fbo = new prx::FrameBuffer2D(800, 600);
-	m_FrameBuffer = new prx::FrameBuffer2D(std::move(*fbo));
-	renderer->setFrameBuffer(m_FrameBuffer);
-	m_Layer->add(new prx::Sprite(540, 340, 0, 300, 300, 0xff0000ff));
-	m_Layer->add( new prx::Sprite(550, 350, 1, 250, 250, dynamic_cast<prx::TextureBase*>(m_FrameBuffer->getTexture())));
+	//auto renderer = m_Layer2->getRenderer();
+	//auto fbo = new prx::FrameBuffer2D(800, 600);
+	//m_FrameBuffer = new prx::FrameBuffer2D(std::move(*fbo));
+	//renderer->setFrameBuffer(m_FrameBuffer);
+	//m_Layer->add(new prx::Sprite(540, 340, 0, 300, 300, 0xff0000ff));
+	//m_Layer->add( new prx::Sprite(550, 350, 1, 250, 250, dynamic_cast<prx::TextureBase*>(m_FrameBuffer->getTexture())));
 	
 	unsigned int soundID = prx::Resources::loadSound("test", "res/audio/test.ogg");
 	m_Sound = prx::Resources::getSound(soundID);
@@ -57,8 +57,8 @@ void Game::init() {
 	m_UPSCounter = new prx::Label("", 10, 540, 0, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
 	m_Layer2->add(m_UPSCounter);
 	//auto fbo = new prx::FrameBuffer2D(800, 600);
-	m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::BUFFER);
-	delete fbo;
+	//m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::BUFFER);
+	//delete fbo;
 }
 
 void Game::tick() {
@@ -101,12 +101,12 @@ void Game::update() {
 
 	//m_Ui->update();
 void Game::render() {
-	m_FrameBuffer->bind();
-	m_FrameBuffer->clear();
-	m_FrameBuffer->unbind();
-	m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::BUFFER);
+	//m_FrameBuffer->bind();
+	//m_FrameBuffer->clear();
+	//m_FrameBuffer->unbind();
+	//m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::BUFFER);
 	m_Layer2->draw();
-	m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::SCREEN);
-	m_Layer2->draw();
-	m_Layer->draw();
+	//m_Layer2->getRenderer()->setRenderTarget(prx::RenderTarget::SCREEN);
+	//m_Layer2->draw();
+	//m_Layer->draw();
 }

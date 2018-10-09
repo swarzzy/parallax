@@ -9,7 +9,7 @@ namespace prx {
 		init();
 	}
 
-	FrameBuffer2D::FrameBuffer2D(FrameBuffer2D&& other)
+	FrameBuffer2D::FrameBuffer2D(FrameBuffer2D&& other) noexcept
 		:FrameBufferBase(other.getWidth(), other.getHeight()), 
 		 m_Texture(other.m_Texture), 
 		 m_RBO(other.m_RBO),
