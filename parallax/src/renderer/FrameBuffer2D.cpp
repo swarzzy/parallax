@@ -47,7 +47,7 @@ namespace prx {
 
 	bool FrameBuffer2D::validate() {
 		bind();
-		bool result = (GLCall(glCheckFramebufferStatus(GL_FRAMEBUFFER)) == GL_FRAMEBUFFER_COMPLETE) && m_Valid;
+		GLCall(bool result = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE && m_Valid);
 		unbind();
 		return result;
 	}
@@ -75,7 +75,8 @@ namespace prx {
 										 GL_RENDERBUFFER,
 										 m_RBO));
 
-		if (GLCall(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)) 
+		GLCall(bool status = glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE);
+		if (status)
 			PRX_WARN("(RENDERBUFFER): Renderbuffer validation failed\n-> API ID: ", m_ID);
 
 		GLCall(glBindFramebuffer(GL_FRAMEBUFFER, PARALLAX_DEFAULT_FRAMEBUFFER));
