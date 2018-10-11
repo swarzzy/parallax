@@ -7,29 +7,28 @@
 #include "../parallax/include/renderer/layers/UILayer.h"
 #include "../parallax/include/renderer/renderable/AnimatedSprite.h"
 #include "../parallax/include/renderer/FrameBuffer2D.h"
+#include "../parallax/include/scene/SpriteNode.h"
+#include "../parallax/include/scene/Scene.h"
 
 //#include "../parallax/include/shading/Shader.h"
-
+using namespace prx;
 class Game : public prx::Application {
 public:
-	prx::Window* m_Window;
-	prx::Shader* m_Shader;
-	prx::Shader* m_ShaderUI;
-	prx::Sound*  m_Sound;
-	prx::SceneLayer* m_Layer;
-	prx::SceneLayer* m_Layer2;
-	prx::Label* m_FPSCounter;
-	prx::Label* m_UPSCounter;
-	std::string m_Path;
-	prx::UILayer* m_Ui;
-	unsigned aID;
-	unsigned aID2;
-	unsigned aID3;
-	prx::AnimatedSprite* hero;
-	prx::FrameBuffer2D* m_FrameBuffer;
+	Window* m_Window;
+	Shader* m_Shader;
+	SceneLayer* m_Layer;
+	Sound* m_Sound;
+	Label* m_FPSCounter;
+	Label* m_UPSCounter;
+	Scene* m_Scene;
+	SpriteNode* m_Background;
+	Renderer2D* m_Renderer;
+	SpriteNode* m_Sun;
+	SpriteNode* m_BluePlanet;
+	SpriteNode* m_BrownPlanet;
+	SpriteNode* m_Clouds;
 public:
-	Game(std::string_view path) 
-		: m_Path(path) {};
+	Game(std::string_view path) {}
 	~Game() {};
 
 	void init() override;

@@ -135,6 +135,12 @@
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\SpriteNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -611,9 +617,21 @@
     <ClInclude Include="include\renderer\FrameBuffer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\scene\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene\SpriteNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scene\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
+    <None Include="include\scene\Node.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

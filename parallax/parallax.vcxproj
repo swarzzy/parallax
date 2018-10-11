@@ -25,6 +25,8 @@
     <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
     <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
+    <ClCompile Include="src\scene\Scene.cpp" />
+    <ClCompile Include="src\scene\SpriteNode.cpp" />
     <ClCompile Include="src\shading\ShaderManager.cpp" />
     <ClCompile Include="src\textures\SpriteSheet.cpp" />
     <ClCompile Include="src\textures\TextureAtlas.cpp" />
@@ -191,6 +193,9 @@
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
+    <ClInclude Include="include\scene\Node.h" />
+    <ClInclude Include="include\scene\Scene.h" />
+    <ClInclude Include="include\scene\SpriteNode.h" />
     <ClInclude Include="include\shading\ShaderManager.h" />
     <ClInclude Include="include\shading\Shader.h" />
     <ClInclude Include="include\textures\SpriteSheet.h" />
@@ -222,6 +227,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\scene\Node.inl" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
   </ItemGroup>

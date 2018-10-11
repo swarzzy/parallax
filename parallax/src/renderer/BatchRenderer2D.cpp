@@ -67,28 +67,28 @@ namespace prx {
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, 0.0);
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, position.z);
 			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
 			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, 0);
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, position.z);
 			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
 			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, 0);
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, position.z);
 			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
 			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, 0);
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, position.z);
 			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
 			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
