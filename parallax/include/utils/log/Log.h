@@ -110,33 +110,41 @@ namespace prx {
 
 #ifndef PARALLAX_DISABLE_LOG
 
-#define PRX_INFO(...) prx::Log::message(prx::LOG_LEVEL::LOG_INFO, __VA_ARGS__)
+#define PRX_INFO(...) prx::Log::message(prx::LogLevel::LOG_INFO, __VA_ARGS__)
 
-#define PRX_WARN(...) prx::Log::message(prx::LOG_LEVEL::LOG_WARN,  __VA_ARGS__, "\n\tFROM: ", __FUNCSIG__, "\n\tFILE: ", __FILE__, " LINE: ", __LINE__)
+#define PRX_WARN(...) prx::Log::message(prx::LogLevel::LOG_WARN,  __VA_ARGS__, \
+					  "\n-> FROM: ", __FUNCSIG__, "\n-> FILE: ",			   \
+					  prx::utils::StringUtils::getFileNameFromPath(__FILE__), " \n-> LINE: ", __LINE__)
 
-#define PRX_ERROR(...) prx::Log::message(prx::LOG_LEVEL::LOG_ERROR, __VA_ARGS__, "\n\tFROM: ", __FUNCSIG__, "\n\tFILE: ", __FILE__, " LINE: ",  __LINE__)
+#define PRX_ERROR(...) prx::Log::message(prx::LogLevel::LOG_ERROR,  __VA_ARGS__, \
+					  "\n-> FROM: ", __FUNCSIG__, "\n-> FILE: ",				 \
+					  prx::utils::StringUtils::getFileNameFromPath(__FILE__), " \n-> LINE: ", __LINE__)
 
 #define PRX_FATAL(...)		do {											  \
-							prx::Log::message(prx::LOG_LEVEL::LOG_FATAL,	  \
-							"*********************************\n",		  \
-							"\t\t FATAL ERROR!\n",							  \
-							  "\t*********************************\n\t",	  \
-							__VA_ARGS__, "\n\tFROM: ", __FUNCSIG__, "\n",	  \
-							"\tFILE: ", __FILE__, " LINE: ",  __LINE__);	  \
-							prx::Log::exportToFile(prx::LOG_LEVEL::LOG_INFO,  \
+							prx::Log::message(prx::LogLevel::LOG_FATAL,	      \
+							"*********************************\n",			  \
+							"       \t FATAL ERROR!\n",						  \
+							  "        *********************************\n",  \
+							"        ",__VA_ARGS__, "\n-> FROM: ",			  \
+							__FUNCSIG__, "\n", "-> FILE: ",					  \
+				            prx::utils::StringUtils::getFileNameFromPath(	  \
+							__FILE__), "\n-> LINE: ",  __LINE__);			  \
+							prx::Log::exportToFile(prx::LogLevel::LOG_INFO,   \
 							"log.txt");										  \
 							__debugbreak();									  \
 							} while(false)
 
 #define PRX_ASSERT(x, ...)  do {											  \
 							if(!x) {										  \
-							prx::Log::message(prx::LOG_LEVEL::LOG_FATAL,	  \
-							"*********************************\n",		  \
-							"\t\t ASSERTION FAILED!\n",						  \
-							  "\t*********************************\n\t",	  \
-							__VA_ARGS__, "\n\tFROM: ", __FUNCSIG__, "\n" 	  \
-							"\tFILE: ", __FILE__, " LINE: ",  __LINE__);	  \
-							prx::Log::exportToFile(prx::LOG_LEVEL::LOG_INFO,  \
+							prx::Log::message(prx::LogLevel::LOG_FATAL,	      \
+							"*********************************\n",			  \
+							"       \t ASSERTION FAILED!\n",				  \
+							  "        *********************************\n",  \
+							"        ",__VA_ARGS__, "\n-> FROM: ",			  \
+							__FUNCSIG__, "\n", "-> FILE: ",					  \
+				            prx::utils::StringUtils::getFileNameFromPath(	  \
+							__FILE__), "\n-> LINE: ",  __LINE__);			  \
+							prx::Log::exportToFile(prx::LogLevel::LOG_INFO,   \
 							"log.txt");										  \
 							__debugbreak();									  \
 							} } while(false)

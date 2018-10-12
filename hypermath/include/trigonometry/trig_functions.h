@@ -7,7 +7,7 @@
 #include<math.h>
 
 namespace hpm {
-	inline float degToRad(float degrees) {
+	inline constexpr float degToRad(float degrees) {
 		return degrees * (M_PI / 180.0f);
 	}
 }

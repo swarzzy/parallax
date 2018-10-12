@@ -4,8 +4,8 @@ namespace hpm {
 	vec2::vec2()
 		: x(0.0f), y(0.0f) {}
 
-	vec2::vec2(float _x, float _y)
-		: x(_x), y(_y) {}
+	vec2::vec2(float x_, float y_)
+		: x(x_), y(y_) {}
 
 	vec2::vec2(float value) 
 		: x(value), y(value) {}

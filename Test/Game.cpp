@@ -59,7 +59,7 @@ void Game::update() {
 	m_Sun->setTransform(hpm::mat4::rotation(-getTime() / 80, hpm::vec3(0, 0, 1)) * hpm::mat4::translation(hpm::vec3(-150 / 2, -150 / 2, 0)));
 	m_Background->setTransform( hpm::mat4::rotation(getTime() / 100, hpm::vec3(0,0,1)) * hpm::mat4::translation(hpm::vec3(-425, -425, 0)));
 	m_BluePlanet->setTransform(hpm::mat4::rotation(getTime() / 50, hpm::vec3(0, 0, 1)) * hpm::mat4::translation(hpm::vec3(80, 80, 0)));
-	m_BrownPlanet->setTransform(hpm::mat4::translation(hpm::vec3(40, 40, 0)) * hpm::mat4::rotation(getTime() / 6, hpm::vec3(0, 0, 1)) * hpm::mat4::translation(hpm::vec3(30, 30, 0)));
+	m_BrownPlanet->setTransform(hpm::mat4::translation(hpm::vec3(40, 40, 0)) * hpm::mat4::rotation(getTime() / 6, hpm::vec3(0, 0, -1)) * hpm::mat4::translation(hpm::vec3(30, 30, 0)));
 }
 	
 void Game::render() {

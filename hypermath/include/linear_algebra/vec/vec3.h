@@ -26,7 +26,7 @@ namespace hpm {
 
 		vec3();
 		vec3(float _x, float _y, float _z);
-		vec3(float value);
+		explicit vec3(float value);
 		vec3(const vec3& vector);
 		vec3(const vec2& vector, float _z);
 

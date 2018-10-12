@@ -19,8 +19,8 @@ namespace hpm {
 		};
 
 		vec2();
-		vec2(float _x, float _y);
-		vec2(float value);
+		vec2(float x_, float y_);
+		explicit vec2(float value);
 		vec2(const vec2& vector);
 		
 		vec2& add		(const vec2& vector);

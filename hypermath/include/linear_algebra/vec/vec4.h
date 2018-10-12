@@ -31,7 +31,7 @@ namespace hpm {
 
 		vec4();
 		vec4(float _x, float _y, float _z, float _w);
-		vec4(float value);
+		explicit vec4(float value);
 		vec4(const vec4& vector);
 		vec4(const vec2& vector, float _z, float _w);
 		vec4(const vec3& vector, float _w);

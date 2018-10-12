@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="include\hypermath.h" />
     <ClInclude Include="include\linear_algebra\matrix.h" />
+    <ClInclude Include="include\linear_algebra\mat\mat3.h" />
     <ClInclude Include="include\linear_algebra\mat\mat4.h" />
     <ClInclude Include="include\linear_algebra\vector.h" />
     <ClInclude Include="include\linear_algebra\vec\vec2.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="include\trigonometry\trig_functions.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\linear_algebra\mat\mat3.cpp" />
     <ClCompile Include="src\linear_algebra\mat\mat4.cpp" />
     <ClCompile Include="src\linear_algebra\vec\vec2.cpp" />
     <ClCompile Include="src\linear_algebra\vec\vec3.cpp" />

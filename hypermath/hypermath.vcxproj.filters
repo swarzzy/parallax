@@ -39,6 +39,9 @@
     <ClInclude Include="include\hypermath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\linear_algebra\mat\mat3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\linear_algebra\mat\mat4.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\linear_algebra\vec\vec4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\linear_algebra\mat\mat3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

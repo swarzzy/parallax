@@ -15,6 +15,11 @@ namespace prx::utils {
 	public:
 		StringUtils() = delete;
 
+		inline static std::string getFileNameFromPath(std::string_view path, char separator = '\\') {
+			auto slashPos = path.find_last_of(separator);
+			return std::string(path).substr(slashPos + 1);
+		}
+
 		template<typename T>
 		inline static std::string toString(T arg) {
 			using namespace std::string_literals;
