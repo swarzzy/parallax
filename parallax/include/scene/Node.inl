@@ -1,4 +1,6 @@
 
+#include "utils/log/Log.h"
+
 namespace prx {
 	
 	Node::Node(Node* parent, Renderer2D* renderer)
@@ -18,6 +20,8 @@ namespace prx {
 	}
 
 	inline void Node::setParent(Node* parent) {
+		if (parent == this)
+			PRX_ERROR("(Node): Trying to set self as a parent\n-> Node ID: ", m_ID);
 		m_Parent = parent;
 		parent->addChild(this);
 	}

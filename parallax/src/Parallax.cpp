@@ -7,14 +7,14 @@ namespace prx {
 	Application::Application() 
 	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0), m_Time(0) {
 		if (m_CurrentApplication != nullptr) {
-			Log::message(LOG_LEVEL::LOG_FATAL, "APPLICATION: Only one application can exist at the same time.");
+			Log::message(LogLevel::LOG_FATAL, "APPLICATION: Only one application can exist at the same time.");
 			ASSERT(m_CurrentApplication == nullptr);
 		}
 		m_CurrentApplication = this;
 	};
 	
 	Application::~Application() {
-		Log::exportToFile(LOG_LEVEL::LOG_INFO, "log.txt");
+		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
 		Resources::terminate();
 		ShaderManager::clear();
 		delete m_Timer;
@@ -23,7 +23,7 @@ namespace prx {
 	}
 
 	Window* Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
-		LOG_LEVEL logLevel, unsigned int clearColor) {
+		LogLevel logLevel, unsigned int clearColor) {
 		Log::init();
 		Log::setLevel(logLevel);
 		Resources::initAudioSystem();
@@ -79,7 +79,7 @@ namespace prx {
 
 	Window* Application::parallaxInit() {
 		Log::init();
-		Log::setLevel(LOG_LEVEL::LOG_INFO);
+		Log::setLevel(LogLevel::LOG_INFO);
 		Resources::initAudioSystem();
 		m_Window = new Window("parallax", 800, 600, false);
 		m_Window->setClearColor(0xff000000);

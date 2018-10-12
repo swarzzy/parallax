@@ -1,6 +1,4 @@
 #pragma once
-#ifndef _PARALLAX_UTILS_LOG_H_
-#define _PARALLAX_UTILS_LOG_H_
 
 #include <vector>
 #include <array>
@@ -22,23 +20,27 @@
 // - direct file exporting to export messages in runtime
 // - export to file in PRX_FATAL and PRX_ASSERT
 // - log destinations
+// - Replace cout with printf
 
 namespace prx {
 
-	enum class LOG_LEVEL {
+	enum class LogLevel {
 		LOG_INFO	= 0,
 		LOG_WARN	= 1,
 		LOG_ERROR	= 2,
 		LOG_FATAL	= 3
 	};
 
-	enum class LOG_TARGET {
+	// Temporary solution
+	typedef LogLevel LOG_LEVEL;
+
+	enum class LogTarget {
 		BUFFER		= 1, 
 		CONSOLE		= 1 << 1,
 		DEBUG_LAYER = 1 << 2,
 	};
 
-	enum class CONSOLE_COLOR {
+	enum class ConsoleColor {
 		WHITE	= 15,
 		GRAY	= 7,
 		GREEN	= 2,
@@ -47,17 +49,17 @@ namespace prx {
 	};
 
 	struct LogMessage {
-		LOG_LEVEL	m_Level;
+		LogLevel	m_Level;
 		std::string m_Message;
 
-		LogMessage(LOG_LEVEL level, std::string_view message)
+		LogMessage(LogLevel level, std::string_view message)
 			: m_Level(level), m_Message(message) {};
 	};
 
-	static std::array<CONSOLE_COLOR, 4> CONSOLE_COLORS  = { CONSOLE_COLOR::WHITE,
-														    CONSOLE_COLOR::YELLOW,
-														    CONSOLE_COLOR::RED,
-														    CONSOLE_COLOR::RED };
+	static std::array<ConsoleColor, 4> CONSOLE_COLORS  = { ConsoleColor::WHITE,
+														   ConsoleColor::YELLOW,
+														   ConsoleColor::RED,
+														   ConsoleColor::RED };
 
 	static std::array<std::string, 4> LOG_LEVEL_STRINGS = { "INFO ",
 														    "WARN ",
@@ -66,7 +68,7 @@ namespace prx {
 
 	class Log {
 	private:
-		inline static LOG_LEVEL  m_Level;
+		inline static LogLevel  m_Level;
 		inline static HANDLE	 m_ConsoleHandle;
 		// Might be slow
 		// TODO: Mb replace it to a raw array
@@ -81,23 +83,23 @@ namespace prx {
 		static void init();
 
 		template<typename... Args>
-		inline static void message(LOG_LEVEL level, Args&&... args);
+		inline static void message(LogLevel level, Args&&... args);
 		
-		inline static void setLevel(LOG_LEVEL level);
+		inline static void setLevel(LogLevel level);
 
-		inline static void exportToFile(LOG_LEVEL level, std::string_view path);
+		inline static void exportToFile(LogLevel level, std::string_view path);
 		
 	private:
 
-		inline static void printBuffer(std::ostream& stream, LOG_LEVEL level, 
-									   CONSOLE_COLOR color = CONSOLE_COLOR::WHITE);
+		inline static void printBuffer(std::ostream& stream, LogLevel level,
+									   ConsoleColor color = ConsoleColor::WHITE);
 
 		template<typename T>
 		inline static void pushToBuffer(const T& msg);
 
 		inline static void pushNewLineToBuffer();
 
-		inline static void printLevel(std::ostream& stream, LOG_LEVEL level);
+		inline static void printLevel(std::ostream& stream, LogLevel level);
 
 		template<typename Arg>
 		inline static void handleMessage(Arg&& arg);
@@ -149,14 +151,14 @@ namespace prx {
 #endif
 
 	template <typename ... Args>
-	void Log::message(LOG_LEVEL level, Args&&... args) {
+	inline void Log::message(LogLevel level, Args&&... args) {
 		if (level >= m_Level) {
 			m_MessageBuffer.clear();
 			handleMessage(std::forward<Args>(args)...);
 			// TODO: add log destination flags
 			m_LogBuffer.emplace_back(level, m_MessageBuffer);
 			if (level == LOG_LEVEL::LOG_FATAL)
-				printBuffer(m_DefaultStream, level, CONSOLE_COLOR::RED);
+				printBuffer(m_DefaultStream, level, ConsoleColor::RED);
 			else
 				printBuffer(m_DefaultStream, level);
 		}
@@ -165,15 +167,15 @@ namespace prx {
 	inline void Log::init() {
 		m_MessageBuffer.reserve(256);
 
-		m_Level = LOG_LEVEL::LOG_INFO;
+		m_Level = LogLevel::LOG_INFO;
 		m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	}
 
-	inline void Log::setLevel(LOG_LEVEL level) {
+	inline void Log::setLevel(LogLevel level) {
 		m_Level = level;
 	}
 
-	inline void Log::exportToFile(LOG_LEVEL level, std::string_view path) {
+	inline void Log::exportToFile(LogLevel level, std::string_view path) {
 		std::ofstream stream;
 		stream.open(std::string(path));
 		if (!stream.is_open()) {
@@ -191,15 +193,15 @@ namespace prx {
 		stream.close();
 	}
 
-	inline void Log::printBuffer(std::ostream& stream, LOG_LEVEL level, CONSOLE_COLOR color) {
+	inline void Log::printBuffer(std::ostream& stream, LogLevel level, ConsoleColor color) {
 		printLevel(stream, level);
 		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(color));
 		stream << m_MessageBuffer;
-		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLOR::WHITE));
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(ConsoleColor::WHITE));
 	}
 
 	template<typename T>
-	void Log::pushToBuffer(const T& msg) {
+	inline void Log::pushToBuffer(const T& msg) {
 		m_MessageBuffer += utils::StringUtils::toString(msg);
 	}
 
@@ -207,24 +209,24 @@ namespace prx {
 		m_MessageBuffer += '\n';
 	}
 
-	inline void Log::printLevel(std::ostream& stream, LOG_LEVEL level) {
+	inline void Log::printLevel(std::ostream& stream, LogLevel level) {
 		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLORS[static_cast<int>(level)]));
 		stream << "[";
 		stream << LOG_LEVEL_STRINGS[static_cast<int>(level)];
 		stream << "] ";
-		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(CONSOLE_COLOR::WHITE));
+		SetConsoleTextAttribute(m_ConsoleHandle, static_cast<WORD>(ConsoleColor::WHITE));
 	}
 
 	template <typename Arg>
-	void Log::handleMessage(Arg&& arg) {
+	inline void Log::handleMessage(Arg&& arg) {
 		pushToBuffer(std::forward<Arg>(arg));
 		pushNewLineToBuffer();
 	}
 	// Expand args with recursion
 	template <typename First, typename... Args>
-	void Log::handleMessage(First&& first, Args&&... args) {
+	inline void Log::handleMessage(First&& first, Args&&... args) {
 		pushToBuffer(std::forward<First>(first));
 		handleMessage(std::forward<Args>(args)...);
 	}
 }
-#endif
+

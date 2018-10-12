@@ -1,9 +1,16 @@
+
 #pragma once
 #ifndef _PARALLAX_UTILS_STRINGUTILS_H_
 #define _PARALLAX_UTILS_STRINGUTILS_H_
 #include <string>
 
+namespace prx {
+	enum class ShaderType;
+}
+
 namespace prx::utils {
+
+	
 	class StringUtils {
 	public:
 		StringUtils() = delete;
@@ -69,6 +76,8 @@ namespace prx::utils {
 		inline static std::string toString(long double num) {
 			return std::to_string(num);
 		}
+
+		static std::string toString(ShaderType type);
 	};
 }
 #endif

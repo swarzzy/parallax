@@ -54,8 +54,8 @@
     <ClCompile Include="src\resources\ResourcesDeprec.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
-    <ClCompile Include="src\utils\log\Log.cpp" />
     <ClCompile Include="src\utils\log\LogOld.cpp" />
+    <ClCompile Include="src\utils\StringUtils.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

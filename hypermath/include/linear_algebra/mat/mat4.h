@@ -19,7 +19,7 @@ namespace hpm {
 
 		mat4();
 		mat4(const mat4& mat);
-		mat4(float diagonal);
+		explicit mat4(float diagonal);
 
 		static mat4 identity();
 		static mat4 ortho(float left, float right, float top, float bottom, float near, float far);

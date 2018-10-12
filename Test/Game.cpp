@@ -21,8 +21,7 @@
 void Game::init() {
 	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
 
-	unsigned int shader = ShaderManager::loadShader("shader", SHADER_SRC::DEFAULT);
-	m_Shader = ShaderManager::getShader(ShaderManager::loadShader("shader", SHADER_SRC::DEFAULT));
+	m_Shader = ShaderManager::getShader(ShaderManager::loadShader(ShaderType::DEFAULT));
 	
 	m_Layer = new SceneLayer(m_Shader);
 	m_Layer->setProjectionMatrix(hpm::mat4::ortho(0, 600, 600, 0, -10, 10));

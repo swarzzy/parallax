@@ -7,27 +7,25 @@
 
 namespace prx {
 	
-	enum class SHADER_SRC {
+	enum class ShaderType {
 		DEFAULT
 	};
 
 	class ShaderManager {
 	private:
+		static unsigned int m_GlobalShaderCounter;
+		
 		static std::map<unsigned int, Shader> m_Shaders;
 		
 	public:
 		ShaderManager() = delete;
 
-		static unsigned int loadShader(std::string_view name, 
-									   std::string_view vertexPath, 
-									   std::string_view fragmentPath);
+		static unsigned int loadShader(std::string_view vertexPath, std::string_view fragmentPath);
 
-		static unsigned int loadShader(std::string_view name, SHADER_SRC shader);
+		static unsigned int loadShader(ShaderType shader);
 
-		static Shader* getShader(std::string_view name);
 		static Shader* getShader(unsigned int id);
 
-		static void deleteShader(std::string_view name);
 		static void deleteShader(unsigned int id);
 		
 		static void clear();
