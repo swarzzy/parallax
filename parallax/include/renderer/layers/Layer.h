@@ -33,7 +33,7 @@ namespace prx {
 		
 		inline void setMask(Texture* mask) { m_Renderer->setMask(mask); }
 
-		void setMaskTransformation(const hpm::mat4& matrix);
+		//void setMaskTransformation(const hpm::mat4& matrix);
 		void setProjectionMatrix(const hpm::mat4& matrix);
 	};
 }

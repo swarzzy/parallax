@@ -42,11 +42,11 @@ namespace prx {
 
 	}
 
-	void Layer::setMaskTransformation(const hpm::mat4& matrix) {
-		m_Shader->bind();
-		m_Shader->setUniform("u_MaskMatrix", matrix);
-		m_Shader->unbind();
-	}
+	//void Layer::setMaskTransformation(const hpm::mat4& matrix) {
+	//	m_Shader->bind();
+	//	m_Shader->setUniform("u_MaskMatrix", matrix);
+	//	m_Shader->unbind();
+	//}
 
 	void Layer::setProjectionMatrix(const hpm::mat4& matrix) {
 		m_ProjectionMatrix = matrix;

@@ -14,8 +14,8 @@ namespace prx {
 		Node*				m_Parent;
 		std::vector<Node*>	m_Children;
 		bool				m_NeedsUpdate;
-		hpm::mat4			m_LocalMat;
-		hpm::mat4			m_WorldMat;
+		hpm::mat3			m_LocalMat;
+		hpm::mat3			m_WorldMat;
 		//hpm::mat4 m_SelfMatrix;
 		
 		//Temporary solution
@@ -39,10 +39,10 @@ namespace prx {
 	
 		inline constexpr unsigned int getID() const noexcept;
 		inline Node* getParent() const noexcept;
-		inline const hpm::mat4& getTransformMat() const noexcept;
-		inline const hpm::mat4& getWorldMat() const noexcept;
+		inline const hpm::mat3& getTransformMat() const noexcept;
+		inline const hpm::mat3& getWorldMat() const noexcept;
 	
-		inline void setTransform(const hpm::mat4& transform) noexcept;
+		inline void setTransform(const hpm::mat3& transform) noexcept;
 		inline void makeNeedsUpdate();
 		
 	protected:

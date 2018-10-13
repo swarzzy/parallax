@@ -1,14 +1,11 @@
 #pragma once
-
-
 #include "../parallax/include/Parallax.h"
 #include "../parallax/include/renderer/layers/SceneLayer.h"
 #include "../parallax/include/renderer/renderable/FPSCounter.h"
 #include "../parallax/include/renderer/layers/UILayer.h"
-#include "../parallax/include/renderer/renderable/AnimatedSprite.h"
-#include "../parallax/include/renderer/FrameBuffer2D.h"
 #include "../parallax/include/scene/SpriteNode.h"
 #include "../parallax/include/scene/Scene.h"
+#include "../parallax/include/renderer/renderable/Label.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;

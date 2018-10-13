@@ -14,13 +14,12 @@ namespace prx {
 		else
 			depth = 0.0f;
 		// TODO: get depth from the parent
-		m_LocalMat = hpm::mat4::translation(hpm::vec3(winWidth / 2.0f, winHeight / 2.0f, depth));
+		m_LocalMat = hpm::mat3::translation(winWidth / 2.0f, winHeight / 2.0f);
 	}
-#define kill delete
 
 	Scene::~Scene() {
 		for (auto child : m_Children) {
-			kill child;
+			delete child;
 		}
 	}
 
@@ -41,7 +40,7 @@ namespace prx {
 		drawChildren();
 	}
 
-#undef kill
+
 
 }
 

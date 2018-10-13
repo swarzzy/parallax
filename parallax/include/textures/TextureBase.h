@@ -12,6 +12,14 @@ namespace prx {
 	};
 
 	class TextureBase {
+	public:
+		inline static const float DEFAULT_UV[8] = {
+			0.0f, 0.0f,	0.0f, 1.0f,	1.0f, 1.0f,	1.0f, 0.0f
+		};
+		inline static const float DEFAULT_REFLECT_UV[8] = {
+			1.0f, 0.0f, 1.0f, 1.0f,	0.0f, 1.0f,	0.0f, 0.0f
+		};
+
 	protected:
 		unsigned int  m_TexID;
 		unsigned int  m_Width;

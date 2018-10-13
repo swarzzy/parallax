@@ -22,13 +22,13 @@ namespace prx {
 			m_GlobalWidgetCounter++;
 		}
 
-		UIWidget(const hpm::vec3& position, const hpm::vec2& size, unsigned int color)
+		UIWidget(const hpm::vec2& position, const hpm::vec2& size, unsigned int color)
 			: Renderable2D(position, size, color),
 				m_ID(m_GlobalWidgetCounter) {
 			m_GlobalWidgetCounter++;
 		};
 
-		UIWidget(hpm::vec3 position, hpm::vec2 size, Texture* texture)
+		UIWidget(hpm::vec2 position, hpm::vec2 size, Texture* texture)
 			: Renderable2D(position, size, texture),
 				m_ID(m_GlobalWidgetCounter) {
 			m_GlobalWidgetCounter++;

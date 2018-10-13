@@ -18,15 +18,15 @@ namespace prx {
 		unsigned int m_DefaultFrame;
 	public:
 		// TODO: setting default frame
-		AnimatedSprite(hpm::vec3 position, hpm::vec2 size, SpriteSheet* texture, unsigned int animationID)
+		AnimatedSprite(hpm::vec2 position, hpm::vec2 size, SpriteSheet* texture, unsigned int animationID)
 			: Sprite(position, size, texture), m_AnimationID(animationID), 
 			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
 			// It`s setting UVs two times, here and in renderable constructor
 			setDefaultUVs();
 		};
 
-		AnimatedSprite(float x, float y, float z, float width, float height, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(x, y, z, width, height, texture), m_AnimationID(animationID),
+		AnimatedSprite(float x, float y, float width, float height, SpriteSheet* texture, unsigned int animationID)
+			: Sprite(x, y, width, height, texture), m_AnimationID(animationID),
 			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
 			setDefaultUVs();
 		};

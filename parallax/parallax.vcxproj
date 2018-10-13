@@ -39,7 +39,6 @@
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
     <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
-    <ClCompile Include="src\renderer\renderable\FPSCounter.cpp" />
     <ClCompile Include="src\renderer\renderable\Group.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="include\renderer\layers\SceneLayer.h" />
     <ClInclude Include="include\renderer\layers\UILayer.h" />
     <ClInclude Include="include\renderer\renderable\AnimatedSprite.h" />
-    <ClInclude Include="include\renderer\renderable\FPSCounter.h" />
     <ClInclude Include="include\renderer\renderable\Group.h" />
     <ClInclude Include="include\renderer\renderable\Label.h" />
     <ClInclude Include="include\renderer\renderable\Renderable2D.h" />

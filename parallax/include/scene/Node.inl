@@ -37,15 +37,15 @@ namespace prx {
 		return m_Parent;
 	}
 
-	inline const hpm::mat4& Node::getTransformMat() const noexcept {
+	inline const hpm::mat3& Node::getTransformMat() const noexcept {
 		return m_LocalMat;
 	}
 
-	inline const hpm::mat4& Node::getWorldMat() const noexcept {
+	inline const hpm::mat3& Node::getWorldMat() const noexcept {
 		return m_WorldMat;
 	}
 
-	inline void Node::setTransform(const hpm::mat4& transform) noexcept {
+	inline void Node::setTransform(const hpm::mat3& transform) noexcept {
 		m_LocalMat = transform;
 		m_NeedsUpdate = true;
 	}

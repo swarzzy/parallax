@@ -5,7 +5,7 @@
 #include <event/UI/OnClickListener.h>
 
 namespace prx {
-	UIButtonBase::UIButtonBase(hpm::vec3 position, hpm::vec2 size, std::string_view text, Font* font, Texture* texPressed, Texture* texReleased)
+	UIButtonBase::UIButtonBase(const hpm::vec2& position, const hpm::vec2& size, std::string_view text, Font* font, Texture* texPressed, Texture* texReleased)
 				 : UIClickable(position, size, texReleased, false),
 				   m_Label(text),
 				   m_Font(font),
@@ -35,7 +35,7 @@ namespace prx {
 
 	void UIButtonBase::submit(Renderer2D* renderer) const {
 		renderer->submit(*this);
-		renderer->drawString(m_Label, hpm::vec3(m_LblPosX, m_LblPosY, m_Position.z + 0.1), m_Font, 0xffffffff);
+		renderer->drawString(m_Label, hpm::vec2(m_LblPosX, m_LblPosY), m_Font, 0xffffffff);
 	}
 
 	void UIButtonBase::pressed(bool pressed) {

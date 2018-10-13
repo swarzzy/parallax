@@ -25,8 +25,8 @@ class Font;
 		
 		event::OnClickListener* m_OnClickListener;
 
-		UIButtonBase(hpm::vec3 position, 
-					 hpm::vec2 size,
+		UIButtonBase(const hpm::vec2& position, 
+					 const hpm::vec2& size,
 					 std::string_view text,
 					 Font* font,
 					 Texture* texPressed,

@@ -17,7 +17,95 @@ namespace prx {
 		GLCall(glDeleteBuffers(1, &m_VBO));
 	}
 
-	void BatchRenderer2D::drawString(std::string_view text, hpm::vec3 position, const Font* font, unsigned int color) {
+	void BatchRenderer2D::drawRect(const hpm::mat3& worldMat, float width, float height, unsigned color) {
+		
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+		m_Buffer->color = color;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+		m_Buffer->color = color;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+		m_Buffer->color = color;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+		m_Buffer->color = color;
+		m_Buffer++;
+
+		m_IndexCount += 6;
+	}
+
+	void BatchRenderer2D::drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect) {
+
+		unsigned int texID = texture->getID();
+		const float* UVs;
+		
+		if (reflect)
+			UVs = TextureBase::DEFAULT_REFLECT_UV;
+		else
+			UVs = TextureBase::DEFAULT_UV;
+
+		float ts = 0.0f;
+
+			bool found = false;
+			for (int i = 0; i < m_TextureSlots.size(); i++) {
+				if (m_TextureSlots[i] == texID) {
+					found = true;
+					ts = static_cast<float>(i + 1);
+					break;
+				}
+			}
+			if (!found) {
+				if (m_TextureSlots.size() >= BATCH_RENDERER_MAX_TEXTURE_SLOTS) {
+					end();
+					flush();
+					begin();
+					m_TextureSlots.clear();
+				}
+
+				m_TextureSlots.push_back(texID);
+				ts = static_cast<float>(m_TextureSlots.size());
+			}
+
+		m_Buffer->vertex = worldMat* hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->UVs.x = UVs[0];
+		m_Buffer->UVs.y = UVs[1];
+		m_Buffer->texID = ts;
+		m_Buffer->color = EMPTY_COLOR;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->UVs.x = UVs[2];
+		m_Buffer->UVs.y = UVs[3];
+		m_Buffer->texID = ts;
+		m_Buffer->color = EMPTY_COLOR;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->UVs.x = UVs[4];
+		m_Buffer->UVs.y = UVs[5];
+		m_Buffer->texID = ts;
+		m_Buffer->color = EMPTY_COLOR;
+		m_Buffer++;
+
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->UVs.x = UVs[6];
+		m_Buffer->UVs.y = UVs[7];
+		m_Buffer->texID = ts;
+		m_Buffer->color = EMPTY_COLOR;
+		m_Buffer++;
+
+		m_IndexCount += 6;
+	}
+
+	void BatchRenderer2D::drawString(std::string_view text, hpm::vec2 position, const Font* font, unsigned int color) {
 
 		auto&		 characters = font->getCharacters();
 		unsigned int atlasID	= font->getFontAtlas().getID();
@@ -40,8 +128,6 @@ namespace prx {
 				flush();
 				begin();
 				m_TextureSlots.clear();
-				//m_TextureSlots.resize(0);
-				//m_TextureSlots.reserve(32);
 			}
 
 			m_TextureSlots.push_back(atlasID);
@@ -55,9 +141,7 @@ namespace prx {
 				ch = characters.at(character);
 			} 
 			catch (std::out_of_range& e) {
-				std::stringstream ss;
-				ss << "RENDERER: Couldn`t find the character in the font: " << e.what();
-				Log::message(LOG_LEVEL::LOG_ERROR, ss.str());
+				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas.");
 				return;
 			}
 			
@@ -67,30 +151,30 @@ namespace prx {
 			float w = ch.Size.x * scale;
 			float h = ch.Size.y * scale;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos, position.z);
-			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(xpos, ypos);
+			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos, ypos + h, position.z);
-			m_Buffer->texCoords.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(xpos, ypos + h);
+			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos + h, position.z);
-			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->texCoords.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(xpos + w, ypos + h);
+			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
 
-			m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(xpos + w, ypos, position.z);
-			m_Buffer->texCoords.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->texCoords.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(xpos + w, ypos);
+			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
 			m_Buffer->texID = ts;
 			m_Buffer->color = color;
 			m_Buffer++;
@@ -101,7 +185,6 @@ namespace prx {
 	}
 
 	void BatchRenderer2D::begin() {
-		m_IndexCount = 0;
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
 		GLCall(m_Buffer = static_cast<VertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 		// NOTE: Is that actually faster to clear slots?
@@ -110,7 +193,7 @@ namespace prx {
 
 	void BatchRenderer2D::submit(const Renderable2D & renderable)
 	{
-		const hpm::vec3&	position	= renderable.getPosition();
+		const hpm::vec2&	position	= renderable.getPosition();
 		const hpm::vec2&	size		= renderable.getSize();
 		unsigned int		color		= renderable.getColor();
 		const float*		UVs			= renderable.getUVs();
@@ -141,29 +224,29 @@ namespace prx {
 		}
 
 		m_Buffer->vertex = m_TransformationStackBack * position;
-		m_Buffer->texCoords.x = UVs[0];
-		m_Buffer->texCoords.y = UVs[1];
+		m_Buffer->UVs.x = UVs[0];
+		m_Buffer->UVs.y = UVs[1];
 		m_Buffer->texID = ts;
 		m_Buffer->color = color;
 		m_Buffer++;
 
-		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x, position.y + size.y, position.z);
-		m_Buffer->texCoords.x = UVs[2];
-		m_Buffer->texCoords.y = UVs[3];
+		m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(position.x, position.y + size.y);
+		m_Buffer->UVs.x = UVs[2];
+		m_Buffer->UVs.y = UVs[3];
 		m_Buffer->texID = ts;
 		m_Buffer->color = color;
 		m_Buffer++;
 
-		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_Buffer->texCoords.x = UVs[4];
-		m_Buffer->texCoords.y = UVs[5];
+		m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(position.x + size.x, position.y + size.y);
+		m_Buffer->UVs.x = UVs[4];
+		m_Buffer->UVs.y = UVs[5];
 		m_Buffer->texID = ts;
 		m_Buffer->color = color;
 		m_Buffer++;
 
-		m_Buffer->vertex = m_TransformationStackBack * hpm::vec3(position.x + size.x, position.y, position.z);
-		m_Buffer->texCoords.x = UVs[6];
-		m_Buffer->texCoords.y = UVs[7];
+		m_Buffer->vertex = m_TransformationStackBack * hpm::vec2(position.x + size.x, position.y);
+		m_Buffer->UVs.x = UVs[6];
+		m_Buffer->UVs.y = UVs[7];
 		m_Buffer->texID = ts;
 		m_Buffer->color = color;
 		m_Buffer++;
@@ -195,15 +278,15 @@ namespace prx {
 
 			m_FrameBuffer->unbind();
 		} 
-		else
+		else {
 			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
+		}
 
 
 		m_IBO->Unbind();
 		GLCall(glBindVertexArray(0));
 
-		// Moved this to begin while developing framebuffers
-		//m_IndexCount = 0;
+		m_IndexCount = 0;
 	}
 
 	void BatchRenderer2D::setFrameBuffer(FrameBuffer2D* framebuffer) {
@@ -236,11 +319,11 @@ namespace prx {
 		GLCall(glEnableVertexAttribArray(BATCH_RENDERER_SHADER_TEXID_INDEX));
 		GLCall(glEnableVertexAttribArray(BATCH_RENDERER_SHADER_COLOR_INDEX));
 
-		GLCall(glVertexAttribPointer(BATCH_RENDERER_SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE,
-			BATCH_RENDERER_VERTEX_SIZE, static_cast<const void*>(0)));
+		GLCall(glVertexAttribPointer(BATCH_RENDERER_SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
+			BATCH_RENDERER_VERTEX_SIZE, static_cast<const void*>(NULL)));
 
 		GLCall(glVertexAttribPointer(BATCH_RENDERER_SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE,
-			BATCH_RENDERER_VERTEX_SIZE, reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texCoords))));
+			BATCH_RENDERER_VERTEX_SIZE, reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
 
 		GLCall(glVertexAttribPointer(BATCH_RENDERER_SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE,
 			BATCH_RENDERER_VERTEX_SIZE, reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texID))));

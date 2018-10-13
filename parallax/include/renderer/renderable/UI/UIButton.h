@@ -6,19 +6,19 @@
 namespace prx {
 	class UIButton : public UIButtonBase {
 	public:
-		UIButton(hpm::vec3 position, float size, std::string_view text);
+		UIButton(const hpm::vec2& position, float size, std::string_view text);
 
-		UIButton(hpm::vec3 position, float size, std::string_view text, Font* customFont);
+		UIButton(const hpm::vec2& position, float size, std::string_view text, Font* customFont);
 
-		UIButton(hpm::vec3 position, float size, std::string_view text, 
+		UIButton(const hpm::vec2& position, float size, std::string_view text,
 				 Texture* customTexPressed, Texture* customTexReleased);
 
-		UIButton(hpm::vec3 position, float size, std::string_view text, Font* customFont, 
+		UIButton(const hpm::vec2& position, float size, std::string_view text, Font* customFont,
 				 Texture* customTexPressed, Texture* customTexReleased);
 
-		UIButton(hpm::vec3 position, float size);
+		UIButton(const hpm::vec2& position, float size);
 
-		UIButton(hpm::vec3 position, float size,
+		UIButton(const hpm::vec2& position, float size,
 				 Texture* customTexPressed, Texture* customTexReleased);
 	};
 }

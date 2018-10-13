@@ -29,8 +29,8 @@ void Game::init() {
 	
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
-	m_FPSCounter = new prx::Label("", 10, 570, 1, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
-	m_UPSCounter = new prx::Label("", 10, 540, 1, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
+	m_FPSCounter = new prx::Label("", 10, 570, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
+	m_UPSCounter = new prx::Label("", 10, 540, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
 	m_Layer->add(m_FPSCounter);
 	m_Layer->add(m_UPSCounter);
 
@@ -56,10 +56,10 @@ void Game::tick() {
 
 void Game::update() {
 	m_Scene->update();
-	m_Sun->setTransform(hpm::mat4::rotation(-getTime() / 80, hpm::vec3(0, 0, 1)) * hpm::mat4::translation(hpm::vec3(-150 / 2, -150 / 2, 0)));
-	m_Background->setTransform( hpm::mat4::rotation(getTime() / 100, hpm::vec3(0,0,1)) * hpm::mat4::translation(hpm::vec3(-425, -425, 0)));
-	m_BluePlanet->setTransform(hpm::mat4::rotation(getTime() / 50, hpm::vec3(0, 0, 1)) * hpm::mat4::translation(hpm::vec3(80, 80, 0)));
-	m_BrownPlanet->setTransform(hpm::mat4::translation(hpm::vec3(40, 40, 0)) * hpm::mat4::rotation(getTime() / 6, hpm::vec3(0, 0, -1)) * hpm::mat4::translation(hpm::vec3(30, 30, 0)));
+	m_Sun->setTransform(hpm::mat3::rotation(-getTime() / 80) * hpm::mat3::translation(-150 / 2, -150 / 2));
+	m_Background->setTransform( hpm::mat3::rotation(getTime() / 100) * hpm::mat3::translation(-425, -425));
+	m_BluePlanet->setTransform(hpm::mat3::rotation(getTime() / 50) * hpm::mat3::translation(80, 80));
+	m_BrownPlanet->setTransform(hpm::mat3::translation(40, 40) * hpm::mat3::rotation(getTime() / 6) * hpm::mat3::translation(30, 30));
 }
 	
 void Game::render() {

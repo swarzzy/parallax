@@ -6,7 +6,7 @@
 namespace prx {
 	class SpriteNode final : public Node {
 	private:
-		Group* m_Group;
+		Sprite* m_Sprite;
 
 	public:
 		SpriteNode(float x, float y, float depth,

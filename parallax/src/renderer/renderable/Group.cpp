@@ -3,7 +3,7 @@
 
 namespace prx {
 
-	Group::Group(const hpm::mat4 & transformation) 
+	Group::Group(const hpm::mat3 & transformation) 
 		: m_TransformationMatrix(transformation){
 	}
 

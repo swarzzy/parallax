@@ -4,5 +4,6 @@
 // The hypermath main include file
 #include "linear_algebra/vector.h"
 #include "linear_algebra/mat/mat4.h"
+#include "linear_algebra/mat/mat3.h"
 #include "trigonometry/trig_functions.h";
 #endif

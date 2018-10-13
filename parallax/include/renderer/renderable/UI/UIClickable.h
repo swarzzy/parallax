@@ -10,10 +10,10 @@ namespace prx {
 		bool m_Pressed;
 
 	protected:
-		UIClickable(const hpm::vec3& position, const hpm::vec2& size, unsigned int color, bool pressed)
+		UIClickable(const hpm::vec2& position, const hpm::vec2& size, unsigned int color, bool pressed)
 			: UIWidget(position, size, color), m_Pressed(pressed) {};
 
-		UIClickable(const hpm::vec3& position, const hpm::vec2& size, Texture* texture, bool pressed)
+		UIClickable(const hpm::vec2& position, const hpm::vec2& size, Texture* texture, bool pressed)
 			: UIWidget(position, size, texture), m_Pressed(pressed) {};
 	public:
 		virtual ~UIClickable() {};
