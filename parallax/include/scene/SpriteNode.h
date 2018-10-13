@@ -9,25 +9,25 @@ namespace prx {
 		Sprite* m_Sprite;
 
 	public:
-		SpriteNode(float x, float y, float depth,
+		SpriteNode(float x, float y, int depth,
 				   float width, float height, 
 				   unsigned int color, 
 				   Renderer2D* renderer, 
 				   Node* parent = nullptr);
 
-		SpriteNode(float x, float y, float depth,
+		SpriteNode(float x, float y, int depth,
 				   float width, float height,
 				   TextureBase* texture,
 				   Renderer2D* renderer,
 				   Node* parent = nullptr);
 
-		SpriteNode(float depth,
+		SpriteNode(int depth,
 				   float width, float height,
 				   unsigned int color,
 				   Renderer2D* renderer,
 				   Node* parent = nullptr);
 		
-		SpriteNode(float depth,
+		SpriteNode(int depth,
 				   float width, float height,
 				   TextureBase* texture,
 				   Renderer2D* renderer,
@@ -38,6 +38,8 @@ namespace prx {
 		void update() override;
 		void draw() override;
 
+		inline const Sprite& getSprite() const noexcept;
+
 	public:
 		SpriteNode(const SpriteNode& other) = delete;
 		SpriteNode(const SpriteNode&& other) = delete;
@@ -46,4 +48,9 @@ namespace prx {
 		SpriteNode& operator=(const SpriteNode&& other) = delete;
 		SpriteNode& operator=(SpriteNode&& other) = delete;
 	};
+	
+	inline const Sprite& SpriteNode::getSprite() const noexcept {
+		return *m_Sprite;
+	}
+
 }

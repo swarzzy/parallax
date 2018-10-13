@@ -84,6 +84,10 @@ namespace prx {
 		return &m_Fonts[RESOURCES_DEFAULT_FONT_ID];
 	}
 
+	Font* Resources::getDefaultFont() {
+		return &m_Fonts[RESOURCES_DEFAULT_FONT_ID];
+	}
+
 	void Resources::deleteFont(unsigned int id) {
 		if (id == RESOURCES_DEFAULT_FONT_ID) {
 			Log::message(LOG_LEVEL::LOG_WARN, "RESOURCE MANAGER: Can not delete default font!");
@@ -123,6 +127,10 @@ namespace prx {
 		std::stringstream ss;
 		ss << "RESOURCE MANAGER: Texture (ID: " << id << " does not exist! Using default texture.";
 		Log::message(LOG_LEVEL::LOG_WARN, ss.str());
+		return &m_Textures[RESOURCES_DEFAULT_TEXTURE_ID];
+	}
+
+	Texture* Resources::getDefaultTexture() {
 		return &m_Textures[RESOURCES_DEFAULT_TEXTURE_ID];
 	}
 

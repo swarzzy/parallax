@@ -7,14 +7,20 @@
 namespace prx {
 		class Sprite: public Renderable2D {
 		public:
-			Sprite(hpm::vec2 position, hpm::vec2 size, unsigned int color);
-			Sprite(hpm::vec2 position, hpm::vec2 size, TextureBase* texture);
-			Sprite(float x, float y, float width, float height, unsigned int color);
-			Sprite(float x, float y, float width, float height, TextureBase* texture);
-			// Sets position as (0.0, 0.0) automatically
+			Sprite(const hpm::vec2& size, unsigned int color);
+			Sprite(const hpm::vec2& size, const TextureBase* texture);
 			Sprite(float width, float height, unsigned int color);
-			Sprite(float width, float height, TextureBase* texture);
+			Sprite(float width, float height, const TextureBase* texture);
 
+			void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix) override;
+
+		public:
+			Sprite(const Sprite& other) = delete;
+			Sprite(const Sprite&& other) = delete;
+			Sprite(Sprite&& other) = delete;
+			const Sprite& operator=(const Sprite& other) = delete;
+			const Sprite& operator=(const Sprite&& other) = delete;
+			const Sprite& operator=(Sprite&& other) = delete;
 		};
 	}
 #endif

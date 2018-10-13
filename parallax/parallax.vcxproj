@@ -19,11 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\scene\LabelNode.cpp" />
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
-    <ClCompile Include="src\renderer\renderable\UI\UIButton.cpp" />
-    <ClCompile Include="src\renderer\renderable\UI\UIClickable.cpp" />
-    <ClCompile Include="src\renderer\renderable\UI\UIButtonBase.cpp" />
-    <ClCompile Include="src\renderer\layers\UILayer.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\scene\SpriteNode.cpp" />
@@ -35,16 +32,14 @@
     <ClCompile Include="src\ext\ftgl\vector.c" />
     <ClCompile Include="src\Fonts\Font.cpp" />
     <ClCompile Include="src\Parallax.cpp" />
-    <ClCompile Include="src\renderer\BatchRenderer2D.cpp" />
+    <ClCompile Include="src\renderer\ForwardRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\layers\Layer.cpp" />
     <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
-    <ClCompile Include="src\renderer\renderable\Group.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\renderable\Sprite.cpp" />
     <ClCompile Include="src\renderer\renderable\StaticSprite.cpp" />
-    <ClCompile Include="src\renderer\Renderer2D.cpp" />
     <ClCompile Include="src\renderer\SimpleRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\VertexArray.cpp" />
     <ClCompile Include="src\renderer\buffer\VertexBuffer.cpp" />
@@ -59,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\audio\Sound.h" />
+    <ClInclude Include="include\event\UI\ButtonListener.h" />
     <ClInclude Include="include\event\UI\Listener.h" />
     <ClInclude Include="include\event\UI\OnClickListener.h" />
     <ClInclude Include="include\ext\freetype\freetype\config\ftconfig.h" />
@@ -164,7 +160,7 @@
     <ClInclude Include="include\ext\GL\wglew.h" />
     <ClInclude Include="include\Fonts\Font.h" />
     <ClInclude Include="include\Parallax.h" />
-    <ClInclude Include="include\renderer\BatchRenderer2D.h" />
+    <ClInclude Include="include\renderer\ForwardRenderer2D.h" />
     <ClInclude Include="include\renderer\buffer\IndexBuffer.h" />
     <ClInclude Include="include\renderer\buffer\VertexArray.h" />
     <ClInclude Include="include\renderer\buffer\VertexBuffer.h" />
@@ -172,17 +168,11 @@
     <ClInclude Include="include\renderer\FrameBuffer2D.h" />
     <ClInclude Include="include\renderer\layers\Layer.h" />
     <ClInclude Include="include\renderer\layers\SceneLayer.h" />
-    <ClInclude Include="include\renderer\layers\UILayer.h" />
     <ClInclude Include="include\renderer\renderable\AnimatedSprite.h" />
-    <ClInclude Include="include\renderer\renderable\Group.h" />
     <ClInclude Include="include\renderer\renderable\Label.h" />
     <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
     <ClInclude Include="include\renderer\renderable\Sprite.h" />
     <ClInclude Include="include\renderer\renderable\StaticSprite.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UIButton.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UIButtonBase.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UIClickable.h" />
-    <ClInclude Include="include\renderer\renderable\UI\UIWidget.h" />
     <ClInclude Include="include\renderer\FrameBufferBase.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
     <ClInclude Include="include\renderer\SimpleRenderer2D.h" />
@@ -191,6 +181,7 @@
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
+    <ClInclude Include="include\scene\LabelNode.h" />
     <ClInclude Include="include\scene\Node.h" />
     <ClInclude Include="include\scene\Scene.h" />
     <ClInclude Include="include\scene\SpriteNode.h" />

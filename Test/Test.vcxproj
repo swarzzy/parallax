@@ -137,7 +137,6 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ButtonListener.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>

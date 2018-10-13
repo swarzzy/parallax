@@ -2,6 +2,7 @@
 
 #include <renderer/Renderer2D.h>
 #include <shading/Shader.h>
+#include <renderer/renderable/Renderable2D.h>
 
 namespace prx {
 

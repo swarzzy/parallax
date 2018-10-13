@@ -52,15 +52,16 @@ namespace prx {
 		static unsigned int loadFont(std::string_view fontPath, unsigned int size, float scale = 1.0f);
 		
 		static Font* getFont(unsigned int id);
+		static Font* getDefaultFont();
 		
 		static void  deleteFont(unsigned int id);
-		// Deletes all fonts
 		static void clearFonts();
 
 		// TEXTURES
 		static unsigned int loadTexture(std::string_view path);
 
 		static Texture* getTexture(unsigned int id);
+		static Texture* getDefaultTexture();
 
 		static void  deleteTexture(unsigned int id);
 		// Deletes all fonts

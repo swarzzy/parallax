@@ -1,14 +1,12 @@
 #pragma once
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
 
-#include <vector>
-
-#include "renderable/Renderable2D.h"
-#include "../Fonts/Font.h";
-#include "FrameBuffer2D.h"
+#include <hypermath.h>
+#include "../textures/Texture.h"
 
 namespace prx {
+
+	class FrameBuffer2D;
+	class Font;
 
 	struct VertexData {
 		hpm::vec2		vertex;
@@ -24,24 +22,23 @@ namespace prx {
 
 	class Renderer2D {
 	protected:
-		std::vector<hpm::mat3>	m_TransformationStack;
-		hpm::mat3				m_TransformationStackBack;
+		inline static const float	 QUAD_DEFAULT_POSITION_X = 0.0f;
+		inline static const float	 QUAD_DEFAULT_POSITION_Y = 0.0f;
+		inline static const unsigned NULL_COLOR = 0xffffffff;
+
+	protected:
 		Texture*				m_Mask;
 		RenderTarget			m_RenderTarget;
 		FrameBuffer2D*			m_FrameBuffer;
 
 	protected:
-		Renderer2D(RenderTarget rendertarget = RenderTarget::SCREEN, FrameBuffer2D* frameBuffer = nullptr);
-		Renderer2D(const Renderer2D& other) = delete;
-		Renderer2D& operator=(const Renderer2D& other) = delete;
-		// TODO: move semantics
-	public:
-		virtual ~Renderer2D() {};
-		void push(const hpm::mat3& matrix);
-		void pop();
+		inline Renderer2D(RenderTarget rendertarget = RenderTarget::SCREEN, FrameBuffer2D* frameBuffer = nullptr) noexcept;
 
-		virtual void setMask(Texture* mask) { m_Mask = mask; }
-		virtual void defaultMask();
+	public:
+		virtual ~Renderer2D() noexcept {};
+
+		virtual void setMask(Texture* mask) noexcept;
+		inline virtual void defaultMask() noexcept;
 
 		virtual void setRenderTarget(RenderTarget target) = 0;
 		virtual void setFrameBuffer(FrameBuffer2D* framebuffer) = 0;
@@ -49,21 +46,37 @@ namespace prx {
 		virtual void begin() {};
 
 		virtual void drawRect(float x, float y, float width, float height, unsigned int color = 0xffffffff) = 0;
-		virtual void drawRect(float x, float y, float width, float height, const TextureBase* texture) = 0;
+		virtual void drawRect(float x, float y, float width, float height, const TextureBase* texture, bool reflect = false) = 0;
 		virtual void drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned int color = 0xffffffff) = 0;
-		virtual void drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture) = 0;
+		virtual void drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture, bool reflect = false) = 0;
 		virtual void drawRect(const hpm::mat3& worldMat, float width, float height, unsigned int color = 0xffffffff) = 0;
 		virtual void drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect = false) = 0;
 
-		virtual void drawString(std::string_view text, hpm::vec2 position, const Font* font, unsigned int color) {};
+		virtual void drawString(std::string_view text, const hpm::mat3& worldMatrix, const Font* font, unsigned int color) {};
+		virtual void drawString(std::string_view text, const hpm::vec2& position, const Font* font, unsigned int color) {};
 
-		virtual void submit(const Renderable2D& renderable) = 0;
 		virtual void end() {};
 		virtual void flush() = 0;
 
-		inline const hpm::mat3& getTransformationStackBack() const {
-			return m_TransformationStackBack;
-		}
+	public:
+		Renderer2D(const Renderer2D& other) = delete;
+		Renderer2D(const Renderer2D&& other) = delete;
+		Renderer2D(Renderer2D&& other) = delete;
+		Renderer2D& operator=(const Renderer2D& other) = delete;
+		Renderer2D& operator=(const Renderer2D&& other) = delete;
+		Renderer2D& operator=(Renderer2D&& other) = delete;
 	};
+
+	inline Renderer2D::Renderer2D(RenderTarget rendertarget, FrameBuffer2D* frameBuffer) noexcept
+		: m_Mask(nullptr), m_RenderTarget(rendertarget), m_FrameBuffer(frameBuffer)
+	{}
+
+	inline void Renderer2D::defaultMask() noexcept {
+		unsigned char maskData[3] = { 255, 255, 255 };
+		m_Mask = new Texture(maskData, 1, 1, TextureFormat::RGB);
+	}
+
+	inline void Renderer2D::setMask(Texture* mask) noexcept {
+		m_Mask = mask;
+	}
 }
-#endif

@@ -11,11 +11,11 @@
 #include <filesystem>
 #include "../parallax/include/renderer/layers/UILayer.h"
 #include "../parallax/include/renderer/renderable/UI/UIButtonBase.h"
-#include "ButtonListener.h"
 #include "../parallax/include/renderer/renderable/UI/UIGroup.h"
 #include "../parallax/include/renderer/renderable/UI/UIButton.h"
 #include "../parallax/include/textures/SpriteSheet.h"
 #include "../parallax/include/renderer/FrameBuffer2D.h"
+#include "../parallax/include/scene/LabelNode.h"
 
 
 void Game::init() {
@@ -29,11 +29,6 @@ void Game::init() {
 	
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
-	m_FPSCounter = new prx::Label("", 10, 570, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
-	m_UPSCounter = new prx::Label("", 10, 540, prx::Resources::getFont(prx::RESOURCES_DEFAULT_FONT_ID), 0xffffffff);
-	m_Layer->add(m_FPSCounter);
-	m_Layer->add(m_UPSCounter);
-
 	auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
 	auto sun = Resources::getTexture(Resources::loadTexture("res/textures/sun.png"));
 	auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
@@ -46,12 +41,15 @@ void Game::init() {
 	m_Sun = new SpriteNode(-150 /2, -150 /2, 1, 150, 150 ,sun ,m_Renderer, m_Scene);
 	m_BluePlanet = new SpriteNode(0, 0, 0, 80, 80, bluePlanet, m_Renderer, m_Scene);
 	m_BrownPlanet = new SpriteNode(0, 0, 0, 30, 30, brownPlanet, m_Renderer, m_BluePlanet);
+	
+	m_FPSCounter = new prx::LabelNode("", -290, 270, 0xffffffff, m_Renderer, m_Scene);
+	m_UPSCounter = new prx::LabelNode("", -290, 240, 0xffffffff, m_Renderer, m_Scene);
 	m_Sound->loop();
 }
 
 void Game::tick() {
-	m_UPSCounter->setText(std::to_string(getUPS()) + " ups");
-	m_FPSCounter->setText(std::to_string(getFPS()) + " fps");
+	m_UPSCounter->getLabel().setText(std::to_string(getUPS()) + " ups");
+	m_FPSCounter->getLabel().setText(std::to_string(getFPS()) + " fps");
 }
 
 void Game::update() {

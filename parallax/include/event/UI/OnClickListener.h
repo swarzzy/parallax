@@ -1,17 +1,17 @@
-#pragma once
-#ifndef _PARALLAX_EVENT_UI_ON_CLICK_LISTENER_H_
-#define _PARALLAX_EVENT_UI_ON_CLICK_LISTENER_H_
-#include "Listener.h"
-
-namespace prx {
-	class UIWidget;
-}
-
-namespace prx::event {
-	class OnClickListener : public Listener {
-	public:
-		virtual void onClick(UIButtonBase* widget) = 0;
-		virtual void onRelease(UIButtonBase* widget) {};
-	};
-}
-#endif
+//#pragma once
+//#ifndef _PARALLAX_EVENT_UI_ON_CLICK_LISTENER_H_
+//#define _PARALLAX_EVENT_UI_ON_CLICK_LISTENER_H_
+//#include "Listener.h"
+//
+//namespace prx {
+//	class UIWidget;
+//}
+//
+//namespace prx::event {
+//	class OnClickListener : public Listener {
+//	public:
+//		virtual void onClick(UIButtonBase* widget) = 0;
+//		virtual void onRelease(UIButtonBase* widget) {};
+//	};
+//}
+//#endif

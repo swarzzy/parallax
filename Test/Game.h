@@ -6,6 +6,7 @@
 #include "../parallax/include/scene/SpriteNode.h"
 #include "../parallax/include/scene/Scene.h"
 #include "../parallax/include/renderer/renderable/Label.h"
+#include "../parallax/include/scene/LabelNode.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;
@@ -15,8 +16,8 @@ public:
 	Shader* m_Shader;
 	SceneLayer* m_Layer;
 	Sound* m_Sound;
-	Label* m_FPSCounter;
-	Label* m_UPSCounter;
+	LabelNode* m_FPSCounter;
+	LabelNode* m_UPSCounter;
 	Scene* m_Scene;
 	SpriteNode* m_Background;
 	Renderer2D* m_Renderer;
