@@ -8,15 +8,15 @@ namespace prx {
 	private:
 		Label* m_Label;
 	public:
-		LabelNode(std::string_view text, unsigned color, Renderer2D* renderer, Node* parent = nullptr);
-		LabelNode(std::string_view text, const Font* font, unsigned color, Renderer2D* renderer, Node* parent = nullptr);
-		LabelNode(std::string_view text, float x, float y, unsigned color, Renderer2D* renderer, Node* parent = nullptr);
-		LabelNode(std::string_view text, const Font* font, float x, float y, unsigned color, Renderer2D* renderer, Node* parent = nullptr);
+		LabelNode(std::string_view text, unsigned color, Node* parent = nullptr);
+		LabelNode(std::string_view text, const Font* font, unsigned color, Node* parent = nullptr);
+		LabelNode(std::string_view text, float x, float y, unsigned color, Node* parent = nullptr);
+		LabelNode(std::string_view text, const Font* font, float x, float y, unsigned color, Node* parent = nullptr);
 
 		~LabelNode();
 
 		void update() override;
-		void draw() override;
+		void draw(Renderer2D* renderer) override;
 
 		inline Label& getLabel() const noexcept;
 

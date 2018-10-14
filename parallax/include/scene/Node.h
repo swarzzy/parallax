@@ -16,23 +16,19 @@ namespace prx {
 		bool				m_NeedsUpdate;
 		hpm::mat3			m_LocalMat;
 		hpm::mat3			m_WorldMat;
-		//hpm::mat4 m_SelfMatrix;
 		
-		//Temporary solution
-		Renderer2D* m_Renderer;
-		
-		explicit inline Node(Node* parent, Renderer2D* renderer);
+		explicit inline Node(Node* parent = nullptr);
 	 
 	public:
 		virtual ~Node() = default;
 
 		/*
-		// These methods must call appropriate methods 
-		// for children after all actions have been completed.
+		* These methods must call appropriate methods 
+		* for children after all actions have been completed.
 		*/
 		virtual void init() {}
 		virtual void update() = 0;
-		virtual void draw() {}
+		virtual void draw(Renderer2D* renderer) {}
 	
 		
 		inline void setParent(Node* parent);
@@ -53,7 +49,7 @@ namespace prx {
 		inline void updateChildren();
 		// This method used when parent node was updated to recalculate all children positions
 		inline void forceUpdateChildren();
-		inline void drawChildren();
+		inline void drawChildren(Renderer2D* renderer);
 
 	public:
 		Node(const Node& other) = delete;

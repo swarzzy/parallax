@@ -12,31 +12,27 @@ namespace prx {
 		SpriteNode(float x, float y, int depth,
 				   float width, float height, 
 				   unsigned int color, 
-				   Renderer2D* renderer, 
 				   Node* parent = nullptr);
 
 		SpriteNode(float x, float y, int depth,
 				   float width, float height,
 				   TextureBase* texture,
-				   Renderer2D* renderer,
 				   Node* parent = nullptr);
 
 		SpriteNode(int depth,
 				   float width, float height,
 				   unsigned int color,
-				   Renderer2D* renderer,
 				   Node* parent = nullptr);
 		
 		SpriteNode(int depth,
 				   float width, float height,
 				   TextureBase* texture,
-				   Renderer2D* renderer,
 				   Node* parent = nullptr);
 		
 		~SpriteNode();
 
 		void update() override;
-		void draw() override;
+		void draw(Renderer2D* renderer) override;
 
 		inline const Sprite& getSprite() const noexcept;
 

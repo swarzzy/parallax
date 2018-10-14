@@ -3,8 +3,8 @@
 
 namespace prx {
 	SpriteNode::SpriteNode(float x, float y, int depth, float width, float height,
-						   unsigned int color, Renderer2D* renderer, Node* parent)
-		: Node(parent, renderer),
+						   unsigned int color, Node* parent)
+		: Node(parent),
 		  m_Sprite(new Sprite(width, height, color))
 	{
 		m_WorldMat = hpm::mat3::identity();
@@ -12,8 +12,8 @@ namespace prx {
 	}
 
 	SpriteNode::SpriteNode(float x, float y, int depth, float width, float height, 
-						   TextureBase* texture, Renderer2D* renderer, Node* parent) 
-		: Node(parent, renderer),
+						   TextureBase* texture, Node* parent) 
+		: Node(parent),
 		m_Sprite(new Sprite(width, height, texture))
 	{
 		m_WorldMat = hpm::mat3::identity();
@@ -21,8 +21,8 @@ namespace prx {
 	}
 
 	SpriteNode::SpriteNode(int depth, float width, float height, 
-						   unsigned color, Renderer2D* renderer, Node* parent)
-		: Node(parent, renderer),
+						   unsigned color, Node* parent)
+		: Node(parent),
 		m_Sprite(new Sprite(width, height, color))
 	{
 		m_WorldMat = hpm::mat3::identity();
@@ -30,8 +30,8 @@ namespace prx {
 	}
 
 	SpriteNode::SpriteNode(int depth, float width, float height, 
-						   TextureBase* texture, Renderer2D* renderer, Node* parent)
-		: Node(parent, renderer),
+						   TextureBase* texture, Node* parent)
+		: Node(parent),
 		m_Sprite(new Sprite(width, height, texture))
 	{
 		m_WorldMat = hpm::mat3::identity();
@@ -51,8 +51,8 @@ namespace prx {
 			updateChildren();
 	}
 
-	void SpriteNode::draw() {
-		m_Sprite->submit(m_Renderer, m_WorldMat);
-		drawChildren();
+	void SpriteNode::draw(Renderer2D* renderer) {
+		m_Sprite->submit(renderer, m_WorldMat);
+		drawChildren(renderer);
 	}
 }

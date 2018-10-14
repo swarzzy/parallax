@@ -2,13 +2,12 @@
 
 namespace prx {
 	
-	Node::Node(Node* parent, Renderer2D* renderer)
+	Node::Node(Node* parent)
 		: m_ID(++m_GlobalNodeCounter),
 		  m_Parent(parent), 
 		  m_NeedsUpdate(true),
 		  m_LocalMat(hpm::mat4::identity()),
-		  m_WorldMat(hpm::mat4::identity()),
-		  m_Renderer(renderer)
+		  m_WorldMat(hpm::mat4::identity())
 	{
 		if (parent != nullptr)
 			parent->addChild(this);
@@ -76,10 +75,10 @@ namespace prx {
 		}
 	}
 
-	inline void Node::drawChildren() {
+	inline void Node::drawChildren(Renderer2D* renderer) {
 		for (auto child : m_Children) {
-			child->draw();
-			child->drawChildren();
+			child->draw(renderer);
+			//child->drawChildren(renderer);
 		}
 		
 	}

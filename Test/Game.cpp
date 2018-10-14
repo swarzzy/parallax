@@ -36,14 +36,14 @@ void Game::init() {
 	//auto clouds = Resources::getTexture(Resources::loadTexture("res/textures/clouds.png"));
 
 	m_Scene = new Scene(m_Layer->getRenderer());
-	m_Background = new SpriteNode(-425, -425, 0.0, 850, 850, background, m_Renderer, m_Scene);
+	m_Background = new SpriteNode(-425, -425, 0.0, 850, 850, background, m_Scene);
 	//m_Clouds = new SpriteNode(-300, -300, 0.0, 600, 600, clouds, m_Renderer, m_Scene);
-	m_Sun = new SpriteNode(-150 /2, -150 /2, 1, 150, 150 ,sun ,m_Renderer, m_Scene);
-	m_BluePlanet = new SpriteNode(0, 0, 0, 80, 80, bluePlanet, m_Renderer, m_Scene);
-	m_BrownPlanet = new SpriteNode(0, 0, 0, 30, 30, brownPlanet, m_Renderer, m_BluePlanet);
+	m_Sun = new SpriteNode(-150 /2, -150 /2, 1, 150, 150 ,sun , m_Scene);
+	m_BluePlanet = new SpriteNode(0, 0, 0, 80, 80, bluePlanet, m_Scene);
+	m_BrownPlanet = new SpriteNode(0, 0, 0, 30, 30, brownPlanet, m_BluePlanet);
 	
-	m_FPSCounter = new prx::LabelNode("", -290, 270, 0xffffffff, m_Renderer, m_Scene);
-	m_UPSCounter = new prx::LabelNode("", -290, 240, 0xffffffff, m_Renderer, m_Scene);
+	m_FPSCounter = new prx::LabelNode("", -290, 270, 0xffffffff, m_Scene);
+	m_UPSCounter = new prx::LabelNode("", -290, 240, 0xffffffff, m_Scene);
 	m_Sound->loop();
 
 	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
@@ -72,14 +72,6 @@ void Game::update() {
 	
 void Game::render() {
 	m_Shader->bind();
-	m_Renderer->begin();
-
-	m_Scene->draw();
-	m_Hero->submit(m_Renderer, hpm::mat3::identity());
-
-	m_Renderer->end();
-	m_Renderer->flush();
+	m_Scene->present();
 	m_Shader->unbind();
-	
-	m_Layer->draw();
 }

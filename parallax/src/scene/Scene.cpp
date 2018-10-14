@@ -1,10 +1,11 @@
 #include <scene/Scene.h>
 #include <window/Window.h>
-
+#include <renderer/Renderer2D.h>
 
 namespace prx {
 	Scene::Scene(Renderer2D* renderer, Node* parent) 
-		: Node(parent, renderer) 
+		: Node(parent),
+		  m_Renderer(renderer)
 	{
 		auto winWidth = Window::getCurrentWindow().getWidth();
 		auto winHeight = Window::getCurrentWindow().getHeight();
@@ -36,10 +37,16 @@ namespace prx {
 			updateChildren();
 	}
 
-	void Scene::draw() {
-		drawChildren();
+	void Scene::draw(Renderer2D* renderer) {
+		//drawChildren(renderer);
 	}
 
+	void Scene::present() {
+		m_Renderer->begin();
+		drawChildren(m_Renderer);
+		m_Renderer->end();
+		m_Renderer->flush();
+	}
 
 
 }
