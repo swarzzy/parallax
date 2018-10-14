@@ -36,7 +36,8 @@ namespace prx {
 
 		inline virtual void reflect(bool reflect) noexcept;
 
-		inline const hpm::vec2&	getSize() const noexcept;
+		inline float getWidth() const noexcept;
+		inline float getHeight() const noexcept;
 		inline unsigned int	getColor() const noexcept;
 		inline virtual const float*	getUVs() const noexcept;
 		inline const TextureBase* getTexture() const noexcept;
@@ -85,8 +86,12 @@ namespace prx {
 			PRX_WARN("(Renderable): Setting a texture to a non-textured rectangle is not allowed");
 	}
 
-	inline const hpm::vec2& Renderable2D::getSize() const noexcept {
-		return hpm::vec2(m_Width, m_Height);
+	inline float Renderable2D::getWidth() const noexcept {
+		return m_Width;
+	}
+
+	inline float Renderable2D::getHeight() const noexcept {
+		return m_Height;
 	}
 
 	inline unsigned Renderable2D::getColor() const noexcept {

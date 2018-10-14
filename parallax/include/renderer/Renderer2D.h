@@ -4,7 +4,8 @@
 #include "../textures/Texture.h"
 
 namespace prx {
-
+	
+	class Renderable2D;
 	class FrameBuffer2D;
 	class Font;
 
@@ -45,12 +46,12 @@ namespace prx {
 		
 		virtual void begin() {};
 
-		virtual void drawRect(float x, float y, float width, float height, unsigned int color = 0xffffffff) = 0;
-		virtual void drawRect(float x, float y, float width, float height, const TextureBase* texture, bool reflect = false) = 0;
 		virtual void drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned int color = 0xffffffff) = 0;
 		virtual void drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture, bool reflect = false) = 0;
 		virtual void drawRect(const hpm::mat3& worldMat, float width, float height, unsigned int color = 0xffffffff) = 0;
 		virtual void drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect = false) = 0;
+
+		virtual void drawRenderable(const hpm::mat3& worldMat, const Renderable2D* renderable) = 0;
 
 		virtual void drawString(std::string_view text, const hpm::mat3& worldMatrix, const Font* font, unsigned int color) {};
 		virtual void drawString(std::string_view text, const hpm::vec2& position, const Font* font, unsigned int color) {};

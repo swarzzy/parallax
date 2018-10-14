@@ -16,9 +16,6 @@ namespace prx {
 		: Renderable2D(width, height, texture) {}
 
 	void Sprite::submit(Renderer2D* renderer, const hpm::mat3& worldMatrix) {
-		if (m_Texture == nullptr)
-			renderer->drawRect(worldMatrix, m_Width, m_Height, m_Color);
-		else
-			renderer->drawRect(worldMatrix, m_Width, m_Height, m_Texture);
+		renderer->drawRenderable(worldMatrix, this);
 	}
 }

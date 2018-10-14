@@ -230,7 +230,6 @@ namespace hpm {
 	}
 
 	mat4& operator*(mat4 left, const mat4& right) noexcept {
-		
 		return left.multiply(right);
 	}
 

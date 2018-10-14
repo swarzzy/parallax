@@ -18,28 +18,22 @@ namespace prx {
 		unsigned int m_DefaultFrame;
 	public:
 		// TODO: setting default frame
-		AnimatedSprite(hpm::vec2 position, hpm::vec2 size, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(position, size, texture), m_AnimationID(animationID), 
+		AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, unsigned int animationID)
+			: Sprite(size, texture), m_AnimationID(animationID), 
 			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
 			// It`s setting UVs two times, here and in renderable constructor
 			setDefaultUVs();
-		};
-
-		AnimatedSprite(float x, float y, float width, float height, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(x, y, width, height, texture), m_AnimationID(animationID),
-			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
-			setDefaultUVs();
-		};
+		}
 
 		AnimatedSprite(float width, float height, SpriteSheet* texture, unsigned int animationID)
 			: Sprite(width, height, texture), m_AnimationID(animationID),
 			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
 			setDefaultUVs();
-		};
+		}
 
-		inline const float* getUVs() const override;
+		inline const float* getUVs() const noexcept override;
 
-		inline void reflect(bool reflect) override;
+		inline void reflect(bool reflect) noexcept override;
 
 		inline void loopAnimation(unsigned int ID);
 		inline void playAnimation(unsigned int ID);
@@ -48,12 +42,12 @@ namespace prx {
 		inline AnimationState getAnimationState();
 	
 	private:
-		void setDefaultUVs() override;
-		void setReflectDefaultUVs() override {};
+		void setDefaultUVs() noexcept override;
+		void setReflectDefaultUVs() noexcept override {};
 	};
 	
 	
-	inline const float* AnimatedSprite::getUVs() const {
+	inline const float* AnimatedSprite::getUVs() const noexcept {
 		if (m_AnimationState != AnimationState::STOP) {
 			if (m_AnimationState == AnimationState::LOOP) {
 				const TexCoords& tc = m_SpriteSheet->getTexCoords(m_AnimationID);
@@ -93,7 +87,7 @@ namespace prx {
 		return m_UVs;
 	};
 
-	inline void AnimatedSprite::reflect(bool reflect) {
+	inline void AnimatedSprite::reflect(bool reflect) noexcept  {
 		m_SpriteSheet->reflect(reflect);
 	}
 
@@ -115,7 +109,7 @@ namespace prx {
 		return m_AnimationState;
 	}
 
-	inline void AnimatedSprite::setDefaultUVs() {
+	inline void AnimatedSprite::setDefaultUVs() noexcept {
 		const TexCoords& tc = m_SpriteSheet->getFrameUVs(m_DefaultFrame);
 		
 		m_UVs[0] = tc.lbX;
@@ -127,6 +121,5 @@ namespace prx {
 		m_UVs[6] = tc.rbX;
 		m_UVs[7] = tc.rbY;
 	}
-
 }
 #endif

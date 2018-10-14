@@ -3,6 +3,7 @@
 #include <Fonts/Font.h>
 #include <renderer/buffer/IndexBuffer.h>
 #include <renderer/FrameBuffer2D.h>
+#include <renderer/renderable/Renderable2D.h>
 
 namespace prx {
 	prx::ForwardRenderer2D::ForwardRenderer2D(RenderTarget rendertarget)
@@ -51,7 +52,7 @@ namespace prx {
 
 		unsigned int offset = 0;
 		for (unsigned int i = 0; i < INDEX_BUFFER_SIZE; i += 6) {
-			indices[i] = offset + 0;
+			indices[  i  ] = offset + 0;
 			indices[i + 1] = offset + 1;
 			indices[i + 2] = offset + 2;
 
@@ -73,14 +74,6 @@ namespace prx {
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
 		GLCall(m_Buffer = static_cast<VertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)));
 		m_TextureSlots.clear();
-	}
-
-	void ForwardRenderer2D::drawRect(float x, float y, float width, float height, unsigned color) {
-		drawRect(hpm::vec2(x, y), hpm::vec2(width, height),color);
-	}
-
-	void ForwardRenderer2D::drawRect(float x, float y, float width, float height, const TextureBase* texture, bool reflect) {
-		drawRect(hpm::vec2(x, y), hpm::vec2(width, height), texture, reflect);
 	}
 
 	void ForwardRenderer2D::drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned color) {
@@ -215,6 +208,70 @@ namespace prx {
 		m_Buffer->color  = NULL_COLOR;
 		m_Buffer++;
 
+		m_IndexCount += 6;
+	}
+
+	void ForwardRenderer2D::drawRenderable(const hpm::mat3& worldMat, const Renderable2D* renderable) {
+		
+		float width = renderable->getWidth();
+		float height = renderable->getWidth();
+		unsigned int color = renderable->getColor();
+		
+		unsigned int texID = renderable->getTexID();
+		if (texID != 0) {
+			const float* UVs = renderable->getUVs();
+			float ts = submitTexture(texID);
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+			m_Buffer->UVs.x = UVs[0];
+			m_Buffer->UVs.y = UVs[1];
+			m_Buffer->texID = ts;
+			m_Buffer->color = NULL_COLOR;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+			m_Buffer->UVs.x = UVs[2];
+			m_Buffer->UVs.y = UVs[3];
+			m_Buffer->texID = ts;
+			m_Buffer->color = NULL_COLOR;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+			m_Buffer->UVs.x = UVs[4];
+			m_Buffer->UVs.y = UVs[5];
+			m_Buffer->texID = ts;
+			m_Buffer->color = NULL_COLOR;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+			m_Buffer->UVs.x = UVs[6];
+			m_Buffer->UVs.y = UVs[7];
+			m_Buffer->texID = ts;
+			m_Buffer->color = NULL_COLOR;
+			m_Buffer++;
+
+		} else {
+			
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color = color;
+			m_Buffer++;
+
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color = color;
+			m_Buffer++;
+		}
 		m_IndexCount += 6;
 	}
 

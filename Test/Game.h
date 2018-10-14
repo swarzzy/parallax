@@ -7,6 +7,7 @@
 #include "../parallax/include/scene/Scene.h"
 #include "../parallax/include/renderer/renderable/Label.h"
 #include "../parallax/include/scene/LabelNode.h"
+#include "../parallax/include/renderer/renderable/AnimatedSprite.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;
@@ -25,6 +26,7 @@ public:
 	SpriteNode* m_BluePlanet;
 	SpriteNode* m_BrownPlanet;
 	SpriteNode* m_Clouds;
+	AnimatedSprite* m_Hero;
 public:
 	Game(std::string_view path) {}
 	~Game() {};

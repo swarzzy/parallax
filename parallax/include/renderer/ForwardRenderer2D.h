@@ -5,7 +5,7 @@
 #include "Renderer2D.h"
 
 namespace prx {
-
+	
 	class IndexBuffer;
 	class FrameBuffer2D;
 	
@@ -39,12 +39,12 @@ namespace prx {
 
 		void begin() override;
 
-		void drawRect(float x, float y, float width, float height, unsigned int color = 0xffffffff) override ;
-		void drawRect(float x, float y, float width, float height, const TextureBase* texture, bool reflect = false) override;
 		void drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned int color = 0xffffffff) override;
 		void drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture, bool reflect = false) override;
 		void drawRect(const hpm::mat3& worldMat, float width, float height, unsigned int color = 0xffffffff) override;
 		void drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect = false) override;
+
+		void drawRenderable(const hpm::mat3& worldMat, const Renderable2D* renderable);
 
 		void drawString(std::string_view text, const hpm::mat3& worldMatrix, const Font* font, unsigned int color) override;
 		void drawString(std::string_view text, const hpm::vec2& position, const Font* font, unsigned int color) override;

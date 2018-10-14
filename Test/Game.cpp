@@ -45,6 +45,16 @@ void Game::init() {
 	m_FPSCounter = new prx::LabelNode("", -290, 270, 0xffffffff, m_Renderer, m_Scene);
 	m_UPSCounter = new prx::LabelNode("", -290, 240, 0xffffffff, m_Renderer, m_Scene);
 	m_Sound->loop();
+
+	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
+	std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
+	std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
+	std::vector<unsigned int> mask3 = { 24, 25, 26, 27, 28, 29, 30 };
+	int aID = sheet->addAnimation("1", mask);
+	int aID2 = sheet->addAnimation("2", mask2);
+	int aID3 = sheet->addAnimation("3", mask3);
+	m_Hero = new AnimatedSprite(100, 100, sheet, aID);
+	m_Hero->loopAnimation(aID);
 }
 
 void Game::tick() {
@@ -65,6 +75,7 @@ void Game::render() {
 	m_Renderer->begin();
 
 	m_Scene->draw();
+	m_Hero->submit(m_Renderer, hpm::mat3::identity());
 
 	m_Renderer->end();
 	m_Renderer->flush();
