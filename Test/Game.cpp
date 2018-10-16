@@ -5,7 +5,6 @@
 #include "../parallax/include/renderer/renderable/Group.h"
 #include "../parallax/include/textures/TextureAtlas.h"
 #include "../parallax/include/renderer/renderable/Sprite.h"
-//#include "GLFW/glfw3.h>
 #include "../parallax/include/textures/Texture.h"
 #include <experimental/filesystem>
 #include <filesystem>
@@ -16,17 +15,14 @@
 #include "../parallax/include/textures/SpriteSheet.h"
 #include "../parallax/include/renderer/FrameBuffer2D.h"
 #include "../parallax/include/scene/LabelNode.h"
+#include "../parallax/include/renderer/ForwardRenderer2D.h"
 
 
 void Game::init() {
 	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
 
-	m_Shader = ShaderManager::getShader(ShaderManager::loadShader(ShaderType::DEFAULT));
-	
-	m_Layer = new SceneLayer(m_Shader);
-	m_Layer->setProjectionMatrix(hpm::mat4::ortho(0, 600, 600, 0, -10, 10));
-	m_Renderer = m_Layer->getRenderer();
-	
+	m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, 600, 600, 0, -10, 10));
+	m_CameraPosition = hpm::vec2(300.f);
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
 	auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
@@ -35,7 +31,8 @@ void Game::init() {
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
 	//auto clouds = Resources::getTexture(Resources::loadTexture("res/textures/clouds.png"));
 
-	m_Scene = new Scene(m_Layer->getRenderer());
+	m_Scene = new Scene(m_Renderer);
+	m_Scene->init();
 	m_Background = new SpriteNode(-425, -425, 0.0, 850, 850, background, m_Scene);
 	//m_Clouds = new SpriteNode(-300, -300, 0.0, 600, 600, clouds, m_Renderer, m_Scene);
 	m_Sun = new SpriteNode(-150 /2, -150 /2, 1, 150, 150 ,sun , m_Scene);
@@ -63,15 +60,24 @@ void Game::tick() {
 }
 
 void Game::update() {
-	m_Scene->update();
 	m_Sun->setTransform(hpm::mat3::rotation(-getTime() / 80) * hpm::mat3::translation(-150 / 2, -150 / 2));
 	m_Background->setTransform( hpm::mat3::rotation(getTime() / 100) * hpm::mat3::translation(-425, -425));
 	m_BluePlanet->setTransform(hpm::mat3::rotation(getTime() / 50) * hpm::mat3::translation(80, 80));
 	m_BrownPlanet->setTransform(hpm::mat3::translation(40, 40) * hpm::mat3::rotation(getTime() / 6) * hpm::mat3::translation(30, 30));
+
+	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
+		m_CameraPosition.y += 3.0;
+	if (m_Window->isKeyHeld(PARALLAX_KEY_S))
+		m_CameraPosition.y -= 3.0;
+	if (m_Window->isKeyHeld(PARALLAX_KEY_A))
+		m_CameraPosition.x -= 3.0;
+	if (m_Window->isKeyHeld(PARALLAX_KEY_D))
+		m_CameraPosition.x += 3.0;
+
+	m_Scene->setCameraPosition(m_CameraPosition);
+	m_Scene->update();
 }
 	
 void Game::render() {
-	m_Shader->bind();
 	m_Scene->present();
-	m_Shader->unbind();
 }

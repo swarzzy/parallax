@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera\Camera2D.cpp" />
     <ClCompile Include="src\scene\LabelNode.cpp" />
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
@@ -54,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\audio\Sound.h" />
+    <ClInclude Include="include\camera\Camera2D.h" />
     <ClInclude Include="include\event\UI\ButtonListener.h" />
     <ClInclude Include="include\event\UI\Listener.h" />
     <ClInclude Include="include\event\UI\OnClickListener.h" />
@@ -202,6 +204,7 @@
     <ClInclude Include="include\utils\timing\ScopedTimer.h" />
     <ClInclude Include="include\utils\timing\SimpleTimer.h" />
     <ClInclude Include="include\ParallaxKeys.h" />
+    <ClInclude Include="include\window\GraphicsManager.h" />
     <ClInclude Include="include\window\Window.h" />
     <ClInclude Include="src\resources\fonts\Font.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />

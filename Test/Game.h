@@ -8,6 +8,7 @@
 #include "../parallax/include/renderer/renderable/Label.h"
 #include "../parallax/include/scene/LabelNode.h"
 #include "../parallax/include/renderer/renderable/AnimatedSprite.h"
+#include "../parallax/include/camera/Camera2D.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;
@@ -27,6 +28,8 @@ public:
 	SpriteNode* m_BrownPlanet;
 	SpriteNode* m_Clouds;
 	AnimatedSprite* m_Hero;
+	Camera2D* m_Camera;
+	hpm::vec2 m_CameraPosition;
 public:
 	Game(std::string_view path) {}
 	~Game() {};

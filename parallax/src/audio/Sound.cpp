@@ -13,7 +13,7 @@ namespace prx {
 
 	Sound::Sound(std::string_view filepath, ga_Mixer* gaMixer)
 		:m_FilePath(filepath), m_gaMixer(gaMixer), m_Gain(1.0f), m_Pan(0.0), m_Pitch(1.0), m_Playing(false) {
-		int dotPos = filepath.find_last_of('.');
+		size_t dotPos = filepath.find_last_of('.');
 		std::string path(filepath);
 		
 		m_Sound = gau_load_sound_file(path.c_str(), path.substr(dotPos + 1).c_str());

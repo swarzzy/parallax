@@ -25,7 +25,7 @@ namespace prx {
 	}
 
 	unsigned ShaderManager::loadShader(ShaderType shader) {
-		if (shader == ShaderType::DEFAULT) {
+		if (shader == ShaderType::FORWARD_RENDERER_DEFAULT) {
 			unsigned int id = ++m_GlobalShaderCounter;
 
 			m_Shaders.emplace(std::piecewise_construct, std::forward_as_tuple(id),

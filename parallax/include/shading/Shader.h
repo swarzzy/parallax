@@ -9,7 +9,7 @@
 
 #include "../ext/GL/glew.h"
 
-#include <hypermath.h>;
+#include <hypermath.h>
 
 #include "../utils/error_handling/GLErrorHandler.h"
 

@@ -123,6 +123,9 @@
     <ClCompile Include="src\renderer\ForwardRenderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\camera\Camera2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -591,6 +594,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\renderer\ForwardRenderer2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\camera\Camera2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window\GraphicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

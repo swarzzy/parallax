@@ -27,6 +27,9 @@ namespace prx {
 		inline static const float	 QUAD_DEFAULT_POSITION_Y = 0.0f;
 		inline static const unsigned NULL_COLOR = 0xffffffff;
 
+		inline static const hpm::mat4 DEFAULT_PROJECTION_MATRIX = 
+			hpm::mat4::ortho(0.0f, 800.0f, 600.0f, 0.0f, -10.0f, 10.0f);
+
 	protected:
 		Texture*				m_Mask;
 		RenderTarget			m_RenderTarget;
@@ -40,6 +43,8 @@ namespace prx {
 
 		virtual void setMask(Texture* mask) noexcept;
 		inline virtual void defaultMask() noexcept;
+
+		virtual void setProjectionMatrix(const hpm::mat4& projMatrix) = 0;
 
 		virtual void setRenderTarget(RenderTarget target) = 0;
 		virtual void setFrameBuffer(FrameBuffer2D* framebuffer) = 0;

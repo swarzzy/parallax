@@ -15,7 +15,7 @@ namespace prx {
 
 	Window* Window::m_CurrentWindow = nullptr;
 
-	Window::Window(std::string_view title, int width, int height, bool fullscreen)
+	Window::Window(std::string_view title, float width, float height, bool fullscreen)
 		: m_Title(title), m_Width(width), m_Height(height), m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
 		m_FullScreen(fullscreen), m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
 		if (m_CurrentWindow != nullptr) {
@@ -57,7 +57,7 @@ namespace prx {
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
 		glfwSetScrollCallback(m_Window, scroll_callback);
 		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
-		glfwSwapInterval(0.0);
+		glfwSwapInterval(0);
 
 		glfwSetWindowUserPointer(m_Window, this);
 
@@ -72,8 +72,8 @@ namespace prx {
 		memset(m_MouseButtonsPressed,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
 		memset(m_MouseButtonsReleased,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
 
-		m_CursorX = m_Width / 2;
-		m_CursorY = m_Width / 2;
+		m_CursorX = m_Width / 2.0f;
+		m_CursorY = m_Height / 2.0f;
 
 		// Initialize GLEW
 		if (glewInit() != GLEW_OK) {
@@ -157,10 +157,10 @@ namespace prx {
 		
 		auto mask = static_cast<unsigned int>(0x000000ff);
 
-		float r = (color & mask) / 255.0;
-		float g = ((color >> 8)  & mask) / 255.0;
-		float b = ((color >> 16) & mask) / 255.0;
-		float a = ((color >> 24) & mask) / 255.0;
+		float r = (color & mask) / 255.0f;
+		float g = ((color >> 8)  & mask) / 255.0f;
+		float b = ((color >> 16) & mask) / 255.0f;
+		float a = ((color >> 24) & mask) / 255.0f;
 		
 		GLCall(glClearColor(r, g, b, a));
 	}
@@ -198,7 +198,7 @@ namespace prx {
 		// TODO: Join this two calls
 	}
 
-	void Window::resize(unsigned width, unsigned height) {
+	void Window::resize(float width, float height) {
 		m_Width  = width;
 		m_Height = height;
 		glfwSetWindowSize(m_Window, width, height);
@@ -232,8 +232,8 @@ namespace prx {
 
 	void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
-		win->m_CursorX = xpos;
-		win->m_CursorY = ypos;
+		win->m_CursorX = static_cast<float>(xpos);
+		win->m_CursorY = static_cast<float>(ypos);
 	}
 
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
@@ -251,8 +251,8 @@ namespace prx {
 
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
-		win->m_ScrollOffsetX += xoffset;
-		win->m_ScrollOffsetY += yoffset;
+		win->m_ScrollOffsetX += static_cast<float>(xoffset);
+		win->m_ScrollOffsetY += static_cast<float>(yoffset);
 	}
 
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height) {

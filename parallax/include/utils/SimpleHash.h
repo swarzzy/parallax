@@ -15,7 +15,7 @@ namespace prx {
 
 			for (auto& element : string)
 				hash = m_MULTIPLIER * hash + static_cast<unsigned char>(element);
-			hash = hash / string.size();
+			hash = hash / static_cast<unsigned int>(string.size());
 			return hash;
 		}
 	};

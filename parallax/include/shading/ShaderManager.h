@@ -8,7 +8,7 @@
 namespace prx {
 	
 	enum class ShaderType {
-		DEFAULT
+		FORWARD_RENDERER_DEFAULT
 	};
 
 	class ShaderManager {

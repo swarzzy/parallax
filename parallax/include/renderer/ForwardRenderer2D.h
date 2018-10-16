@@ -8,20 +8,21 @@ namespace prx {
 	
 	class IndexBuffer;
 	class FrameBuffer2D;
+	class Shader;
 	
 	class ForwardRenderer2D final : public Renderer2D {
 	public:
-		const unsigned int	MAX_RENDERABLES		= 60000;
-		const unsigned int	VERTEX_SIZE			= sizeof(VertexData);
-		const unsigned int	RENDERABLE_SIZE		= VERTEX_SIZE * 4;
-		const unsigned int	INDEX_BUFFER_SIZE	= MAX_RENDERABLES * 6;
-		const unsigned int	BUFFER_SIZE			= RENDERABLE_SIZE * MAX_RENDERABLES;
-		const unsigned int	MAX_TEXTURE_SLOTS	= 32 - 1; // Mask hold the last slot
+		static const unsigned int	MAX_RENDERABLES		= 60000;
+		static const unsigned int	VERTEX_SIZE			= sizeof(VertexData);
+		static const unsigned int	RENDERABLE_SIZE		= VERTEX_SIZE * 4;
+		static const unsigned int	INDEX_BUFFER_SIZE	= MAX_RENDERABLES * 6;
+		static const unsigned int	BUFFER_SIZE			= RENDERABLE_SIZE * MAX_RENDERABLES;
+		static const unsigned int	MAX_TEXTURE_SLOTS	= 32 - 1; // Mask hold the last slot
 
-		const unsigned int SHADER_VERTEX_INDEX	= 0;
-		const unsigned int SHADER_UV_INDEX		= 1;
-		const unsigned int SHADER_TEXID_INDEX	= 2;
-		const unsigned int SHADER_COLOR_INDEX	= 3;
+		static const unsigned int	SHADER_VERTEX_INDEX	= 0;
+		static const unsigned int	SHADER_UV_INDEX		= 1;
+		static const unsigned int	SHADER_TEXID_INDEX	= 2;
+		static const unsigned int	SHADER_COLOR_INDEX	= 3;
 
 	private:
 		inline static const float	 EMPTY_TEXTURE_SLOT	= 0.0f;
@@ -32,10 +33,17 @@ namespace prx {
 		std::vector<unsigned int>	m_TextureSlots;
 		int							m_IndexCount;
 		VertexData*					m_Buffer;
+		unsigned					m_ShaderID;
+		Shader*						m_Shader;
+		hpm::mat4					m_ProjectionMatrix;
+		bool						m_ProjMatrixNeedsUpdate;
 
 	public:
-		ForwardRenderer2D(RenderTarget rendertarget = RenderTarget::SCREEN);
+		ForwardRenderer2D(const hpm::mat4& projectionMatrix = DEFAULT_PROJECTION_MATRIX, 
+						  RenderTarget rendertarget = RenderTarget::SCREEN);
 		~ForwardRenderer2D();
+
+		void setProjectionMatrix(const hpm::mat4& projMatrix);
 
 		void begin() override;
 

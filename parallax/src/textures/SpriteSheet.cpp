@@ -20,7 +20,7 @@ namespace prx {
 		int coordCounter = m_Tiles;
 		
 			for (int j = m_Height - spriteHeight; j >= 0; j-= spriteHeight) {
-		for (int i = 0; i  < m_Width; i+= spriteWidth) {
+		for (unsigned int i = 0; i  < m_Width; i+= spriteWidth) {
 				float leftBottomX = static_cast<float>(i) / m_Width;
 				float leftBottomY = static_cast<float>(j) / m_Height;
 				
@@ -64,7 +64,7 @@ namespace prx {
 			ASSERT(mask.size() <= m_Tiles)
 		}
 		m_Animations.emplace_back(name, mask.size(), mask);
-		return m_Animations.size() - 1;
+		return static_cast<unsigned>(m_Animations.size() - 1);
 	}
 
 	const TexCoords& SpriteSheet::getTexCoords(unsigned int animationID) const {

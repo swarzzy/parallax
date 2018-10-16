@@ -24,7 +24,8 @@ namespace prx {
 		static Window* m_CurrentWindow;
 		
 		std::string	 m_Title;
-		unsigned int m_Width, m_Height;
+		float		 m_Width;
+		float		 m_Height;
 		GLFWwindow*	 m_Window;
 		GLFWmonitor* m_Monitor;
 		hpm::vec3	 m_ClearColor;
@@ -49,7 +50,7 @@ namespace prx {
 	public:
 		
 		// Only one instance can exist at the same time.
-		Window(std::string_view title, int width, int height, bool fullscreen);
+		Window(std::string_view title, float width, float height, bool fullscreen);
 		~Window();
 
 		static inline const Window& getCurrentWindow() { return *m_CurrentWindow; };
@@ -60,7 +61,7 @@ namespace prx {
 
 		void clear(unsigned int flags);
 
-		void resize(unsigned int width, unsigned int height);
+		void resize(float width, float height);
 
 		void enableFullScreen(bool fullscreen);
 
@@ -77,8 +78,8 @@ namespace prx {
 
 		inline GLFWwindow* getWindowPointer() { return m_Window; };
 		
-		inline unsigned int getWidth() const  { return m_Width; };
-		inline unsigned int getHeight() const { return m_Height; };
+		inline float getWidth() const  { return m_Width; };
+		inline float getHeight() const { return m_Height; };
 		
 		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_Height - m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };

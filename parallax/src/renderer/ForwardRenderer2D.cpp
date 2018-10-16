@@ -4,10 +4,15 @@
 #include <renderer/buffer/IndexBuffer.h>
 #include <renderer/FrameBuffer2D.h>
 #include <renderer/renderable/Renderable2D.h>
+#include <shading/ShaderManager.h>
 
 namespace prx {
-	prx::ForwardRenderer2D::ForwardRenderer2D(RenderTarget rendertarget)
-		: Renderer2D(rendertarget), m_IBO(nullptr), m_Buffer(nullptr)
+	prx::ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix, RenderTarget rendertarget)
+		: Renderer2D(rendertarget),
+		  m_IBO(nullptr),
+		  m_Buffer(nullptr),
+		  m_ProjectionMatrix(projectionMatrix),
+		  m_ProjMatrixNeedsUpdate(false)
 	{
 		init();
 		defaultMask();
@@ -16,8 +21,15 @@ namespace prx {
 	ForwardRenderer2D::~ForwardRenderer2D() {
 		delete m_Mask;
 		delete m_IBO;
+		
+		ShaderManager::deleteShader(m_ShaderID);
 
 		GLCall(glDeleteBuffers(1, &m_VBO));
+	}
+
+	void ForwardRenderer2D::setProjectionMatrix(const hpm::mat4& projMatrix) {
+		m_ProjectionMatrix = projMatrix;
+		m_ProjMatrixNeedsUpdate = true;
 	}
 
 	void ForwardRenderer2D::init() {
@@ -68,6 +80,18 @@ namespace prx {
 		delete[] indices;
 
 		GLCall(glBindVertexArray(0));
+
+		m_ShaderID  = ShaderManager::loadShader(ShaderType::FORWARD_RENDERER_DEFAULT);
+		m_Shader	= ShaderManager::getShader(m_ShaderID);
+
+		int samplerIndices[32];
+		for (int i = 0; i < 32; i++)
+			samplerIndices[i] = i;
+
+		m_Shader->bind();
+		m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
+		m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
+		m_Shader->unbind();
 	}
 
 	void ForwardRenderer2D::begin() {
@@ -433,6 +457,12 @@ namespace prx {
 		GLCall(glBindVertexArray(m_VAO));
 		m_IBO->Bind();
 
+		m_Shader->bind();
+		if (m_ProjMatrixNeedsUpdate) {
+			m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
+			m_ProjMatrixNeedsUpdate = false;
+		}
+
 		if (m_RenderTarget == RenderTarget::BUFFER) {
 			m_FrameBuffer->bind();
 			//m_FrameBuffer->clear();
@@ -444,6 +474,8 @@ namespace prx {
 		else {
 			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
 		}
+		
+		m_Shader->unbind();
 
 		m_IBO->Unbind();
 		GLCall(glBindVertexArray(0));
