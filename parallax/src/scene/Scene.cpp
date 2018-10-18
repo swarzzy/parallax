@@ -4,16 +4,14 @@
 #include <camera/Camera2D.h>
 
 namespace prx {
-	Scene::Scene(Renderer2D* renderer, Node* parent) 
-		: Node(parent),
+	Scene::Scene(Renderer2D* renderer)
+		: Node(nullptr),
 		  m_Renderer(renderer),
 		  m_Camera(new Camera2D()),
-		  m_CameraMoved(false)
+		  m_CameraMoved(false),
+		  m_NeedsSorting(false) 
 	{
-		auto winWidth = Window::getCurrentWindow().getWidth();
-		auto winHeight = Window::getCurrentWindow().getHeight();
-		
-		m_LocalMat = hpm::mat3::translation(winWidth / 2.0f, winHeight / 2.0f);
+		m_Camera->setCameraPosition(defaultCameraPosition);
 	}
 
 	Scene::~Scene() {
@@ -23,10 +21,14 @@ namespace prx {
 	}
 
 	void Scene::init() {
-		auto width = Window::getCurrentWindow().getWidth();
-		auto height = Window::getCurrentWindow().getHeight();
-		m_Camera->init(hpm::vec2(width / 2, height / 2), -10, 10, width, height);
+		auto winWidth = Window::getCurrentWindow().getWidth();
+		auto winHeight = Window::getCurrentWindow().getHeight();
+
+		m_Camera->init(winWidth, winHeight);
+		
+		m_Renderer->init();
 		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+		initChildren();
 	}
 
 	void Scene::update() {
@@ -39,19 +41,31 @@ namespace prx {
 			updateChildren();
 	}
 
-	void Scene::draw(Renderer2D* renderer) {
-		//
+	void Scene::sortChildren() {
+		std::sort(m_Children.begin(), m_Children.end(), sortingPredicate);
 	}
 
+	void Scene::draw(Renderer2D* renderer) {}
+
 	void Scene::present() {
+		if (m_NeedsSorting) {
+			sortChildren();
+			m_NeedsSorting = false;
+		}
+
 		if (m_CameraMoved) {
 			m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
 			m_CameraMoved = false;
 		}
+
 		m_Renderer->begin();
 		drawChildren(m_Renderer);
 		m_Renderer->end();
 		m_Renderer->flush();
+	}
+
+	void Scene::sortRequest() noexcept {
+		m_NeedsSorting = true;
 	}
 
 	void Scene::setCameraPosition(hpm::vec2 position) noexcept {

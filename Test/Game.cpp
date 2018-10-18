@@ -16,31 +16,38 @@
 #include "../parallax/include/renderer/FrameBuffer2D.h"
 #include "../parallax/include/scene/LabelNode.h"
 #include "../parallax/include/renderer/ForwardRenderer2D.h"
+#include <complex>
 
 
 void Game::init() {
 	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
 
 	m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, 600, 600, 0, -10, 10));
-	m_CameraPosition = hpm::vec2(300.f);
+	m_CameraPosition = hpm::vec2(0.0);
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
 	auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
 	auto sun = Resources::getTexture(Resources::loadTexture("res/textures/sun.png"));
 	auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
-	//auto clouds = Resources::getTexture(Resources::loadTexture("res/textures/clouds.png"));
 
 	m_Scene = new Scene(m_Renderer);
 	m_Scene->init();
-	m_Background = new SpriteNode(-425, -425, 0.0, 850, 850, background, m_Scene);
-	//m_Clouds = new SpriteNode(-300, -300, 0.0, 600, 600, clouds, m_Renderer, m_Scene);
-	m_Sun = new SpriteNode(-150 /2, -150 /2, 1, 150, 150 ,sun , m_Scene);
-	m_BluePlanet = new SpriteNode(0, 0, 0, 80, 80, bluePlanet, m_Scene);
-	m_BrownPlanet = new SpriteNode(0, 0, 0, 30, 30, brownPlanet, m_BluePlanet);
+	m_Layer = new Layer(0, m_Scene);
+	m_UILayer = new Layer(1, m_Scene);
+	m_Layer->init();
+	m_UILayer->init();
+	m_Background = new SpriteNode(0, 0, 850, 850, background, m_Layer);
+	m_Background->setAnchorPoint(0.5, 0.5);
+	m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , m_Layer);
+	m_Sun->setAnchorPoint(0.5, 0.5);
+	m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, m_Layer);
+	m_BluePlanet->setAnchorPoint(0.5, 0.5);
+	m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
+	m_BrownPlanet->setAnchorPoint(0.5, 0.5);
 	
-	m_FPSCounter = new prx::LabelNode("", -290, 270, 0xffffffff, m_Scene);
-	m_UPSCounter = new prx::LabelNode("", -290, 240, 0xffffffff, m_Scene);
+	m_FPSCounter = new prx::LabelNode("", 0, 577, 0xffffffff, m_UILayer);
+	m_UPSCounter = new prx::LabelNode("", 0, 555, 0xffffffff, m_UILayer);
 	m_Sound->loop();
 
 	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
@@ -50,8 +57,9 @@ void Game::init() {
 	int aID = sheet->addAnimation("1", mask);
 	int aID2 = sheet->addAnimation("2", mask2);
 	int aID3 = sheet->addAnimation("3", mask3);
-	m_Hero = new AnimatedSprite(100, 100, sheet, aID);
+	m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
 	m_Hero->loopAnimation(aID);
+	m_Hero->setAnchorPoint(0.5, 0.5);
 }
 
 void Game::tick() {
@@ -60,10 +68,11 @@ void Game::tick() {
 }
 
 void Game::update() {
-	m_Sun->setTransform(hpm::mat3::rotation(-getTime() / 80) * hpm::mat3::translation(-150 / 2, -150 / 2));
-	m_Background->setTransform( hpm::mat3::rotation(getTime() / 100) * hpm::mat3::translation(-425, -425));
-	m_BluePlanet->setTransform(hpm::mat3::rotation(getTime() / 50) * hpm::mat3::translation(80, 80));
-	m_BrownPlanet->setTransform(hpm::mat3::translation(40, 40) * hpm::mat3::rotation(getTime() / 6) * hpm::mat3::translation(30, 30));
+	m_Background->setRotation(getTime() / 80);
+	m_Sun->setRotation(-getTime() / 80);
+	m_BluePlanet->setRotation(getTime() / 50, 120);
+	m_BrownPlanet->setRotation(getTime() / 5, 45);
+	m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);
 
 	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
 		m_CameraPosition.y += 3.0;

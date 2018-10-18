@@ -9,23 +9,21 @@ namespace prx {
 		Sprite* m_Sprite;
 
 	public:
-		SpriteNode(float x, float y, int depth,
+		SpriteNode(float x, float y,
 				   float width, float height, 
 				   unsigned int color, 
 				   Node* parent = nullptr);
 
-		SpriteNode(float x, float y, int depth,
+		SpriteNode(float x, float y,
 				   float width, float height,
 				   TextureBase* texture,
 				   Node* parent = nullptr);
 
-		SpriteNode(int depth,
-				   float width, float height,
+		SpriteNode(float width, float height,
 				   unsigned int color,
 				   Node* parent = nullptr);
 		
-		SpriteNode(int depth,
-				   float width, float height,
+		SpriteNode(float width, float height,
 				   TextureBase* texture,
 				   Node* parent = nullptr);
 		

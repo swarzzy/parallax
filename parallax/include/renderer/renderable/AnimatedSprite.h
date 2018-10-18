@@ -16,6 +16,7 @@ namespace prx {
 		SpriteSheet*	m_SpriteSheet;
 		mutable AnimationState	m_AnimationState;
 		unsigned int m_DefaultFrame;
+	
 	public:
 		// TODO: setting default frame
 		AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, unsigned int animationID)
@@ -35,9 +36,9 @@ namespace prx {
 
 		inline void reflect(bool reflect) noexcept override;
 
-		inline void loopAnimation(unsigned int ID);
-		inline void playAnimation(unsigned int ID);
-		inline void stopAnimation();
+		inline void loopAnimation(unsigned int ID) noexcept;
+		inline void playAnimation(unsigned int ID) noexcept;
+		inline void stopAnimation() noexcept;
 		
 		inline AnimationState getAnimationState();
 	
@@ -91,17 +92,17 @@ namespace prx {
 		m_SpriteSheet->reflect(reflect);
 	}
 
-	inline void AnimatedSprite::loopAnimation(unsigned ID) {
+	inline void AnimatedSprite::loopAnimation(unsigned ID) noexcept {
 		m_AnimationID = ID;
 		m_AnimationState = AnimationState::LOOP;
 	}
 
-	inline void AnimatedSprite::playAnimation(unsigned ID) {
+	inline void AnimatedSprite::playAnimation(unsigned ID) noexcept {
 		m_AnimationID = ID;
 		m_AnimationState = AnimationState::PLAY;
 	}
 
-	inline void AnimatedSprite::stopAnimation() {
+	inline void AnimatedSprite::stopAnimation() noexcept {
 		m_AnimationState = AnimationState::STOP;
 	}
 

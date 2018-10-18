@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera\Camera2D.cpp" />
+    <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
     <ClCompile Include="src\scene\LabelNode.cpp" />
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
+    <ClCompile Include="src\scene\Layer.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\scene\SpriteNode.cpp" />
     <ClCompile Include="src\shading\ShaderManager.cpp" />
@@ -35,8 +37,6 @@
     <ClCompile Include="src\Parallax.cpp" />
     <ClCompile Include="src\renderer\ForwardRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
-    <ClCompile Include="src\renderer\layers\Layer.cpp" />
-    <ClCompile Include="src\renderer\layers\SceneLayer.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\renderable\Sprite.cpp" />
@@ -168,8 +168,6 @@
     <ClInclude Include="include\renderer\buffer\VertexBuffer.h" />
     <ClInclude Include="include\renderer\buffer\VertexBufferLayout.h" />
     <ClInclude Include="include\renderer\FrameBuffer2D.h" />
-    <ClInclude Include="include\renderer\layers\Layer.h" />
-    <ClInclude Include="include\renderer\layers\SceneLayer.h" />
     <ClInclude Include="include\renderer\renderable\AnimatedSprite.h" />
     <ClInclude Include="include\renderer\renderable\Label.h" />
     <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
@@ -183,7 +181,9 @@
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
+    <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
     <ClInclude Include="include\scene\LabelNode.h" />
+    <ClInclude Include="include\scene\Layer.h" />
     <ClInclude Include="include\scene\Node.h" />
     <ClInclude Include="include\scene\Scene.h" />
     <ClInclude Include="include\scene\SpriteNode.h" />

@@ -9,14 +9,16 @@
 namespace prx {
 	prx::ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix, RenderTarget rendertarget)
 		: Renderer2D(rendertarget),
+		  m_VAO(0),
+		  m_VBO(0),
 		  m_IBO(nullptr),
+		  m_IndexCount(0),
 		  m_Buffer(nullptr),
+		  m_ShaderID(0),
+		  m_Shader(nullptr),
 		  m_ProjectionMatrix(projectionMatrix),
 		  m_ProjMatrixNeedsUpdate(false)
-	{
-		init();
-		defaultMask();
-	}
+	{}
 
 	ForwardRenderer2D::~ForwardRenderer2D() {
 		delete m_Mask;
@@ -92,6 +94,8 @@ namespace prx {
 		m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
 		m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
 		m_Shader->unbind();
+
+		defaultMask();
 	}
 
 	void ForwardRenderer2D::begin() {

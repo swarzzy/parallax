@@ -14,18 +14,11 @@ namespace prx {
 		float	  m_ViewSpaceHeight;
 		bool	  m_NeedsUpdate;
 
-		// Temporary solution
-		float m_Near;
-		float m_Far;
-
 	public:
 		Camera2D();
 		~Camera2D();
 
-		void init(hpm::vec2 position,
-				  float near,
-				  float far,
-				  float viewSpaceWidth = defaultViewSpaceWidth,
+		void init(float viewSpaceWidth = defaultViewSpaceWidth,
 				  float viewSpaceHeight = defaultViewSpaceHeight);
 
 		void update();

@@ -43,6 +43,8 @@ namespace prx {
 						  RenderTarget rendertarget = RenderTarget::SCREEN);
 		~ForwardRenderer2D();
 
+		void init() override;
+
 		void setProjectionMatrix(const hpm::mat4& projMatrix);
 
 		void begin() override;
@@ -64,7 +66,6 @@ namespace prx {
 		void setRenderTarget(RenderTarget target) override;
 
 	private:
-		void init();
 		float submitTexture(unsigned texID);
 	};
 }
