@@ -18,7 +18,7 @@ namespace prx {
 
 		inline std::string_view getText() const { return m_Text; }
 
-		void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix) override;
+		void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) override;
 
 	public:
 		Label(const Label& other) = delete;

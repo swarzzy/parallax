@@ -31,7 +31,7 @@ namespace prx {
 	}
 
 	void AnimatedSpriteNode::draw(Renderer2D* renderer) {
-		m_AnimatedSprite->submit(renderer, m_WorldMat * m_AnchorMat);
+		m_AnimatedSprite->submit(renderer, m_WorldMat * m_AnchorMat, m_Depth);
 		drawChildren(renderer);
 	}
 }

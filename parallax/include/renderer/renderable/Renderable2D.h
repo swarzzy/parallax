@@ -28,7 +28,7 @@ namespace prx {
 	public:
 		virtual ~Renderable2D() = default;
 
-		virtual void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix = hpm::mat3(1.0f)) = 0;
+		virtual void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix = hpm::mat3(1.0f), float depth = 0) = 0;
 
 		inline void	setColor(unsigned int color) noexcept;
 		inline void setSize(hpm::vec2 size) noexcept;

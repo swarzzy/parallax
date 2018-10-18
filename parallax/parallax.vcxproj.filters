@@ -126,6 +126,9 @@
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\components\TransformComponent2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -602,11 +605,17 @@
     <ClInclude Include="include\scene\AnimatedSpriteNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\scene\components\TransformComponent2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
     <None Include="include\scene\Node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\scene\components\TransformComponent2D.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

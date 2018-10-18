@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\camera\Camera2D.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
+    <ClCompile Include="src\scene\components\TransformComponent2D.cpp" />
     <ClCompile Include="src\scene\LabelNode.cpp" />
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
+    <ClInclude Include="include\scene\components\TransformComponent2D.h" />
     <ClInclude Include="include\scene\LabelNode.h" />
     <ClInclude Include="include\scene\Layer.h" />
     <ClInclude Include="include\scene\Node.h" />
@@ -219,6 +221,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\scene\components\TransformComponent2D.inl" />
     <None Include="include\scene\Node.inl" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />

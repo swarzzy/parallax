@@ -12,7 +12,7 @@ namespace prx {
 			Sprite(float width, float height, unsigned int color);
 			Sprite(float width, float height, const TextureBase* texture);
 
-			void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix) override;
+			void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) override;
 
 		public:
 			Sprite(const Sprite& other) = delete;

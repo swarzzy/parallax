@@ -20,9 +20,10 @@ namespace prx {
 		static const unsigned int	MAX_TEXTURE_SLOTS	= 32 - 1; // Mask hold the last slot
 
 		static const unsigned int	SHADER_VERTEX_INDEX	= 0;
-		static const unsigned int	SHADER_UV_INDEX		= 1;
-		static const unsigned int	SHADER_TEXID_INDEX	= 2;
-		static const unsigned int	SHADER_COLOR_INDEX	= 3;
+		static const unsigned int	SHADER_DEPTH_INDEX  = 1;
+		static const unsigned int	SHADER_UV_INDEX		= 2;
+		static const unsigned int	SHADER_TEXID_INDEX	= 3;
+		static const unsigned int	SHADER_COLOR_INDEX	= 4;
 
 	private:
 		inline static const float	 EMPTY_TEXTURE_SLOT	= 0.0f;
@@ -49,15 +50,15 @@ namespace prx {
 
 		void begin() override;
 
-		void drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned int color = 0xffffffff) override;
-		void drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture, bool reflect = false) override;
-		void drawRect(const hpm::mat3& worldMat, float width, float height, unsigned int color = 0xffffffff) override;
-		void drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect = false) override;
+		void drawRect(const hpm::vec2& position, float depth, const hpm::vec2& size, unsigned int color = 0xffffffff) override;
+		void drawRect(const hpm::vec2& position, float depth, const hpm::vec2& size, const TextureBase* texture, bool reflect = false) override;
+		void drawRect(const hpm::mat3& worldMat, float depth, float width, float height, unsigned int color = 0xffffffff) override;
+		void drawRect(const hpm::mat3& worldMat, float depth, float width, float height, const TextureBase* texture, bool reflect = false) override;
 
-		void drawRenderable(const hpm::mat3& worldMat, const Renderable2D* renderable);
+		void drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) override;
 
-		void drawString(std::string_view text, const hpm::mat3& worldMatrix, const Font* font, unsigned int color) override;
-		void drawString(std::string_view text, const hpm::vec2& position, const Font* font, unsigned int color) override;
+		void drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) override;
+		void drawString(std::string_view text, const hpm::vec2& position, float depth, const Font* font, unsigned int color) override;
 	
 		void end() override;
 		void flush() override;

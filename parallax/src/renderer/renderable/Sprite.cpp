@@ -15,7 +15,7 @@ namespace prx {
 	Sprite::Sprite(float width, float height, const TextureBase* texture) 
 		: Renderable2D(width, height, texture) {}
 
-	void Sprite::submit(Renderer2D* renderer, const hpm::mat3& worldMatrix) {
-		renderer->drawRenderable(worldMatrix, this);
+	void Sprite::submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) {
+		renderer->drawRenderable(worldMatrix, depth, this);
 	}
 }

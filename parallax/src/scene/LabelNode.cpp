@@ -41,7 +41,7 @@ namespace prx {
 	}
 
 	void LabelNode::draw(Renderer2D* renderer) {
-		m_Label->submit(renderer, m_WorldMat);
+		m_Label->submit(renderer, m_WorldMat, m_Depth);
 		drawChildren(renderer);
 	}
 }

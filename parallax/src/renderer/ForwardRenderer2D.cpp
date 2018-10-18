@@ -43,12 +43,16 @@ namespace prx {
 		GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
 
 		GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
+		GLCall(glEnableVertexAttribArray(SHADER_DEPTH_INDEX));
 		GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
 		GLCall(glEnableVertexAttribArray(SHADER_TEXID_INDEX));
 		GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
 
 		GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
 			VERTEX_SIZE, static_cast<const void*>(NULL)));
+
+		GLCall(glVertexAttribPointer(SHADER_DEPTH_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::depth))));
 
 		GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
 			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
@@ -104,24 +108,28 @@ namespace prx {
 		m_TextureSlots.clear();
 	}
 
-	void ForwardRenderer2D::drawRect(const hpm::vec2& position, const hpm::vec2& size, unsigned color) {
+	void ForwardRenderer2D::drawRect(const hpm::vec2& position, float depth, const hpm::vec2& size, unsigned color) {
 		
 		m_Buffer->vertex = position;
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = hpm::vec2(position.x, position.y + size.y);
+		m_Buffer->depth = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = position + size;
+		m_Buffer->depth  = depth;
 		m_Buffer->texID	 = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = hpm::vec2(position.x + size.x, position.y);
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
@@ -129,7 +137,7 @@ namespace prx {
 		m_IndexCount += 6;
 	}
 
-	void ForwardRenderer2D::drawRect(const hpm::vec2& position, const hpm::vec2& size, const TextureBase* texture, bool reflect) {
+	void ForwardRenderer2D::drawRect(const hpm::vec2& position, float depth, const hpm::vec2& size, const TextureBase* texture, bool reflect) {
 		unsigned int texID = texture->getID();
 		const float* UVs;
 
@@ -141,6 +149,7 @@ namespace prx {
 		float ts = submitTexture(texID);
 
 		m_Buffer->vertex = position;
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[0];
 		m_Buffer->UVs.y  = UVs[1];
 		m_Buffer->texID  = ts;
@@ -148,6 +157,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = hpm::vec2(position.x, position.y + size.y);
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[2];
 		m_Buffer->UVs.y  = UVs[3];
 		m_Buffer->texID  = ts;
@@ -155,6 +165,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = position + size;
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[4];
 		m_Buffer->UVs.y  = UVs[5];
 		m_Buffer->texID  = ts;
@@ -162,6 +173,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = hpm::vec2(position.x + size.x, position.y);
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[6];
 		m_Buffer->UVs.y  = UVs[7];
 		m_Buffer->texID  = ts;
@@ -171,24 +183,28 @@ namespace prx {
 		m_IndexCount += 6;
 	}
 
-	void ForwardRenderer2D::drawRect(const hpm::mat3& worldMat, float width, float height, unsigned color) {
+	void ForwardRenderer2D::drawRect(const hpm::mat3& worldMat, float depth, float width, float height, unsigned color) {
 		
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->depth  = depth;
 		m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
 		m_Buffer->color  = color;
 		m_Buffer++;
@@ -196,7 +212,7 @@ namespace prx {
 		m_IndexCount += 6;
 	}
 
-	void ForwardRenderer2D::drawRect(const hpm::mat3& worldMat, float width, float height, const TextureBase* texture, bool reflect) {
+	void ForwardRenderer2D::drawRect(const hpm::mat3& worldMat, float depth, float width, float height, const TextureBase* texture, bool reflect) {
 
 		unsigned int texID = texture->getID();
 		const float* UVs;
@@ -208,7 +224,8 @@ namespace prx {
 
 		float ts = submitTexture(texID);
 
-		m_Buffer->vertex = worldMat* hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[0];
 		m_Buffer->UVs.y  = UVs[1];
 		m_Buffer->texID  = ts;
@@ -216,6 +233,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[2];
 		m_Buffer->UVs.y  = UVs[3];
 		m_Buffer->texID  = ts;
@@ -223,6 +241,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
+		m_Buffer->depth = depth;
 		m_Buffer->UVs.x  = UVs[4];
 		m_Buffer->UVs.y  = UVs[5];
 		m_Buffer->texID  = ts;
@@ -230,6 +249,7 @@ namespace prx {
 		m_Buffer++;
 
 		m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
+		m_Buffer->depth  = depth;
 		m_Buffer->UVs.x  = UVs[6];
 		m_Buffer->UVs.y  = UVs[7];
 		m_Buffer->texID  = ts;
@@ -239,7 +259,7 @@ namespace prx {
 		m_IndexCount += 6;
 	}
 
-	void ForwardRenderer2D::drawRenderable(const hpm::mat3& worldMat, const Renderable2D* renderable) {
+	void ForwardRenderer2D::drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) {
 		
 		float width = renderable->getWidth();
 		float height = renderable->getWidth();
@@ -251,59 +271,66 @@ namespace prx {
 			float ts = submitTexture(texID);
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
-			m_Buffer->UVs.x = UVs[0];
-			m_Buffer->UVs.y = UVs[1];
-			m_Buffer->texID = ts;
-			m_Buffer->color = NULL_COLOR;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = UVs[0];
+			m_Buffer->UVs.y  = UVs[1];
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = NULL_COLOR;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
-			m_Buffer->UVs.x = UVs[2];
-			m_Buffer->UVs.y = UVs[3];
-			m_Buffer->texID = ts;
-			m_Buffer->color = NULL_COLOR;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = UVs[2];
+			m_Buffer->UVs.y  = UVs[3];
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = NULL_COLOR;
 			m_Buffer++;
 
-			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
-			m_Buffer->UVs.x = UVs[4];
-			m_Buffer->UVs.y = UVs[5];
-			m_Buffer->texID = ts;
-			m_Buffer->color = NULL_COLOR;
+			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);\
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = UVs[4];
+			m_Buffer->UVs.y  = UVs[5];
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = NULL_COLOR;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
-			m_Buffer->UVs.x = UVs[6];
-			m_Buffer->UVs.y = UVs[7];
-			m_Buffer->texID = ts;
-			m_Buffer->color = NULL_COLOR;
+			m_Buffer->UVs.x  = UVs[6];
+			m_Buffer->UVs.y  = UVs[7];
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = NULL_COLOR;
 			m_Buffer++;
 
 		} else {
 			
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
-			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
-			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
-			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
-			m_Buffer->texID = EMPTY_TEXTURE_SLOT;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->texID  = EMPTY_TEXTURE_SLOT;
+			m_Buffer->color  = color;
 			m_Buffer++;
 		}
 		m_IndexCount += 6;
 	}
 
-	void ForwardRenderer2D::drawString(std::string_view text, const hpm::mat3& worldMatrix, const Font* font, unsigned int color) {
+	void ForwardRenderer2D::drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) {
 
 		auto&		 characters = font->getCharacters();
 		unsigned int atlasID	= font->getFontAtlas().getID();
@@ -330,31 +357,35 @@ namespace prx {
 			float h = ch.Size.y * scale;
 
 			m_Buffer->vertex = worldMatrix * hpm::vec2(xpos, ypos);
-			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMatrix * hpm::vec2(xpos, ypos + h);
-			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMatrix * hpm::vec2(xpos + w, ypos + h);
-			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = worldMatrix * hpm::vec2(xpos + w, ypos);
-			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_IndexCount += 6;
@@ -362,7 +393,7 @@ namespace prx {
 		}
 	}
 
-	void ForwardRenderer2D::drawString(std::string_view text, const hpm::vec2& position, const Font* font, unsigned color) {
+	void ForwardRenderer2D::drawString(std::string_view text, const hpm::vec2& position, float depth, const Font* font, unsigned color) {
 		auto&		 characters = font->getCharacters();
 		unsigned int atlasID = font->getFontAtlas().getID();
 		float		 scale = font->getScale();
@@ -388,31 +419,35 @@ namespace prx {
 			float h = ch.Size.y * scale;
 
 			m_Buffer->vertex = hpm::vec2(xpos, ypos);
-			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = hpm::vec2(xpos, ypos + h);
-			m_Buffer->UVs.x = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = ch.AtlasCoords.x / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = hpm::vec2(xpos + w, ypos + h);
-			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = (ch.AtlasCoords.y + ch.AtlasCoords.w) / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_Buffer->vertex = hpm::vec2(xpos + w, ypos);
-			m_Buffer->UVs.x = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
-			m_Buffer->UVs.y = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
-			m_Buffer->texID = ts;
-			m_Buffer->color = color;
+			m_Buffer->depth  = depth;
+			m_Buffer->UVs.x  = (ch.AtlasCoords.x + ch.AtlasCoords.z) / font->getFontAtlas().getWidth();
+			m_Buffer->UVs.y  = ch.AtlasCoords.y / font->getFontAtlas().getHeight();
+			m_Buffer->texID  = ts;
+			m_Buffer->color  = color;
 			m_Buffer++;
 
 			m_IndexCount += 6;
