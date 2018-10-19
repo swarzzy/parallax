@@ -11,41 +11,20 @@ namespace prx {
 		  m_CameraMoved(false),
 		  m_NeedsSorting(false) 
 	{
-		m_Camera->setCameraPosition(defaultCameraPosition);
+		m_Camera->setCameraPosition(DEFAULT_CAMERA_POSITION);
 	}
 
 	Scene::~Scene() {
 		for (auto child : m_Children) {
 			delete child;
 		}
-	}
-
-	void Scene::init() {
-		auto winWidth = Window::getCurrentWindow().getWidth();
-		auto winHeight = Window::getCurrentWindow().getHeight();
-
-		m_Camera->init(winWidth, winHeight);
-		
-		m_Renderer->init();
-		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
-		initChildren();
-	}
-
-	void Scene::update() {
-		m_Camera->update();
-		if (m_NeedsUpdate) {
-			updatePosition();
-			forceUpdateChildren();
-		}
-		else
-			updateChildren();
+		delete m_Camera;
 	}
 
 	void Scene::sortChildren() {
-		std::sort(m_Children.begin(), m_Children.end(), sortingPredicate);
+		std::sort(m_Children.begin(), m_Children.end(), SORT_PREDICATE);
 	}
 
-	void Scene::draw(Renderer2D* renderer) {}
 
 	void Scene::present() {
 		if (m_NeedsSorting) {
@@ -59,7 +38,8 @@ namespace prx {
 		}
 
 		m_Renderer->begin();
-		drawChildren(m_Renderer);
+		for (auto child : m_Children)
+			child->draw(m_Renderer);
 		m_Renderer->end();
 		m_Renderer->flush();
 	}
@@ -78,6 +58,18 @@ namespace prx {
 		m_CameraMoved = true;
 	}
 
+	void Scene::initInternal() {
+		auto winWidth = Window::getCurrentWindow().getWidth();
+		auto winHeight = Window::getCurrentWindow().getHeight();
 
+		m_Camera->init(winWidth, winHeight);
+
+		m_Renderer->init();
+		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+	}
+
+	void Scene::updateInternal() {
+		m_Camera->update();
+	}
 }
 

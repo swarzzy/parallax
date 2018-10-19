@@ -7,8 +7,8 @@ namespace prx {
 		: Node(parent, width, height),
 		  m_Sprite(new Sprite(width, height, color))
 	{
-		m_Position.x = x;
-		m_Position.y = y;
+		m_TransformComponent.setPosition(x, y);
+		m_TransformComponent.setSize(width, height);
 	}
 
 	SpriteNode::SpriteNode(float x, float y, float width, float height, 
@@ -16,37 +16,32 @@ namespace prx {
 		: Node(parent, width, height),
 		m_Sprite(new Sprite(width, height, texture))
 	{
-		m_Position.x = x;
-		m_Position.y = y;
+		m_TransformComponent.setPosition(x, y);
+		m_TransformComponent.setSize(width, height);
+
 	}
 
 	SpriteNode::SpriteNode(float width, float height, 
 						   unsigned color, Node* parent)
 		: Node(parent, width, height),
-		m_Sprite(new Sprite(width, height, color))
-	{}
+		m_Sprite(new Sprite(width, height, color)) 
+	{
+		m_TransformComponent.setSize(width, height);
+	}
 
 	SpriteNode::SpriteNode(float width, float height, 
 						   TextureBase* texture, Node* parent)
 		: Node(parent, width, height),
-		m_Sprite(new Sprite(width, height, texture))
-	{}
+		m_Sprite(new Sprite(width, height, texture)) 
+	{
+		m_TransformComponent.setSize(width, height);
+	}
 
 	SpriteNode::~SpriteNode() {
 		delete m_Sprite;
 	}
 
-	void SpriteNode::update() {
-		if (m_NeedsUpdate) {
-			updatePosition();
-			forceUpdateChildren();
-		}
-		else
-			updateChildren();
-	}
-
-	void SpriteNode::draw(Renderer2D* renderer) {
-		m_Sprite->submit(renderer, m_WorldMat * m_AnchorMat, m_Depth);
-		drawChildren(renderer);
+	void SpriteNode::drawInternal(Renderer2D* renderer) {
+		m_Sprite->submit(renderer, m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
 	}
 }

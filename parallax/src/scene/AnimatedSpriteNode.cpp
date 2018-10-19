@@ -7,31 +7,24 @@ namespace prx {
 		: Node(parent, width, height),
 		  m_AnimatedSprite(new AnimatedSprite(width, height, texture, animationID)) 
 	{
-		m_Position.x = x;
-		m_Position.y = y;
+		m_TransformComponent.setPosition(x, y);
+		m_TransformComponent.setSize(width, height);
+
 	}
 
 	AnimatedSpriteNode::AnimatedSpriteNode(float width, float height, 
 											SpriteSheet* texture, unsigned animationID,	Node* parent) 
 		: Node(parent ,width, height),
-		  m_AnimatedSprite(new AnimatedSprite(width, height, texture, animationID))
-	{}
+		  m_AnimatedSprite(new AnimatedSprite(width, height, texture, animationID)) 
+	{
+		m_TransformComponent.setSize(width, height);
+	}
 
 	AnimatedSpriteNode::~AnimatedSpriteNode() {
 		
 	}
 
-	void AnimatedSpriteNode::update() {
-		if (m_NeedsUpdate) {
-			updatePosition();
-			forceUpdateChildren();
-		}
-		else
-			updateChildren();
-	}
-
-	void AnimatedSpriteNode::draw(Renderer2D* renderer) {
-		m_AnimatedSprite->submit(renderer, m_WorldMat * m_AnchorMat, m_Depth);
-		drawChildren(renderer);
+	void AnimatedSpriteNode::drawInternal(Renderer2D* renderer) {
+		m_AnimatedSprite->submit(renderer, m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
 	}
 }

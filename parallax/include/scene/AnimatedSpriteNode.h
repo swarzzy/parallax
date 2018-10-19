@@ -24,14 +24,14 @@ namespace prx {
 
 		~AnimatedSpriteNode();
 
-		void update() override;
-		void draw(Renderer2D* renderer) override;
-
 		inline void reflect(bool reflect) noexcept;
 
 		inline void loopAnimation(unsigned int ID) noexcept;
 		inline void playAnimation(unsigned int ID) noexcept;
 		inline void stopAnimation() noexcept;
+
+	private:
+		void drawInternal(Renderer2D* renderer) override;
 
 	public:
 		AnimatedSpriteNode(const AnimatedSpriteNode& other) = delete;

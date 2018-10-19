@@ -32,16 +32,15 @@ void Game::init() {
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
 
 	m_Scene = new Scene(m_Renderer);
-	m_Scene->init();
 	m_Layer = new Layer(0, m_Scene);
 	m_UILayer = new Layer(1, m_Scene);
-	m_Layer->init();
-	m_UILayer->init();
-	m_Background = new SpriteNode(0, 0, 850, 850, background, m_Layer);
+	//m_Scene->init();
+	auto t = new Layer(23,m_Layer);
+	m_Background = new SpriteNode(0, 0, 1850, 1850, background, t);
 	m_Background->setAnchorPoint(0.5, 0.5);
-	m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , m_Layer);
+	m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , t);
 	m_Sun->setAnchorPoint(0.5, 0.5);
-	m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, m_Layer);
+	m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, t);
 	m_BluePlanet->setAnchorPoint(0.5, 0.5);
 	m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
 	m_BrownPlanet->setAnchorPoint(0.5, 0.5);
@@ -57,9 +56,17 @@ void Game::init() {
 	int aID = sheet->addAnimation("1", mask);
 	int aID2 = sheet->addAnimation("2", mask2);
 	int aID3 = sheet->addAnimation("3", mask3);
-	m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
-	m_Hero->loopAnimation(aID);
-	m_Hero->setAnchorPoint(0.5, 0.5);
+	//m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
+	//m_Hero->loopAnimation(aID);
+	//m_Hero->setAnchorPoint(0.5, 0.5);
+	m_Scene->init();
+	std::cout << m_Scene->getID() << std::endl; //1
+	std::cout << m_Layer->getID() << std::endl; //2
+	std::cout << m_UILayer->getID() << std::endl;//3
+	std::cout << m_Background->getID() << std::endl;//4
+	std::cout << m_Sun->getID() << std::endl;//5
+	std::cout << m_BluePlanet->getID() << std::endl;//6
+	std::cout << m_BrownPlanet->getID() << std::endl;//7
 }
 
 void Game::tick() {
@@ -82,9 +89,22 @@ void Game::update() {
 		m_CameraPosition.x -= 3.0;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_D))
 		m_CameraPosition.x += 3.0;
+	static int depth = 0;
+
+	if (m_Window->isKeyPressed(PARALLAX_KEY_T)) {
+		depth++;
+		m_Layer->setDepth(depth);
+	}
+	if (m_Window->isKeyPressed(PARALLAX_KEY_G)) {
+		depth--;
+		m_Layer->setDepth(depth);
+	}
+
+	
 
 	m_Scene->setCameraPosition(m_CameraPosition);
 	m_Scene->update();
+	std::cout << "update()" << std::endl;
 }
 	
 void Game::render() {

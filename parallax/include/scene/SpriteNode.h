@@ -29,10 +29,11 @@ namespace prx {
 		
 		~SpriteNode();
 
-		void update() override;
-		void draw(Renderer2D* renderer) override;
-
 		inline const Sprite& getSprite() const noexcept;
+
+	private:
+
+		void drawInternal(Renderer2D* renderer) override;
 
 	public:
 		SpriteNode(const SpriteNode& other) = delete;

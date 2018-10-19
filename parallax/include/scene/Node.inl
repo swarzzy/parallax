@@ -1,30 +1,99 @@
 #include "../utils/log/Log.h"
+#include "Node.h"
 
 namespace prx {
-	
+	inline int Node::defaultNodeDepth() noexcept{
+		return DEFAULT_NODE_DEPTH;
+	}
+
+	inline const hpm::vec2 Node::defaultAnchorPoint() noexcept {
+		return DEFAULT_ANCHOR_POINT;
+	}
+
 	Node::Node(Node* parent, float width, float height)
-		: m_ID(++globalNodeCounter),
+		: m_ID(++GLOBAL_NODE_COUNTER),
 		  m_Parent(parent),
-		  m_LocalMat(hpm::mat4::identity()),
-		  m_WorldMat(hpm::mat4::identity()),
-		  m_AnchorMat(hpm::mat3::identity()),
-		  m_Depth(0),
-		  m_NeedsUpdate(true),
-		  m_Position(hpm::vec2(0.0f)),
-		  m_Scale(1.0f),
-		  m_RotationAngle(0.0f),
-		  m_RotationRadius(0.0f),
-		  m_Size(width, height),
-		  m_AnchorPoint(defaultAnchorPoint),
-		  m_NeedsLocalMatUpdate(true),
-		  m_NeedsAnchorMatUpdate(true)
+		  m_Depth(DEFAULT_NODE_DEPTH),
+		  m_TransformUpdate(true),
+		  m_DepthUpdate(true),
+		  m_Initialized(false)
 	{
 		if (parent != nullptr) {
 			parent->addChild(this);
 			m_Depth = parent->m_Depth;
-		} else {
-			m_Depth = defaultNodeDepth;
 		}
+	}
+
+	inline void Node::init() {
+		if (!m_Initialized) {
+		m_Initialized = true;
+
+		m_TransformComponent.init();
+
+		initInternal();
+
+		for (auto child : m_Children)
+			child->init();
+		// NOTE: Should it even be here
+		update();
+		}
+	}
+
+	inline void Node::update() {
+#ifdef PARALLAX_DEBUG
+		if (!m_Initialized)
+			PRX_FATAL("NODE: Node is not initialized (Node ID: ", m_ID," )");
+#endif
+		if (m_DepthUpdate) {
+			if (m_Parent != nullptr)
+				m_Depth = m_Parent->m_Depth;
+			PRX_INFO("depth uppdate ", m_ID);
+		}
+
+		if (m_TransformUpdate) {
+			if (m_Parent != nullptr)
+				m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
+			m_TransformComponent.update();			
+			PRX_INFO("transform uppdate ", m_ID);
+		}
+
+		updateInternal();
+
+		if (m_DepthUpdate && m_TransformUpdate)
+			for (auto child : m_Children) {
+				child->depthUpdateQuery();
+				child->transformUpdateQuery();
+				child->update();
+			}
+		else if (m_DepthUpdate)
+			for (auto child : m_Children) {
+				child->depthUpdateQuery();
+				child->update();
+			}
+		else if (m_TransformUpdate)
+			for (auto child : m_Children) {
+				child->transformUpdateQuery();
+				child->update();
+			}
+		else {
+			for (auto child : m_Children) {
+				child->update();
+			}
+		}
+
+		m_DepthUpdate = false;
+		m_TransformUpdate = false;
+	}
+
+	inline void Node::draw(Renderer2D * renderer) {
+#ifdef PARALLAX_DEBUG
+		if (!m_Initialized)
+			PRX_FATAL("(Node): Node is not initialized (Node ID: )", m_ID);
+#endif
+		drawInternal(renderer);
+
+		for (auto child : m_Children)
+			child->draw(renderer);
 	}
 
 	inline void Node::addChild(Node* child) {
@@ -39,8 +108,8 @@ namespace prx {
 		m_Depth = parent->m_Depth;
 	}
 
-	inline void Node::makeNeedsUpdate() {
-		m_NeedsUpdate = true;
+	inline bool Node::isInitialized() const noexcept {
+		return m_Initialized;
 	}
 
 	inline constexpr unsigned int Node::getID() const noexcept {
@@ -51,114 +120,52 @@ namespace prx {
 		return m_Parent;
 	}
 
-	inline const hpm::mat3& Node::getTransformMat() const noexcept {
-		return m_LocalMat;
+	inline const hpm::mat3& Node::getLocalMat() const noexcept {
+		return m_TransformComponent.getLocalMat();
 	}
 
 	inline const hpm::mat3& Node::getWorldMat() const noexcept {
-		return m_WorldMat;
+		return m_TransformComponent.getWorldMat();
 	}
 
-	/*inline void Node::setTransform(const hpm::mat3& transform) noexcept {
-		m_LocalMat = transform;
-		m_NeedsUpdate = true;
-	}*/
-
 	inline void Node::setPosition(const hpm::vec2& position) noexcept {
-		m_Position = position;
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
+		m_TransformComponent.setPosition(position);
+		m_TransformUpdate = true;
 	}
 
 	inline void Node::setPosition(float x, float y) noexcept {
-		m_Position = hpm::vec2(x, y);
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
+		m_TransformComponent.setPosition(x, y);
+		m_TransformUpdate = true;
 	}
 
 	inline void Node::setScale(float scale) noexcept {
-		m_Scale = scale;
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
-	}
-
-	inline void Node::setRotation(float angle) noexcept {
-		m_RotationAngle = angle;
-		m_RotationRadius = 0.0f;
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
+		m_TransformComponent.setScale(scale);
+		m_TransformUpdate = true;
 	}
 
 	inline void Node::setRotation(float angle, float radius) noexcept {
-		m_RotationAngle = angle;
-		m_RotationRadius = radius;
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
+		m_TransformComponent.setRotation(angle, radius);
+		m_TransformUpdate = true;
 	}
 
 	inline void Node::setAnchorPoint(hpm::vec2 anchorPoint) noexcept {
-		m_AnchorPoint = anchorPoint;
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
+		m_TransformComponent.setAnchorPoint(anchorPoint);
+		m_TransformUpdate = true;
 	}
 
 	inline void Node::setAnchorPoint(float x, float y) noexcept {
-		m_AnchorPoint = hpm::vec2(x ,y);
-		m_NeedsUpdate = true;
-		m_NeedsLocalMatUpdate = true;
-		m_NeedsAnchorMatUpdate = true;
+		m_TransformComponent.setAnchorPoint(x, y);
+		m_TransformUpdate = true;
 	}
 
-	inline void Node::initChildren() {
-		for (auto child : m_Children) {
-			child->init();
-			child->initChildren();
-		}
+	inline void Node::depthUpdateQuery() noexcept {
+		m_DepthUpdate = true;
 	}
 
-	inline void Node::updatePosition() {
-		if (m_NeedsAnchorMatUpdate) {
-			m_AnchorMat = hpm::mat3::translation(-(m_Size.x * m_AnchorPoint.x), -(m_Size.y * m_AnchorPoint.y));
-			m_NeedsAnchorMatUpdate = false;
-		}
-		if (m_NeedsLocalMatUpdate) {
-			m_LocalMat = hpm::mat3::translation(m_Position)
-				* hpm::mat3::rotation(m_RotationAngle)
-				* hpm::mat3::translation(m_RotationRadius, m_RotationRadius)
-				* hpm::mat3::scale(hpm::vec2(m_Scale));
-			m_NeedsLocalMatUpdate = false;
-		}
-		if (m_Parent != nullptr) {
-			m_WorldMat = m_Parent->getWorldMat() * m_LocalMat;
-			m_Depth = m_Parent->m_Depth;
-		}
-		else {
-			m_WorldMat = m_WorldMat * m_LocalMat;
-		}
-		m_NeedsUpdate = false;
+	inline void Node::transformUpdateQuery() noexcept {
+		m_TransformUpdate = true;
 	}
 
-	inline void Node::updateChildren() {
-		for (auto child : m_Children) {
-			child->update();
-			child->updateChildren();
-		}
-	}
-
-	inline void Node::forceUpdateChildren() {
-		for (auto child : m_Children) {
-			child->makeNeedsUpdate();
-			child->update();
-			child->updateChildren();
-		}
-	}
-
-	inline void Node::drawChildren(Renderer2D* renderer) {
-		for (auto child : m_Children) {
-			child->draw(renderer);
-		}
-		
-	}
 	inline int Node::getDepth() const noexcept {
 		return m_Depth;
 	}

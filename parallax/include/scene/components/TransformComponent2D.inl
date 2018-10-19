@@ -17,6 +17,10 @@ namespace prx {
 		return m_Position;
 	}
 
+	inline const hpm::vec2 & TransformComponent2D::getSize() const noexcept {
+		return m_Size;
+	}
+
 	inline const hpm::vec2& TransformComponent2D::getAnchorPoint() const noexcept {
 		return m_AnchorPoint;
 	}
@@ -50,6 +54,18 @@ namespace prx {
 	inline void TransformComponent2D::setPosition(const hpm::vec2 & position) noexcept {
 		m_Position = position;
 		m_LocalUpdate = true;
+		m_WorldUpdate = true;
+	}
+
+	inline void TransformComponent2D::setSize(const hpm::vec2 & size) noexcept {
+		m_Size = size;
+		m_AnchorUpdate = true;
+		m_WorldUpdate = true;
+	}
+
+	inline void TransformComponent2D::setSize(float width, float height) noexcept {
+		m_Size = hpm::vec2(width, height);
+		m_AnchorUpdate = true;
 		m_WorldUpdate = true;
 	}
 

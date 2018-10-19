@@ -17,16 +17,16 @@ namespace prx {
 		m_ViewSpaceHeight = viewSpaceHeight;
 		m_ProjectionMatrix = hpm::mat4::ortho(m_Position.x, m_ViewSpaceWidth + m_Position.x,
 											  m_ViewSpaceHeight + m_Position.y, m_Position.y,
-											  static_cast<float>(Layer::minDepthValue), 
-											  static_cast<float>(Layer::maxDepthValue));
+											  static_cast<float>(Layer::maxDepthValue()), 
+											  static_cast<float>(Layer::minDepthValue()));
 	}
 
 	void Camera2D::update() {
 		if (m_NeedsUpdate) {
 			m_ProjectionMatrix = hpm::mat4::ortho(m_Position.x, m_ViewSpaceWidth + m_Position.x, 
 												  m_ViewSpaceHeight + m_Position.y, m_Position.y, 
-												  static_cast<float>(Layer::minDepthValue),
-												  static_cast<float>(Layer::maxDepthValue));
+												  static_cast<float>(Layer::maxDepthValue()),
+												  static_cast<float>(Layer::minDepthValue()));
 		}
 	}
 }

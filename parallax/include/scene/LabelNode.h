@@ -15,10 +15,10 @@ namespace prx {
 
 		~LabelNode();
 
-		void update() override;
-		void draw(Renderer2D* renderer) override;
-
 		inline Label& getLabel() const noexcept;
+
+	private:
+		void drawInternal(Renderer2D* renderer) override;
 
 	public:
 		LabelNode(const LabelNode& other) = delete;

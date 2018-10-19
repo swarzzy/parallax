@@ -3,17 +3,17 @@
 namespace prx {
 	TransformComponent2D::TransformComponent2D()
 		: m_LocalMat(hpm::mat3::identity()),
-		 m_WorldMat(hpm::mat3::identity()),
-		 m_AnchorMat(hpm::mat3::identity()),
-		 m_Position(0.0f),
-		 m_Scale(0.0f),
-		 m_RotationAngle(0.0f),
-		 m_RotationRadius(0.0f),
-		 m_Size(0.0f),
-		 m_AnchorPoint(0.0f),
-		 m_LocalUpdate(true),
-		 m_WorldUpdate(true),
-		 m_AnchorUpdate(true)
+		m_WorldMat(hpm::mat3::identity()),
+		m_AnchorMat(hpm::mat3::identity()),
+		m_Position(0.0f),
+		m_Scale(1.0f),
+		m_RotationAngle(0.0f),
+		m_RotationRadius(0.0f),
+		m_Size(0.0f),
+		m_AnchorPoint(0.0f),
+		m_LocalUpdate(true),
+		m_WorldUpdate(true),
+		m_AnchorUpdate(true)
 	{}
 
 	TransformComponent2D::~TransformComponent2D() {}
@@ -39,4 +39,5 @@ namespace prx {
 			m_WorldUpdate = false;
 		}
 	}
+}
 

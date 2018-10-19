@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <hypermath.h>
+#include "../Common.h"
+#include "../scene/components/TransformComponent2D.h"
 
 namespace prx {
 	
@@ -15,86 +17,65 @@ namespace prx {
  *	anchor point only applied to a renderable nodes
  */
 	protected:
-		inline static unsigned int	globalNodeCounter = 0;
-		
-		inline static int			defaultNodeDepth = 0;
-		inline static hpm::vec2		defaultAnchorPoint = hpm::vec2(0.0f);
+		inline static unsigned int		GLOBAL_NODE_COUNTER = 0;
+		inline static const int			DEFAULT_NODE_DEPTH = 0;
+		inline static const hpm::vec2	DEFAULT_ANCHOR_POINT = hpm::vec2(0.0f);
 
-	protected:	
-		unsigned int		m_ID;
-		Node*				m_Parent;
-		std::vector<Node*>	m_Children;
+	public:
+		static inline int defaultNodeDepth() noexcept;
+		static inline const hpm::vec2 defaultAnchorPoint() noexcept;
 
-		hpm::mat3			m_LocalMat;
-		hpm::mat3			m_WorldMat;
-		hpm::mat3			m_AnchorMat;
-		int					m_Depth;
-		bool				m_NeedsUpdate;
+	protected:
 
-		hpm::vec2			m_Position;
-		float				m_Scale;
-		float				m_RotationAngle;
-		float				m_RotationRadius;
-		hpm::vec2			m_Size;
-		hpm::vec2			m_AnchorPoint;
+		PRX_DISALLOW_COPY_AND_MOVE(Node)
 
-		// Internal flags. Used in updatePosition method
-		bool				m_NeedsLocalMatUpdate;
-		bool				m_NeedsAnchorMatUpdate;
+		unsigned int		 m_ID;
+		Node*				 m_Parent;
+		std::vector<Node*>	 m_Children;
+		TransformComponent2D m_TransformComponent;
+		int					 m_Depth;
+		bool				 m_TransformUpdate;
+		bool				 m_DepthUpdate;
+		bool				 m_Initialized;
 	
 		inline Node(Node* parent = nullptr, float width = 0, float height = 0);
 	 
 	public:
 		virtual ~Node() = default;
 
-		/*
-		* These methods must call appropriate methods 
-		* for children after all actions have been completed.
-		*/
-		virtual void init() {};
-		virtual void update() = 0;
-		virtual void draw(Renderer2D* renderer) {}
+		inline void init();
+		virtual inline void update();
+		inline void draw(Renderer2D* renderer);
+		// TODO: Destroy method
+		inline void destroy() {};
 	
-		
 		virtual inline void setParent(Node* parent);
+
+		inline bool isInitialized() const noexcept;
 	
 		inline constexpr unsigned int getID() const noexcept;
 		inline Node* getParent() const noexcept;
-		inline const hpm::mat3& getTransformMat() const noexcept;
-		inline const hpm::mat3& getWorldMat() const noexcept;
 		inline int getDepth() const noexcept;
+		inline const hpm::mat3& getLocalMat() const noexcept;
+		inline const hpm::mat3& getWorldMat() const noexcept;
 	
-		/*inline void setTransform(const hpm::mat3& transform) noexcept;*/
 		inline void setPosition(const hpm::vec2& position) noexcept;
 		inline void setPosition(float x, float y) noexcept;
 		inline void setScale(float scale) noexcept;
-		inline void setRotation(float angle) noexcept;
-		inline void setRotation(float angle, float radius) noexcept;
+		inline void setRotation(float angle, float radius = 0) noexcept;
 		inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
 		inline void setAnchorPoint(float x, float y) noexcept;
 
-		inline void makeNeedsUpdate();
+		inline void depthUpdateQuery() noexcept;
+		inline void transformUpdateQuery() noexcept;
 		
 	protected:
+		// These methods will contain the user code in derived classes
+		virtual void initInternal() {};
+		virtual void updateInternal() {};
+		virtual void drawInternal(Renderer2D* renderer) {};
+
 		inline void addChild(Node* child);
-
-		// These methods must be called in init, draw and update overridden methods
-		inline void initChildren();
-
-		inline void updatePosition();
-		inline void updateChildren();
-		// This method used when parent node was updated to recalculate all children positions
-		inline void forceUpdateChildren();
-
-		inline void drawChildren(Renderer2D* renderer);
-
-	public:
-		Node(const Node& other) = delete;
-		Node(const Node&& other) = delete;
-		Node(Node&& other) = delete;
-		Node& operator=(const Node& other) = delete;
-		Node& operator=(const Node&& other) = delete;
-		Node& operator=(Node&& other) = delete;
 	 };
  }
 #include "Node.inl"

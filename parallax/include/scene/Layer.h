@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Common.h"
 #include "Node.h"
 
 namespace prx {
@@ -7,30 +8,25 @@ namespace prx {
 	class Scene;
 	
 	class Layer : public Node {
+	private:
+		PRX_DISALLOW_COPY_AND_MOVE(Layer)
+
+		inline static int MIN_DEPTH_VALUE = -10;
+		inline static int MAX_DEPTH_VALUE =  10;
+
 	public:
-		inline static int minDepthValue = -10;
-		inline static int maxDepthValue =  10;
+		static int minDepthValue() noexcept;
+		static int maxDepthValue() noexcept;
 
 	private:
 		Scene*	m_ParentScene;
-		bool	m_DepthUpdated;
 
 	public:
 		explicit Layer(int depth, Node* parent = nullptr);
-		~Layer() {};
+		virtual ~Layer() {};
 
-		void init() override;
 		void update() override;
-		void draw(Renderer2D* renderer) override;
 
 		void setDepth(int depth);
-
-	public:
-		Layer(const Layer& other) = delete;
-		Layer(const Layer&& other) = delete;
-		Layer(Layer&& other) = delete;
-		Layer& operator=(const Layer& other) = delete;
-		Layer& operator=(const Layer&& other) = delete;
-		Layer& operator=(Layer&& other) = delete;
 	};
 }

@@ -34,6 +34,7 @@ namespace prx {
 		inline const hpm::mat3& getAnchorMat() const noexcept;
 
 		inline const hpm::vec2& getPosition() const noexcept;
+		inline const hpm::vec2& getSize() const noexcept;
 		inline const hpm::vec2& getAnchorPoint() const noexcept;
 		inline float getScale() const noexcept;
 		inline float getRotationAngle() const noexcept;
@@ -45,6 +46,8 @@ namespace prx {
 		inline void setLocalMat(const hpm::mat3& matrix) noexcept;
 
 		inline void setPosition(const hpm::vec2& position) noexcept;
+		inline void setSize(const hpm::vec2& size) noexcept;
+		inline void setSize(float width, float height) noexcept;
 		inline void setPosition(float x, float y) noexcept;
 		inline void setScale(float scale) noexcept;
 		inline void setRotation(float angle) noexcept;

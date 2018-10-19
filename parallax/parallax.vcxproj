@@ -57,6 +57,7 @@
   <ItemGroup>
     <ClInclude Include="include\audio\Sound.h" />
     <ClInclude Include="include\camera\Camera2D.h" />
+    <ClInclude Include="include\Common.h" />
     <ClInclude Include="include\event\UI\ButtonListener.h" />
     <ClInclude Include="include\event\UI\Listener.h" />
     <ClInclude Include="include\event\UI\OnClickListener.h" />
