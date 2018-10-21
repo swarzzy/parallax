@@ -1,4 +1,5 @@
 #include <scene/components/TransformComponent2D.h>
+#include "utils/log/Log.h"
 
 namespace prx {
 	TransformComponent2D::TransformComponent2D()
@@ -13,18 +14,27 @@ namespace prx {
 		m_AnchorPoint(0.0f),
 		m_LocalUpdate(true),
 		m_WorldUpdate(true),
-		m_AnchorUpdate(true)
+		m_AnchorUpdate(true),
+		m_Initialized(false)
 	{}
 
 	TransformComponent2D::~TransformComponent2D() {}
 
 	void TransformComponent2D::init() {
-		update();
+		if (!m_Initialized) {
+			m_Initialized = true;
+			update();
+		}
 	}
 
 	void TransformComponent2D::update() {
+#ifdef PARALLAX_DEBUG
+		if (!m_Initialized)
+			PRX_WARN("TRANSFORM COMPONENT: Transform component used without being initialized");
+#endif
 		if (m_AnchorUpdate) {
-			m_AnchorMat = hpm::mat3::translation(-(m_Size.x * m_AnchorPoint.x), -(m_Size.y * m_AnchorPoint.y));
+			m_AnchorMat = hpm::mat3::translation(-(m_Size.x * m_Scale * m_AnchorPoint.x), 
+												 -(m_Size.y * m_Scale *  m_AnchorPoint.y));
 			m_AnchorUpdate = false;
 		}
 		if (m_LocalUpdate) {

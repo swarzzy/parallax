@@ -12,8 +12,6 @@
  --- disabling anchor points (usefull for non renderable nodes)
 
  scenes:
- --- mat2
- --- depth in renderer
  --- group node
  --- culling
  --- frozen nodes

@@ -1,18 +1,1 @@
 [INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
-[INFO ] depth uppdate 2
-[INFO ] transform uppdate 2
-[INFO ] depth uppdate 3
-[INFO ] transform uppdate 3
-[INFO ] depth uppdate 1
-[INFO ] transform uppdate 1
-[INFO ] depth uppdate 2
-[INFO ] transform uppdate 2
-[INFO ] depth uppdate 3
-[INFO ] transform uppdate 3
-[FATAL] *********************************
-       	 FATAL ERROR!
-        *********************************
-        (Node): Node is not initialized (Node ID: )4
--> FROM: void __cdecl prx::Node::draw(class prx::Renderer2D *)
--> FILE: node.inl
--> LINE: 91

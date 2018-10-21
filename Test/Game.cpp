@@ -17,6 +17,7 @@
 #include "../parallax/include/scene/LabelNode.h"
 #include "../parallax/include/renderer/ForwardRenderer2D.h"
 #include <complex>
+#include "../parallax/include/scene/Group.h"
 
 
 void Game::init() {
@@ -31,42 +32,64 @@ void Game::init() {
 	auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
 
-	m_Scene = new Scene(m_Renderer);
+	m_Scene = new Scene("scene", m_Renderer);
 	m_Layer = new Layer(0, m_Scene);
-	m_UILayer = new Layer(1, m_Scene);
-	//m_Scene->init();
-	auto t = new Layer(23,m_Layer);
-	m_Background = new SpriteNode(0, 0, 1850, 1850, background, t);
-	m_Background->setAnchorPoint(0.5, 0.5);
-	m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , t);
-	m_Sun->setAnchorPoint(0.5, 0.5);
-	m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, t);
-	m_BluePlanet->setAnchorPoint(0.5, 0.5);
-	m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
-	m_BrownPlanet->setAnchorPoint(0.5, 0.5);
+
+	std::knuth_b rand;
+	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
+	m_Group = new Group(m_Layer);
+	auto g = new Group(m_Group);
+	//m_Group->setPosition(100, 100);
+	float step = 0.1;
+	int counter = 0;
+	for (float x = 0; x < 600; x += 3) {// 3, 1.0
+		for (float y = 0; y < 600; y += 3) {
+			unsigned int color = 255 << 24 | colorDistrib(rand) << 16 | colorDistrib(rand) << 8 | colorDistrib(rand);
+			auto t = new SpriteNode(x, y, 1, 1, color, g);
+			step += 0.0001f;
+			counter++;
+		}
+	}
 	
+	std::cout << m_Layer->getDepth() << std::endl;
+	std::cout << m_Layer->getLocalMat().toString() << std::endl;
+	std::cout << m_Layer->getWorldMat().toString() << std::endl;
+	m_UILayer = new Layer(1, m_Scene);
+	////m_Scene->init();
+	//auto t = new Layer(23,m_Layer);
+	//m_Background = new SpriteNode(0, 0, 1850, 1850, background, t);
+	//m_Background->setAnchorPoint(0.5, 0.5);
+	//m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , t);
+	//m_Sun->setAnchorPoint(0.5, 0.5);
+	//m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, t);
+	//m_BluePlanet->setAnchorPoint(0.5, 0.5);
+	//m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
+	//m_BrownPlanet->setAnchorPoint(0.5, 0.5);
+	//
 	m_FPSCounter = new prx::LabelNode("", 0, 577, 0xffffffff, m_UILayer);
 	m_UPSCounter = new prx::LabelNode("", 0, 555, 0xffffffff, m_UILayer);
-	m_Sound->loop();
+	//m_Sound->loop();
 
-	prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
-	std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
-	std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
-	std::vector<unsigned int> mask3 = { 24, 25, 26, 27, 28, 29, 30 };
-	int aID = sheet->addAnimation("1", mask);
-	int aID2 = sheet->addAnimation("2", mask2);
-	int aID3 = sheet->addAnimation("3", mask3);
-	//m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
-	//m_Hero->loopAnimation(aID);
-	//m_Hero->setAnchorPoint(0.5, 0.5);
+	//prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
+	//std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
+	//std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
+	//std::vector<unsigned int> mask3 = { 24, 25, 26, 27, 28, 29, 30 };
+	//int aID = sheet->addAnimation("1", mask);
+	//int aID2 = sheet->addAnimation("2", mask2);
+	//int aID3 = sheet->addAnimation("3", mask3);
+	////m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
+	////m_Hero->loopAnimation(aID);
+	////m_Hero->setAnchorPoint(0.5, 0.5);
+	//m_Scene->init();
+	//std::cout << m_Scene->getID() << std::endl; //1
+	//std::cout << m_Layer->getID() << std::endl; //2
+	//std::cout << m_UILayer->getID() << std::endl;//3
+	//std::cout << m_Background->getID() << std::endl;//4
+	//std::cout << m_Sun->getID() << std::endl;//5
+	//std::cout << m_BluePlanet->getID() << std::endl;//6
+	//std::cout << m_BrownPlanet->getID() << std::endl;//7
 	m_Scene->init();
-	std::cout << m_Scene->getID() << std::endl; //1
-	std::cout << m_Layer->getID() << std::endl; //2
-	std::cout << m_UILayer->getID() << std::endl;//3
-	std::cout << m_Background->getID() << std::endl;//4
-	std::cout << m_Sun->getID() << std::endl;//5
-	std::cout << m_BluePlanet->getID() << std::endl;//6
-	std::cout << m_BrownPlanet->getID() << std::endl;//7
+	m_Scene->removeChild(m_UILayer);
 }
 
 void Game::tick() {
@@ -75,38 +98,38 @@ void Game::tick() {
 }
 
 void Game::update() {
-	m_Background->setRotation(getTime() / 80);
+	/*m_Background->setRotation(getTime() / 80);
 	m_Sun->setRotation(-getTime() / 80);
 	m_BluePlanet->setRotation(getTime() / 50, 120);
 	m_BrownPlanet->setRotation(getTime() / 5, 45);
-	m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);
+	m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);*/
 
 	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
-		m_CameraPosition.y += 3.0;
+		m_CameraPosition.y += 0.1;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_S))
-		m_CameraPosition.y -= 3.0;
+		m_CameraPosition.y -= 0.1;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_A))
 		m_CameraPosition.x -= 3.0;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_D))
 		m_CameraPosition.x += 3.0;
 	static int depth = 0;
 
-	if (m_Window->isKeyPressed(PARALLAX_KEY_T)) {
+	//m_Group->setScale(m_CameraPosition.y);
+	/*if (m_Window->isKeyPressed(PARALLAX_KEY_T)) {
 		depth++;
 		m_Layer->setDepth(depth);
 	}
 	if (m_Window->isKeyPressed(PARALLAX_KEY_G)) {
 		depth--;
 		m_Layer->setDepth(depth);
-	}
+	}*/
 
 	
 
-	m_Scene->setCameraPosition(m_CameraPosition);
+	//m_Scene->setCameraPosition(m_CameraPosition);
 	m_Scene->update();
-	std::cout << "update()" << std::endl;
 }
 	
 void Game::render() {
-	m_Scene->present();
+	m_Scene->draw();
 }

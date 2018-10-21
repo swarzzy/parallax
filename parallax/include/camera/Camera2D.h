@@ -18,6 +18,8 @@ namespace prx {
 		Camera2D();
 		~Camera2D();
 
+		inline static const hpm::vec2 defaultViewSpaceSize() noexcept;
+
 		void init(float viewSpaceWidth = defaultViewSpaceWidth,
 				  float viewSpaceHeight = defaultViewSpaceHeight);
 
@@ -25,8 +27,8 @@ namespace prx {
 
 		inline const hpm::mat4& getProjectionMatrix() const noexcept;
 
-		inline const unsigned getViewSpaceWidth() const noexcept;
-		inline const unsigned getViewSpaceHeight() const noexcept;
+		inline const hpm::vec2& getViewSpaceSize() const noexcept;
+		inline const hpm::vec2& getCameraPosition() const noexcept;
 
 		inline void setCameraPosition(const hpm::vec2 position) noexcept;
 		inline void setCameraPosition(float x, float y) noexcept;
@@ -43,17 +45,24 @@ namespace prx {
 		Camera2D& operator=(Camera2D&& other) = delete;
 	};
 
+	inline const hpm::vec2 Camera2D::defaultViewSpaceSize() noexcept {
+		return hpm::vec2(defaultViewSpaceWidth, defaultViewSpaceHeight);
+	}
+
+
 	inline const hpm::mat4& Camera2D::getProjectionMatrix() const noexcept {
 		return m_ProjectionMatrix;
 	}
 	
-	inline const unsigned Camera2D::getViewSpaceWidth() const noexcept {
-		return m_ViewSpaceWidth;
+	inline const hpm::vec2& Camera2D::getViewSpaceSize() const noexcept {
+		return hpm::vec2(m_ViewSpaceWidth, m_ViewSpaceHeight);
 	}
 
-	inline const unsigned Camera2D::getViewSpaceHeight() const noexcept {
-		return m_ViewSpaceHeight;
+
+	inline const hpm::vec2& Camera2D::getCameraPosition() const noexcept {
+		return m_Position;
 	}
+
 
 	inline void Camera2D::setCameraPosition(const hpm::vec2 position) noexcept {
 		m_Position = position;
