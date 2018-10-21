@@ -2,31 +2,58 @@
 #include <window/Window.h>
 #include <renderer/Renderer2D.h>
 #include <camera/Camera2D.h>
+#include <scene/Layer.h>
 
 namespace prx {
-	Scene::Scene(Renderer2D* renderer)
-		: Node(nullptr),
-		  m_Renderer(renderer),
-		  m_Camera(new Camera2D()),
-		  m_CameraMoved(false),
-		  m_NeedsSorting(false) 
+
+	const std::function<bool(Layer*, Layer*)> Scene::SORT_PREDICATE =
+		[](Layer* a, Layer* b) {return a->getDepth() < b->getDepth(); };
+
+	Scene::Scene(std::string_view name, Renderer2D* renderer)
+		: m_ID(++GLOBAL_SCENE_COUNTER),
+		m_Name(name),
+		m_Renderer(renderer),
+		m_Camera(new Camera2D()),
+		m_CameraMoved(false),
+		m_NeedsSorting(false)
 	{
 		m_Camera->setCameraPosition(DEFAULT_CAMERA_POSITION);
 	}
 
 	Scene::~Scene() {
-		for (auto child : m_Children) {
-			delete child;
+		for (auto layer : m_Layers) {
+			delete layer;
 		}
 		delete m_Camera;
 	}
 
 	void Scene::sortChildren() {
-		std::sort(m_Children.begin(), m_Children.end(), SORT_PREDICATE);
+		std::sort(m_Layers.begin(), m_Layers.end(), SORT_PREDICATE);
 	}
 
+	void Scene::init() {
+		auto winWidth = Window::getCurrentWindow().getWidth();
+		auto winHeight = Window::getCurrentWindow().getHeight();
 
-	void Scene::present() {
+		m_Camera->init(winWidth, winHeight);
+
+		m_Renderer->init();
+		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+
+		for (auto layer : m_Layers)
+			layer->init();
+
+		sortChildren();
+	}
+
+	void Scene::update() {
+		m_Camera->update();
+
+		for (auto layer : m_Layers)
+			layer->update();
+	}
+
+	void Scene::draw() {
 		if (m_NeedsSorting) {
 			sortChildren();
 			m_NeedsSorting = false;
@@ -38,10 +65,15 @@ namespace prx {
 		}
 
 		m_Renderer->begin();
-		for (auto child : m_Children)
-			child->draw(m_Renderer);
+		for (auto layer : m_Layers)
+			layer->draw(m_Renderer);
 		m_Renderer->end();
 		m_Renderer->flush();
+	}
+
+	void Scene::removeChild(Layer* layer) {
+		auto result = std::find(m_Layers.begin(), m_Layers.end(), layer);
+		m_Layers.erase(result);
 	}
 
 	void Scene::sortRequest() noexcept {
@@ -58,18 +90,14 @@ namespace prx {
 		m_CameraMoved = true;
 	}
 
-	void Scene::initInternal() {
-		auto winWidth = Window::getCurrentWindow().getWidth();
-		auto winHeight = Window::getCurrentWindow().getHeight();
-
-		m_Camera->init(winWidth, winHeight);
-
-		m_Renderer->init();
-		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
-	}
-
-	void Scene::updateInternal() {
-		m_Camera->update();
+	void Scene::addChild(Layer* child) {
+		if (child != nullptr) {
+			m_Layers.push_back(child);
+			sortRequest();
+		} else {
+			PRX_ERROR("SCENE: Can`t add new child. Child was nullptr\n-> SCENE ID: ",
+					 m_ID, "\n-> SCENE NAME: ", m_Name);
+		}
 	}
 }
 

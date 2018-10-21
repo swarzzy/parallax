@@ -9,42 +9,49 @@ namespace prx {
 	class Layer;
 	class Camera2D;
 
-	class Scene : public Node {
+	class Scene {
 	private:
 		inline static const hpm::vec2 DEFAULT_CAMERA_POSITION = hpm::vec2(0.0);
-		inline static const std::function<bool(Node*,Node*)> SORT_PREDICATE = 
-			[](Node* a, Node* b){return a->getDepth() < b->getDepth(); };
+		static const std::function<bool(Layer*, Layer*)> SORT_PREDICATE;
+
+		inline static unsigned int GLOBAL_SCENE_COUNTER = 0;
 
 	public:
 		inline static hpm::vec2 defaultCameraPosition() noexcept;
+
+		friend class Layer;
 
 	protected:
 
 		PRX_DISALLOW_COPY_AND_MOVE(Scene)
 
-		Renderer2D* m_Renderer;
-		Camera2D*	m_Camera;
-		bool		m_CameraMoved;
-		bool		m_NeedsSorting;
+		unsigned int		m_ID;
+		std::string			m_Name;
+		std::vector<Layer*> m_Layers;
+		Renderer2D*			m_Renderer;
+		Camera2D*			m_Camera;
+		bool				m_CameraMoved;
+		bool				m_NeedsSorting;
 		
 	public:
-		explicit Scene(Renderer2D* renderer);
+		Scene(std::string_view name, Renderer2D* renderer);
 		~Scene();
 
 		void sortChildren();
-		void present();
+		void init();
+		void update();
+		void draw();
+		void destroy() {};
+
+		void removeChild(Layer* layer);
 		
 		void sortRequest() noexcept;
 
 		void setCameraPosition(hpm::vec2 position) noexcept;
 		void setCameraPosition(float x, float y) noexcept;
 
-	protected:
-		inline void initInternal() override;
-		inline void updateInternal() override;
-
 	private:
-		void setParent(Node* parent) override {};
+		void addChild(Layer* child);
 	};
 
 	inline hpm::vec2 Scene::defaultCameraPosition() noexcept {

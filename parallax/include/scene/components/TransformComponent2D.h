@@ -1,4 +1,5 @@
 #pragma once
+#include "../../Common.h"
 #include <hypermath.h>
 
 namespace prx {
@@ -19,7 +20,11 @@ namespace prx {
 		bool m_WorldUpdate;
 		bool m_AnchorUpdate;
 
+		bool m_Initialized;
+
 	public:
+
+		PRX_DISALLOW_COPY_AND_MOVE(TransformComponent2D)
 
 		TransformComponent2D();
 		~TransformComponent2D();
@@ -54,14 +59,6 @@ namespace prx {
 		inline void setRotation(float angle, float radius) noexcept;
 		inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
 		inline void setAnchorPoint(float x, float y) noexcept;
-
-	public:
-		TransformComponent2D(const TransformComponent2D& other) = delete;
-		TransformComponent2D(const TransformComponent2D&& other) = delete;
-		TransformComponent2D(TransformComponent2D&& other) = delete;
-		TransformComponent2D& operator=(const TransformComponent2D& other) = delete;
-		TransformComponent2D& operator=(const TransformComponent2D&& other) = delete;
-		TransformComponent2D& operator=(TransformComponent2D&& other) = delete;
 	};
 }
 #include "TransformComponent2D.inl"

@@ -9,6 +9,7 @@
 #include "../parallax/include/camera/Camera2D.h"
 #include "../parallax/include/scene/Layer.h"
 #include "../parallax/include/scene/AnimatedSpriteNode.h"
+#include "../parallax/include/scene/Group.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;
@@ -31,6 +32,7 @@ public:
 	hpm::vec2 m_CameraPosition;
 	Layer* m_Layer;
 	Layer* m_UILayer;
+	Group* m_Group;
 public:
 	Game(std::string_view path) {}
 	~Game() {};

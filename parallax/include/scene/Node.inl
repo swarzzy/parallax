@@ -24,19 +24,31 @@ namespace prx {
 		}
 	}
 
+	Node::~Node() {
+		for (auto child : m_Children) {
+			delete child;
+		}
+	}
+
 	inline void Node::init() {
 		if (!m_Initialized) {
 		m_Initialized = true;
 
-		m_TransformComponent.init();
+		if (m_Parent != nullptr) {
+			m_Depth = m_Parent->m_Depth;
+			m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
+		}
 
+		m_TransformComponent.init();
+		
 		initInternal();
 
 		for (auto child : m_Children)
 			child->init();
-		// NOTE: Should it even be here
-		update();
 		}
+
+		m_DepthUpdate = false;
+		m_TransformUpdate = false;
 	}
 
 	inline void Node::update() {
@@ -47,14 +59,14 @@ namespace prx {
 		if (m_DepthUpdate) {
 			if (m_Parent != nullptr)
 				m_Depth = m_Parent->m_Depth;
-			PRX_INFO("depth uppdate ", m_ID);
+			//PRX_INFO("depth uppdate ", m_ID);
 		}
 
 		if (m_TransformUpdate) {
 			if (m_Parent != nullptr)
 				m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
 			m_TransformComponent.update();			
-			PRX_INFO("transform uppdate ", m_ID);
+			//PRX_INFO("transform uppdate ", m_ID);
 		}
 
 		updateInternal();
@@ -103,9 +115,15 @@ namespace prx {
 	inline void Node::setParent(Node* parent) {
 		if (parent == this)
 			PRX_ERROR("(Node): Trying to set self as a parent\n-> Node ID: ", m_ID);
+		m_Parent->removeChild(this);
 		m_Parent = parent;
 		parent->addChild(this);
 		m_Depth = parent->m_Depth;
+	}
+
+	inline void Node::removeChild(Node * child){
+		auto result = std::find(m_Children.begin(), m_Children.end(), child);
+		m_Children.erase(result);
 	}
 
 	inline bool Node::isInitialized() const noexcept {

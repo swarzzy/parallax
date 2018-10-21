@@ -185,6 +185,7 @@
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
     <ClInclude Include="include\scene\components\TransformComponent2D.h" />
+    <ClInclude Include="include\scene\Group.h" />
     <ClInclude Include="include\scene\LabelNode.h" />
     <ClInclude Include="include\scene\Layer.h" />
     <ClInclude Include="include\scene\Node.h" />

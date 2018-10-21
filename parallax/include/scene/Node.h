@@ -41,7 +41,7 @@ namespace prx {
 		inline Node(Node* parent = nullptr, float width = 0, float height = 0);
 	 
 	public:
-		virtual ~Node() = default;
+		inline virtual ~Node();
 
 		inline void init();
 		virtual inline void update();
@@ -50,6 +50,7 @@ namespace prx {
 		inline void destroy() {};
 	
 		virtual inline void setParent(Node* parent);
+		inline void removeChild(Node* child);
 
 		inline bool isInitialized() const noexcept;
 	
@@ -59,12 +60,12 @@ namespace prx {
 		inline const hpm::mat3& getLocalMat() const noexcept;
 		inline const hpm::mat3& getWorldMat() const noexcept;
 	
-		inline void setPosition(const hpm::vec2& position) noexcept;
-		inline void setPosition(float x, float y) noexcept;
-		inline void setScale(float scale) noexcept;
-		inline void setRotation(float angle, float radius = 0) noexcept;
-		inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
-		inline void setAnchorPoint(float x, float y) noexcept;
+		virtual inline void setPosition(const hpm::vec2& position) noexcept;
+		virtual inline void setPosition(float x, float y) noexcept;
+		virtual inline void setScale(float scale) noexcept;
+		virtual inline void setRotation(float angle, float radius = 0) noexcept;
+		virtual inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
+		virtual inline void setAnchorPoint(float x, float y) noexcept;
 
 		inline void depthUpdateQuery() noexcept;
 		inline void transformUpdateQuery() noexcept;
