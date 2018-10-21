@@ -26,6 +26,7 @@
     <ClCompile Include="src\renderer\FrameBuffer2D.cpp" />
     <ClCompile Include="src\resources\ImageLoader.cpp" />
     <ClCompile Include="src\scene\Layer.cpp" />
+    <ClCompile Include="src\scene\Node.cpp" />
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\scene\SpriteNode.cpp" />
     <ClCompile Include="src\shading\ShaderManager.cpp" />

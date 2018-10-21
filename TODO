@@ -10,9 +10,3 @@
  --- UI: add possibility to disable loading defaults and UI need complete rework
  --- inverse method in matrix class
  --- disabling anchor points (usefull for non renderable nodes)
-
- scenes:
- --- group node
- --- culling
- --- frozen nodes
- --- visibility for nodes

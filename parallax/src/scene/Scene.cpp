@@ -48,6 +48,8 @@ namespace prx {
 
 	void Scene::update() {
 		m_Camera->update();
+		currentCameraPosition = m_Camera->getCameraPosition();
+		currentViewSize = m_Camera->getViewSpaceSize();
 
 		for (auto layer : m_Layers)
 			layer->update();
@@ -88,6 +90,14 @@ namespace prx {
 	void Scene::setCameraPosition(float x, float y) noexcept {
 		m_Camera->setCameraPosition(x, y);
 		m_CameraMoved = true;
+	}
+
+	const hpm::vec2& Scene::getCameraPosition() const noexcept {
+		return m_Camera->getCameraPosition();
+	}
+
+	const hpm::vec2& Scene::getViewSize() const noexcept {
+		return m_Camera->getViewSpaceSize();
 	}
 
 	void Scene::addChild(Layer* child) {

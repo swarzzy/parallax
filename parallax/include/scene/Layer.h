@@ -40,5 +40,8 @@ namespace prx {
 		inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept override final {};
 		inline void setAnchorPoint(float x, float y) noexcept override final {};
 		inline void setParent(Node* parent) override final {};
+
+		inline void enableVisibilityTest(bool enable) noexcept override final {};
+		inline void setVisibilityTestMode(VisibilityTestMode mode) noexcept override final {};
 	};
 }

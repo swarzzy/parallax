@@ -16,6 +16,11 @@ namespace prx {
 
 		inline static unsigned int GLOBAL_SCENE_COUNTER = 0;
 
+		// Temporary solution
+		inline static hpm::vec2 currentCameraPosition = hpm::vec2(0.0);
+		inline static hpm::vec2 currentViewSize = hpm::vec2(0.0);
+
+
 	public:
 		inline static hpm::vec2 defaultCameraPosition() noexcept;
 
@@ -37,6 +42,9 @@ namespace prx {
 		Scene(std::string_view name, Renderer2D* renderer);
 		~Scene();
 
+		static const hpm::vec2& getCurrentCameraPosition() { return currentCameraPosition; };
+		static const hpm::vec2& getCurrentCameraViewSize() { return currentViewSize; };
+
 		void sortChildren();
 		void init();
 		void update();
@@ -49,6 +57,9 @@ namespace prx {
 
 		void setCameraPosition(hpm::vec2 position) noexcept;
 		void setCameraPosition(float x, float y) noexcept;
+
+		const hpm::vec2& getCameraPosition() const noexcept;
+		const hpm::vec2& getViewSize() const noexcept;
 
 	private:
 		void addChild(Layer* child);

@@ -10,8 +10,7 @@ namespace prx {
 	private:
 		hpm::vec2 m_Position;
 		hpm::mat4 m_ProjectionMatrix;
-		float	  m_ViewSpaceWidth;
-		float	  m_ViewSpaceHeight;
+		hpm::vec2 m_ViewSpaceSize;
 		bool	  m_NeedsUpdate;
 
 	public:
@@ -55,7 +54,7 @@ namespace prx {
 	}
 	
 	inline const hpm::vec2& Camera2D::getViewSpaceSize() const noexcept {
-		return hpm::vec2(m_ViewSpaceWidth, m_ViewSpaceHeight);
+		return m_ViewSpaceSize;
 	}
 
 
@@ -75,14 +74,12 @@ namespace prx {
 	}
 
 	inline void Camera2D::setViewSpace(const hpm::vec2 viewSpaceSize) noexcept {
-		m_ViewSpaceWidth = viewSpaceSize.x;
-		m_ViewSpaceHeight = viewSpaceSize.y;
+		m_ViewSpaceSize = viewSpaceSize;
 		m_NeedsUpdate = true;
 	}
 
 	inline void Camera2D::setViewSpace(float width, float height) noexcept {
-		m_ViewSpaceWidth = width;
-		m_ViewSpaceHeight = height;
+		m_ViewSpaceSize = hpm::vec2(width, height);
 		m_NeedsUpdate = true;
 	}
 }

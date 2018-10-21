@@ -38,29 +38,33 @@ void Game::init() {
 	std::knuth_b rand;
 	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	m_Group = new Group(m_Layer);
-	auto g = new Group(m_Group);
+	m_Group->setPosition(300, 300);
+	//m_Group->setAnchorPoint(0.5, 0.5);
+	m_Group->enableVisibilityTest(false);
 	//m_Group->setPosition(100, 100);
+	m_Sun = new SpriteNode(0, 0, 150, 150, sun, m_Layer);
+	//m_Sun->setAnchorPoint(0.5, 0.5);
+	m_Sun->setVisibilityTestMode(VisibilityTestMode::QUAD);
 	float step = 0.1;
 	int counter = 0;
 	for (float x = 0; x < 600; x += 3) {// 3, 1.0
 		for (float y = 0; y < 600; y += 3) {
 			unsigned int color = 255 << 24 | colorDistrib(rand) << 16 | colorDistrib(rand) << 8 | colorDistrib(rand);
-			auto t = new SpriteNode(x, y, 1, 1, color, g);
+			auto t = new SpriteNode(x, y, 1, 1, color, m_Group);
 			step += 0.0001f;
 			counter++;
 		}
 	}
-	
-	std::cout << m_Layer->getDepth() << std::endl;
-	std::cout << m_Layer->getLocalMat().toString() << std::endl;
-	std::cout << m_Layer->getWorldMat().toString() << std::endl;
+	//m_Group->setPosition(20, 20);
+	//std::cout << m_Layer->getDepth() << std::endl;
+	//std::cout << m_Layer->getLocalMat().toString() << std::endl;
+	//std::cout << m_Layer->getWorldMat().toString() << std::endl;
 	m_UILayer = new Layer(1, m_Scene);
 	////m_Scene->init();
 	//auto t = new Layer(23,m_Layer);
 	//m_Background = new SpriteNode(0, 0, 1850, 1850, background, t);
 	//m_Background->setAnchorPoint(0.5, 0.5);
-	//m_Sun = new SpriteNode(0, 0, 150, 150 ,sun , t);
-	//m_Sun->setAnchorPoint(0.5, 0.5);
+	
 	//m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, t);
 	//m_BluePlanet->setAnchorPoint(0.5, 0.5);
 	//m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
@@ -89,7 +93,7 @@ void Game::init() {
 	//std::cout << m_BluePlanet->getID() << std::endl;//6
 	//std::cout << m_BrownPlanet->getID() << std::endl;//7
 	m_Scene->init();
-	m_Scene->removeChild(m_UILayer);
+	//m_Scene->removeChild(m_UILayer);
 }
 
 void Game::tick() {
@@ -98,21 +102,33 @@ void Game::tick() {
 }
 
 void Game::update() {
-	/*m_Background->setRotation(getTime() / 80);
-	m_Sun->setRotation(-getTime() / 80);
+	m_Group->setRotation(getTime() / 80, -300);
+	/*m_Sun->setRotation(-getTime() / 80);
 	m_BluePlanet->setRotation(getTime() / 50, 120);
 	m_BrownPlanet->setRotation(getTime() / 5, 45);
 	m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);*/
 
 	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
-		m_CameraPosition.y += 0.1;
+		m_CameraPosition.y += 3.1;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_S))
-		m_CameraPosition.y -= 0.1;
+		m_CameraPosition.y -= 3.1;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_A))
 		m_CameraPosition.x -= 3.0;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_D))
 		m_CameraPosition.x += 3.0;
 	static int depth = 0;
+	static bool hide = false;
+	static bool hidesp = false;
+	static bool freeze = false;
+	if (m_Window->isKeyPressed(PARALLAX_KEY_SPACE))
+		hide = !hide;
+	if (m_Window->isKeyPressed(PARALLAX_KEY_H))
+		hidesp = !hidesp;
+	if (m_Window->isKeyPressed(PARALLAX_KEY_F))
+		freeze = !freeze;
+	m_Sun->hide(hide);
+	m_Group->hide(hidesp);
+	m_Group->freeze(freeze);
 
 	//m_Group->setScale(m_CameraPosition.y);
 	/*if (m_Window->isKeyPressed(PARALLAX_KEY_T)) {
@@ -126,8 +142,11 @@ void Game::update() {
 
 	
 
-	//m_Scene->setCameraPosition(m_CameraPosition);
+	m_Scene->setCameraPosition(m_CameraPosition);
 	m_Scene->update();
+	//std::cout << m_Scene->getCameraPosition().toString() << std::endl;
+	//std::cout << m_Scene->getViewSize().toString() << std::endl;
+	//std::cout << m_Layer->getWorldMat().toString() << std::endl;
 }
 	
 void Game::render() {

@@ -8,6 +8,11 @@ namespace prx {
 	
 	class Renderer2D;
 
+	enum class VisibilityTestMode {
+		ANCHOR_POINT,
+		QUAD
+	};
+
 	class Node {
 /* NOTE:
  *	Another way to make anchor points is set some size to every node, 
@@ -17,9 +22,10 @@ namespace prx {
  *	anchor point only applied to a renderable nodes
  */
 	protected:
-		inline static unsigned int		GLOBAL_NODE_COUNTER = 0;
-		inline static const int			DEFAULT_NODE_DEPTH = 0;
-		inline static const hpm::vec2	DEFAULT_ANCHOR_POINT = hpm::vec2(0.0f);
+		inline static unsigned int		 GLOBAL_NODE_COUNTER		  = 0;
+		inline static const int			 DEFAULT_NODE_DEPTH			  = 0;
+		inline static const hpm::vec2	 DEFAULT_ANCHOR_POINT		  = hpm::vec2(0.0f);
+		inline static VisibilityTestMode DEFAULT_VISIBILITY_TEST_MODE = VisibilityTestMode::QUAD;
 
 	public:
 		static inline int defaultNodeDepth() noexcept;
@@ -32,11 +38,18 @@ namespace prx {
 		unsigned int		 m_ID;
 		Node*				 m_Parent;
 		std::vector<Node*>	 m_Children;
-		TransformComponent2D m_TransformComponent;
-		int					 m_Depth;
-		bool				 m_TransformUpdate;
-		bool				 m_DepthUpdate;
 		bool				 m_Initialized;
+		
+		TransformComponent2D m_TransformComponent;
+		bool				 m_TransformUpdate;
+		bool				 m_Frozen;
+		
+		bool				 m_Visible;
+		int					 m_Depth;
+		bool				 m_DepthUpdate;
+		bool				 m_InViewSpace;
+		bool				 m_VisibilityTestEnabled;
+		VisibilityTestMode	 m_VisibilityTestMode;
 	
 		inline Node(Node* parent = nullptr, float width = 0, float height = 0);
 	 
@@ -51,12 +64,12 @@ namespace prx {
 	
 		virtual inline void setParent(Node* parent);
 		inline void removeChild(Node* child);
+		inline Node* getParent() const noexcept;
 
 		inline bool isInitialized() const noexcept;
 	
-		inline constexpr unsigned int getID() const noexcept;
-		inline Node* getParent() const noexcept;
 		inline int getDepth() const noexcept;
+		inline constexpr unsigned int getID() const noexcept;
 		inline const hpm::mat3& getLocalMat() const noexcept;
 		inline const hpm::mat3& getWorldMat() const noexcept;
 	
@@ -66,6 +79,16 @@ namespace prx {
 		virtual inline void setRotation(float angle, float radius = 0) noexcept;
 		virtual inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
 		virtual inline void setAnchorPoint(float x, float y) noexcept;
+
+		virtual inline void hide(bool hide) noexcept;
+		inline bool isHidden() const noexcept;
+
+		virtual inline void enableVisibilityTest(bool enable) noexcept;
+		virtual inline void setVisibilityTestMode(VisibilityTestMode mode) noexcept;
+		inline bool isCulled() const noexcept;
+
+		virtual inline void freeze(bool freeze) noexcept;
+		inline bool isFrozen() const noexcept;
 
 		inline void depthUpdateQuery() noexcept;
 		inline void transformUpdateQuery() noexcept;
@@ -77,6 +100,9 @@ namespace prx {
 		virtual void drawInternal(Renderer2D* renderer) {};
 
 		inline void addChild(Node* child);
+
+		void visibilityTestAnchor();
+		void visibilityTestQuad();
 	 };
  }
 #include "Node.inl"

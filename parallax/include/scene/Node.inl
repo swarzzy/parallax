@@ -13,10 +13,15 @@ namespace prx {
 	Node::Node(Node* parent, float width, float height)
 		: m_ID(++GLOBAL_NODE_COUNTER),
 		  m_Parent(parent),
-		  m_Depth(DEFAULT_NODE_DEPTH),
+		  m_Initialized(false),
 		  m_TransformUpdate(true),
+		  m_Frozen(false),
+		  m_Visible(true),
+		  m_Depth(DEFAULT_NODE_DEPTH),
 		  m_DepthUpdate(true),
-		  m_Initialized(false)
+		  m_InViewSpace(false),
+		  m_VisibilityTestEnabled(true),
+		  m_VisibilityTestMode(DEFAULT_VISIBILITY_TEST_MODE)
 	{
 		if (parent != nullptr) {
 			parent->addChild(this);
@@ -49,52 +54,77 @@ namespace prx {
 
 		m_DepthUpdate = false;
 		m_TransformUpdate = false;
+
+		if (m_VisibilityTestEnabled) {
+			m_InViewSpace = false;
+			if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
+				visibilityTestQuad();
+			else
+				visibilityTestAnchor();
+		}
+		else
+			m_InViewSpace = true;
 	}
 
 	inline void Node::update() {
 #ifdef PARALLAX_DEBUG
 		if (!m_Initialized)
-			PRX_FATAL("NODE: Node is not initialized (Node ID: ", m_ID," )");
+			PRX_FATAL("NODE: Node is not initialized (Node ID: ", m_ID, " )");
 #endif
-		if (m_DepthUpdate) {
-			if (m_Parent != nullptr)
-				m_Depth = m_Parent->m_Depth;
-			//PRX_INFO("depth uppdate ", m_ID);
+		if (!m_Frozen) {
+
+			if (m_DepthUpdate) {
+				if (m_Parent != nullptr)
+					m_Depth = m_Parent->m_Depth;
+				//PRX_INFO("depth uppdate ", m_ID);
+			}
+
+			if (m_TransformUpdate) {
+				if (m_Parent != nullptr)
+					m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
+				m_TransformComponent.update();
+				//PRX_INFO("transform uppdate ", m_ID);
+			}
+
+			updateInternal();
+
+			if (m_DepthUpdate && m_TransformUpdate)
+				for (auto child : m_Children) {
+					child->depthUpdateQuery();
+					child->transformUpdateQuery();
+					child->update();
+				}
+			else if (m_DepthUpdate)
+				for (auto child : m_Children) {
+					child->depthUpdateQuery();
+					child->update();
+				}
+			else if (m_TransformUpdate)
+				for (auto child : m_Children) {
+					child->transformUpdateQuery();
+					child->update();
+				}
+			else {
+				for (auto child : m_Children) {
+					child->update();
+				}
+			}
+
+			m_DepthUpdate = false;
+			m_TransformUpdate = false;
+
+			if (m_Visible) {
+				if (m_VisibilityTestEnabled) {
+					m_InViewSpace = false;
+					if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
+						visibilityTestQuad();
+					else
+						visibilityTestAnchor();
+				}
+				else
+					m_InViewSpace = true;
+			}
 		}
-
-		if (m_TransformUpdate) {
-			if (m_Parent != nullptr)
-				m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
-			m_TransformComponent.update();			
-			//PRX_INFO("transform uppdate ", m_ID);
-		}
-
-		updateInternal();
-
-		if (m_DepthUpdate && m_TransformUpdate)
-			for (auto child : m_Children) {
-				child->depthUpdateQuery();
-				child->transformUpdateQuery();
-				child->update();
-			}
-		else if (m_DepthUpdate)
-			for (auto child : m_Children) {
-				child->depthUpdateQuery();
-				child->update();
-			}
-		else if (m_TransformUpdate)
-			for (auto child : m_Children) {
-				child->transformUpdateQuery();
-				child->update();
-			}
-		else {
-			for (auto child : m_Children) {
-				child->update();
-			}
-		}
-
-		m_DepthUpdate = false;
-		m_TransformUpdate = false;
 	}
 
 	inline void Node::draw(Renderer2D * renderer) {
@@ -102,10 +132,12 @@ namespace prx {
 		if (!m_Initialized)
 			PRX_FATAL("(Node): Node is not initialized (Node ID: )", m_ID);
 #endif
-		drawInternal(renderer);
+		if (m_Visible && m_InViewSpace) {
+			drawInternal(renderer);
 
-		for (auto child : m_Children)
-			child->draw(renderer);
+			for (auto child : m_Children)
+				child->draw(renderer);
+		}
 	}
 
 	inline void Node::addChild(Node* child) {
@@ -174,6 +206,34 @@ namespace prx {
 	inline void Node::setAnchorPoint(float x, float y) noexcept {
 		m_TransformComponent.setAnchorPoint(x, y);
 		m_TransformUpdate = true;
+	}
+
+	inline void Node::hide(bool hide) noexcept {
+		m_Visible = !hide;
+	}
+
+	inline bool Node::isHidden() const noexcept {
+		return !m_Visible;
+	}
+
+	inline void Node::enableVisibilityTest(bool enable) noexcept {
+		m_VisibilityTestEnabled = enable;
+	}
+
+	inline void Node::setVisibilityTestMode(VisibilityTestMode mode) noexcept {
+		m_VisibilityTestMode = mode;
+	}
+
+	inline bool Node::isCulled() const noexcept {
+		return !m_InViewSpace;
+	}
+
+	inline void Node::freeze(bool freeze) noexcept {
+		m_Frozen = freeze;
+	}
+
+	inline bool Node::isFrozen() const noexcept {
+		return m_Frozen;
 	}
 
 	inline void Node::depthUpdateQuery() noexcept {

@@ -14,6 +14,8 @@ namespace prx {
 		: Node(nullptr),
 		  m_ParentScene(parent) 
 	{
+		m_InViewSpace = true;
+		m_VisibilityTestEnabled = false;
 		if (parent != nullptr)
 			parent->addChild(this);
 	}
@@ -23,29 +25,32 @@ namespace prx {
 		if (!m_Initialized)
 			PRX_FATAL("LAYER: Layer is not initialized (Node ID: ", m_ID, " )");
 #endif
-		if (m_DepthUpdate) {
-			if (m_ParentScene != nullptr) 
-				m_ParentScene->sortRequest();
-			else if (m_Parent != nullptr)
-				m_Depth = m_Parent->getDepth();
-		PRX_INFO("depth update ", m_ID);
-		}
+		if (!m_Frozen) {
 
-		updateInternal();
-
-		if (m_DepthUpdate)
-			for (auto child : m_Children) {
-				child->depthUpdateQuery();
-				child->update();
+			if (m_DepthUpdate) {
+				if (m_ParentScene != nullptr)
+					m_ParentScene->sortRequest();
+				else if (m_Parent != nullptr)
+					m_Depth = m_Parent->getDepth();
+				PRX_INFO("depth update ", m_ID);
 			}
-		else {
-			for (auto child : m_Children) {
-				child->update();
-			}
-		}
 
-		m_DepthUpdate = false;
-		m_TransformUpdate = false;
+			updateInternal();
+
+			if (m_DepthUpdate)
+				for (auto child : m_Children) {
+					child->depthUpdateQuery();
+					child->update();
+				}
+			else {
+				for (auto child : m_Children) {
+					child->update();
+				}
+			}
+
+			m_DepthUpdate = false;
+			m_TransformUpdate = false;
+		}
 	}
 
 	void Layer::setParent(Scene* parent) {
