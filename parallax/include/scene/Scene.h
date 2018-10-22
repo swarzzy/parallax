@@ -58,8 +58,12 @@ namespace prx {
 		void setCameraPosition(hpm::vec2 position) noexcept;
 		void setCameraPosition(float x, float y) noexcept;
 
+		void setCameraViewSpaceSize(hpm::vec2 size) noexcept;
+		void setCameraViewSpaceSize(float x, float y) noexcept;
+
 		const hpm::vec2& getCameraPosition() const noexcept;
 		const hpm::vec2& getViewSize() const noexcept;
+		inline unsigned getID() const noexcept;
 
 	private:
 		void addChild(Layer* child);
@@ -68,5 +72,10 @@ namespace prx {
 	inline hpm::vec2 Scene::defaultCameraPosition() noexcept {
 		return DEFAULT_CAMERA_POSITION;
 	}
+
+	inline unsigned Scene::getID() const noexcept {
+		return m_ID;
+	}
+
 
 }

@@ -80,6 +80,7 @@ namespace prx {
 		
 		inline float getWidth() const  { return m_Width; };
 		inline float getHeight() const { return m_Height; };
+		inline hpm::vec2 getSize() const { return hpm::vec2(m_Width, m_Height); }
 		
 		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_Height - m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };

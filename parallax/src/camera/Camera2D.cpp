@@ -1,5 +1,6 @@
 #include <camera/Camera2D.h>
 #include <scene/Layer.h>
+#include <scene/Director.h>
 
 namespace prx {
 	Camera2D::Camera2D() 
@@ -15,16 +16,16 @@ namespace prx {
 		m_ViewSpaceSize = hpm::vec2(viewSpaceWidth, viewSpaceHeight);
 		m_ProjectionMatrix = hpm::mat4::ortho(m_Position.x, m_ViewSpaceSize.x + m_Position.x,
 											  m_ViewSpaceSize.y + m_Position.y, m_Position.y,
-											  static_cast<float>(Layer::maxDepthValue()), 
-											  static_cast<float>(Layer::minDepthValue()));
+											  static_cast<float>(Director::maxDepthValue()), 
+											  static_cast<float>(Director::minDepthValue()));
 	}
 
 	void Camera2D::update() {
 		if (m_NeedsUpdate) {
 			m_ProjectionMatrix = hpm::mat4::ortho(m_Position.x, m_ViewSpaceSize.x + m_Position.x, 
 												  m_ViewSpaceSize.y + m_Position.y, m_Position.y, 
-												  static_cast<float>(Layer::maxDepthValue()),
-												  static_cast<float>(Layer::minDepthValue()));
+												  static_cast<float>(Director::maxDepthValue()),
+												  static_cast<float>(Director::minDepthValue()));
 		}
 	}
 }

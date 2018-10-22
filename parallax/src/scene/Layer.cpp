@@ -1,15 +1,8 @@
 #include <scene/Layer.h>
 #include <scene/Scene.h>
+#include <scene/Director.h>
 
 namespace prx {
-	int Layer::minDepthValue() noexcept {
-		return MIN_DEPTH_VALUE;
-	}
-
-	int Layer::maxDepthValue() noexcept {
-		return MAX_DEPTH_VALUE;
-	}
-
 	Layer::Layer(int depth, Scene* parent)
 		: Node(nullptr),
 		  m_ParentScene(parent) 
@@ -61,13 +54,13 @@ namespace prx {
 
 	void Layer::setDepth(int depth) {
 		if (m_ParentScene != nullptr) {
-			if (depth >= MIN_DEPTH_VALUE && depth <= MAX_DEPTH_VALUE) {
+			if (depth >= Director::minDepthValue() && depth <= Director::maxDepthValue()) {
 				m_Depth = depth;
 				m_DepthUpdate = true;
 			}
 			else {
 				PRX_WARN("LAYER: Incorrect depth value. Value sould be between: ",
-					MIN_DEPTH_VALUE, " and ", MAX_DEPTH_VALUE, ".");
+					Director::minDepthValue(), " and ", Director::maxDepthValue(), ".");
 			}
 		}
 	}

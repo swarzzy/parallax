@@ -25,6 +25,7 @@ namespace prx {
 			delete layer;
 		}
 		delete m_Camera;
+		delete m_Renderer;
 	}
 
 	void Scene::sortChildren() {
@@ -90,6 +91,14 @@ namespace prx {
 	void Scene::setCameraPosition(float x, float y) noexcept {
 		m_Camera->setCameraPosition(x, y);
 		m_CameraMoved = true;
+	}
+
+	void Scene::setCameraViewSpaceSize(hpm::vec2 size) noexcept {
+		m_Camera->setViewSpace(size);
+	}
+
+	void Scene::setCameraViewSpaceSize(float x, float y) noexcept {
+		m_Camera->setViewSpace(x, y);
 	}
 
 	const hpm::vec2& Scene::getCameraPosition() const noexcept {

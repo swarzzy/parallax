@@ -4,6 +4,7 @@
 #include <utils/log/Log.h>
 #include <utils/error_handling/GLErrorHandler.h>
 #include <resources/Resources.h>
+#include <scene/Director.h>
 
 namespace prx {
 
@@ -83,7 +84,7 @@ namespace prx {
 		}
 
 		// Setting GL viewport
-		GLCall(glViewport(0, 0, m_Width, m_Height));
+		//GLCall(glViewport(0, 0, m_Width, m_Height));
 
 		std::stringstream ss;
 		ss << "OpenGL version: " << glGetString(GL_VERSION);
@@ -259,7 +260,8 @@ namespace prx {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		win->m_Width = width;
 		win->m_Height = height;
-		GLCall(glViewport(0, 0, width, height));
+		if (Director::getInstance() != nullptr)
+			Director::getInstance()->setViewport(hpm::vec2(width, height));
 	}
 }
 

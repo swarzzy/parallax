@@ -22,9 +22,8 @@
 
 void Game::init() {
 	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
-
-	m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, 600, 600, 0, -10, 10));
-	m_CameraPosition = hpm::vec2(0.0);
+	Director::initialize();
+	
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
 	auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
@@ -32,7 +31,8 @@ void Game::init() {
 	auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
 
-	m_Scene = new Scene("scene", m_Renderer);
+	Director::getInstance()->createScene("Scene");
+	m_Scene = Director::getInstance()->getScene("Scene");
 	m_Layer = new Layer(0, m_Scene);
 
 	std::knuth_b rand;
@@ -92,8 +92,9 @@ void Game::init() {
 	//std::cout << m_Sun->getID() << std::endl;//5
 	//std::cout << m_BluePlanet->getID() << std::endl;//6
 	//std::cout << m_BrownPlanet->getID() << std::endl;//7
-	m_Scene->init();
 	//m_Scene->removeChild(m_UILayer);
+	Director::getInstance()->setCurrentScene("Scene");
+	Director::getInstance()->initScene();
 }
 
 void Game::tick() {
@@ -143,12 +144,13 @@ void Game::update() {
 	
 
 	m_Scene->setCameraPosition(m_CameraPosition);
-	m_Scene->update();
+	
 	//std::cout << m_Scene->getCameraPosition().toString() << std::endl;
 	//std::cout << m_Scene->getViewSize().toString() << std::endl;
 	//std::cout << m_Layer->getWorldMat().toString() << std::endl;
+	Director::getInstance()->update();
 }
 	
 void Game::render() {
-	m_Scene->draw();
+	Director::getInstance()->draw();
 }

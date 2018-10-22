@@ -10,6 +10,7 @@
 #include "../parallax/include/scene/Layer.h"
 #include "../parallax/include/scene/AnimatedSpriteNode.h"
 #include "../parallax/include/scene/Group.h"
+#include "../parallax/include/scene/Director.h"
 
 //#include "../parallax/include/shading/Shader.h"
 using namespace prx;
