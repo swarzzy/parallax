@@ -184,6 +184,7 @@
     <ClInclude Include="include\resources\FileReader.h" />
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resource.h" />
+    <ClInclude Include="include\resources\ResourceHandler.h" />
     <ClInclude Include="include\resources\Resources.h" />
     <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="include\window\GraphicsManager.h" />
     <ClInclude Include="include\window\Window.h" />
     <ClInclude Include="src\resources\fonts\Font.h" />
+    <ClInclude Include="include\resources\ResourceManager.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />

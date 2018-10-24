@@ -14,6 +14,8 @@ namespace prx {
 	};
 
 	class Director final : public Singleton<Director>{
+	public:
+		friend class Singleton<Director>;
 	private:
 		inline static int MIN_DEPTH_VALUE = -10;
 		inline static int MAX_DEPTH_VALUE = 10;
@@ -29,13 +31,13 @@ namespace prx {
 
 		hpm::vec2 m_ViewportSize;
 
+		Director();
 	public:
 		static int minDepthValue() noexcept;
 		static int maxDepthValue() noexcept;
 
 		PRX_DISALLOW_COPY_AND_MOVE(Director)
 
-		Director();
 		~Director();
 
 		// TODO: checking if window initialized before initialize director

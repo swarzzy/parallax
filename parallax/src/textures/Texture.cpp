@@ -4,16 +4,20 @@
 
 namespace prx {
 	Texture::Texture(std::string_view path) 
-		: m_Path(path) {
-		m_TexID = load();
+		//TODO: This temporary solution
+		: TextureBase(path, path)
+	{
+		  m_TexID = load();
 	}
 
 	Texture::Texture(unsigned char* data, unsigned int width, unsigned int height, TextureFormat format)
-		: m_Path("") {
-		m_Width = width;
-		m_Height = height;
-		m_Format = format;
-		m_TexID = loadFromBitmap(data);
+		//TODO: This temporary solution	
+		: TextureBase(std::to_string(m_TexID), "")
+	{
+		  m_Width = width;
+		  m_Height = height;
+		  m_Format = format;
+		  m_TexID = loadFromBitmap(data);
 	}
 
 	Texture::~Texture() {
@@ -21,7 +25,7 @@ namespace prx {
 	}
 
 	unsigned Texture::load() {
-		Image* image = ImageLoader::loadImage(m_Path);
+		Image* image = ImageLoader::loadImage(m_FilePath);
 
 		m_Width = image->getWigth();
 		m_Height = image->getHeight();

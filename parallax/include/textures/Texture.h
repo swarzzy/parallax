@@ -9,11 +9,8 @@
 namespace prx {
 
 	class Texture : public TextureBase {
-	private:
-		std::string  m_Path;
-	
 	public:
-		Texture() {};
+		Texture() {}
 		Texture(std::string_view path);
 		Texture(unsigned char* data, unsigned int width, unsigned int height, TextureFormat format);
 		~Texture();

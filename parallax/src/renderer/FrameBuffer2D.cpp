@@ -3,6 +3,7 @@
 namespace prx {
 	FrameBuffer2D::FrameBuffer2D(unsigned int width, unsigned int height)
 		: FrameBufferBase(width, height), 
+		  // TODO: propper naming for texture
 		  m_Texture(new Texture(nullptr, width, height, TextureFormat::RGB)),
 		  m_Valid(true)
 	{

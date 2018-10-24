@@ -30,6 +30,7 @@ namespace prx {
 
 		inline static const hpm::mat4 DEFAULT_PROJECTION_MATRIX = 
 			hpm::mat4::ortho(0.0f, 800.0f, 600.0f, 0.0f, -10.0f, 10.0f);
+		inline static const char* DEFAULT_MASK_NAME = "parallax_default_renderer_mask_name";
 
 	protected:
 		Texture*				m_Mask;

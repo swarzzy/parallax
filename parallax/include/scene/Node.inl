@@ -113,17 +113,22 @@ namespace prx {
 			m_DepthUpdate = false;
 			m_TransformUpdate = false;
 
-			if (m_Visible) {
-				if (m_VisibilityTestEnabled) {
-					m_InViewSpace = false;
-					if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
-						visibilityTestQuad();
-					else
-						visibilityTestAnchor();
-				}
+		}
+		else {
+			for (auto child : m_Children)
+				child->update();
+		}
+
+		if (m_Visible) {
+			if (m_VisibilityTestEnabled) {
+				m_InViewSpace = false;
+				if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
+					visibilityTestQuad();
 				else
-					m_InViewSpace = true;
+					visibilityTestAnchor();
 			}
+			else
+				m_InViewSpace = true;
 		}
 	}
 
@@ -230,6 +235,8 @@ namespace prx {
 
 	inline void Node::freeze(bool freeze) noexcept {
 		m_Frozen = freeze;
+		for (auto child : m_Children)
+			child->freeze(freeze);
 	}
 
 	inline bool Node::isFrozen() const noexcept {

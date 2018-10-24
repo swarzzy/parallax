@@ -4,6 +4,8 @@
 
 #include "../ext/GL/glew.h"
 #include "../utils/error_handling/GLErrorHandler.h"
+#include "../resources/Resource.h"
+#include "../utils/SimpleHash.h"
 
 namespace prx {
 
@@ -11,7 +13,7 @@ namespace prx {
 		RED, RGB, RGBA
 	};
 
-	class TextureBase {
+	class TextureBase : public Resource {
 	public:
 		inline static const float DEFAULT_UV[8] = {
 			0.0f, 0.0f,	0.0f, 1.0f,	1.0f, 1.0f,	1.0f, 0.0f
@@ -26,7 +28,9 @@ namespace prx {
 		unsigned int  m_Height;
 		TextureFormat m_Format;
 
-		TextureBase() {};
+		TextureBase(std::string_view name = "unnamed", std::string_view filepath = "unknown") 
+			: Resource(name, filepath, hash_string(name)) 
+		{};
 
 	public:
 		

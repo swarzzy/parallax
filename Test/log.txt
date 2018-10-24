@@ -1,1 +1,9 @@
 [INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
+[WARN ] 1 constructed
+-> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::ResourceHandler(class prx::Texture *)
+-> FILE: resourcehandler.h 
+-> LINE: 66
+[WARN ] 0 deleted
+-> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::~ResourceHandler(void)
+-> FILE: resourcehandler.h 
+-> LINE: 75

@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <random>
-
+#include "../parallax/include/resources/ResourceHandler.h"
 
 #include "../parallax/include/renderer/renderable/Group.h"
 #include "../parallax/include/textures/TextureAtlas.h"
@@ -18,12 +18,13 @@
 #include "../parallax/include/renderer/ForwardRenderer2D.h"
 #include <complex>
 #include "../parallax/include/scene/Group.h"
+#include "../parallax/include/resources/ResourceManager.h"
 
 
 void Game::init() {
 	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
 	Director::initialize();
-	
+
 	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
 
 	auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
@@ -34,7 +35,12 @@ void Game::init() {
 	Director::getInstance()->createScene("Scene");
 	m_Scene = Director::getInstance()->getScene("Scene");
 	m_Layer = new Layer(0, m_Scene);
-
+	{
+		auto h = get_resource<Texture>("res/textures/sun.png");
+		ResourceManager::initialize();
+		auto t = ResourceManager::getInstance()->get<Texture>(23, "res/textures/sun.png");
+		
+	}
 	std::knuth_b rand;
 	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	m_Group = new Group(m_Layer);

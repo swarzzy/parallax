@@ -8,3 +8,5 @@
 	TypeName& operator=(const TypeName& other) = delete;\
 	TypeName& operator=(const TypeName&& other) = delete;\
 	TypeName& operator=(TypeName&& TypeName) = delete;
+
+typedef unsigned int prx_id_t;

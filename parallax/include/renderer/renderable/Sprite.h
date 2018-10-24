@@ -5,7 +5,10 @@
 #include "Renderable2D.h"
 
 namespace prx {
-		class Sprite: public Renderable2D {
+	
+	class TextureBase;
+
+	class Sprite: public Renderable2D {
 		public:
 			Sprite(const hpm::vec2& size, unsigned int color);
 			Sprite(const hpm::vec2& size, const TextureBase* texture);
