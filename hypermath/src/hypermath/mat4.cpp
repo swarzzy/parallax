@@ -1,7 +1,6 @@
-#include <linear_algebra/mat/mat4.h>
-
-#include <linear_algebra/vector.h>
-#include <trigonometry/trig_functions.h>
+#include "mat4.h"
+#include "vec3.h"
+#include "trigFunctions.h"
 
 namespace hpm {
 

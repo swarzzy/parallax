@@ -73,10 +73,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\test</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
-    <IncludePath>$(SolutionDir)parallax\parallax\ext;$(SolutionDir)parallax\parallax\include;$(SolutionDir)hypermath\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\parallax\ext;$(SolutionDir)parallax\parallax\include;$(SolutionDir)hypermath\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)hypermath\include;$(SolutionDir)parallax\parallax\include;$(SolutionDir)parallax\parallax\ext;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)hypermath\src;$(SolutionDir)parallax\parallax\include;$(SolutionDir)parallax\parallax\ext;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\test</OutDir>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
   </PropertyGroup>

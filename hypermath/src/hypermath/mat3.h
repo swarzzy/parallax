@@ -3,7 +3,7 @@
 #define _HYPERMATH_MATRIX_MAT3_H_
 
 #include <string>
-#include "../vec/vec3.h"
+#include "vec3.h"
 
 namespace hpm {
 

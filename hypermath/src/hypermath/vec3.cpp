@@ -1,6 +1,5 @@
-#include <linear_algebra/vec/vec3.h>
-
-#include <linear_algebra/vec/vec2.h>
+#include "vec3.h"
+#include "vec2.h"
 
 namespace hpm {
 	vec3::vec3()

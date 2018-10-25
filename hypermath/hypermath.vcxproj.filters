@@ -15,48 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\linear_algebra\mat\mat4.h">
+    <ClInclude Include="src\hypermath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\linear_algebra\vec\vec2.h">
+    <ClInclude Include="src\hypermath\mat3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\linear_algebra\vec\vec3.h">
+    <ClInclude Include="src\hypermath\mat4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\linear_algebra\vec\vec4.h">
+    <ClInclude Include="src\hypermath\vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\linear_algebra\matrix.h">
+    <ClInclude Include="src\hypermath\vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\linear_algebra\vector.h">
+    <ClInclude Include="src\hypermath\vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\trigonometry\trig_functions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\hypermath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\linear_algebra\mat\mat3.h">
+    <ClInclude Include="src\hypermath\trigFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\linear_algebra\mat\mat4.cpp">
+    <ClCompile Include="src\hypermath\mat3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\linear_algebra\vec\vec2.cpp">
+    <ClCompile Include="src\hypermath\mat4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\linear_algebra\vec\vec3.cpp">
+    <ClCompile Include="src\hypermath\vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\linear_algebra\vec\vec4.cpp">
+    <ClCompile Include="src\hypermath\vec3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\linear_algebra\mat\mat3.cpp">
+    <ClCompile Include="src\hypermath\vec4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

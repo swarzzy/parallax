@@ -3,7 +3,7 @@
 #define _HYPERMATH_MAT4_H_
 
 #include <string>
-#include "../vec/vec4.h"
+#include "vec4.h"
 
 namespace hpm {
 	

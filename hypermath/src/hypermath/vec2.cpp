@@ -1,4 +1,4 @@
-#include <linear_algebra/vec/vec2.h>
+#include "vec2.h"
 
 namespace hpm {
 	vec2::vec2()
