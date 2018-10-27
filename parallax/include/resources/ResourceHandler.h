@@ -2,9 +2,10 @@
 
 #include "../Common.h"
 #include "Resource.h"
+#include "ResourceManager.h"
+#include "../textures/Texture.h"
 
 namespace prx {
-
 	template<typename Res>
 	class ResourceHandler final {
 	private:
@@ -12,8 +13,8 @@ namespace prx {
 
 		inline explicit ResourceHandler(Res* resource);
 	public:
-		template <typename ResType, typename... Args>
-		inline friend ResourceHandler<ResType> get_resource(Args&&... args);
+		template <typename T>
+		inline friend ResourceHandler<T> get_resource(std::string_view name, std::string_view filepath);
 		
 		inline ~ResourceHandler();
 
@@ -48,10 +49,17 @@ namespace prx {
 		ResourceHandler& operator=(const ResourceHandler&& other) = delete;
 	};
 
-	template <typename ResType, typename... Args>
-	ResourceHandler<ResType> get_resource(Args&&... args) {
-		// TODO: resource manager
-		return ResourceHandler<ResType>(new ResType(std::forward<Args>(args)...));
+	template <typename T>
+	ResourceHandler<T> get_resource(std::string_view name, std::string_view filepath) {
+		T* result = ResourceManager::getInstance()->get<T>(filepath);
+		if (result == nullptr) {
+			result = ResourceManager::getInstance()->load<T>(name, filepath);
+			if (result == nullptr) {
+				// TODO: Error handling
+				PRX_FATAL("ERROR");
+			}
+		}
+		return ResourceHandler<T>(result);
 	}
 
 	template <typename Res>
@@ -61,16 +69,14 @@ namespace prx {
 		}
 		else {
 			m_Resource = resource;
-			++m_Resource->m_RefCounter;
 		}
 		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " constructed");
 	}
 
 	template <typename Res>
 	ResourceHandler<Res>::~ResourceHandler() {
-		// TODO: resource manager
 		if (m_Resource != nullptr) {
-			--m_Resource->m_RefCounter;
+			ResourceManager::getInstance()->free(m_Resource);
 		}
 		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " deleted");
 	}
@@ -187,7 +193,7 @@ namespace prx {
 			return 0;
 		}
 		else {
-			return m_Resource->m_RefCount;
+			return m_Resource->getRefCount();
 		}
 	}
 

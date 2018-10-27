@@ -42,13 +42,13 @@ namespace prx {
 
 		m_Textures.emplace(std::piecewise_construct, 
 						   std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_ID), 
-						   std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_PATH));
+						   std::forward_as_tuple("", RESOURCES_DEFAULT_TEXTURE_PATH));
 
 		// UI Default textures
-		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_ID),
-			std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_PATH));
-		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_ID),
-			std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH));
+		//m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_ID),
+			//std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_PRESSED_PATH));
+		//m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_ID),
+			//std::forward_as_tuple(UI_BUTTON_DEFAULT_TEXTURE_RELEASED_PATH));
 
 		if (m_gaManager == nullptr) {
 			Log::message(LOG_LEVEL::LOG_FATAL, "RESOURCE MANAGER: Audio system is not initialized!");
@@ -116,7 +116,7 @@ namespace prx {
 		}
 		//m_Textures.emplace(id, path);
 		auto result = m_Textures.emplace(std::piecewise_construct, 
-										std::forward_as_tuple(id), std::forward_as_tuple(path));
+										std::forward_as_tuple(id), std::forward_as_tuple("", path));
 		return id;
 	}
 
@@ -145,7 +145,7 @@ namespace prx {
 	void Resources::clearTextures() {
 		m_Textures.clear();
 		m_Textures.emplace(std::piecewise_construct, std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_ID),
-			std::forward_as_tuple(RESOURCES_DEFAULT_TEXTURE_PATH));
+			std::forward_as_tuple("",RESOURCES_DEFAULT_TEXTURE_PATH));
 	}
 
 	unsigned Resources::loadSound(std::string_view name, std::string_view path) {

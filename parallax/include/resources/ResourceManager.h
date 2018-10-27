@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include <unordered_map>
 #include "../Common.h"
 #include "../utils/Singleton.h"
 
@@ -20,24 +20,87 @@ namespace prx {
 		~ResourceManager() {};
 
 	private:
-		static std::map<prx_id_t, Resource>	m_Resources;
+		std::unordered_map<prx_id_t, Resource*>	m_Resources;
+		std::vector<prx_id_t> m_GarbageList;
 
 	public:
-		template<typename Res, typename... Args>
-		inline Res* get(prx_id_t identifier, Args&&... args);
+		template<typename Res>
+		inline Res* load(std::string_view name, std::string_view filepath);
+
+		template<typename Res>
+		inline Res* get(std::string_view filepath);
+
+		template<typename Res>
+		inline void free(Res* resource);
+
+		inline void collectGarbage();
 
 	};
 
-	template<typename Res, typename... Args>
-	Res* ResourceManager::get(prx_id_t identifier, Args&&... args) {
-		//auto resource = m_Resources.find(identifier);
-		//if (resource != m_Resources.end()) {
-		//	return &static_cast<Res>(resource->second);
-		//}
-		//// TODO: Check how many constructors this runs and make emplace
-		//auto newResource = new Res(std::forward<Args>(args)...);
-		//m_Resources.insert(std::move(std::pair<prx_id_t, Resource>(newResource.getIdentificator(), std::move(static_cast<Resource>(*newResource)))));
-		//return newResource;
+	template<typename Res>
+	Res* ResourceManager::load(std::string_view name, std::string_view filepath) {
+		Res* resource = new Res(name, filepath);
+		Resource* ptr = dynamic_cast<Resource*>(resource);
+		if (ptr == nullptr) {
+			PRX_ERROR("RESOURCE MANAGER: Failed to load resource! Unknown resource type.\n-> TYPE: ",
+				typeid(Res).name());
+			delete resource;
+			return nullptr;
+			// TODO: EXCEPTIONS
+		}
+		auto result = m_Resources.emplace(ptr->getID(), ptr);
+		if (!result.second) {
+			PRX_ERROR("RESOURCE MANAGER: Failed to load resource! Unexpected error.");
+			// TODO: EXCEPTIONS
+			delete resource;
+			return nullptr;
+		}
+		++resource->m_RefCounter;
+		return resource;
+	}
+
+	template<typename Res>
+	inline Res* ResourceManager::get(std::string_view filepath) {
+		auto result = m_Resources.find(Resource::makeID(filepath));
+		if (result == m_Resources.end())
+			return nullptr;
+		Res* ptr;
+		if (ptr = dynamic_cast<Res*>(result->second)) {
+			++ptr->m_RefCounter;
+			return ptr;
+		}
+		if (ptr->getRefCount() <= 0) {
+			// Very slow thing
+			auto result = std::find(m_GarbageList.begin(), m_GarbageList.end(), ptr->getID());
+			m_GarbageList.erase(result);
+		}
 		return nullptr;
+	}
+
+	template<typename Res>
+	void ResourceManager::free(Res* resource) {
+		--resource->m_RefCounter;
+		if (resource->m_RefCounter <= 0) {
+#ifdef PARALLAX_DEBUG
+			if (resource->m_RefCounter < 0)
+				PRX_WARN("RESOURCE MANAGER: Reference counter is less than zero!");
+#endif
+			m_GarbageList.push_back(resource->getID());
+		}
+	}
+
+	void ResourceManager::collectGarbage() {
+#ifdef PARALLAX_ENABLE_MEMORY_LOGGING
+		unsigned int counter = 0;
+		for (auto garbage : m_GarbageList) {
+			m_Resources.erase(garbage);
+			counter++;
+		}
+		PRX_INFO("GARBAGE COLLECTION: ", counter, " items deleted.");
+#else
+		for (auto garbage : m_GarbageList) {
+				m_Resources.erase(garbage);
+		}
+#endif
 	}
 }

@@ -3,9 +3,9 @@
 #include <resources/ImageLoader.h>
 
 namespace prx {
-	Texture::Texture(std::string_view path) 
+	Texture::Texture(std::string_view name, std::string_view path) 
 		//TODO: This temporary solution
-		: TextureBase(path, path)
+		: TextureBase(name, path)
 	{
 		  m_TexID = load();
 	}

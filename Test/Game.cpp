@@ -36,11 +36,14 @@ void Game::init() {
 	m_Scene = Director::getInstance()->getScene("Scene");
 	m_Layer = new Layer(0, m_Scene);
 	{
-		auto h = get_resource<Texture>("res/textures/sun.png");
+//		auto h = get_resource<Texture>("res/textures/sun.png");
 		ResourceManager::initialize();
-		auto t = ResourceManager::getInstance()->get<Texture>(23, "res/textures/sun.png");
+		auto t = get_resource<Texture>("tex", std::string("res/textures/background.png"));
+		auto r = get_resource<Texture>("tex", std::string("res/textures/brown_planet.png"));
+		auto f = ResourceHandler<Texture>(std::move(r));
 		
 	}
+	ResourceManager::getInstance()->collectGarbage();
 	std::knuth_b rand;
 	std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	m_Group = new Group(m_Layer);

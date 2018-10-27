@@ -29,7 +29,7 @@ namespace prx {
 		TextureFormat m_Format;
 
 		TextureBase(std::string_view name = "unnamed", std::string_view filepath = "unknown") 
-			: Resource(name, filepath, hash_string(name)) 
+			: Resource(name, filepath) 
 		{};
 
 	public:
