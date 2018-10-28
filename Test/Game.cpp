@@ -31,6 +31,10 @@ void Game::init() {
 	auto sun = Resources::getTexture(Resources::loadTexture("res/textures/sun.png"));
 	auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
 	auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
+	background->init();
+	sun->init();
+	bluePlanet->init();
+	brownPlanet->init();
 
 	Director::getInstance()->createScene("Scene");
 	m_Scene = Director::getInstance()->getScene("Scene");

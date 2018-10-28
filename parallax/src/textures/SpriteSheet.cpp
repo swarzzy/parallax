@@ -4,7 +4,8 @@
 namespace prx {
 
 	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected)
-		: m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
+		: TextureBase("", path), 
+		m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
 		m_TexCoords(new TexCoords[m_Tiles]),
 		m_ReflectedTexCoords(new TexCoords[m_Tiles]),
 		m_Reflected(reflected),
@@ -96,7 +97,7 @@ namespace prx {
 	}
 
 	unsigned SpriteSheet::load() {
-		Image* image = ImageLoader::loadImage(m_Path);
+		auto image = load_image(m_Path);
 
 		m_Width = image->getWigth();
 		m_Height = image->getHeight();
@@ -129,8 +130,6 @@ namespace prx {
 		//GLCall(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-
-		delete image;
 
 		return result;
 	}

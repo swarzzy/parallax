@@ -52,6 +52,7 @@
     <ClCompile Include="src\resources\ResourcesDeprec.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
+    <ClCompile Include="src\textures\TextureBase.cpp" />
     <ClCompile Include="src\utils\log\LogOld.cpp" />
     <ClCompile Include="src\utils\StringUtils.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
@@ -203,6 +204,8 @@
     <ClInclude Include="include\textures\TextureAtlas.h" />
     <ClInclude Include="include\textures\TextureBase.h" />
     <ClInclude Include="include\utils\color\ColorFormatConverter.h" />
+    <ClInclude Include="include\utils\error\ImageLoadingException.h" />
+    <ClInclude Include="include\utils\error\ParallaxException.h" />
     <ClInclude Include="include\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />
@@ -369,7 +372,7 @@
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>

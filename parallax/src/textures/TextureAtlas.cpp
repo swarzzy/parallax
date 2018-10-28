@@ -4,9 +4,11 @@
 #include <utils/error_handling/GLErrorHandler.h>
 #include <resources/ImageLoader.h>
 #include <textures/Texture.h>
+#include "utils/error/ImageLoadingException.h"
 
 namespace prx {
-	TextureAtlas::TextureAtlas(unsigned int width, unsigned int height, TextureFormat format) {
+	TextureAtlas::TextureAtlas(unsigned int width, unsigned int height, TextureFormat format)
+		: TextureBase("", ""){
 		m_Format = format;
 		m_Width  = width;
 		m_Height = height;
@@ -29,13 +31,11 @@ namespace prx {
 
 	hpm::vec4 TextureAtlas::add(unsigned char* pixels, unsigned width, unsigned height, TextureFormat format) {
 		if (format != m_Format) {
-			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
-			ASSERT(false);
+			PRX_FATAL("TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, width, height);
 		if (atl.x < 0) {
-			// TODO: Quiet logging
-			//Log::message("TEXTURE ATLAS: Atlas is full. Can not add new region.", LOG_WARNING);
+			PRX_WARN("TEXTURE ATLAS: Atlas is full. Can not add new region.");
 			return hpm::vec4(-1.0);
 		}
 		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, pixels, width);
@@ -44,15 +44,18 @@ namespace prx {
 	}
 
 	hpm::vec4 TextureAtlas::add(std::string_view path) {
-		Image* image = ImageLoader::loadImage(path);
-
+		std::shared_ptr<Image> image;
+		try {
+			 image = load_image(path);
+		} catch (ImageLoadingException& e) {
+			PRX_FATAL("TEXTURE ATLAS: ", e);
+		}
 		if (image->getFormat() != getGLFormat(m_Format)) {
-			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
-			ASSERT(false);
+			PRX_FATAL(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Could not add region to the atlas. Incorrect data format");
 		}
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(m_TextureAtlas, image->getWigth(), image->getHeight());
 		if (atl.x < 0) {
-			//Log::message("TEXTURE ATLAS: Atlas is full. Can not add new region.", LOG_WARNING);
+			PRX_WARN("TEXTURE ATLAS: Atlas is full. Can not add new region.");
 			return hpm::vec4(-1.0);
 		}
 		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, image->getPixels(), image->getWigth());
@@ -61,7 +64,7 @@ namespace prx {
 
 	void TextureAtlas::resize(unsigned width, unsigned height) {
 		if (width < m_TextureAtlas->width || height < m_TextureAtlas->height) {
-			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Can not resize atlas. New size os less than old.");
+			PRX_WARN("TEXTURE ATLAS: Can not resize atlas. New size os less than old.");
 			return;
 		}
 
@@ -77,7 +80,7 @@ namespace prx {
 
 		ftgl::ivec4 atl = ftgl::texture_atlas_get_region(textureAtlasNew, m_TextureAtlas->width, m_TextureAtlas->height);
 		if (atl.x < 0) {
-			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE ATLAS: Can not resize atlas");
+			PRX_ERROR("TEXTURE ATLAS: Can not resize atlas");
 			return;
 		}
 		ftgl::texture_atlas_set_region(textureAtlasNew, atl.x, atl.y, atl.width, atl.height, m_TextureAtlas->data, m_TextureAtlas->width);
@@ -119,8 +122,7 @@ namespace prx {
 			format = GL_RED;
 		}
 		else {
-			Log::message(LOG_LEVEL::LOG_ERROR, "TEXTURE: Could not create texture. Incorrect data format");
-			ASSERT(false);
+			PRX_FATAL("TEXTURE: Could not create texture. Incorrect data format");
 		}
 
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, format, GL_UNSIGNED_BYTE, m_TextureAtlas->data));

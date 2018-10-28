@@ -59,7 +59,7 @@ namespace prx {
 		
 
 	public:
-		SpriteSheet() {};
+		//SpriteSheet() {};
 		SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected = false);
 		~SpriteSheet();
 
@@ -90,7 +90,7 @@ namespace prx {
 		if (frame < m_Tiles)
 			return m_TexCoords[frame];
 		else {
-			Log::message(LOG_LEVEL::LOG_ERROR, "SPRITE SHEET: Incorrect UV index");
+			PRX_ERROR("SPRITE SHEET: Incorrect UV index");
 			return m_TexCoords[0];
 		}
 	}

@@ -234,9 +234,11 @@ namespace prx {
 	}
 
 	inline void Node::freeze(bool freeze) noexcept {
-		m_Frozen = freeze;
-		for (auto child : m_Children)
-			child->freeze(freeze);
+		if (m_Frozen != freeze) {
+			m_Frozen = freeze;
+			for (auto child : m_Children)
+				child->freeze(freeze);
+		}
 	}
 
 	inline bool Node::isFrozen() const noexcept {

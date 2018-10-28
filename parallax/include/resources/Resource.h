@@ -22,29 +22,34 @@ namespace prx {
 
 		PRX_DISALLOW_COPY_AND_MOVE(Resource);
 
-		explicit Resource(std::string_view name, std::string_view filepath)
-		: m_uID(++_globalResourceCounter),
-		  m_RefCounter(0),
-		  m_Name(name),
-		  m_FilePath(filepath),
-		  m_ID(hash_string(filepath))
-		{}
-
+		Resource(std::string_view name, std::string_view filepath);
 		virtual ~Resource() {};
 
 	public:
 		inline size_t getUniqueID() const noexcept;
-		inline prx_id_t getID() const noexcept;
+		inline prx_id_t getResID() const noexcept;
 		inline const std::string& getName() const noexcept;
 		inline const std::string& getFilePath() const noexcept;
 		inline const prx_id_t getRefCount() const noexcept;
-		static inline prx_id_t makeID(std::string_view filepath);
+		static inline prx_id_t makeResID(std::string_view filepath);
+
+		virtual void init() = 0;
+		virtual void update() {};
+		virtual void destroy() = 0;
 
 		template <typename T>
 		friend class ResourceHandler;
 
 		friend class ResourceManager;
 	};
+
+	inline Resource::Resource(std::string_view name, std::string_view filepath)
+		: m_uID(++_globalResourceCounter),
+		m_RefCounter(0),
+		m_Name(name),
+		m_FilePath(filepath),
+		m_ID(hash_string(filepath))
+	{}
 
 	inline size_t Resource::getUniqueID() const noexcept {
 		return m_uID;
@@ -63,11 +68,11 @@ namespace prx {
 		return m_RefCounter;
 	}
 
-	inline prx_id_t Resource::getID() const noexcept {
+	inline prx_id_t Resource::getResID() const noexcept {
 		return m_ID;
 	}
 
-	inline prx_id_t Resource::makeID(std::string_view filepath) {
+	inline prx_id_t Resource::makeResID(std::string_view filepath) {
 		return hash_string(filepath);
 	}
 

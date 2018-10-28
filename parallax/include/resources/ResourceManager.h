@@ -48,7 +48,7 @@ namespace prx {
 			return nullptr;
 			// TODO: EXCEPTIONS
 		}
-		auto result = m_Resources.emplace(ptr->getID(), ptr);
+		auto result = m_Resources.emplace(ptr->getResID(), ptr);
 		if (!result.second) {
 			PRX_ERROR("RESOURCE MANAGER: Failed to load resource! Unexpected error.");
 			// TODO: EXCEPTIONS
@@ -61,7 +61,7 @@ namespace prx {
 
 	template<typename Res>
 	inline Res* ResourceManager::get(std::string_view filepath) {
-		auto result = m_Resources.find(Resource::makeID(filepath));
+		auto result = m_Resources.find(Resource::makeResID(filepath));
 		if (result == m_Resources.end())
 			return nullptr;
 		Res* ptr;
@@ -71,7 +71,7 @@ namespace prx {
 		}
 		if (ptr->getRefCount() <= 0) {
 			// Very slow thing
-			auto result = std::find(m_GarbageList.begin(), m_GarbageList.end(), ptr->getID());
+			auto result = std::find(m_GarbageList.begin(), m_GarbageList.end(), ptr->getResID());
 			m_GarbageList.erase(result);
 		}
 		return nullptr;
@@ -85,7 +85,7 @@ namespace prx {
 			if (resource->m_RefCounter < 0)
 				PRX_WARN("RESOURCE MANAGER: Reference counter is less than zero!");
 #endif
-			m_GarbageList.push_back(resource->getID());
+			m_GarbageList.push_back(resource->getResID());
 		}
 	}
 

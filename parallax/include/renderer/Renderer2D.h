@@ -84,6 +84,7 @@ namespace prx {
 	inline void Renderer2D::defaultMask() noexcept {
 		unsigned char maskData[3] = { 255, 255, 255 };
 		m_Mask = new Texture(maskData, 1, 1, TextureFormat::RGB);
+		m_Mask->init();
 	}
 
 	inline void Renderer2D::setMask(Texture* mask) noexcept {

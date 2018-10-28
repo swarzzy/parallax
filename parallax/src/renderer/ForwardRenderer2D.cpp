@@ -142,9 +142,9 @@ namespace prx {
 		const float* UVs;
 
 		if (reflect)
-			UVs = TextureBase::DEFAULT_REFLECT_UV;
+			UVs = TextureBase::reflectDefaultUV();
 		else
-			UVs = TextureBase::DEFAULT_UV;
+			UVs = TextureBase::defaultUV();
 
 		float ts = submitTexture(texID);
 
@@ -218,9 +218,9 @@ namespace prx {
 		const float* UVs;
 		
 		if (reflect)
-			UVs = TextureBase::DEFAULT_REFLECT_UV;
+			UVs = TextureBase::reflectDefaultUV();
 		else
-			UVs = TextureBase::DEFAULT_UV;
+			UVs = TextureBase::defaultUV();
 
 		float ts = submitTexture(texID);
 

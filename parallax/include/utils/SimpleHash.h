@@ -14,6 +14,8 @@ namespace prx {
 		static const unsigned int m_MULTIPLIER = 31;
 	public:
 		static inline unsigned int hashString(std::string_view string) {
+			if (string.size() == 0)
+				return 0;
 			unsigned int hash = 0;
 
 			for (auto& element : string)

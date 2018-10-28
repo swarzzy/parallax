@@ -1,9 +1,6 @@
 #pragma once
-
-#ifndef _IMAGELOADER_H_
-#define _IMAGELOADER_H_
-
-#include <string_view>
+#ifndef _PARALLAX_UTILS_IMAGELOADER_H_
+#define _PARALLAX_UTILS_IMAGELOADER_H_
 
 #include "../../ext/GL/glew.h"
 #include "../utils/log/Log.h"
@@ -20,15 +17,12 @@ namespace prx {
 		Image(unsigned int width, unsigned int height, GLenum format, unsigned char* pixels);
 		~Image();
 
-		inline const unsigned int	getWigth()	const { return m_Width;  }
-		inline const unsigned int	getHeight() const { return m_Height; }
-		inline const GLenum			getFormat() const { return m_Format; }
-		inline const unsigned char* getPixels() const { return m_Pixels; }
+		inline const unsigned int	getWigth()	const noexcept { return m_Width;  }
+		inline const unsigned int	getHeight() const noexcept { return m_Height; }
+		inline const GLenum			getFormat() const noexcept { return m_Format; }
+		inline const unsigned char* getPixels() const noexcept { return m_Pixels; }
 	};
 
-	class ImageLoader {
-	public:
-		static Image* loadImage(std::string_view path);
-	};
+	std::shared_ptr<Image> load_image(std::string_view path);
 }
 #endif

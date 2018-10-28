@@ -37,7 +37,7 @@ namespace prx {
 
 		FTCall(FT_Set_Pixel_Sizes(face, 0, m_Size));
 
-		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+		//GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
 		m_FontAtlas = new TextureAtlas(512, 512, TextureFormat::RED);
 

@@ -2,6 +2,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../ext/stb/stb_image.h"
+#include "../utils/error/ImageLoadingException.h"
 
 namespace prx {
 
@@ -12,14 +13,17 @@ namespace prx {
 		stbi_image_free(m_Pixels);
 	}
 
-	Image* ImageLoader::loadImage(std::string_view path) {
+	std::shared_ptr<Image> load_image(std::string_view path) {
 		stbi_set_flip_vertically_on_load(true);
 
 		int width, height, componentsCount;
 
-		unsigned char *data = stbi_load(path.data(), &width, &height, &componentsCount, 0);
+		unsigned char* data = stbi_load(path.data(), &width, &height, &componentsCount, 0);
+		
+		if (data == nullptr) {
+			throw ImageLoadingException(path.data());
+		}
 
-		if (data) {
 			GLenum format;
 			if (componentsCount == 1)
 				format = GL_RED;
@@ -28,11 +32,6 @@ namespace prx {
 			else if (componentsCount == 4)
 				format = GL_RGBA;
 
-			return new Image(width, height, format, data);
-		}
-		else {
-			Log::message(LOG_LEVEL::LOG_ERROR, "Image loader error! Can`t load image");
-			return nullptr;
-		}
+			return std::make_shared<Image>(width, height, format, data);
 	}
 }
