@@ -3,11 +3,26 @@
 #include <renderer/Renderer2D.h>
 #include <camera/Camera2D.h>
 #include <scene/Layer.h>
+#include <scene/SpriteNode.h>
+#include <scene/LabelNode.h>
 
 namespace prx {
 
 	const std::function<bool(Layer*, Layer*)> Scene::SORT_PREDICATE =
 		[](Layer* a, Layer* b) {return a->getDepth() < b->getDepth(); };
+
+	void delete_node(Node* node) {
+		auto& children = node->getChildren();
+		auto parent = node->getParent();
+		parent->removeChild(node);
+		
+		for (auto child : children) {
+			child->setParent(parent);
+		}
+
+		node->destroy();
+		delete node;
+	}
 
 	Scene::Scene(std::string_view name, Renderer2D* renderer)
 		: m_ID(++GLOBAL_SCENE_COUNTER),
@@ -15,7 +30,8 @@ namespace prx {
 		m_Renderer(renderer),
 		m_Camera(new Camera2D()),
 		m_CameraMoved(false),
-		m_NeedsSorting(false)
+		m_NeedsSorting(false),
+		m_Initialized(false)
 	{
 		m_Camera->setCameraPosition(DEFAULT_CAMERA_POSITION);
 	}
@@ -28,50 +44,84 @@ namespace prx {
 		delete m_Renderer;
 	}
 
+	SpriteNode* Scene::createSprite(float width, float height, std::string_view texturePath, Node* parent) {
+		auto texture = get_resource<Texture>(texturePath);
+		SpriteNode* node = new SpriteNode(width, height, texture, this, parent);
+		return node;
+	}
+
+	Group* Scene::createGroup(Node* parent) {
+		return new Group(this);
+	}
+
+	LabelNode* Scene::createLabel(std::string_view text, unsigned color, Node* parent) {
+		return new LabelNode(this, text, color, parent);
+	}
+
+	Layer* Scene::createLayer(int depth) {
+		return new Layer(this, depth);
+	}
+
 	void Scene::sortChildren() {
 		std::sort(m_Layers.begin(), m_Layers.end(), SORT_PREDICATE);
 	}
 
 	void Scene::init() {
-		auto winWidth = Window::getCurrentWindow().getWidth();
-		auto winHeight = Window::getCurrentWindow().getHeight();
+		if (!m_Initialized) {
+			m_Initialized = true;
+			auto winWidth = Window::getCurrentWindow().getWidth();
+			auto winHeight = Window::getCurrentWindow().getHeight();
 
-		m_Camera->init(winWidth, winHeight);
+			m_Camera->init(winWidth, winHeight);
 
-		m_Renderer->init();
-		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+			m_Renderer->init();
+			m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
 
-		for (auto layer : m_Layers)
-			layer->init();
+			for (auto layer : m_Layers)
+				layer->init();
 
-		sortChildren();
+			sortChildren();
+		}
 	}
 
 	void Scene::update() {
-		m_Camera->update();
-		currentCameraPosition = m_Camera->getCameraPosition();
-		currentViewSize = m_Camera->getViewSpaceSize();
+		if (m_Initialized) {
+			m_Camera->update();
+			currentCameraPosition = m_Camera->getCameraPosition();
+			currentViewSize = m_Camera->getViewSpaceSize();
 
-		for (auto layer : m_Layers)
-			layer->update();
+			for (auto layer : m_Layers)
+				layer->update();
+		}
 	}
 
 	void Scene::draw() {
-		if (m_NeedsSorting) {
-			sortChildren();
-			m_NeedsSorting = false;
-		}
+		if (m_Initialized) {
+			if (m_NeedsSorting) {
+				sortChildren();
+				m_NeedsSorting = false;
+			}
 
-		if (m_CameraMoved) {
-			m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
-			m_CameraMoved = false;
-		}
+			if (m_CameraMoved) {
+				m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+				m_CameraMoved = false;
+			}
 
-		m_Renderer->begin();
-		for (auto layer : m_Layers)
-			layer->draw(m_Renderer);
-		m_Renderer->end();
-		m_Renderer->flush();
+			m_Renderer->begin();
+			for (auto layer : m_Layers)
+				layer->draw(m_Renderer);
+			m_Renderer->end();
+			m_Renderer->flush();
+		}
+	}
+
+	void Scene::destroy() {
+		// TODO:: Camera and Renderer destroy
+		if (m_Initialized) {
+			m_Initialized = false;
+			for (auto layer : m_Layers)
+				layer->destroy();
+		}
 	}
 
 	void Scene::removeChild(Layer* layer) {
@@ -119,4 +169,3 @@ namespace prx {
 		}
 	}
 }
-

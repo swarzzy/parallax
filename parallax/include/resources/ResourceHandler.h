@@ -1,27 +1,32 @@
 #pragma once
 
-#include "../Common.h"
 #include "Resource.h"
 #include "ResourceManager.h"
-#include "../textures/Texture.h"
 
 namespace prx {
 	template<typename Res>
 	class ResourceHandler final {
 	private:
-		Res* m_Resource;
+		static struct weak_construct_t {};
+		static constexpr weak_construct_t weak_construct = weak_construct_t();
 
-		inline explicit ResourceHandler(Res* resource);
+		Res* m_Resource;
+		inline explicit ResourceHandler(weak_construct_t, Res* resource);
 	public:
 		template <typename T>
-		inline friend ResourceHandler<T> get_resource(std::string_view name, std::string_view filepath);
+		inline friend ResourceHandler<T> get_resource(std::string_view filepath);
 		
+		inline explicit ResourceHandler(Res* resource);
 		inline ~ResourceHandler();
 
-		inline explicit ResourceHandler(const ResourceHandler& other) noexcept;
-		inline explicit ResourceHandler(ResourceHandler&& other) noexcept;
+		inline ResourceHandler(const ResourceHandler& other) noexcept;
+		inline ResourceHandler(ResourceHandler& other) noexcept;
+		inline ResourceHandler(const ResourceHandler&& other) noexcept;
+		inline ResourceHandler(ResourceHandler&& other) noexcept;
 		inline ResourceHandler& operator=(const ResourceHandler& other) noexcept;
-		ResourceHandler& operator=(ResourceHandler&& other) noexcept;
+		inline ResourceHandler& operator=(ResourceHandler& other) noexcept;
+		inline ResourceHandler& operator=(ResourceHandler&& other) noexcept;
+		inline ResourceHandler& operator=(const ResourceHandler&& other) noexcept;
 
 		template <typename L, typename R>
 		inline friend bool operator==(const ResourceHandler<L>& left, const ResourceHandler<R>& right) noexcept;
@@ -41,36 +46,35 @@ namespace prx {
 		Res* operator->() noexcept;
 
 		inline void free() noexcept;
-		inline Res* get() noexcept;
+		inline Res* get() const noexcept;
 		inline size_t getRefCount() const noexcept;
 		inline bool unique() const noexcept;
-	public:
-		ResourceHandler(const ResourceHandler&& other) = delete;
-		ResourceHandler& operator=(const ResourceHandler&& other) = delete;
 	};
 
 	template <typename T>
-	ResourceHandler<T> get_resource(std::string_view name, std::string_view filepath) {
+	ResourceHandler<T> get_resource(std::string_view filepath) {
 		T* result = ResourceManager::getInstance()->get<T>(filepath);
 		if (result == nullptr) {
-			result = ResourceManager::getInstance()->load<T>(name, filepath);
+			result = ResourceManager::getInstance()->load<T>(filepath);
 			if (result == nullptr) {
-				// TODO: Error handling
-				PRX_FATAL("ERROR");
+				PRX_ERROR("RESOURCE MANAGER: Failed to load resource\n-> PATH: ", filepath);
 			}
 		}
-		return ResourceHandler<T>(result);
+		return ResourceHandler<T>(ResourceHandler<T>::weak_construct, result);
 	}
 
 	template <typename Res>
-	ResourceHandler<Res>::ResourceHandler(Res* resource) {
-		if (resource == nullptr) {
-			m_Resource = nullptr;
+	ResourceHandler<Res>::ResourceHandler(weak_construct_t, Res* resource)
+		: m_Resource(resource)
+	{}
+
+	template <typename Res>
+	ResourceHandler<Res>::ResourceHandler(Res* resource) 
+		: m_Resource(resource) 
+	{
+		if (m_Resource != nullptr) {
+			++m_Resource->m_RefCounter;
 		}
-		else {
-			m_Resource = resource;
-		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " constructed");
 	}
 
 	template <typename Res>
@@ -78,7 +82,6 @@ namespace prx {
 		if (m_Resource != nullptr) {
 			ResourceManager::getInstance()->free(m_Resource);
 		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " deleted");
 	}
 
 	template <typename Res>
@@ -90,7 +93,17 @@ namespace prx {
 			m_Resource = other.m_Resource;
 			++m_Resource->m_RefCounter;
 		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " copied");
+	}
+
+	template <typename Res>
+	ResourceHandler<Res>::ResourceHandler(ResourceHandler& other) noexcept {
+		if (other.m_Resource == nullptr) {
+			m_Resource = nullptr;
+		}
+		else {
+			m_Resource = other.m_Resource;
+			++m_Resource->m_RefCounter;
+		}
 	}
 
 	template <typename Res>
@@ -101,7 +114,6 @@ namespace prx {
 			m_Resource = other.m_Resource;
 			other.m_Resource = nullptr;
 		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " moved");
 	}
 
 	template <typename Res>
@@ -115,7 +127,20 @@ namespace prx {
 				++this->m_Resource->m_RefCounter;
 			}
 		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " copy assign");
+		return *this;
+	}
+
+	template <typename Res>
+	ResourceHandler<Res>& ResourceHandler<Res>::operator=(ResourceHandler& other) noexcept {
+		if (other != *this) {
+			if (other.m_Resource == nullptr) {
+				m_Resource = nullptr;
+			}
+			else {
+				this->m_Resource = other.m_Resource;
+				++this->m_Resource->m_RefCounter;
+			}
+		}
 		return *this;
 	}
 
@@ -130,7 +155,31 @@ namespace prx {
 				other.m_Resource = nullptr;
 			}
 		}
-		PRX_WARN(m_Resource != nullptr ? m_Resource->m_RefCounter : 300, " move assign");
+		return *this;
+	}
+
+	template <typename Res>
+	ResourceHandler<Res>::ResourceHandler(const ResourceHandler&& other) noexcept {
+		if (other.m_Resource == nullptr) {
+			m_Resource = nullptr;
+		}
+		else {
+			m_Resource = other.m_Resource;
+			++m_Resource->m_RefCounter;
+		}
+	}
+
+	template <typename Res>
+	ResourceHandler<Res>& ResourceHandler<Res>::operator=(const ResourceHandler&& other) noexcept {
+		if (other != *this) {
+			if (other.m_Resource == nullptr) {
+				m_Resource = nullptr;
+			}
+			else {
+				this->m_Resource = other.m_Resource;
+				++this->m_Resource->m_RefCounter;
+			}
+		}
 		return *this;
 	}
 
@@ -183,7 +232,7 @@ namespace prx {
 	}
 
 	template<typename Res>
-	Res* ResourceHandler<Res>::get() noexcept {
+	Res* ResourceHandler<Res>::get() const noexcept {
 		return m_Resource;
 	}
 
@@ -201,5 +250,4 @@ namespace prx {
 	bool ResourceHandler<Res>::unique() const noexcept {
 		return m_Resource != nullptr && m_Resource->m_RefCounter == 1;
 	}
-
 }

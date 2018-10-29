@@ -10,8 +10,9 @@ namespace prx {
 		return DEFAULT_ANCHOR_POINT;
 	}
 
-	Node::Node(Node* parent, float width, float height)
+	Node::Node(Scene* scene, Node* parent, float width, float height)
 		: m_ID(++GLOBAL_NODE_COUNTER),
+		  m_Scene(scene),
 		  m_Parent(parent),
 		  m_Initialized(false),
 		  m_TransformUpdate(true),
@@ -24,7 +25,10 @@ namespace prx {
 		  m_VisibilityTestMode(DEFAULT_VISIBILITY_TEST_MODE)
 	{
 		if (parent != nullptr) {
-			parent->addChild(this);
+			if (parent->getScene() != scene) 
+				PRX_ERROR("NODE: Attempt to assign a node to wrong scene\n-> ID:", m_ID);
+			else 
+				parent->addChild(this);
 			m_Depth = parent->m_Depth;
 		}
 	}
@@ -67,92 +71,112 @@ namespace prx {
 	}
 
 	inline void Node::update() {
-#ifdef PARALLAX_DEBUG
-		if (!m_Initialized)
-			PRX_FATAL("NODE: Node is not initialized (Node ID: ", m_ID, " )");
-#endif
-		if (!m_Frozen) {
+		if (m_Initialized) {
+			if (!m_Frozen) {
 
-			if (m_DepthUpdate) {
-				if (m_Parent != nullptr)
-					m_Depth = m_Parent->m_Depth;
-				//PRX_INFO("depth uppdate ", m_ID);
+				if (m_DepthUpdate) {
+					if (m_Parent != nullptr)
+						m_Depth = m_Parent->m_Depth;
+					//PRX_INFO("depth uppdate ", m_ID);
+				}
+
+				if (m_TransformUpdate) {
+					if (m_Parent != nullptr)
+						m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
+					m_TransformComponent.update();
+					//PRX_INFO("transform uppdate ", m_ID);
+				}
+
+				updateInternal();
+
+				if (m_DepthUpdate && m_TransformUpdate)
+					for (auto child : m_Children) {
+						child->depthUpdateQuery();
+						child->transformUpdateQuery();
+						child->update();
+					}
+				else if (m_DepthUpdate)
+					for (auto child : m_Children) {
+						child->depthUpdateQuery();
+						child->update();
+					}
+				else if (m_TransformUpdate)
+					for (auto child : m_Children) {
+						child->transformUpdateQuery();
+						child->update();
+					}
+				else {
+					for (auto child : m_Children) {
+						child->update();
+					}
+				}
+
+				m_DepthUpdate = false;
+				m_TransformUpdate = false;
+
 			}
-
-			if (m_TransformUpdate) {
-				if (m_Parent != nullptr)
-					m_TransformComponent.setWorldMat(m_Parent->getWorldMat());
-				m_TransformComponent.update();
-				//PRX_INFO("transform uppdate ", m_ID);
-			}
-
-			updateInternal();
-
-			if (m_DepthUpdate && m_TransformUpdate)
-				for (auto child : m_Children) {
-					child->depthUpdateQuery();
-					child->transformUpdateQuery();
-					child->update();
-				}
-			else if (m_DepthUpdate)
-				for (auto child : m_Children) {
-					child->depthUpdateQuery();
-					child->update();
-				}
-			else if (m_TransformUpdate)
-				for (auto child : m_Children) {
-					child->transformUpdateQuery();
-					child->update();
-				}
 			else {
-				for (auto child : m_Children) {
+				for (auto child : m_Children)
 					child->update();
+			}
+
+			if (m_Visible) {
+				if (m_VisibilityTestEnabled) {
+					m_InViewSpace = false;
+					if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
+						visibilityTestQuad();
+					else
+						visibilityTestAnchor();
 				}
-			}
-
-			m_DepthUpdate = false;
-			m_TransformUpdate = false;
-
-		}
-		else {
-			for (auto child : m_Children)
-				child->update();
-		}
-
-		if (m_Visible) {
-			if (m_VisibilityTestEnabled) {
-				m_InViewSpace = false;
-				if (m_VisibilityTestMode == VisibilityTestMode::QUAD)
-					visibilityTestQuad();
 				else
-					visibilityTestAnchor();
+					m_InViewSpace = true;
 			}
-			else
-				m_InViewSpace = true;
 		}
 	}
 
 	inline void Node::draw(Renderer2D * renderer) {
-#ifdef PARALLAX_DEBUG
-		if (!m_Initialized)
-			PRX_FATAL("(Node): Node is not initialized (Node ID: )", m_ID);
-#endif
-		if (m_Visible && m_InViewSpace) {
-			drawInternal(renderer);
+		if (m_Initialized) {
+			if (m_Visible && m_InViewSpace) {
+				drawInternal(renderer);
 
-			for (auto child : m_Children)
-				child->draw(renderer);
+				for (auto child : m_Children)
+					child->draw(renderer);
+			}
 		}
 	}
+
+	inline void Node::destroy() {
+		if (m_Initialized) {
+			m_Initialized = false;
+
+			m_TransformComponent.destroy();
+
+			m_TransformUpdate = true;
+			m_DepthUpdate = true;
+
+			destroyInternal();
+
+			for (auto child : m_Children)
+				child->destroy();
+		}
+	}
+
 
 	inline void Node::addChild(Node* child) {
 		m_Children.push_back(child);
 	}
 
 	inline void Node::setParent(Node* parent) {
-		if (parent == this)
-			PRX_ERROR("(Node): Trying to set self as a parent\n-> Node ID: ", m_ID);
-		m_Parent->removeChild(this);
+		if (parent == this) {
+			PRX_ERROR("NODE: Trying to set self as a parent\n-> ID: ", m_ID);
+			return;
+		}
+		if (parent->getScene() != m_Scene) {
+			PRX_ERROR("NODE: Attempt to assign a node to wrong scene\n-> ID:", m_ID);
+			return;
+		}
+		if (m_Parent != nullptr)
+			m_Parent->removeChild(this);
 		m_Parent = parent;
 		parent->addChild(this);
 		m_Depth = parent->m_Depth;
@@ -171,8 +195,16 @@ namespace prx {
 		return m_ID;
 	}
 
+	inline const Scene * Node::getScene() const noexcept {
+		return m_Scene;
+	}
+
 	inline Node* Node::getParent() const noexcept {
 		return m_Parent;
+	}
+
+	inline const std::vector<Node*>& Node::getChildren() const noexcept {
+		return m_Children;
 	}
 
 	inline const hpm::mat3& Node::getLocalMat() const noexcept {
@@ -195,6 +227,16 @@ namespace prx {
 
 	inline void Node::setScale(float scale) noexcept {
 		m_TransformComponent.setScale(scale);
+		m_TransformUpdate = true;
+	}
+
+	inline void Node::setSize(float width, float height) noexcept {
+		m_TransformComponent.setSize(width, height);
+		m_TransformUpdate = true;
+	}
+
+	inline void Node::setSize(const hpm::vec2 & size) noexcept {
+		m_TransformComponent.setSize(size);
 		m_TransformUpdate = true;
 	}
 

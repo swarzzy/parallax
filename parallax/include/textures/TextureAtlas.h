@@ -31,8 +31,6 @@ namespace prx {
 		
 		// Rebuilds actual rendering API texture with new added regions.
 		void update();
-		void init() override {};
-		void destroy() override {};
 
 		inline unsigned int getUsage()  const { return static_cast<unsigned int>(m_TextureAtlas->used);   };
 		inline unsigned int getWidth()  const { return static_cast<unsigned int>(m_TextureAtlas->width);  };

@@ -25,7 +25,7 @@ namespace prx {
 
 	public:
 		template<typename Res>
-		inline Res* load(std::string_view name, std::string_view filepath);
+		inline Res* load(std::string_view filepath);
 
 		template<typename Res>
 		inline Res* get(std::string_view filepath);
@@ -38,8 +38,8 @@ namespace prx {
 	};
 
 	template<typename Res>
-	Res* ResourceManager::load(std::string_view name, std::string_view filepath) {
-		Res* resource = new Res(name, filepath);
+	Res* ResourceManager::load(std::string_view filepath) {
+		Res* resource = new Res(filepath);
 		Resource* ptr = dynamic_cast<Resource*>(resource);
 		if (ptr == nullptr) {
 			PRX_ERROR("RESOURCE MANAGER: Failed to load resource! Unknown resource type.\n-> TYPE: ",

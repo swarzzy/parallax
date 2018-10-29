@@ -49,5 +49,17 @@ namespace prx {
 			m_WorldUpdate = false;
 		}
 	}
-}
 
+	void TransformComponent2D::destroy() {
+		if (m_Initialized) {
+			m_WorldMat = hpm::mat3::identity();
+			m_LocalMat = hpm::mat3::identity();
+
+			m_LocalUpdate = true;
+			m_WorldUpdate = true;
+			m_AnchorUpdate = true;
+
+			m_Initialized = false;
+		}
+	}
+}

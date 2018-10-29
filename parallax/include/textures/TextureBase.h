@@ -48,7 +48,7 @@ namespace prx {
 		TextureWrap	  m_WrapMode;
 		TextureFilter m_FilterMode;
 
-		TextureBase(std::string_view name, std::string_view filepath);
+		explicit TextureBase(std::string_view filepath);
 		TextureBase();
 
 	public:

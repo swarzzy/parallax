@@ -3,53 +3,46 @@
 #include <scene/Director.h>
 
 namespace prx {
-	Layer::Layer(int depth, Scene* parent)
-		: Node(nullptr),
-		  m_ParentScene(parent) 
+	Layer::Layer(Scene* scene, int depth)
+		: Node(scene, nullptr),
+		  m_ParentScene(scene) 
 	{
 		m_InViewSpace = true;
 		m_VisibilityTestEnabled = false;
-		if (parent != nullptr)
-			parent->addChild(this);
+		if (scene != nullptr)
+			scene->addChild(this);
 	}
 
 	void Layer::update() {
-#ifdef PARALLAX_DEBUG
-		if (!m_Initialized)
-			PRX_FATAL("LAYER: Layer is not initialized (Node ID: ", m_ID, " )");
-#endif
-		if (!m_Frozen) {
+		if (m_Initialized) {
+			if (!m_Frozen) {
 
-			if (m_DepthUpdate) {
-				if (m_ParentScene != nullptr)
-					m_ParentScene->sortRequest();
-				else if (m_Parent != nullptr)
-					m_Depth = m_Parent->getDepth();
-				PRX_INFO("depth update ", m_ID);
-			}
-
-			updateInternal();
-
-			if (m_DepthUpdate)
-				for (auto child : m_Children) {
-					child->depthUpdateQuery();
-					child->update();
+				if (m_DepthUpdate) {
+					if (m_ParentScene != nullptr)
+						m_ParentScene->sortRequest();
+					// TODO: remove this
+					else if (m_Parent != nullptr)
+						m_Depth = m_Parent->getDepth();
+					PRX_INFO("depth update ", m_ID);
 				}
-			else {
-				for (auto child : m_Children) {
-					child->update();
-				}
-			}
 
-			m_DepthUpdate = false;
-			m_TransformUpdate = false;
+				updateInternal();
+
+				if (m_DepthUpdate)
+					for (auto child : m_Children) {
+						child->depthUpdateQuery();
+						child->update();
+					}
+				else {
+					for (auto child : m_Children) {
+						child->update();
+					}
+				}
+
+				m_DepthUpdate = false;
+				m_TransformUpdate = false;
+			}
 		}
-	}
-
-	void Layer::setParent(Scene* parent) {
-		m_ParentScene->removeChild(this);
-		m_ParentScene = parent;
-		parent->addChild(this);
 	}
 
 	void Layer::setDepth(int depth) {

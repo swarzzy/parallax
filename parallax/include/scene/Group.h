@@ -5,11 +5,13 @@
 
 namespace prx {
 	class Group final : public Node {
-			
 		PRX_DISALLOW_COPY_AND_MOVE(Group)
+	private:
+		Group(Scene* scene, Node* parent = 0) : Node(scene, parent) {};
 
 	public:
-		Group(Node* parent = 0) : Node(parent) {};
 		~Group() {};
+
+		friend class Scene;
 	};
 }

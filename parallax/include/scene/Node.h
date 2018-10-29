@@ -7,6 +7,7 @@
 namespace prx {
 	
 	class Renderer2D;
+	class Scene;
 
 	enum class VisibilityTestMode {
 		ANCHOR_POINT,
@@ -14,6 +15,7 @@ namespace prx {
 	};
 
 	class Node {
+		PRX_DISALLOW_COPY_AND_MOVE(Node)
 /* NOTE:
  *	Another way to make anchor points is set some size to every node, 
  *	multiply a world matrix by an anchor matix, 
@@ -31,11 +33,12 @@ namespace prx {
 		static inline int defaultNodeDepth() noexcept;
 		static inline const hpm::vec2 defaultAnchorPoint() noexcept;
 
+		friend class Scene;
+
 	protected:
 
-		PRX_DISALLOW_COPY_AND_MOVE(Node)
-
 		unsigned int		 m_ID;
+		Scene*				 m_Scene;
 		Node*				 m_Parent;
 		std::vector<Node*>	 m_Children;
 		bool				 m_Initialized;
@@ -51,7 +54,7 @@ namespace prx {
 		bool				 m_VisibilityTestEnabled;
 		VisibilityTestMode	 m_VisibilityTestMode;
 	
-		inline Node(Node* parent = nullptr, float width = 0, float height = 0);
+		inline Node(Scene* scene, Node* parent = nullptr, float width = 0, float height = 0);
 	 
 	public:
 		inline virtual ~Node();
@@ -59,23 +62,26 @@ namespace prx {
 		inline void init();
 		virtual inline void update();
 		inline void draw(Renderer2D* renderer);
-		// TODO: Destroy method
-		inline void destroy() {};
+		inline void destroy();
 	
 		virtual inline void setParent(Node* parent);
 		inline void removeChild(Node* child);
 		inline Node* getParent() const noexcept;
+		inline const std::vector<Node*>& getChildren() const noexcept;
 
 		inline bool isInitialized() const noexcept;
 	
 		inline int getDepth() const noexcept;
 		inline constexpr unsigned int getID() const noexcept;
+		inline const Scene* getScene() const noexcept;
 		inline const hpm::mat3& getLocalMat() const noexcept;
 		inline const hpm::mat3& getWorldMat() const noexcept;
 	
 		virtual inline void setPosition(const hpm::vec2& position) noexcept;
 		virtual inline void setPosition(float x, float y) noexcept;
 		virtual inline void setScale(float scale) noexcept;
+		virtual inline void setSize(float width, float height) noexcept;
+		virtual inline void setSize(const hpm::vec2& size) noexcept;
 		virtual inline void setRotation(float angle, float radius = 0) noexcept;
 		virtual inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
 		virtual inline void setAnchorPoint(float x, float y) noexcept;
@@ -98,6 +104,7 @@ namespace prx {
 		virtual void initInternal() {};
 		virtual void updateInternal() {};
 		virtual void drawInternal(Renderer2D* renderer) {};
+		virtual void destroyInternal() {};
 
 		inline void addChild(Node* child);
 

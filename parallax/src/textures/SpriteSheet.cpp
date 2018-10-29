@@ -4,7 +4,7 @@
 namespace prx {
 
 	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected)
-		: TextureBase("", path), 
+		: TextureBase(path), 
 		m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
 		m_TexCoords(new TexCoords[m_Tiles]),
 		m_ReflectedTexCoords(new TexCoords[m_Tiles]),

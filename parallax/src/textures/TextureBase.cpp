@@ -20,8 +20,8 @@ namespace prx {
 
 	const byte TextureBase::EMPTY_TEXTURE_COLOR = 255;
 
-	TextureBase::TextureBase(std::string_view name, std::string_view filepath)
-		: Resource(name, filepath),
+	TextureBase::TextureBase(std::string_view filepath)
+		: Resource(filepath),
 		  m_TexID(0),
 		  m_Width(0),
 		  m_Height(0),
@@ -31,7 +31,7 @@ namespace prx {
 	{};
 
 	TextureBase::TextureBase()
-		: Resource("", ""),
+		: Resource(""),
 		  m_TexID(0),
 		  m_Width(0),
 		  m_Height(0),

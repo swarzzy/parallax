@@ -1,25 +1,7 @@
 [INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
-[WARN ] 1 constructed
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::ResourceHandler(class prx::Texture *)
--> FILE: resourcehandler.h 
--> LINE: 73
-[WARN ] 1 constructed
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::ResourceHandler(class prx::Texture *)
--> FILE: resourcehandler.h 
--> LINE: 73
-[WARN ] 1 moved
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::ResourceHandler(class prx::ResourceHandler<class prx::Texture> &&) noexcept
--> FILE: resourcehandler.h 
--> LINE: 104
-[WARN ] 0 deleted
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::~ResourceHandler(void)
--> FILE: resourcehandler.h 
--> LINE: 81
-[WARN ] 300 deleted
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::~ResourceHandler(void)
--> FILE: resourcehandler.h 
--> LINE: 81
-[WARN ] 0 deleted
--> FROM: __cdecl prx::ResourceHandler<class prx::Texture>::~ResourceHandler(void)
--> FILE: resourcehandler.h 
--> LINE: 81
+[INFO ] Resource initialized
+-> FILE: 
+[INFO ] Resource initialized
+-> FILE: res/textures/5mb.jpg
+[INFO ] Resource initialized
+-> FILE: res/textures/blue_planet.png

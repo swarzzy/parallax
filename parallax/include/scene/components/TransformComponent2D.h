@@ -31,6 +31,8 @@ namespace prx {
 
 		void init();
 		void update();
+		// Clear local and world matrix
+		void destroy();
 
 		//TransformComponent2D clone() const;
 

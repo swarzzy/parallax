@@ -3,13 +3,20 @@
 #include <functional>
 #include "Node.h"
 #include "../Common.h"
+#include "../resources/ResourceHandler.h"
+#include "Group.h"
 
 namespace prx {
 
 	class Layer;
 	class Camera2D;
+	class SpriteNode;
+	class LabelNode;
+
+	void delete_node(Node* node);
 
 	class Scene {
+		PRX_DISALLOW_COPY_AND_MOVE(Scene)
 	private:
 		inline static const hpm::vec2 DEFAULT_CAMERA_POSITION = hpm::vec2(0.0);
 		static const std::function<bool(Layer*, Layer*)> SORT_PREDICATE;
@@ -25,10 +32,9 @@ namespace prx {
 		inline static hpm::vec2 defaultCameraPosition() noexcept;
 
 		friend class Layer;
+		friend class Node;
 
 	protected:
-
-		PRX_DISALLOW_COPY_AND_MOVE(Scene)
 
 		unsigned int		m_ID;
 		std::string			m_Name;
@@ -37,6 +43,7 @@ namespace prx {
 		Camera2D*			m_Camera;
 		bool				m_CameraMoved;
 		bool				m_NeedsSorting;
+		bool				m_Initialized;
 		
 	public:
 		Scene(std::string_view name, Renderer2D* renderer);
@@ -45,11 +52,16 @@ namespace prx {
 		static const hpm::vec2& getCurrentCameraPosition() { return currentCameraPosition; };
 		static const hpm::vec2& getCurrentCameraViewSize() { return currentViewSize; };
 
+		SpriteNode* createSprite(float width, float height, std::string_view texturePath, Node* parent = nullptr);
+		Group* createGroup(Node* parent = nullptr);
+		LabelNode* createLabel(std::string_view text, unsigned int color, Node* parent = nullptr);
+		Layer* createLayer(int depth);
+
 		void sortChildren();
 		void init();
 		void update();
 		void draw();
-		void destroy() {};
+		void destroy();
 
 		void removeChild(Layer* layer);
 		
@@ -67,6 +79,7 @@ namespace prx {
 
 	private:
 		void addChild(Layer* child);
+
 	};
 
 	inline hpm::vec2 Scene::defaultCameraPosition() noexcept {
@@ -76,6 +89,4 @@ namespace prx {
 	inline unsigned Scene::getID() const noexcept {
 		return m_ID;
 	}
-
-
 }

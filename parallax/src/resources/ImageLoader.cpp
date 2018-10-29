@@ -19,7 +19,6 @@ namespace prx {
 		int width, height, componentsCount;
 
 		unsigned char* data = stbi_load(path.data(), &width, &height, &componentsCount, 0);
-		
 		if (data == nullptr) {
 			throw ImageLoadingException(path.data());
 		}

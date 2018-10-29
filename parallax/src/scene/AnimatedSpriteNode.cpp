@@ -4,7 +4,7 @@
 namespace prx {
 	AnimatedSpriteNode::AnimatedSpriteNode(float x, float y, float width, float height,
 											SpriteSheet* texture, unsigned animationID, Node* parent)
-		: Node(parent, width, height),
+		: Node(nullptr, parent, width, height),
 		  m_AnimatedSprite(new AnimatedSprite(width, height, texture, animationID)) 
 	{
 		m_TransformComponent.setPosition(x, y);
@@ -14,7 +14,7 @@ namespace prx {
 
 	AnimatedSpriteNode::AnimatedSpriteNode(float width, float height, 
 											SpriteSheet* texture, unsigned animationID,	Node* parent) 
-		: Node(parent ,width, height),
+		: Node(nullptr, parent ,width, height),
 		  m_AnimatedSprite(new AnimatedSprite(width, height, texture, animationID)) 
 	{
 		m_TransformComponent.setSize(width, height);

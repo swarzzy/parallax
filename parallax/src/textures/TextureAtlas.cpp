@@ -8,7 +8,7 @@
 
 namespace prx {
 	TextureAtlas::TextureAtlas(unsigned int width, unsigned int height, TextureFormat format)
-		: TextureBase("", ""){
+		: TextureBase(""){
 		m_Format = format;
 		m_Width  = width;
 		m_Height = height;
