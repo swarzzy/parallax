@@ -1,28 +1,14 @@
 #include "Game.h"
-#include <random>
 #include "../parallax/include/resources/ResourceHandler.h"
-
-#include "../parallax/include/renderer/renderable/Group.h"
-#include "../parallax/include/textures/TextureAtlas.h"
-#include "../parallax/include/renderer/renderable/Sprite.h"
-#include "../parallax/include/textures/Texture.h"
 #include <experimental/filesystem>
 #include <filesystem>
-#include "../parallax/include/renderer/layers/UILayer.h"
-#include "../parallax/include/renderer/renderable/UI/UIButtonBase.h"
-#include "../parallax/include/renderer/renderable/UI/UIGroup.h"
-#include "../parallax/include/renderer/renderable/UI/UIButton.h"
 #include "../parallax/include/textures/SpriteSheet.h"
-#include "../parallax/include/renderer/FrameBuffer2D.h"
 #include "../parallax/include/scene/LabelNode.h"
-#include "../parallax/include/renderer/ForwardRenderer2D.h"
-#include <complex>
-#include "../parallax/include/scene/Group.h"
 #include "../parallax/include/resources/ResourceManager.h"
-
+#include "../parallax/include/audio/Sound.h"
 
 void Game::init() {
-	parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
+	parallaxInit("Parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000);
 
 	m_Sound = get_resource<Sound>("res/audio/test.ogg");
 	m_Sound->init();

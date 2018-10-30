@@ -23,18 +23,19 @@ namespace prx {
 	class Font {
 	private: 
 		std::string					m_FilePath;
+		std::string					m_Name;
 		unsigned int				m_Size;
 		float						m_Scale;
 		std::map<char, Character>	m_Characters;
 
 	public:
 		TextureAtlas*				m_FontAtlas;
-		Font() {};
-		Font(std::string_view filepath, int size, float scale = 1.0f);
-		Font(const unsigned char* data, size_t dataSize, int size, float scale = 1.0f);
+		Font(std::string_view filepath, std::string_view name, int size, float scale = 1.0f);
+		Font(std::string_view name, const unsigned char* data, size_t dataSize, int size, float scale = 1.0f);
 		~Font();
 
 		inline const std::string&				getFilePath()	const { return m_FilePath;	 };
+		inline const std::string&				getName()		const { return m_Name;		 };
 		inline unsigned int						getSize()		const { return m_Size;		 };
 		inline float							getScale()		const { return m_Scale;		 };
 		inline const std::map<char, Character>& getCharacters() const { return m_Characters; };

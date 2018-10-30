@@ -2,6 +2,7 @@
 #include <resources/ResourceManager.h>
 #include <scene/Director.h>
 #include <audio/AudioEngine.h>
+#include <Fonts/FontManager.h>
 
 namespace prx {
 
@@ -22,7 +23,7 @@ namespace prx {
 	
 	Application::~Application() {
 		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
-		Resources::terminate();
+		FontManager::destroy();
 		ShaderManager::clear();
 		ResourceManager::destroy();
 		AudioEngine::destroy();
@@ -36,14 +37,12 @@ namespace prx {
 		LogLevel logLevel, unsigned int clearColor) {
 		Log::init();
 		Log::setLevel(logLevel);
-		// TODO: Remove old resource initializaton
-		Resources::initAudioSystem();
 		Window::initialize(title, width, height, fullscreen);
 		Window::getInstance()->setClearColor(clearColor);
 		AudioEngine::initialize();
 		ResourceManager::initialize();
+		FontManager::initialize(1.0f);
 		Director::initialize();
-		Resources::init();
 	}
 
 	void Application::run() {
@@ -95,12 +94,11 @@ namespace prx {
 	void Application::parallaxInit() {
 		Log::init();
 		Log::setLevel(LogLevel::LOG_INFO);
-		Resources::initAudioSystem();
 		Window::initialize("parallax", 800, 600, false);
 		Window::getInstance()->setClearColor(0xff000000);
 		AudioEngine::initialize();
 		ResourceManager::initialize();
+		FontManager::initialize(1.0f);
 		Director::initialize();
-		Resources::init();
 	}
 }

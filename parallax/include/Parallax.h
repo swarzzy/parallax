@@ -4,7 +4,6 @@
 
 #include "window/Window.h"
 #include "utils/timing/SimpleTimer.h";
-#include "resources/Resources.h"
 #include "shading/ShaderManager.h"
 #include "utils/log/Log.h"
 #include "shading/Shader.h"

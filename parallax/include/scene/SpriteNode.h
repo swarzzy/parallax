@@ -1,7 +1,6 @@
 #pragma once
 #include "Node.h"
 #include "../renderer/renderable/Sprite.h"
-#include "../renderer/renderable/Group.h"
 #include "../Common.h"
 #include "../resources/ResourceHandler.h"
 #include "../textures/Texture.h"

@@ -1,7 +1,6 @@
 #include <audio/Sound.h>
 
 #include <utils/log/Log.h>
-#include <resources/Resources.h>
 #include <window/Window.h>
 #include "audio/AudioEngine.h"
 

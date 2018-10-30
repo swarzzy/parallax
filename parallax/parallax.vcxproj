@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera\Camera2D.cpp" />
+    <ClCompile Include="src\Fonts\FontManager.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
     <ClCompile Include="src\scene\components\TransformComponent2D.cpp" />
     <ClCompile Include="src\scene\Director.cpp" />
@@ -43,17 +44,12 @@
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
     <ClCompile Include="src\renderer\renderable\Renderable2D.cpp" />
     <ClCompile Include="src\renderer\renderable\Sprite.cpp" />
-    <ClCompile Include="src\renderer\renderable\StaticSprite.cpp" />
-    <ClCompile Include="src\renderer\SimpleRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\VertexArray.cpp" />
     <ClCompile Include="src\renderer\buffer\VertexBuffer.cpp" />
     <ClCompile Include="src\resources\FileReader.cpp" />
-    <ClCompile Include="src\resources\Resources.cpp" />
-    <ClCompile Include="src\resources\ResourcesDeprec.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\textures\TextureBase.cpp" />
-    <ClCompile Include="src\utils\log\LogOld.cpp" />
     <ClCompile Include="src\utils\StringUtils.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
@@ -167,6 +163,7 @@
     <ClInclude Include="include\ext\GL\glxew.h" />
     <ClInclude Include="include\ext\GL\wglew.h" />
     <ClInclude Include="include\Fonts\Font.h" />
+    <ClInclude Include="include\Fonts\FontManager.h" />
     <ClInclude Include="include\Parallax.h" />
     <ClInclude Include="include\renderer\ForwardRenderer2D.h" />
     <ClInclude Include="include\renderer\buffer\IndexBuffer.h" />
@@ -178,17 +175,13 @@
     <ClInclude Include="include\renderer\renderable\Label.h" />
     <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
     <ClInclude Include="include\renderer\renderable\Sprite.h" />
-    <ClInclude Include="include\renderer\renderable\StaticSprite.h" />
     <ClInclude Include="include\renderer\FrameBufferBase.h" />
     <ClInclude Include="include\renderer\Renderer2D.h" />
-    <ClInclude Include="include\renderer\SimpleRenderer2D.h" />
-    <ClInclude Include="include\resources\DefaultFont.h" />
+    <ClInclude Include="include\Fonts\DefaultFont.h" />
     <ClInclude Include="include\resources\FileReader.h" />
     <ClInclude Include="include\resources\ImageLoader.h" />
     <ClInclude Include="include\resources\Resource.h" />
     <ClInclude Include="include\resources\ResourceHandler.h" />
-    <ClInclude Include="include\resources\Resources.h" />
-    <ClInclude Include="include\resources\ResourcesDeprec.h" />
     <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
     <ClInclude Include="include\scene\components\TransformComponent2D.h" />
     <ClInclude Include="include\scene\Director.h" />
@@ -211,14 +204,12 @@
     <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />
     <ClInclude Include="include\utils\log\Log.h" />
-    <ClInclude Include="include\utils\log\LogOld.h" />
     <ClInclude Include="include\utils\SimpleHash.h" />
     <ClInclude Include="include\utils\Singleton.h" />
     <ClInclude Include="include\utils\StringUtils.h" />
     <ClInclude Include="include\utils\timing\ScopedTimer.h" />
     <ClInclude Include="include\utils\timing\SimpleTimer.h" />
     <ClInclude Include="include\ParallaxKeys.h" />
-    <ClInclude Include="include\window\GraphicsManager.h" />
     <ClInclude Include="include\window\Window.h" />
     <ClInclude Include="src\resources\fonts\Font.h" />
     <ClInclude Include="include\resources\ResourceManager.h" />

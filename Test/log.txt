@@ -3,7 +3,6 @@
 
 [INFO ] Resource initialized
 -> FILE: 
-[FATAL] RESOURCE MANAGER: Audio system is not initialized!
 [INFO ] Resource initialized
 -> FILE: res/audio/test.ogg
 [INFO ] Resource initialized

@@ -16,8 +16,9 @@ namespace prx {
 		gau_Manager*	m_gaManager;
 		ga_Mixer*		m_gaMixer;
 
-	public:
 		inline AudioEngine();
+
+	public:
 		inline ~AudioEngine();
 
 		inline ga_Mixer* getMixer() noexcept;

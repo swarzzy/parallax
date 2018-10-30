@@ -12,13 +12,23 @@
 #include <textures/Texture.h>
 
 namespace prx {
-	Font::Font(std::string_view filepath, int size, float scale) 
-		: m_FilePath(filepath), m_Size(size), m_Scale(scale), m_FontAtlas(nullptr) {
+	Font::Font(std::string_view filepath, std::string_view name, int size, float scale) 
+		: m_FilePath(filepath),
+		  m_Name(name),
+		  m_Size(size), 
+		  m_Scale(scale), 
+		  m_FontAtlas(nullptr)
+	{
 		loadFontFromFile();
 	}
 
-	Font::Font(const unsigned char* data, size_t dataSize, int size, float scale) 
-		: m_Size(size), m_Scale(scale), m_FontAtlas(nullptr) {
+	Font::Font(std::string_view name, const unsigned char* data, size_t dataSize, int size, float scale) 
+		: m_FilePath(""),
+		  m_Name(name),
+		  m_Size(size), 
+		  m_Scale(scale), 
+		  m_FontAtlas(nullptr) 
+	{
 		loadFontFromBinary(data, dataSize);
 	}
 

@@ -1,9 +1,7 @@
-
 #include <window/Window.h>
 
 #include <utils/log/Log.h>
 #include <utils/error_handling/GLErrorHandler.h>
-#include <resources/Resources.h>
 #include <scene/Director.h>
 #include <audio/AudioEngine.h>
 

@@ -2,6 +2,7 @@
 
 #include "Resource.h"
 #include "ResourceManager.h"
+#include "../audio/Sound.h"
 
 namespace prx {
 	template<typename Res>

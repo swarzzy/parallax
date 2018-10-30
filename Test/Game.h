@@ -1,6 +1,5 @@
 #pragma once
 #include "../parallax/include/Parallax.h"
-#include "../parallax/include/renderer/renderable/FPSCounter.h"
 #include "../parallax/include/scene/SpriteNode.h"
 #include "../parallax/include/scene/Scene.h"
 #include "../parallax/include/renderer/renderable/Label.h"
