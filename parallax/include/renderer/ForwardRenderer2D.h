@@ -38,6 +38,7 @@ namespace prx {
 		Shader*						m_Shader;
 		hpm::mat4					m_ProjectionMatrix;
 		bool						m_ProjMatrixNeedsUpdate;
+		bool						m_Initialized;
 
 	public:
 		ForwardRenderer2D(const hpm::mat4& projectionMatrix = DEFAULT_PROJECTION_MATRIX, 
@@ -45,6 +46,8 @@ namespace prx {
 		~ForwardRenderer2D();
 
 		void init() override;
+		// OpenGL might actually not free memory
+		void destroy() override;
 
 		void setProjectionMatrix(const hpm::mat4& projMatrix);
 

@@ -45,7 +45,7 @@ namespace prx {
 
 	private:
 		void initInternal() override;
-		void drawInternal(Renderer2D* renderer) override;
+		void drawInternal() override;
 		void destroyInternal() override;
 	};
 	

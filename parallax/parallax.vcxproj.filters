@@ -644,6 +644,9 @@
     <ClInclude Include="include\utils\error\ImageLoadingException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\audio\AudioEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />

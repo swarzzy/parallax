@@ -56,8 +56,8 @@ namespace prx {
 		}
 	}
 
-	void SpriteNode::drawInternal(Renderer2D* renderer) {
-		m_Sprite->submit(renderer, m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
+	void SpriteNode::drawInternal() {
+		m_Sprite->submit(getRenderer(), m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
 	}
 
 	void SpriteNode::destroyInternal() {

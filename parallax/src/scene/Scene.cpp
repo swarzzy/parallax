@@ -41,7 +41,6 @@ namespace prx {
 			delete layer;
 		}
 		delete m_Camera;
-		delete m_Renderer;
 	}
 
 	SpriteNode* Scene::createSprite(float width, float height, std::string_view texturePath, Node* parent) {
@@ -73,9 +72,6 @@ namespace prx {
 			auto winHeight = Window::getCurrentWindow().getHeight();
 
 			m_Camera->init(winWidth, winHeight);
-
-			m_Renderer->init();
-			m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
 
 			for (auto layer : m_Layers)
 				layer->init();
@@ -109,7 +105,7 @@ namespace prx {
 
 			m_Renderer->begin();
 			for (auto layer : m_Layers)
-				layer->draw(m_Renderer);
+				layer->draw();
 			m_Renderer->end();
 			m_Renderer->flush();
 		}
@@ -151,8 +147,17 @@ namespace prx {
 		m_Camera->setViewSpace(x, y);
 	}
 
+	void Scene::setRenderer(Renderer2D* renderer) noexcept {
+		m_Renderer = renderer;
+		m_Renderer->setProjectionMatrix(m_Camera->getProjectionMatrix());
+	}
+
 	const hpm::vec2& Scene::getCameraPosition() const noexcept {
 		return m_Camera->getCameraPosition();
+	}
+
+	const Camera2D& Scene::getCamera() const noexcept {
+		return *m_Camera;
 	}
 
 	const hpm::vec2& Scene::getViewSize() const noexcept {

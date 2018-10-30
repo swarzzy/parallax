@@ -92,14 +92,20 @@ namespace prx {
 	void ResourceManager::collectGarbage() {
 #ifdef PARALLAX_ENABLE_MEMORY_LOGGING
 		unsigned int counter = 0;
-		for (auto garbage : m_GarbageList) {
-			m_Resources.erase(garbage);
+		for (auto res : m_GarbageList) {
+			auto node = m_Resources.find(res);
+			delete node->second;
+			m_Resources.erase(node);
 			counter++;
+			m_GarbageList.clear();
 		}
 		PRX_INFO("GARBAGE COLLECTION: ", counter, " items deleted.");
 #else
-		for (auto garbage : m_GarbageList) {
-				m_Resources.erase(garbage);
+		for (auto res : m_GarbageList) {
+			auto node = m_Resources.find(res);
+			delete node->second;
+			m_Resources.erase(node);
+			m_GarbageList.clear();
 		}
 #endif
 	}

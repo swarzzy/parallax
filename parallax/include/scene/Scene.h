@@ -73,9 +73,14 @@ namespace prx {
 		void setCameraViewSpaceSize(hpm::vec2 size) noexcept;
 		void setCameraViewSpaceSize(float x, float y) noexcept;
 
+		void setRenderer(Renderer2D* renderer) noexcept;
+
 		const hpm::vec2& getCameraPosition() const noexcept;
+		const Camera2D& getCamera() const noexcept;
 		const hpm::vec2& getViewSize() const noexcept;
 		inline unsigned getID() const noexcept;
+		inline const std::string& getName() const noexcept;
+		inline bool isInitialized() const noexcept;
 
 	private:
 		void addChild(Layer* child);
@@ -88,5 +93,14 @@ namespace prx {
 
 	inline unsigned Scene::getID() const noexcept {
 		return m_ID;
+	}
+
+	inline const std::string& Scene::getName() const noexcept {
+		return m_Name;
+	}
+
+
+	inline bool Scene::isInitialized() const noexcept {
+		return m_Initialized;
 	}
 }

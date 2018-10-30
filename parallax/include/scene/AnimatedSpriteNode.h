@@ -31,7 +31,7 @@ namespace prx {
 		inline void stopAnimation() noexcept;
 
 	private:
-		void drawInternal(Renderer2D* renderer) override;
+		void drawInternal() override;
 
 	public:
 		AnimatedSpriteNode(const AnimatedSpriteNode& other) = delete;

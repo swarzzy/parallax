@@ -24,7 +24,7 @@ namespace prx {
 		
 	}
 
-	void AnimatedSpriteNode::drawInternal(Renderer2D* renderer) {
-		m_AnimatedSprite->submit(renderer, m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
+	void AnimatedSpriteNode::drawInternal() {
+		m_AnimatedSprite->submit(getRenderer(), m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
 	}
 }

@@ -58,6 +58,7 @@
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\audio\AudioEngine.h" />
     <ClInclude Include="include\audio\Sound.h" />
     <ClInclude Include="include\camera\Camera2D.h" />
     <ClInclude Include="include\Common.h" />

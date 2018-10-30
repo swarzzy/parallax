@@ -22,29 +22,25 @@
 
 
 void Game::init() {
-	m_Window = parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
-	Director::initialize();
-	ResourceManager::initialize();
+	parallaxInit("Parallax", 600, 600, false, prx::LOG_LEVEL::LOG_INFO, 0xff000000);
 
-	m_Sound = Resources::getSound(Resources::loadSound("test", "res/audio/test.ogg"));
-
-	//auto background = Resources::getTexture(Resources::loadTexture("res/textures/background.png"));
-	//auto sun = get_resource<Texture>("res/textures/sun.png");
-	//auto bluePlanet = Resources::getTexture(Resources::loadTexture("res/textures/blue_planet.png"));
-	//auto brownPlanet = Resources::getTexture(Resources::loadTexture("res/textures/brown_planet.png"));
-	//background->init();
-	////sun->init();
-	////sun->destroy();
-	////sun->init();
-	//bluePlanet->init();
-	//brownPlanet->init();
+	m_Sound = get_resource<Sound>("res/audio/test.ogg");
+	m_Sound->init();
+	m_Sound->loop();
 
 	Director::getInstance()->createScene("Scene");
+	Director::getInstance()->createScene("Scene2");
 	m_Scene = Director::getInstance()->getScene("Scene");
+	m_Scene2 = Director::getInstance()->getScene("Scene2");
+
 	m_Layer = m_Scene->createLayer(0);
 	m_UILayer = m_Scene->createLayer(1);
+	auto layer2 = m_Scene2->createLayer(0);
 
-	m_Sun = m_Scene->createSprite(100, 100, "res/textures/sun.jpg");
+	auto sprite = m_Scene2->createSprite(100, 100, "res/textures/5mb.jpg", layer2);
+	sprite->setPosition(300, 300);
+
+	m_Sun = m_Scene->createSprite(100, 100, "res/textures/sun.png");
 	m_Sun->setParent(m_Layer);
 	m_Sun->setPosition(5, 5);
 
@@ -65,6 +61,7 @@ void Game::init() {
 	m_UPSCounter->setPosition(4, 555);
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
+	
 	//std::knuth_b rand;
 	//std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	//m_Group = new Group(m_Layer);
@@ -72,10 +69,7 @@ void Game::init() {
 	////m_Group->setAnchorPoint(0.5, 0.5);
 	//m_Group->enableVisibilityTest(false);
 	////m_Group->setPosition(100, 100);
-	/*m_Sun = new SpriteNode(0, 0, 150, 150, sun, m_Layer);*/
 	
-	//m_Sun->setAnchorPoint(0.5, 0.5);
-	m_Sun->setVisibilityTestMode(VisibilityTestMode::QUAD);
 	//float step = 0.1;
 	//int counter = 0;
 	//for (float x = 0; x < 600; x += 3) {// 3, 1.0
@@ -87,45 +81,11 @@ void Game::init() {
 	//	}
 	//}
 	//m_Group->setPosition(20, 20);
-	//std::cout << m_Layer->getDepth() << std::endl;
-	//std::cout << m_Layer->getLocalMat().toString() << std::endl;
-	//std::cout << m_Layer->getWorldMat().toString() << std::endl;
-	//m_UILayer = new Layer(1, m_Scene);
-	////m_Scene->init();
-	//auto t = new Layer(23,m_Layer);
-	//m_Background = new SpriteNode(0, 0, 1850, 1850, background, t);
-	//m_Background->setAnchorPoint(0.5, 0.5);
-	
-	//m_BluePlanet = new SpriteNode(0, 0, 80, 80, bluePlanet, t);
-	//m_BluePlanet->setAnchorPoint(0.5, 0.5);
-	//m_BrownPlanet = new SpriteNode(0, 0, 30, 30, brownPlanet, m_BluePlanet);
-	//m_BrownPlanet->setAnchorPoint(0.5, 0.5);
-	//
-	//m_FPSCounter = new prx::LabelNode("", 0, 577, 0xffffffff, m_UILayer);
-	//m_UPSCounter = new prx::LabelNode("", 0, 555, 0xffffffff, m_UILayer);
-	//m_Sound->loop();
 
-	//prx::SpriteSheet* sheet = new prx::SpriteSheet("res/textures/hero_spritesheet.png", 8, 5);
-	//std::vector<unsigned int> mask = { 0,1,2,3,4,5, 6, 7 };
-	//std::vector<unsigned int> mask2 = { 8,9,10,11,12,13 };
-	//std::vector<unsigned int> mask3 = { 24, 25, 26, 27, 28, 29, 30 };
-	//int aID = sheet->addAnimation("1", mask);
-	//int aID2 = sheet->addAnimation("2", mask2);
-	//int aID3 = sheet->addAnimation("3", mask3);
-	////m_Hero = new AnimatedSpriteNode(100, 100, sheet, aID, m_Sun);
-	////m_Hero->loopAnimation(aID);
-	////m_Hero->setAnchorPoint(0.5, 0.5);
-	//m_Scene->init();
-	//std::cout << m_Scene->getID() << std::endl; //1
-	//std::cout << m_Layer->getID() << std::endl; //2
-	//std::cout << m_UILayer->getID() << std::endl;//3
-	//std::cout << m_Background->getID() << std::endl;//4
-	//std::cout << m_Sun->getID() << std::endl;//5
-	//std::cout << m_BluePlanet->getID() << std::endl;//6
-	//std::cout << m_BrownPlanet->getID() << std::endl;//7
-	//m_Scene->removeChild(m_UILayer);
+	m_Window = Window::getInstance();
+	
 	Director::getInstance()->setCurrentScene("Scene");
-	Director::getInstance()->initScene();
+	Director::getInstance()->playScene();
 }
 
 void Game::tick() {
@@ -136,7 +96,7 @@ void Game::tick() {
 void Game::update() {
 	//m_Group->setRotation(getTime() / 80, -300);
 	m_Sun->setRotation(-getTime() / 80);
-	m_BluePlanet->setRotation(getTime() / 25, 50);
+	//m_BluePlanet->setRotation(getTime() / 25, 50);
 	//m_BrownPlanet->setRotation(getTime() / 5, 45);
 	//m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);*/
 
@@ -154,13 +114,20 @@ void Game::update() {
 	static bool freeze = false;
 	if (m_Window->isKeyPressed(PARALLAX_KEY_SPACE)) {
 		hide = !hide;
-		hide ? m_Sun->init() : m_Sun->destroy();
+		hide ? Director::getInstance()->setCurrentScene("Scene") : Director::getInstance()->setCurrentScene("Scene2");
+		Director::getInstance()->playScene();
 	}
 	if (m_Window->isKeyPressed(PARALLAX_KEY_H)) {
 		delete_node(m_BluePlanet);
+		m_BluePlanet = nullptr;
 	}
-	if (m_Window->isKeyPressed(PARALLAX_KEY_F))
+	if (m_Window->isKeyPressed(PARALLAX_KEY_F)) {
+		Director::getInstance()->deleteScene("Scene2");
 		ResourceManager::getInstance()->collectGarbage();
+	}
+	if (m_Window->isKeyPressed(PARALLAX_KEY_P)) {
+		m_Sound.free();
+	}
 	//m_Group->hide(hidesp);
 	//m_Group->freeze(freeze);
 	//m_Sun->setSize(500, 500);
@@ -178,13 +145,9 @@ void Game::update() {
 	
 
 	m_Scene->setCameraPosition(m_CameraPosition);
-	
-	//std::cout << m_Scene->getCameraPosition().toString() << std::endl;
-	//std::cout << m_Scene->getViewSize().toString() << std::endl;
-	//std::cout << m_Layer->getWorldMat().toString() << std::endl;
 	Director::getInstance()->update();
 }
 	
 void Game::render() {
-	Director::getInstance()->draw();
+	Director::getInstance()->render();
 }

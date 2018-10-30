@@ -134,13 +134,13 @@ namespace prx {
 		}
 	}
 
-	inline void Node::draw(Renderer2D * renderer) {
+	inline void Node::draw() {
 		if (m_Initialized) {
 			if (m_Visible && m_InViewSpace) {
-				drawInternal(renderer);
+				drawInternal();
 
 				for (auto child : m_Children)
-					child->draw(renderer);
+					child->draw();
 			}
 		}
 	}

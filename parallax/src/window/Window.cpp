@@ -5,6 +5,7 @@
 #include <utils/error_handling/GLErrorHandler.h>
 #include <resources/Resources.h>
 #include <scene/Director.h>
+#include <audio/AudioEngine.h>
 
 namespace prx {
 
@@ -17,13 +18,14 @@ namespace prx {
 	Window* Window::m_CurrentWindow = nullptr;
 
 	Window::Window(std::string_view title, float width, float height, bool fullscreen)
-		: m_Title(title), m_Width(width), m_Height(height), m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
-		m_FullScreen(fullscreen), m_ScrollOffsetX(0), m_ScrollOffsetY(0) {
-		if (m_CurrentWindow != nullptr) {
-			Log::message(LOG_LEVEL::LOG_ERROR, "WINDOW: Only one window can exist at the same time.");
-			ASSERT(m_CurrentWindow == nullptr);
-		}
-
+		: m_Title(title), 
+		  m_Width(width),
+		  m_Height(height), 
+		  m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
+		  m_FullScreen(fullscreen), 
+		  m_ScrollOffsetX(0), 
+		  m_ScrollOffsetY(0) 
+	{
 		if (!init())
 			glfwTerminate();
 		m_CurrentWindow = this;
@@ -34,7 +36,7 @@ namespace prx {
 		
 		// Initialize GLFW
 		if (!glfwInit()) {
-			Log::message(LOG_LEVEL::LOG_FATAL, "Failed to init GLFW");
+			PRX_ERROR("PARALLAX: Failed to init GLFW");
 			return false;
 		}
 
@@ -48,9 +50,14 @@ namespace prx {
 
 		if (!m_Window) {
 			glfwTerminate();
-			prx::Log::message(LOG_LEVEL::LOG_FATAL, "Failed to create window");
+			PRX_ERROR("PARALLAX: Failed to create window");
 			return false;
 		}
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		glfwMakeContextCurrent(m_Window);
 
 		glfwSetKeyCallback(m_Window, key_callback);
@@ -78,22 +85,12 @@ namespace prx {
 
 		// Initialize GLEW
 		if (glewInit() != GLEW_OK) {
-			prx::Log::message(LOG_LEVEL::LOG_FATAL, "Failed to initialize GLEW");
+			PRX_ERROR("PARALLAX: Failed to initialize GLEW");
 			glfwTerminate();
 			return false;
 		}
 
-		// Setting GL viewport
-		//GLCall(glViewport(0, 0, m_Width, m_Height));
-
-		std::stringstream ss;
-		ss << "OpenGL version: " << glGetString(GL_VERSION);
-		Log::message(LOG_LEVEL::LOG_INFO, ss.str());
-
-		GLCall(glEnable(GL_BLEND));
-		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-		// TODO: Depth and blending modes
-		//GLCall(glEnable(GL_DEPTH_TEST));
+		PRX_INFO("\t PARALLAX ENGINE\n-> OPENGL VERSION: ", glGetString(GL_VERSION), "\n");
 
 		return true;
 	}
@@ -108,7 +105,7 @@ namespace prx {
 
 	bool Window::isKeyHeld(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
+			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
 			return false;
 		}
 		return m_KeysCurrentState[key];
@@ -116,7 +113,7 @@ namespace prx {
 
 	bool Window::isKeyPressed(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
+			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
 			return false;
 		}
 		return m_KeysPressed[key];
@@ -124,7 +121,7 @@ namespace prx {
 
 	bool Window::isKeyReleased(GLenum key) const {
 		if (key >= PARALLAX_INPUT_MAX_KEYS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
+			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
 			return false;
 		}
 		return m_KeysReleased[key];
@@ -132,7 +129,7 @@ namespace prx {
 
 	bool Window::isMouseButtonHeld(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
+			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
 			return false;
 		}
 		return m_MouseButtonsCurrentState[button];
@@ -140,7 +137,7 @@ namespace prx {
 
 	bool Window::isMouseButtonPressed(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
+			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
 			return false;
 		}
 		return m_MouseButtonsPressed[button];
@@ -148,7 +145,7 @@ namespace prx {
 
 	bool Window::isMouseButtonReleased(GLenum button) const {
 		if (button >= PARALLAX_INPUT_MAX_MOUSE_BUTTONS) {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse button number");
+			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
 			return false;
 		}
 		return m_MouseButtonsReleased[button];
@@ -168,7 +165,7 @@ namespace prx {
 
 	void Window::updateRender() {
 		// Gorilla-audio update
-		gau_manager_update(Resources::m_gaManager);
+		gau_manager_update(AudioEngine::getInstance()->getManager());
 
 		// OpenGl update
 		glfwPollEvents();
@@ -227,7 +224,7 @@ namespace prx {
 				win->m_KeysCurrentState[key] = false;
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid key number");
+			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
 		}
 	}
 
@@ -246,7 +243,7 @@ namespace prx {
 				win->m_MouseButtonsCurrentState[button] = false;
 		}
 		else {
-			prx::Log::message(LOG_LEVEL::LOG_WARN, "Invalid mouse key number");
+			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
 		}
 	}
 

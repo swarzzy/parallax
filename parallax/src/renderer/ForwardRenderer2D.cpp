@@ -17,16 +17,22 @@ namespace prx {
 		  m_ShaderID(0),
 		  m_Shader(nullptr),
 		  m_ProjectionMatrix(projectionMatrix),
-		  m_ProjMatrixNeedsUpdate(false)
+		  m_ProjMatrixNeedsUpdate(false),
+		  m_Initialized(false)
 	{}
 
 	ForwardRenderer2D::~ForwardRenderer2D() {
-		delete m_Mask;
-		delete m_IBO;
-		
-		ShaderManager::deleteShader(m_ShaderID);
+		if (m_Initialized) {
+			GLCall(glDeleteBuffers(1, &m_VAO));
+			GLCall(glDeleteBuffers(1, &m_VBO));
+			delete m_IBO;
 
-		GLCall(glDeleteBuffers(1, &m_VBO));
+			ShaderManager::deleteShader(m_ShaderID);
+
+			delete m_Mask;
+
+			m_Initialized = false;
+		}
 	}
 
 	void ForwardRenderer2D::setProjectionMatrix(const hpm::mat4& projMatrix) {
@@ -35,71 +41,89 @@ namespace prx {
 	}
 
 	void ForwardRenderer2D::init() {
-		GLCall(glGenVertexArrays(1, &m_VAO));
-		GLCall(glGenBuffers(1, &m_VBO));
+		if (!m_Initialized) {
+			m_Initialized = true;
+			GLCall(glGenVertexArrays(1, &m_VAO));
+			GLCall(glGenBuffers(1, &m_VBO));
 
-		GLCall(glBindVertexArray(m_VAO));
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
-		GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
+			GLCall(glBindVertexArray(m_VAO));
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+			GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
 
-		GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
-		GLCall(glEnableVertexAttribArray(SHADER_DEPTH_INDEX));
-		GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
-		GLCall(glEnableVertexAttribArray(SHADER_TEXID_INDEX));
-		GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_DEPTH_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_TEXID_INDEX));
+			GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
 
-		GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
-			VERTEX_SIZE, static_cast<const void*>(NULL)));
+			GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
+				VERTEX_SIZE, static_cast<const void*>(NULL)));
 
-		GLCall(glVertexAttribPointer(SHADER_DEPTH_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::depth))));
+			GLCall(glVertexAttribPointer(SHADER_DEPTH_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::depth))));
 
-		GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
+			GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
 
-		GLCall(glVertexAttribPointer(SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texID))));
+			GLCall(glVertexAttribPointer(SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texID))));
 
-		GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, VERTEX_SIZE,
-			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::color))));
+			GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, VERTEX_SIZE,
+				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::color))));
 
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
 
-		unsigned int* indices = new unsigned int[INDEX_BUFFER_SIZE];
+			unsigned int* indices = new unsigned int[INDEX_BUFFER_SIZE];
 
-		unsigned int offset = 0;
-		for (unsigned int i = 0; i < INDEX_BUFFER_SIZE; i += 6) {
-			indices[  i  ] = offset + 0;
-			indices[i + 1] = offset + 1;
-			indices[i + 2] = offset + 2;
+			unsigned int offset = 0;
+			for (unsigned int i = 0; i < INDEX_BUFFER_SIZE; i += 6) {
+				indices[i] = offset + 0;
+				indices[i + 1] = offset + 1;
+				indices[i + 2] = offset + 2;
 
-			indices[i + 3] = offset + 2;
-			indices[i + 4] = offset + 3;
-			indices[i + 5] = offset + 0;
+				indices[i + 3] = offset + 2;
+				indices[i + 4] = offset + 3;
+				indices[i + 5] = offset + 0;
 
-			offset += 4;
+				offset += 4;
+			}
+
+			m_IBO = new IndexBuffer(indices, INDEX_BUFFER_SIZE);
+			m_IBO->Bind();
+
+			delete[] indices;
+
+			GLCall(glBindVertexArray(0));
+
+			m_ShaderID = ShaderManager::loadShader(ShaderType::FORWARD_RENDERER_DEFAULT);
+			m_Shader = ShaderManager::getShader(m_ShaderID);
+
+			int samplerIndices[32];
+			for (int i = 0; i < 32; i++)
+				samplerIndices[i] = i;
+
+			m_Shader->bind();
+			m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
+			m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
+			m_Shader->unbind();
+
+			defaultMask();
 		}
+	}
 
-		m_IBO = new IndexBuffer(indices, INDEX_BUFFER_SIZE);
+	void ForwardRenderer2D::destroy() {
+		if (m_Initialized) {
+			GLCall(glDeleteBuffers(1, &m_VAO));
+			GLCall(glDeleteBuffers(1, &m_VBO));
+			delete m_IBO;
 
-		delete[] indices;
+			ShaderManager::deleteShader(m_ShaderID);
 
-		GLCall(glBindVertexArray(0));
+			delete m_Mask;
 
-		m_ShaderID  = ShaderManager::loadShader(ShaderType::FORWARD_RENDERER_DEFAULT);
-		m_Shader	= ShaderManager::getShader(m_ShaderID);
-
-		int samplerIndices[32];
-		for (int i = 0; i < 32; i++)
-			samplerIndices[i] = i;
-
-		m_Shader->bind();
-		m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
-		m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
-		m_Shader->unbind();
-
-		defaultMask();
+			m_Initialized = false;
+		}
 	}
 
 	void ForwardRenderer2D::begin() {
@@ -527,14 +551,12 @@ namespace prx {
 			m_FrameBuffer = framebuffer;
 			return;
 		}
-		PRX_ERROR("(Renderer): Failed to set framebuffer. Framebuffer is incomplte.");
-		// TODO: exceptions
+		PRX_ERROR("RENDERER: Failed to set framebuffer. Framebuffer is incomplete.");
 	}
 
 	void ForwardRenderer2D::setRenderTarget(RenderTarget target) {
-		if (target == RenderTarget::BUFFER) {
-			PRX_ASSERT(m_FrameBuffer, "(Renderer): Trying no set render target as a buffer. Buffer is not set.");
-			// TODO: Exceptions and all that stuff to handle it properly
+		if (target == RenderTarget::BUFFER && m_FrameBuffer == nullptr) {
+			PRX_ERROR("RENDERER: Failed to set buffer as render target. Buffer was nullptr");
 		}
 		m_RenderTarget = target;
 	}

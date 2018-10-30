@@ -15,7 +15,7 @@ namespace prx {
 		LabelNode(Scene* scene, std::string_view text, float x, float y, unsigned color, Node* parent = nullptr);
 		LabelNode(Scene* scene, std::string_view text, const Font* font, float x, float y, unsigned color, Node* parent = nullptr);
 
-		void drawInternal(Renderer2D* renderer) override;
+		void drawInternal() override;
 
 	public:
 		friend class Scene;

@@ -19,18 +19,7 @@ namespace prx {
 	ga_Mixer*		Resources::m_gaMixer	= nullptr;
 
 	bool Resources::initAudioSystem() {
-			
-		gc_result result = gc_initialize(NULL);
-		
-			//m_gaManager = gau_manager_create();
-			m_gaManager = gau_manager_create_custom(GA_DEVICE_TYPE_OPENAL, GAU_THREAD_POLICY_MULTI, 4, 512);
-			m_gaMixer = gau_manager_mixer(m_gaManager);
-
-		if (result == GC_ERROR_GENERIC || m_gaMixer == nullptr || m_gaManager == nullptr) {
-			Log::message(LOG_LEVEL::LOG_FATAL, "RESOURCE MANAGER: Could not initialize audio system!");
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	bool Resources::init() {
@@ -158,8 +147,8 @@ namespace prx {
 			return id;
 		}
 		//m_Sounds.emplace(id, path);
-		m_Sounds.emplace(std::piecewise_construct, std::forward_as_tuple(id),
-							std::forward_as_tuple(path, m_gaMixer));
+		///m_Sounds.emplace(std::piecewise_construct, std::forward_as_tuple(id),
+						//	std::forward_as_tuple(path, m_gaMixer));
 		return id;
 	}
 
@@ -207,10 +196,6 @@ namespace prx {
 		m_Fonts.clear();
 		m_Textures.clear();
 		m_Sounds.clear();
-		
-		// gorilla-audio terminate
-		gau_manager_destroy(m_gaManager);
-		gc_shutdown();
 	}
 }
 

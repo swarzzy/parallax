@@ -29,8 +29,8 @@ namespace prx {
 		delete m_Label;
 	}
 
-	void LabelNode::drawInternal(Renderer2D* renderer) {
-		m_Label->submit(renderer, m_TransformComponent.getWorldMat() , m_Depth);
+	void LabelNode::drawInternal() {
+		m_Label->submit(getRenderer(), m_TransformComponent.getWorldMat() , m_Depth);
 	}
 }
 

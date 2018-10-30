@@ -15,7 +15,8 @@ namespace prx {
 		
 		inline static Class* m_Object = nullptr;
 	public:
-		inline static void initialize();
+		template <typename... Args>
+		inline static void initialize(Args&&... args);
 		inline static Class* getInstance();
 		inline static void destroy();
 	};

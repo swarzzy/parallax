@@ -1,11 +1,12 @@
 #pragma once
-#ifndef _WINDOW_H_
-#define _WINDOW_H
+#ifndef _PARALLAX_WINDOW_WINDOW_H_
+#define _PARALLAX_WINDOW_WINDOW_H_
 
 #include "../ext/GL/glew.h"
-//#include "../ext/GLFW/glfw3.h"
 #include "../ParallaxKeys.h"
 #include <hypermath.h>
+#include "utils/Singleton.h"
+#include "../Common.h"
 
 namespace prx {
 
@@ -18,7 +19,8 @@ namespace prx {
 	};
 
 	// Only one instance can exist at the same time.
-	class Window {
+	class Window final : public Singleton<Window> {
+		PRX_DISALLOW_COPY_AND_MOVE(Window)
 	private:
 
 		static Window* m_CurrentWindow;
@@ -47,10 +49,11 @@ namespace prx {
 		float m_ScrollOffsetX, 
 			  m_ScrollOffsetY;
 		
-	public:
-		
-		// Only one instance can exist at the same time.
 		Window(std::string_view title, float width, float height, bool fullscreen);
+
+	public:
+		friend class Singleton<Window>;
+
 		~Window();
 
 		static inline const Window& getCurrentWindow() { return *m_CurrentWindow; };
@@ -76,7 +79,8 @@ namespace prx {
 		bool isMouseButtonPressed	(GLenum button) const;
 		bool isMouseButtonReleased	(GLenum button) const;
 
-		inline GLFWwindow* getWindowPointer() { return m_Window; };
+		// Deprecated
+		PRX_DEPRECATED inline GLFWwindow* getWindowPointer() { return m_Window; };
 		
 		inline float getWidth() const  { return m_Width; };
 		inline float getHeight() const { return m_Height; };
@@ -96,7 +100,4 @@ namespace prx {
 		friend static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	};
 }
-
-
 #endif
-

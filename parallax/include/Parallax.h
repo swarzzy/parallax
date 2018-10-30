@@ -23,7 +23,6 @@ namespace prx {
 	private:
 		static Application* m_CurrentApplication;
 
-		Window*			m_Window;
 		SimpleTimer*	m_Timer;
 		float			m_DeltaTime;
 		float			m_LastFrameTime;
@@ -37,8 +36,8 @@ namespace prx {
 		virtual ~Application();
 
 		
-		Window* parallaxInit();
-		Window* parallaxInit(std::string_view title, int width, int height, bool fullscreen,
+		void parallaxInit();
+		void parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 			LOG_LEVEL logLevel, unsigned int clearColor);
 		
 		// Once at start

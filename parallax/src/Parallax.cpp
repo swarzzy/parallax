@@ -1,14 +1,21 @@
 #include <Parallax.h>
+#include <resources/ResourceManager.h>
+#include <scene/Director.h>
+#include <audio/AudioEngine.h>
 
 namespace prx {
 
 	Application* Application::m_CurrentApplication = nullptr;
 	
 	Application::Application() 
-	: m_DeltaTime(1.0), m_LastFrameTime(0.0), m_FPS(0), m_UPS(0), m_Time(0) {
+	: m_DeltaTime(1.0), 
+	  m_LastFrameTime(0.0), 
+	  m_FPS(0), 
+	  m_UPS(0), 
+	  m_Time(0) 
+	{
 		if (m_CurrentApplication != nullptr) {
-			Log::message(LogLevel::LOG_FATAL, "APPLICATION: Only one application can exist at the same time.");
-			ASSERT(m_CurrentApplication == nullptr);
+			PRX_FATAL("APPLICATION: Only one application can exist at the same time.");
 		}
 		m_CurrentApplication = this;
 	};
@@ -17,23 +24,31 @@ namespace prx {
 		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
 		Resources::terminate();
 		ShaderManager::clear();
+		ResourceManager::destroy();
+		AudioEngine::destroy();
+		Director::destroy();
 		delete m_Timer;
-		delete m_Window;
+		Window::destroy();
 		m_CurrentApplication = nullptr;
 	}
 
-	Window* Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
+	void Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
 		LogLevel logLevel, unsigned int clearColor) {
 		Log::init();
 		Log::setLevel(logLevel);
+		// TODO: Remove old resource initializaton
 		Resources::initAudioSystem();
-		m_Window = new Window(title, width, height, fullscreen);
-		m_Window->setClearColor(clearColor);
+		Window::initialize(title, width, height, fullscreen);
+		Window::getInstance()->setClearColor(clearColor);
+		AudioEngine::initialize();
+		ResourceManager::initialize();
+		Director::initialize();
 		Resources::init();
-		return m_Window;
 	}
 
 	void Application::run() {
+		auto window = Window::getInstance();
+		
 		m_Timer = new SimpleTimer();
 		m_Time = m_Timer->elapsed();
 
@@ -44,10 +59,10 @@ namespace prx {
 		unsigned int framesPerTick = 0;
 		unsigned int updateCounter = 0;
 
-		while (!m_Window->isClosed()) {
+		while (!window->isClosed()) {
 			m_Time = m_Timer->elapsed();
 			// TODO: maybe replace elapsed() with m_Time everywhere
-			m_Window->clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
+			window->clear(prx::COLOR_BUFFER | prx::DEPTH_BUFFER);
 
 			if (m_Time - tickTime > 1000.0) {
 				tickTime = m_Time;
@@ -63,7 +78,7 @@ namespace prx {
 				updateTime = m_Time;
 				updateCounter++;
 				update();
-				m_Window->updateInput();
+				window->updateInput();
 			}
 
 			m_Time = m_Timer->elapsed();
@@ -72,18 +87,20 @@ namespace prx {
 			m_LastFrameTime = frameTime;
 			framesPerTick++;
 			render();
-			m_Window->updateRender();
+			window->updateRender();
 		}
 	}
 
 
-	Window* Application::parallaxInit() {
+	void Application::parallaxInit() {
 		Log::init();
 		Log::setLevel(LogLevel::LOG_INFO);
 		Resources::initAudioSystem();
-		m_Window = new Window("parallax", 800, 600, false);
-		m_Window->setClearColor(0xff000000);
+		Window::initialize("parallax", 800, 600, false);
+		Window::getInstance()->setClearColor(0xff000000);
+		AudioEngine::initialize();
+		ResourceManager::initialize();
+		Director::initialize();
 		Resources::init();
-		return m_Window;
 	}
 }

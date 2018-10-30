@@ -1,9 +1,9 @@
 #pragma once
 #include <map>
-#include <vector>
 #include "../Common.h"
 #include <hypermath.h>
 #include "../utils/Singleton.h"
+#include "../renderer/ForwardRenderer2D.h"
 
 namespace prx {
 
@@ -14,8 +14,10 @@ namespace prx {
 	};
 
 	class Director final : public Singleton<Director>{
+		PRX_DISALLOW_COPY_AND_MOVE(Director)
 	public:
 		friend class Singleton<Director>;
+
 	private:
 		inline static int MIN_DEPTH_VALUE = -10;
 		inline static int MAX_DEPTH_VALUE = 10;
@@ -24,25 +26,25 @@ namespace prx {
 		std::map<unsigned, Scene*> m_Scenes;
 		std::map<std::string, unsigned> m_ScenesList;
 
-		Scene* m_CurrentScene;
-		SceneState m_SceneState;
-		hpm::vec2 m_CurrentCameraPosition;
-		hpm::vec2 m_CurrentCameraViewSpaceSize;
+		Scene*		m_CurrentScene;
+		SceneState	m_SceneState;
 
-		hpm::vec2 m_ViewportSize;
+		hpm::vec2	m_CurrentCameraPosition;
+		hpm::vec2	m_CurrentCameraViewSpaceSize;
+
+		hpm::vec2	m_ViewportSize;
+
+		ForwardRenderer2D* m_Renderer;
 
 		Director();
 	public:
 		static int minDepthValue() noexcept;
 		static int maxDepthValue() noexcept;
 
-		PRX_DISALLOW_COPY_AND_MOVE(Director)
-
 		~Director();
 
-		// TODO: checking if window initialized before initialize director
 		void update();
-		void draw();
+		void render();
 
 		unsigned int createScene(std::string_view name);
 		Scene* getScene(std::string_view name);
@@ -52,21 +54,14 @@ namespace prx {
 		void setCurrentScene(unsigned ID);
 
 		void initScene();
+		void destroyScene();
+		void deleteScene(std::string_view name);
+		void deleteScene(unsigned ID);
 
-		inline void playScene() noexcept;
-		inline void stopScene() noexcept;
+		void playScene() noexcept;
+		void stopScene() noexcept;
 
 		void setViewport(hpm::vec2 size);
 		void updateViewport();
 	};
-
-	inline void Director::playScene() noexcept {
-		m_SceneState = SceneState::PLAY;
-	}
-
-	inline void Director::stopScene() noexcept {
-		m_SceneState = SceneState::STOP;
-	}
-
-
 }

@@ -61,7 +61,7 @@ namespace prx {
 
 		inline void init();
 		virtual inline void update();
-		inline void draw(Renderer2D* renderer);
+		inline void draw();
 		inline void destroy();
 	
 		virtual inline void setParent(Node* parent);
@@ -76,6 +76,8 @@ namespace prx {
 		inline const Scene* getScene() const noexcept;
 		inline const hpm::mat3& getLocalMat() const noexcept;
 		inline const hpm::mat3& getWorldMat() const noexcept;
+		
+		Renderer2D* getRenderer() const noexcept;
 	
 		virtual inline void setPosition(const hpm::vec2& position) noexcept;
 		virtual inline void setPosition(float x, float y) noexcept;
@@ -103,7 +105,7 @@ namespace prx {
 		// These methods will contain the user code in derived classes
 		virtual void initInternal() {};
 		virtual void updateInternal() {};
-		virtual void drawInternal(Renderer2D* renderer) {};
+		virtual void drawInternal() {};
 		virtual void destroyInternal() {};
 
 		inline void addChild(Node* child);

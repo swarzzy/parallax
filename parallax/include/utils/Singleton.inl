@@ -2,12 +2,13 @@
 
 namespace prx {
 	template <typename Class>
-	void Singleton<Class>::initialize() {
+	template <typename... Args>
+	void Singleton<Class>::initialize(Args&&... args) {
 		if (m_Object != nullptr)
 			PRX_ERROR("Trying to create more than one copy of singleton.\n-> CLASS: ",
 						typeid(Class).name());
 		else
-			m_Object = new Class();
+			m_Object = new Class(std::forward<Args>(args)...);
 	}
 
 	template <typename Class>

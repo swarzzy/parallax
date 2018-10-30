@@ -28,4 +28,8 @@ namespace prx {
 
 		m_InViewSpace = testRightUpEdge && testLeftDownEdge;
 	}
+	
+	Renderer2D * Node::getRenderer() const noexcept {
+		return m_Scene->m_Renderer;
+	}
 }

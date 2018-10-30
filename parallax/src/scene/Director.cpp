@@ -23,28 +23,35 @@ namespace prx {
 		  m_CurrentCameraViewSpaceSize(0.0f),
 		  m_ViewportSize(0.0f)
 	{
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
 		m_ViewportSize = Window::getCurrentWindow().getSize();
+		m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0,
+											minDepthValue(), maxDepthValue()));
+		m_Renderer->init();
 	}
 
 	Director::~Director() {
+		m_Renderer->destroy();
+		delete m_Renderer;
+
+		for (auto scene : m_Scenes)
+			delete scene.second;
 	}
 
 	void Director::update() {
-		if (m_CurrentScene != nullptr)
-			// TODO: get rid of this checking
+		if (m_SceneState == SceneState::PLAY)
 		m_CurrentScene->update();
 	}
 
-	void Director::draw() {
-		if (m_CurrentScene != nullptr)
-			// TODO: get rid of this checking
+	void Director::render() {
+		if (m_SceneState == SceneState::PLAY)
 			m_CurrentScene->draw();
 	}
 
 	unsigned Director::createScene(std::string_view name) {
-		ForwardRenderer2D* renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0,
-																			 minDepthValue(), maxDepthValue()));
-		Scene* scene = new Scene(name, renderer);
+		Scene* scene = new Scene(name, m_Renderer);
 		m_Scenes[scene->getID()] = scene;
 		m_ScenesList[std::string(name)] = scene->getID();
 		return scene->getID();
@@ -61,15 +68,70 @@ namespace prx {
 	}
 
 	void Director::setCurrentScene(std::string_view name) {
+		if (m_CurrentScene != nullptr)
+			m_CurrentScene->destroy();
 		m_CurrentScene = getScene(name);
+		m_CurrentScene->init();
+		m_CurrentScene->setRenderer(m_Renderer);
+		m_SceneState = SceneState::STOP;
+		// TODO: GC policies
+		ResourceManager::getInstance()->collectGarbage();
 	}
 
 	void Director::setCurrentScene(unsigned ID) {
+		if (m_CurrentScene != nullptr)
+			m_CurrentScene->destroy();
 		m_CurrentScene = getScene(ID);
+		m_CurrentScene->init();
+		m_CurrentScene->setRenderer(m_Renderer);
+		m_SceneState = SceneState::STOP;
+		// TODO: GC policies
+		ResourceManager::getInstance()->collectGarbage();
 	}
 
 	void Director::initScene() {
 		m_CurrentScene->init();
+	}
+
+	void Director::destroyScene() {
+		m_CurrentScene->destroy();
+	}
+
+	void Director::deleteScene(std::string_view name) {
+		auto node = m_Scenes.find(m_ScenesList.find(std::string(name))->second);
+		if (node->second == m_CurrentScene) {
+			PRX_ERROR("DIRECTOR: Can not delete current scene./n-> SCENE: ", m_CurrentScene->getName());
+			return;
+		}
+		delete node->second;
+		m_Scenes.erase(node);
+		m_ScenesList.erase(std::string(name));
+	}
+
+	void Director::deleteScene(unsigned ID) {
+		auto node = m_Scenes.find(ID);
+		if (node->second == m_CurrentScene) {
+			PRX_ERROR("DIRECTOR: Can not delete current scene./n-> SCENE: ", m_CurrentScene->getName());
+			return;
+		}
+		delete node->second;
+		m_Scenes.erase(node);
+		for (auto iter : m_ScenesList) {
+			if (iter.second == ID)
+				m_ScenesList.erase(iter.first);
+			break;
+		}
+	}
+
+	void Director::playScene() noexcept {
+		if (m_CurrentScene->isInitialized())
+			m_SceneState = SceneState::PLAY;
+		else
+			PRX_ERROR("DIRECTOR: Can not play scene. Scene is not initialized/n->SCENE: ", m_CurrentScene->getName());
+	}
+
+	void Director::stopScene() noexcept {
+		m_SceneState = SceneState::STOP;
 	}
 
 	void Director::setViewport(hpm::vec2 size) {

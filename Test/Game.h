@@ -18,10 +18,11 @@ class Game : public prx::Application {
 public:
 	Window* m_Window;
 	Shader* m_Shader;
-	Sound* m_Sound;
+	ResourceHandler<Sound> m_Sound;
 	LabelNode* m_FPSCounter;
 	LabelNode* m_UPSCounter;
 	Scene* m_Scene;
+	Scene* m_Scene2;
 	SpriteNode* m_Background;
 	Renderer2D* m_Renderer;
 	SpriteNode* m_Sun;
@@ -35,7 +36,7 @@ public:
 	Layer* m_UILayer;
 	Group* m_Group;
 public:
-	Game(std::string_view path) {}
+	Game(std::string_view path) : m_Sound(nullptr) {}
 	~Game() {};
 
 	void init() override;

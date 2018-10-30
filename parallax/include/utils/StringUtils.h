@@ -46,6 +46,10 @@ namespace prx::utils {
 			return std::string(str);
 		}
 
+		inline static std::string toString(unsigned char const* str) {
+			return std::string(reinterpret_cast<char const*>(str));
+		}
+
 		inline static std::string toString(int num) {
 			return std::to_string(num);
 		}

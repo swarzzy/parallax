@@ -2,6 +2,7 @@
 #include <string>
 #include "../Common.h"
 #include "../utils/SimpleHash.h"
+#include "../utils/log/Log.h"
 
 namespace prx {
 
@@ -9,6 +10,7 @@ namespace prx {
 	class ResourceHandler;
 
 	class Resource {
+		PRX_DISALLOW_COPY_AND_MOVE(Resource);
 	private:
 		inline static size_t _globalResourceCounter = 0;
 	protected:
@@ -20,8 +22,6 @@ namespace prx {
 		std::string m_FilePath;
 		// An identifier (hashed filepath string) to distinguish unique and replicable resources
 		prx_id_t m_ID;
-
-		PRX_DISALLOW_COPY_AND_MOVE(Resource);
 
 		explicit Resource(std::string_view filepath);
 		virtual ~Resource() {};
@@ -110,7 +110,4 @@ namespace prx {
 			}
 		}
 	}
-
-
-
 }

@@ -6,16 +6,16 @@
 
 #include "../ext/gorilla/ga.h"
 #include "../ext/gorilla/gau.h"
+#include "../resources/Resource.h"
+#include "../Common.h"
 
 namespace prx {
 	class Window;
 
-	class Sound {
+	class Sound final : public Resource {
+		PRX_DISALLOW_COPY_AND_MOVE(Sound)
 	private:
-		std::string			m_FilePath;
-		
 		ga_Mixer*			m_gaMixer;
-		
 		ga_Sound*			m_Sound;
 		mutable ga_Handle*	m_Handle;
 
@@ -25,9 +25,8 @@ namespace prx {
 
 		mutable bool		m_Playing;
 
-
 	public:
-		Sound(std::string_view filepath, ga_Mixer* gaMixer);
+		Sound(std::string_view filepath);
 		~Sound();
 
 		void play() const;
@@ -35,34 +34,43 @@ namespace prx {
 		void pause() const;
 		void stop() const;
 
-		inline void setGain	(float gain) {
-			if (gain > 1.0) {
-				m_Gain = 1.0;
-				return;
-			}
-			if (gain < 0.0) {
-				m_Gain = 0.0;
-				return;
-			}
-			m_Gain = gain;
-		}
-		inline void setPan	(float pan)	{
-			if (pan > 1.0) {
-				m_Pan = 1.0;
-				return;
-			}
-			if (pan < -1.0) {
-				m_Pan = 0.0;
-				return;
-			}
-			m_Pan = pan;
-		}
-		inline void setPitch(float pitch) { m_Pitch = pitch; }
-
-		inline std::string_view getFilePath() const { return m_FilePath; }
+		inline void setGain(float gain) noexcept;
+		inline void setPan(float pan) noexcept;
+		inline void setPitch(float pitch) noexcept;
 
 	private:
+		void initInternal() override;
+		void destroyInternal() override;
+
 		friend static void set_flag_and_destroy_on_finish(ga_Handle* in_handle, void* in_context);
 	};
+
+	inline void Sound::setGain(float gain) noexcept {
+		if (gain > 1.0) {
+			m_Gain = 1.0;
+			return;
+		}
+		if (gain < 0.0) {
+			m_Gain = 0.0;
+			return;
+		}
+		m_Gain = gain;
+	}
+
+	inline void Sound::setPan(float pan) noexcept {
+		if (pan > 1.0) {
+			m_Pan = 1.0;
+			return;
+		}
+		if (pan < -1.0) {
+			m_Pan = 0.0;
+			return;
+		}
+		m_Pan = pan;
+	}
+
+	inline void Sound::setPitch(float pitch) noexcept {
+		m_Pitch = pitch;
+	}
 }
 #endif

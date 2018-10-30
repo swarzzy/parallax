@@ -44,6 +44,7 @@ namespace prx {
 		virtual ~Renderer2D() noexcept {};
 
 		virtual void init() {};
+		virtual void destroy() {};
 
 		virtual void setMask(Texture* mask) noexcept;
 		inline virtual void defaultMask() noexcept;

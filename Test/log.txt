@@ -1,7 +1,24 @@
-[INFO ] OpenGL version: 4.5.0 - Build 22.20.16.4799
+[INFO ] 	 PARALLAX ENGINE
+-> OPENGL VERSION: 4.5.0 - Build 22.20.16.4799
+
 [INFO ] Resource initialized
 -> FILE: 
+[FATAL] RESOURCE MANAGER: Audio system is not initialized!
 [INFO ] Resource initialized
--> FILE: res/textures/5mb.jpg
+-> FILE: res/audio/test.ogg
+[INFO ] Resource initialized
+-> FILE: res/textures/sun.png
 [INFO ] Resource initialized
 -> FILE: res/textures/blue_planet.png
+[INFO ] Resource initialized
+-> FILE: res/textures/brown_planet.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/sun.png
+[FATAL] *********************************
+       	 ASSERTION FAILED!
+        *********************************
+        Attempt to get an instance of not initialized singleton.
+-> CLASS: class prx::ResourceManager
+-> FROM: class prx::ResourceManager *__cdecl prx::Singleton<class prx::ResourceManager>::getInstance(void)
+-> FILE: singleton.inl
+-> LINE: 17
