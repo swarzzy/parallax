@@ -40,7 +40,8 @@ namespace prx {
 		}
 		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, pixels, width);
 
-		return hpm::vec4(atl.x, atl.y, atl.width, atl.height);
+		return hpm::vec4(static_cast<float>(atl.x), static_cast<float>(atl.y), 
+						 static_cast<float>(atl.width), static_cast<float>(atl.height));
 	}
 
 	hpm::vec4 TextureAtlas::add(std::string_view path) {
@@ -59,7 +60,9 @@ namespace prx {
 			return hpm::vec4(-1.0);
 		}
 		ftgl::texture_atlas_set_region(m_TextureAtlas, atl.x, atl.y, atl.width, atl.height, image->getPixels(), image->getWigth());
-		return hpm::vec4(atl.x, atl.y, atl.width, atl.height);
+		
+		return hpm::vec4(static_cast<float>(atl.x), static_cast<float>(atl.y),
+					     static_cast<float>(atl.width), static_cast<float>(atl.height));
 	}
 
 	void TextureAtlas::resize(unsigned width, unsigned height) {
@@ -87,8 +90,8 @@ namespace prx {
 		ftgl::texture_atlas_delete(m_TextureAtlas);
 		m_TextureAtlas = textureAtlasNew;
 
-		m_Width = m_TextureAtlas->width;
-		m_Height = m_TextureAtlas->height;
+		m_Width =  static_cast<unsigned>(m_TextureAtlas->width);
+		m_Height = static_cast<unsigned>(m_TextureAtlas->height);
 	}
 
 	void TextureAtlas::update() {

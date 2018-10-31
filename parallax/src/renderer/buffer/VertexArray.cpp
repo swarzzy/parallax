@@ -21,7 +21,7 @@ namespace prx {
 		for (unsigned int i = 0; i < elements.size(); i++) {
 			GLCall(glEnableVertexAttribArray(i));
 			GLCall(glVertexAttribPointer(i, elements[i].count, elements[i].type, elements[i].normalized
-				, layout.GetStride(), (GLvoid*)offset));
+				, layout.GetStride(), reinterpret_cast<void*>(offset)));
 			offset += elements[i].count * VertexBufferElement::GetSizeOfType(elements[i].type);
 		}
 		Unbind();
@@ -35,7 +35,7 @@ namespace prx {
 		for (unsigned int i = 0; i < elements.size(); i++) {
 			GLCall(glEnableVertexAttribArray(i));
 			GLCall(glVertexAttribPointer(i, elements[i].count, elements[i].type, elements[i].normalized
-				, layout.GetStride(), (GLvoid*)offset));
+				, layout.GetStride(), reinterpret_cast<void*>(offset)));
 			offset += elements[i].count * VertexBufferElement::GetSizeOfType(elements[i].type);
 		}
 		Unbind();

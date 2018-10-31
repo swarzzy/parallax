@@ -2,7 +2,7 @@
 #ifndef _PARALLAX_RENDERER_RENDERABLE2D_H_
 #define _PARALLAX_RENDERER_RENDERABLE2D_H_
 
-#include <hypermath.h>;
+#include <hypermath.h>
 #include "../../textures/TextureBase.h"
 
 namespace prx {

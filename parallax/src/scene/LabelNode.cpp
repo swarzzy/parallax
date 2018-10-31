@@ -30,7 +30,7 @@ namespace prx {
 	}
 
 	void LabelNode::drawInternal() {
-		m_Label->submit(getRenderer(), m_TransformComponent.getWorldMat() , m_Depth);
+		m_Label->submit(getRenderer(), m_TransformComponent.getWorldMat() , static_cast<float>(m_Depth));
 	}
 }
 

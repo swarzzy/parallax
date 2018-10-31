@@ -101,7 +101,7 @@ namespace prx {
 		GLCall(glGetProgramiv(m_ID, GL_ACTIVE_UNIFORMS, &uniformCount));
 		m_Uniforms.resize(uniformCount);
 		char name[128];
-		for (unsigned int i = 0; i < uniformCount; i++) {
+		for (int i = 0; i < uniformCount; i++) {
 			unsigned int glType;
 			GLCall(glGetActiveUniform(m_ID, i, sizeof(name), nullptr, &m_Uniforms[i].size, &glType, name));
 			m_Uniforms[i].name = std::string(name);

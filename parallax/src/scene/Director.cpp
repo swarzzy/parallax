@@ -28,7 +28,7 @@ namespace prx {
 
 		m_ViewportSize = Window::getCurrentWindow().getSize();
 		m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0,
-											minDepthValue(), maxDepthValue()));
+											static_cast<float>(minDepthValue()), static_cast<float>(maxDepthValue())));
 		m_Renderer->init();
 	}
 
@@ -136,7 +136,7 @@ namespace prx {
 
 	void Director::setViewport(hpm::vec2 size) {
 		m_ViewportSize = size;
-		GLCall(glViewport(0, 0, size.x, size.y));
+		GLCall(glViewport(0, 0, static_cast<unsigned>(size.x), static_cast<unsigned>(size.y)));
 		updateViewport();
 	}
 

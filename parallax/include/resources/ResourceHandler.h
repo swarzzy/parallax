@@ -8,7 +8,7 @@ namespace prx {
 	template<typename Res>
 	class ResourceHandler final {
 	private:
-		static struct weak_construct_t {};
+		struct weak_construct_t {};
 		static constexpr weak_construct_t weak_construct = weak_construct_t();
 
 		Res* m_Resource;

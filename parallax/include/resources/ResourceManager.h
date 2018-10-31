@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "../Common.h"
 #include "../utils/Singleton.h"
+#include "Resource.h"
 
 namespace prx {
 
@@ -35,6 +36,7 @@ namespace prx {
 
 		inline void collectGarbage();
 
+		inline void clean();
 	};
 
 	template<typename Res>
@@ -108,5 +110,10 @@ namespace prx {
 			m_GarbageList.clear();
 		}
 #endif
+	}
+
+	void ResourceManager::clean() {
+		m_Resources.clear();
+		m_GarbageList.clear();
 	}
 }

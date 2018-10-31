@@ -34,6 +34,7 @@ namespace prx {
 		}
 		else {
 			PRX_ERROR("Shader Manager: Failed to load shader. Unknown shader type: ", shader);
+			return 0;
 		}
 	}
 

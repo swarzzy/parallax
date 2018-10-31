@@ -370,7 +370,7 @@ namespace prx {
 				ch = characters.at(character);
 			} 
 			catch (std::out_of_range& e) {
-				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas.");
+				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas./n-> EXCEPTION: ", e.what());
 				return;
 			}
 			
@@ -432,7 +432,7 @@ namespace prx {
 				ch = characters.at(character);
 			}
 			catch (std::out_of_range& e) {
-				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas.");
+				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas./n-> EXCEPTION: ", e.what());
 				return;
 			}
 

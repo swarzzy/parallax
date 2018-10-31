@@ -15,11 +15,11 @@ namespace prx {
 
 	Window* Window::m_CurrentWindow = nullptr;
 
-	Window::Window(std::string_view title, float width, float height, bool fullscreen)
+	Window::Window(std::string_view title, unsigned width, unsigned height, bool fullscreen)
 		: m_Title(title), 
 		  m_Width(width),
 		  m_Height(height), 
-		  m_ClearColor(hpm::vec3(0.0, 0.0, 0.0)),
+		  m_ClearColor(hpm::vec3(0.0f, 0.0f, 0.0f)),
 		  m_FullScreen(fullscreen), 
 		  m_ScrollOffsetX(0), 
 		  m_ScrollOffsetY(0) 
@@ -42,9 +42,9 @@ namespace prx {
 		m_Monitor = glfwGetPrimaryMonitor();
 
 		if (m_FullScreen)
-			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), m_Monitor, nullptr);
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(),	m_Monitor, nullptr);
 		else
-			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(),	nullptr, nullptr);
 
 		if (!m_Window) {
 			glfwTerminate();
@@ -78,8 +78,8 @@ namespace prx {
 		memset(m_MouseButtonsPressed,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
 		memset(m_MouseButtonsReleased,		false, PARALLAX_INPUT_MAX_MOUSE_BUTTONS * sizeof(bool));
 
-		m_CursorX = m_Width / 2.0f;
-		m_CursorY = m_Height / 2.0f;
+		m_CursorX = static_cast<int>(m_Width) / 2.0f;
+		m_CursorY = static_cast<int>(m_Height) / 2.0f;
 
 		// Initialize GLEW
 		if (glewInit() != GLEW_OK) {
@@ -194,7 +194,7 @@ namespace prx {
 		// TODO: Join this two calls
 	}
 
-	void Window::resize(float width, float height) {
+	void Window::resize(unsigned width, unsigned height) {
 		m_Width  = width;
 		m_Height = height;
 		glfwSetWindowSize(m_Window, width, height);
@@ -256,7 +256,7 @@ namespace prx {
 		win->m_Width = width;
 		win->m_Height = height;
 		if (Director::getInstance() != nullptr)
-			Director::getInstance()->setViewport(hpm::vec2(width, height));
+			Director::getInstance()->setViewport(hpm::vec2(static_cast<float>(width), static_cast<float>(height)));
 	}
 }
 

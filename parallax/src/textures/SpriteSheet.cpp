@@ -76,7 +76,8 @@ namespace prx {
 		if (currentTime - animation.timeElapsed > animation.timePerState) {
 			animation.currentState == animation.framesNumber - 1 ? 
 										animation.currentState= 0 : animation.currentState++;
-			animation.timeElapsed = currentTime;
+			// TODO: time variables types
+			animation.timeElapsed = static_cast<__int64>(currentTime);
 		}
 		return m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
 	}

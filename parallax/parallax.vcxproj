@@ -286,15 +286,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\include\ext\freetype;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\include\ext\freetype;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax</IntDir>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

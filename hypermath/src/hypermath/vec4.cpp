@@ -6,8 +6,8 @@ namespace hpm {
 	vec4::vec4()
 		: x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
 
-	vec4::vec4(float _x, float _y, float _z, float _w) 
-		: x(_x), y(_y), z(_z), w(_w) {}
+	vec4::vec4(float x_, float y_, float z_, float w_) 
+		: x(x_), y(y_), z(z_), w(w_) {}
 
 	vec4::vec4(float value) 
 		: x(value), y(value), z(value), w(value){}

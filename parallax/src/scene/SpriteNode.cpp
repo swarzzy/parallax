@@ -57,7 +57,9 @@ namespace prx {
 	}
 
 	void SpriteNode::drawInternal() {
-		m_Sprite->submit(getRenderer(), m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), m_Depth);
+		m_Sprite->submit(getRenderer(), 
+						 m_TransformComponent.getWorldMat() * m_TransformComponent.getAnchorMat(), 
+						 static_cast<float>(m_Depth));
 	}
 
 	void SpriteNode::destroyInternal() {

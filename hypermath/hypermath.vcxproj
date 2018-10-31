@@ -87,12 +87,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath</OutDir>
-    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath\</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath</OutDir>
-    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\hypermath\</OutDir>
+    <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\hypermath\</IntDir>
     <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

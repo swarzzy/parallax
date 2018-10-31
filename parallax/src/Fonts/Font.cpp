@@ -22,7 +22,7 @@ namespace prx {
 		loadFontFromFile();
 	}
 
-	Font::Font(std::string_view name, const unsigned char* data, size_t dataSize, int size, float scale) 
+	Font::Font(std::string_view name, const unsigned char* data, long dataSize, int size, float scale) 
 		: m_FilePath(""),
 		  m_Name(name),
 		  m_Size(size), 
@@ -36,7 +36,7 @@ namespace prx {
 		delete m_FontAtlas;
 	}
 
-	void Font::loadFontFromBinary(const unsigned char* data, size_t size) {
+	void Font::loadFontFromBinary(const unsigned char* data, long size) {
 		USE_PARALLAX_FREETYPE_DEBUGGER
 
 		FT_Library ft;
@@ -67,7 +67,8 @@ namespace prx {
 			FTCall(FT_Load_Char(face, ch, FT_LOAD_RENDER));
 			hpm::vec4 coords = m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
 			if (coords.x < 0.0f) {
-				m_FontAtlas->resize(m_FontAtlas->getWidth() * 1.5, m_FontAtlas->getHeight() * 1.5);
+				m_FontAtlas->resize(static_cast<unsigned>(m_FontAtlas->getWidth() * 1.5f), 
+									static_cast<unsigned>(m_FontAtlas->getHeight() * 1.5f));
 
 				// Shifting all old chars coords by 1 because of 
 				// texture atlas resize method implementation
@@ -81,11 +82,13 @@ namespace prx {
 			}
 
 			m_Characters.emplace(std::piecewise_construct, std::forward_as_tuple(ch), std::forward_as_tuple(
-				coords,
-				hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-				hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap.rows - face->glyph->bitmap_top),
-				face->glyph->advance.x
-			));
+								 coords,
+								 hpm::vec2(static_cast<float>(face->glyph->bitmap.width),
+								 		  static_cast<float>(face->glyph->bitmap.rows)),
+								 hpm::vec2(static_cast<float>(face->glyph->bitmap_left),
+								 		  static_cast<float>(face->glyph->bitmap.rows - face->glyph->bitmap_top)),
+								 face->glyph->advance.x
+								));
 		}
 		m_FontAtlas->update();
 
@@ -135,7 +138,8 @@ namespace prx {
 			FTCall(FT_Load_Char(face, ch, FT_LOAD_RENDER));
 			hpm::vec4 coords =  m_FontAtlas->add(face->glyph->bitmap.buffer, face->glyph->bitmap.width, face->glyph->bitmap.rows, TextureFormat::RED);
 			if (coords.x < 0.0f) {
-				m_FontAtlas->resize(m_FontAtlas->getWidth() * 1.5, m_FontAtlas->getHeight() * 1.5);
+				m_FontAtlas->resize(static_cast<unsigned>(m_FontAtlas->getWidth() * 1.5), 
+									static_cast<unsigned>(m_FontAtlas->getHeight() * 1.5));
 				
 				// Shifting all old chars coords by 1 because of 
 				// texture atlas resize method implementation
@@ -150,8 +154,9 @@ namespace prx {
 
 			m_Characters.emplace(std::piecewise_construct, std::forward_as_tuple(ch), std::forward_as_tuple(
 									coords,
-									hpm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-									hpm::vec2(face->glyph->bitmap_left, face->glyph->bitmap.rows - face->glyph->bitmap_top),
+									hpm::vec2(static_cast<float>(face->glyph->bitmap.width), static_cast<float>(face->glyph->bitmap.rows)),
+									hpm::vec2(static_cast<float>(face->glyph->bitmap_left), 
+											  static_cast<float>(face->glyph->bitmap.rows - face->glyph->bitmap_top)),
 									face->glyph->advance.x
 								));
 		}

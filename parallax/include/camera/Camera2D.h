@@ -19,8 +19,8 @@ namespace prx {
 
 		inline static const hpm::vec2 defaultViewSpaceSize() noexcept;
 
-		void init(float viewSpaceWidth = defaultViewSpaceWidth,
-				  float viewSpaceHeight = defaultViewSpaceHeight);
+		void init(unsigned viewSpaceWidth = defaultViewSpaceWidth,
+				  unsigned viewSpaceHeight = defaultViewSpaceHeight);
 
 		void update();
 
@@ -45,7 +45,7 @@ namespace prx {
 	};
 
 	inline const hpm::vec2 Camera2D::defaultViewSpaceSize() noexcept {
-		return hpm::vec2(defaultViewSpaceWidth, defaultViewSpaceHeight);
+		return hpm::vec2(static_cast<float>(defaultViewSpaceWidth), static_cast<float>(defaultViewSpaceHeight));
 	}
 
 

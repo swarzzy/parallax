@@ -22,6 +22,7 @@ namespace prx {
 	};
 	
 	Application::~Application() {
+		ResourceManager::getInstance()->clean();
 		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
 		FontManager::destroy();
 		ShaderManager::clear();

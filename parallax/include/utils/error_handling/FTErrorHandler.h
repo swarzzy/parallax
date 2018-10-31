@@ -4,7 +4,7 @@
 
 #ifdef PARALLAX_DEBUG 
 
-#include "ErrorHandler.h";
+#include "ErrorHandler.h"
 
 #include <sstream>
 #include "../log/Log.h"

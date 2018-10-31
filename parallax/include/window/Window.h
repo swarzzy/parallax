@@ -26,8 +26,8 @@ namespace prx {
 		static Window* m_CurrentWindow;
 		
 		std::string	 m_Title;
-		float		 m_Width;
-		float		 m_Height;
+		unsigned	 m_Width;
+		unsigned	 m_Height;
 		GLFWwindow*	 m_Window;
 		GLFWmonitor* m_Monitor;
 		hpm::vec3	 m_ClearColor;
@@ -49,7 +49,7 @@ namespace prx {
 		float m_ScrollOffsetX, 
 			  m_ScrollOffsetY;
 		
-		Window(std::string_view title, float width, float height, bool fullscreen);
+		Window(std::string_view title, unsigned width, unsigned height, bool fullscreen);
 
 	public:
 		friend class Singleton<Window>;
@@ -64,27 +64,27 @@ namespace prx {
 
 		void clear(unsigned int flags);
 
-		void resize(float width, float height);
+		void resize(unsigned width, unsigned height);
 
 		void enableFullScreen(bool fullscreen);
 
 		bool isClosed() const;
 
 		// TODO: button defines
-		bool isKeyHeld		(GLenum key) const;
-		bool isKeyPressed	(GLenum key) const;
-		bool isKeyReleased	(GLenum key) const;
+		bool isKeyHeld		(unsigned key) const;
+		bool isKeyPressed	(unsigned key) const;
+		bool isKeyReleased	(unsigned key) const;
 
-		bool isMouseButtonHeld		(GLenum button) const;
-		bool isMouseButtonPressed	(GLenum button) const;
-		bool isMouseButtonReleased	(GLenum button) const;
+		bool isMouseButtonHeld		(unsigned button) const;
+		bool isMouseButtonPressed	(unsigned button) const;
+		bool isMouseButtonReleased	(unsigned button) const;
 
 		// Deprecated
 		PRX_DEPRECATED inline GLFWwindow* getWindowPointer() { return m_Window; };
 		
-		inline float getWidth() const  { return m_Width; };
-		inline float getHeight() const { return m_Height; };
-		inline hpm::vec2 getSize() const { return hpm::vec2(m_Width, m_Height); }
+		inline unsigned getWidth() const  { return m_Width; };
+		inline unsigned getHeight() const { return m_Height; };
+		inline hpm::vec2 getSize() const { return hpm::vec2(static_cast<float>(m_Width), static_cast<float>(m_Height)); }
 		
 		inline hpm::vec2 getCursorPos() const  { return hpm::vec2(m_CursorX, m_Height - m_CursorY); };
 		inline double getScrollOffsetY() const { return m_ScrollOffsetY; };

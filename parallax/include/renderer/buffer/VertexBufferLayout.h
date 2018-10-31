@@ -18,8 +18,8 @@ namespace prx {
 			case GL_UNSIGNED_INT:	return sizeof(GLuint);
 			case GL_UNSIGNED_BYTE:	return sizeof(GLubyte);
 			}
+			return 0;
 		}
-
 	};
 
 	class VertexBufferLayout {

@@ -87,13 +87,13 @@ void Game::update() {
 	//m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);*/
 
 	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
-		m_CameraPosition.y += 3.1;
+		m_CameraPosition.y += 3.1f;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_S))
-		m_CameraPosition.y -= 3.1;
+		m_CameraPosition.y -= 3.1f;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_A))
-		m_CameraPosition.x -= 3.0;
+		m_CameraPosition.x -= 3.0f;
 	if (m_Window->isKeyHeld(PARALLAX_KEY_D))
-		m_CameraPosition.x += 3.0;
+		m_CameraPosition.x += 3.0f;
 	static int depth = 0;
 	static bool hide = true;
 	static bool hidesp = false;

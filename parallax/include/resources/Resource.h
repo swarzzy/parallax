@@ -30,7 +30,7 @@ namespace prx {
 		inline size_t getUniqueID() const noexcept;
 		inline prx_id_t getResID() const noexcept;
 		inline const std::string& getFilePath() const noexcept;
-		inline const prx_id_t getRefCount() const noexcept;
+		inline const size_t getRefCount() const noexcept;
 		inline size_t getUserCount() const noexcept;
 		inline bool isInitialized() const noexcept;
 		static inline prx_id_t makeResID(std::string_view filepath);
@@ -69,7 +69,7 @@ namespace prx {
 		return m_FilePath;
 	}
 
-	inline const prx_id_t Resource::getRefCount() const noexcept {
+	inline const size_t Resource::getRefCount() const noexcept {
 		return m_RefCounter;
 	}
 

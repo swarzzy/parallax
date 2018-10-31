@@ -91,7 +91,7 @@ namespace prx {
 			if (m_Playing)
 				stop();
 			ga_sound_release(m_Sound);
-			m_Sound == nullptr;
+			m_Sound = nullptr;
 		}
 	}
 

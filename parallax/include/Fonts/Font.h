@@ -31,7 +31,7 @@ namespace prx {
 	public:
 		TextureAtlas*				m_FontAtlas;
 		Font(std::string_view filepath, std::string_view name, int size, float scale = 1.0f);
-		Font(std::string_view name, const unsigned char* data, size_t dataSize, int size, float scale = 1.0f);
+		Font(std::string_view name, const unsigned char* data, long dataSize, int size, float scale = 1.0f);
 		~Font();
 
 		inline const std::string&				getFilePath()	const { return m_FilePath;	 };
@@ -43,7 +43,7 @@ namespace prx {
 
 	private:
 		void loadFontFromFile();
-		void loadFontFromBinary(const unsigned char* data, size_t size);
+		void loadFontFromBinary(const unsigned char* data, long size);
 	};
 }
 #endif

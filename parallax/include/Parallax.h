@@ -3,7 +3,7 @@
 #define _PARALLAX_PARALLAX_H_
 
 #include "window/Window.h"
-#include "utils/timing/SimpleTimer.h";
+#include "utils/timing/SimpleTimer.h"
 #include "shading/ShaderManager.h"
 #include "utils/log/Log.h"
 #include "shading/Shader.h"
@@ -28,7 +28,7 @@ namespace prx {
 		unsigned int	m_FPS;
 		unsigned int	m_UPS;
 		
-		unsigned long long m_Time;
+		float m_Time;
 	
 	protected:
 		Application();
@@ -58,7 +58,7 @@ namespace prx {
 		inline unsigned int getFPS() const { return m_FPS; }
 		inline unsigned int getUPS() const { return m_UPS; }
 		inline float		getDeltaTime() const { return m_DeltaTime; }
-		inline float		getTime() const { return m_Time; }
+		inline float getTime() const { return m_Time; }
 		
 		inline void start() { init(); run(); }
 	};
