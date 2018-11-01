@@ -12,7 +12,8 @@ namespace prx {
 	private:
 		Sprite* m_Sprite;
 		ResourceHandler<Texture> m_Texture;
-
+	
+	public:
 		SpriteNode(float x, float y,
 				   float width, float height, 
 				   unsigned int color,
@@ -34,8 +35,6 @@ namespace prx {
 				   ResourceHandler<Texture> texture,
 				   Scene* scene,
 				   Node* parent = nullptr);
-	public:
-		friend class Scene;
 		
 		~SpriteNode();
 

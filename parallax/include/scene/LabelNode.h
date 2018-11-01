@@ -10,15 +10,13 @@ namespace prx {
 	private:
 		Label* m_Label;
 
+	public:
 		LabelNode(Scene* scene, std::string_view text, unsigned color, Node* parent = nullptr);
 		LabelNode(Scene* scene, std::string_view text, const Font* font, unsigned color, Node* parent = nullptr);
 		LabelNode(Scene* scene, std::string_view text, float x, float y, unsigned color, Node* parent = nullptr);
 		LabelNode(Scene* scene, std::string_view text, const Font* font, float x, float y, unsigned color, Node* parent = nullptr);
 
 		void drawInternal() override;
-
-	public:
-		friend class Scene;
 
 		~LabelNode();
 

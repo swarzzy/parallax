@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spritesheet file="res/textures/adventurer.png" columns="8" rows="12">
+    <animation name="run">
+    	<tile>9</tile>
+    	<tile>10</tile>
+    	<tile>11/tile>
+    	<tile>12</tile>
+    	<tile>13</tile>
+    	<tile>14</tile>
+   </animation>
+</spritesheet>

@@ -47,7 +47,10 @@ void Game::init() {
 	m_UPSCounter->setPosition(4, 555);
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
+
 	
+	m_Hero = m_Scene->createAnimation(150, 150, "res/textures/adventurer.sheet", "run", m_Layer);
+	m_Hero->loopAnimation("run");
 	//std::knuth_b rand;
 	//std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
 	//m_Group = new Group(m_Layer);
@@ -77,14 +80,20 @@ void Game::init() {
 void Game::tick() {
 	m_UPSCounter->getLabel().setText(std::to_string(getUPS()) + " ups");
 	m_FPSCounter->getLabel().setText(std::to_string(getFPS()) + " fps");
+	std::cout << Application::getInstance()->getTime() << std::endl;
 }
 
 void Game::update() {
+	
+	m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
+	m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
+
 	//m_Group->setRotation(getTime() / 80, -300);
 	m_Sun->setRotation(-getTime() / 80);
 	//m_BluePlanet->setRotation(getTime() / 25, 50);
 	//m_BrownPlanet->setRotation(getTime() / 5, 45);
 	//m_Sun->setScale(std::fabs(std::sin(getTime() / 1000)) + 0.5);*/
+
 
 	if (m_Window->isKeyHeld(PARALLAX_KEY_W))
 		m_CameraPosition.y += 3.1f;

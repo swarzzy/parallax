@@ -4,40 +4,40 @@
 #include "Sprite.h"
 #include "../../textures/SpriteSheet.h"
 
+
 namespace prx {
 	
 	enum class AnimationState { PLAY, LOOP, STOP };
 
 	class AnimatedSprite : public Sprite {
+		PRX_DISALLOW_COPY_AND_MOVE(AnimatedSprite)
 	private:
 		unsigned int m_AnimationID;
 		// Store sprite sheet as dedicate sprite sheet pointer to not cast TextureBase 
 		// to the sheet every getUVs call
-		SpriteSheet*	m_SpriteSheet;
+		SpriteSheet*			m_SpriteSheet;
 		mutable AnimationState	m_AnimationState;
-		unsigned int m_DefaultFrame;
+		unsigned int			m_DefaultFrame;
 	
 	public:
 		// TODO: setting default frame
-		AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(size, texture), m_AnimationID(animationID), 
-			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
-			// It`s setting UVs two times, here and in renderable constructor
-			setDefaultUVs();
-		}
+		AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, const std::string& animationName);
+		AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, unsigned int animationID);
+		AnimatedSprite(float width, float height, SpriteSheet* texture, unsigned int animationID);
+		AnimatedSprite(float width, float height, SpriteSheet* texture, const std::string& animationName);
 
-		AnimatedSprite(float width, float height, SpriteSheet* texture, unsigned int animationID)
-			: Sprite(width, height, texture), m_AnimationID(animationID),
-			m_SpriteSheet(texture), m_AnimationState(AnimationState::STOP), m_DefaultFrame(0) {
-			setDefaultUVs();
-		}
+		void update();
+		// Call this after spritesheet initialized
+		void init();
 
-		inline const float* getUVs() const noexcept override;
+		const float* getUVs() const noexcept override;
 
-		inline void reflect(bool reflect) noexcept override;
+		void reflect(bool reflect) noexcept override;
 
 		inline void loopAnimation(unsigned int ID) noexcept;
 		inline void playAnimation(unsigned int ID) noexcept;
+		inline void loopAnimation(const std::string& animationName) noexcept;
+		inline void playAnimation(const std::string& animationName) noexcept;
 		inline void stopAnimation() noexcept;
 		
 		inline AnimationState getAnimationState();
@@ -46,61 +46,28 @@ namespace prx {
 		void setDefaultUVs() noexcept override;
 		void setReflectDefaultUVs() noexcept override {};
 	};
-	
-	
-	inline const float* AnimatedSprite::getUVs() const noexcept {
-		if (m_AnimationState != AnimationState::STOP) {
-			if (m_AnimationState == AnimationState::LOOP) {
-				const TexCoords& tc = m_SpriteSheet->getTexCoords(m_AnimationID);
-
-				m_UVs[0] = tc.lbX;
-				m_UVs[1] = tc.lbY;
-				m_UVs[2] = tc.ltX;
-				m_UVs[3] = tc.ltY;
-				m_UVs[4] = tc.rtX;
-				m_UVs[5] = tc.rtY;
-				m_UVs[6] = tc.rbX;
-				m_UVs[7] = tc.rbY;
-
-			}
-			else
-				if (m_AnimationState == AnimationState::PLAY) {
-					if (m_SpriteSheet->getAnimationCurrentFrame(m_AnimationID)
-						< m_SpriteSheet->getAnimaionFrameCount(m_AnimationID) - 1) {
-
-						const TexCoords& tc = m_SpriteSheet->getTexCoords(m_AnimationID);
-
-						m_UVs[0] = tc.lbX;
-						m_UVs[1] = tc.lbY;
-						m_UVs[2] = tc.ltX;
-						m_UVs[3] = tc.ltY;
-						m_UVs[4] = tc.rtX;
-						m_UVs[5] = tc.rtY;
-						m_UVs[6] = tc.rbX;
-						m_UVs[7] = tc.rbY;
-					}
-					else {
-						m_AnimationState = AnimationState::STOP;
-						m_SpriteSheet->resetAnimations();
-					}
-				}
-		}
-		return m_UVs;
-	};
-
-	inline void AnimatedSprite::reflect(bool reflect) noexcept  {
-		m_SpriteSheet->reflect(reflect);
-	}
 
 	inline void AnimatedSprite::loopAnimation(unsigned ID) noexcept {
 		m_AnimationID = ID;
 		m_AnimationState = AnimationState::LOOP;
 	}
 
+	inline void AnimatedSprite::loopAnimation(const std::string& animationName) noexcept {
+		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
+		m_AnimationState = AnimationState::LOOP;
+	}
+
+
 	inline void AnimatedSprite::playAnimation(unsigned ID) noexcept {
 		m_AnimationID = ID;
 		m_AnimationState = AnimationState::PLAY;
 	}
+
+	inline void AnimatedSprite::playAnimation(const std::string& animationName) noexcept {
+		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
+		m_AnimationState = AnimationState::PLAY;
+	}
+
 
 	inline void AnimatedSprite::stopAnimation() noexcept {
 		m_AnimationState = AnimationState::STOP;
@@ -108,19 +75,6 @@ namespace prx {
 
 	inline AnimationState AnimatedSprite::getAnimationState() {
 		return m_AnimationState;
-	}
-
-	inline void AnimatedSprite::setDefaultUVs() noexcept {
-		const TexCoords& tc = m_SpriteSheet->getFrameUVs(m_DefaultFrame);
-		
-		m_UVs[0] = tc.lbX;
-		m_UVs[1] = tc.lbY;
-		m_UVs[2] = tc.ltX;
-		m_UVs[3] = tc.ltY;
-		m_UVs[4] = tc.rtX;
-		m_UVs[5] = tc.rtY;
-		m_UVs[6] = tc.rbX;
-		m_UVs[7] = tc.rbY;
 	}
 }
 #endif

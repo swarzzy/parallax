@@ -16,7 +16,7 @@ namespace prx {
 	};
 
 	const TextureWrap   TextureBase::DEFAULT_TEXTURE_WRAP = TextureWrap::REPEAT;
-	const TextureFilter TextureBase::DEFAULT_TEXTURE_FILTER = TextureFilter::LINEAR;
+	const TextureFilter TextureBase::DEFAULT_TEXTURE_FILTER = TextureFilter::NEAREST;
 
 	const byte TextureBase::EMPTY_TEXTURE_COLOR = 255;
 
@@ -67,9 +67,17 @@ namespace prx {
 			PRX_FATAL("TEXTURE: Could not create texture. Incorrect data format");
 		}
 
+		GLCall(glGenTextures(1, &m_TexID));
+
+		updateParameters();
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
+
 		//GLCall(glTexStorage2D(GL_TEXTURE_2D, 1, internalFormat, m_Width, m_Height));
 		//GLCall(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 
 	void TextureBase::setParameters(TextureWrap wrapMode, TextureFilter filterMode) {
@@ -102,9 +110,17 @@ namespace prx {
 			PRX_FATAL("TEXTURE: Could not create texture from memory. Incorrect data format");
 		}
 
+		GLCall(glGenTextures(1, &m_TexID));
+
+		updateParameters();
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
+
 		//GLCall(glTexStorage2D(GL_TEXTURE_2D, 1, internalFormat, m_Width, m_Height));
 		//GLCall(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, GL_UNSIGNED_BYTE, pixels));
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 
 	void TextureBase::loadEmpty(unsigned width, unsigned height, TextureFormat format) {
@@ -139,7 +155,15 @@ namespace prx {
 			PRX_FATAL("TEXTURE: Could not create texture from memory. Incorrect data format");
 		}
 
+		GLCall(glGenTextures(1, &m_TexID));
+
+		updateParameters();
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
+
 		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, GL_UNSIGNED_BYTE, data));
+
+		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 
 	void TextureBase::unload() {

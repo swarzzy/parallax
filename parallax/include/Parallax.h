@@ -53,7 +53,7 @@ namespace prx {
 		void run();
 	
 	public:
-		static inline const Application& getCurrentApplication() { return *m_CurrentApplication; }
+		static inline Application* getInstance() { return m_CurrentApplication; }
 		
 		inline unsigned int getFPS() const { return m_FPS; }
 		inline unsigned int getUPS() const { return m_UPS; }

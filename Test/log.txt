@@ -6,12 +6,49 @@
 [INFO ] Resource initialized
 -> FILE: res/audio/test.ogg
 [INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource destroyed
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
+-> FILE: res/textures/adventurer.png
+[INFO ] Resource initialized
 -> FILE: res/textures/sun.png
 [INFO ] Resource initialized
 -> FILE: res/textures/blue_planet.png
 [INFO ] Resource initialized
 -> FILE: res/textures/brown_planet.png
-[INFO ] GARBAGE COLLECTION: 0 items deleted.
 [INFO ] Resource destroyed
 -> FILE: res/textures/sun.png
 [FATAL] *********************************

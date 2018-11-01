@@ -1,15 +1,7 @@
  --- SSE in hypermath ???
  --- constants header ???
- --- vector templates
- --- Texture loading failation handling
  --- kerning
- --- texture parameters
  --- parallax allocator
- --- window resize callbacks
- --- warnings
- --- UI: add possibility to disable loading defaults and UI need complete rework
  --- inverse method in matrix class
  --- disabling anchor points (usefull for non renderable nodes)
-
- --- director
- --- resources
+ --- global texture default parameters settings

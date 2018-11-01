@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\camera\Camera2D.cpp" />
     <ClCompile Include="src\Fonts\FontManager.cpp" />
+    <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
     <ClCompile Include="src\scene\components\TransformComponent2D.cpp" />
     <ClCompile Include="src\scene\Director.cpp" />
@@ -198,8 +199,10 @@
     <ClInclude Include="include\textures\TextureAtlas.h" />
     <ClInclude Include="include\textures\TextureBase.h" />
     <ClInclude Include="include\utils\color\ColorFormatConverter.h" />
+    <ClInclude Include="include\utils\error\FileReadException.h" />
     <ClInclude Include="include\utils\error\ImageLoadingException.h" />
     <ClInclude Include="include\utils\error\ParallaxException.h" />
+    <ClInclude Include="include\utils\error\UninitializedResourceUsedException.h" />
     <ClInclude Include="include\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />

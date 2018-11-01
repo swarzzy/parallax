@@ -1,85 +1,200 @@
 #include <textures/SpriteSheet.h>
 #include <resources/ImageLoader.h>
+#include <utils/error/UninitializedResourceUsedException.h>
+#include <ext/rapidxml/rapidxml.hpp>
+#include <resources/FileReader.h>
+#include "scene/Node.h"
 
 namespace prx {
 
+	SpriteSheet::SpriteSheet(std::string_view path)
+		: TextureBase(""),
+		m_Columns(0),
+		m_Rows(0),
+		m_Tiles(0),
+		m_UV(nullptr),
+		m_ReflectedUV(nullptr),
+		m_Reflected(0),
+		m_CurrentUVBuffer(nullptr),
+		m_XMLPath(path)
+	{
+		parseXML();
+	}
+
 	SpriteSheet::SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected)
 		: TextureBase(path), 
-		m_Path(path), m_Columns(columns), m_Rows(rows), m_Tiles(columns * rows),
-		m_TexCoords(new TexCoords[m_Tiles]),
-		m_ReflectedTexCoords(new TexCoords[m_Tiles]),
-		m_Reflected(reflected),
-		m_CurrentUVBuffer(m_TexCoords),
-		m_CurrentApplication(&Application::getCurrentApplication()) {
+		  m_Columns(columns), 
+		  m_Rows(rows), 
+		  m_Tiles(columns * rows),
+		  m_UV(nullptr),
+		  m_ReflectedUV(nullptr),
+		  m_Reflected(reflected),
+		  m_CurrentUVBuffer(nullptr),
+		  m_XMLPath("")
+	{}
+
+	SpriteSheet::~SpriteSheet() {
+		GLCall(glDeleteTextures(1, &m_TexID));
+		delete[] m_UV;
+		delete[] m_ReflectedUV;
+	}
+
+	void SpriteSheet::initInternal() {
+		m_UV = new UV[m_Tiles];
+		m_ReflectedUV = new UV[m_Tiles];
+		m_CurrentUVBuffer = m_UV;
 		
-		m_TexID = load();
+		loadFromFile();
 
 		// Calculate tex coords
-		unsigned int spriteWidth  = m_Width / m_Columns;
+		unsigned int spriteWidth = m_Width / m_Columns;
 		unsigned int spriteHeight = m_Height / m_Rows;
-		
+
 		int coordCounter = m_Tiles;
-		
-			for (int j = m_Height - spriteHeight; j >= 0; j-= spriteHeight) {
-		for (unsigned int i = 0; i  < m_Width; i+= spriteWidth) {
+
+		for (int j = m_Height - spriteHeight; j >= 0; j -= spriteHeight) {
+			for (unsigned int i = 0; i < m_Width; i += spriteWidth) {
 				float leftBottomX = static_cast<float>(i) / m_Width;
 				float leftBottomY = static_cast<float>(j) / m_Height;
-				
-				m_TexCoords[m_Tiles - coordCounter].lbX = leftBottomX;
-				m_TexCoords[m_Tiles - coordCounter].lbY = leftBottomY;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].rbX = leftBottomX;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].rbY = leftBottomY;
+
+				m_UV[m_Tiles - coordCounter].lbX = leftBottomX;
+				m_UV[m_Tiles - coordCounter].lbY = leftBottomY;
+				m_ReflectedUV[m_Tiles - coordCounter].rbX = leftBottomX;
+				m_ReflectedUV[m_Tiles - coordCounter].rbY = leftBottomY;
 
 
-				m_TexCoords[m_Tiles - coordCounter].ltX = leftBottomX;
-				m_TexCoords[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].rtX = leftBottomX;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_UV[m_Tiles - coordCounter].ltX = leftBottomX;
+				m_UV[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_ReflectedUV[m_Tiles - coordCounter].rtX = leftBottomX;
+				m_ReflectedUV[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
-				m_TexCoords[m_Tiles - coordCounter].rtX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_TexCoords[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].ltX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_UV[m_Tiles - coordCounter].rtX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_UV[m_Tiles - coordCounter].rtY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
+				m_ReflectedUV[m_Tiles - coordCounter].ltX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_ReflectedUV[m_Tiles - coordCounter].ltY = leftBottomY + static_cast<float>(spriteHeight) / m_Height;
 
-				m_TexCoords[m_Tiles - coordCounter].rbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_TexCoords[m_Tiles - coordCounter].rbY = leftBottomY;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].lbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
-				m_ReflectedTexCoords[m_Tiles - coordCounter].lbY = leftBottomY;
-				
-			coordCounter--;
+				m_UV[m_Tiles - coordCounter].rbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_UV[m_Tiles - coordCounter].rbY = leftBottomY;
+				m_ReflectedUV[m_Tiles - coordCounter].lbX = leftBottomX + static_cast<float>(spriteWidth) / m_Width;
+				m_ReflectedUV[m_Tiles - coordCounter].lbY = leftBottomY;
+
+				coordCounter--;
 			}
 		}
 	}
 
-	SpriteSheet::~SpriteSheet() {
+	void SpriteSheet::destroyInternal() {
+		delete[] m_UV;
+		delete[] m_ReflectedUV;
+
 		GLCall(glDeleteTextures(1, &m_TexID));
-		delete[] m_TexCoords;
-		delete[] m_ReflectedTexCoords;
 	}
 
-	unsigned int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask) {
+	void SpriteSheet::parseXML() {
+		using namespace rapidxml;
+		
+		std::string file;
+		try {
+			file = read_file_as_text(m_XMLPath);
+		} catch(FileReadException& e) {
+			PRX_ERROR("SPRITE SHEET: ", e.what());
+			m_Columns = 1;
+			m_Rows = 1;
+			m_Tiles = 1;
+			return;
+		}
+		
+		xml_document<> doc;
+		xml_node<> * rootNode;
+		
+		doc.parse<0>(const_cast<char*>(file.c_str()));
+		
+		rootNode = doc.first_node("spritesheet");
+
+		m_FilePath = rootNode->first_attribute("file")->value();
+		m_Columns = std::stoi(rootNode->first_attribute("columns")->value());
+		m_Rows = std::stoi(rootNode->first_attribute("rows")->value());
+
+		m_Tiles = m_Columns * m_Rows;
+	
+		std::vector<unsigned> tiles;
+		for (xml_node<>* animationNode = rootNode->first_node("animation"); animationNode; animationNode = animationNode->next_sibling()) {
+			const char* name = animationNode->first_attribute("name")->value();
+			for (xml_node<> * tileNode = animationNode->first_node("tile"); tileNode; tileNode = tileNode->next_sibling())
+			{
+				unsigned tile = std::stoi(tileNode->value());
+				if (tile > m_Tiles)
+					PRX_ERROR("SPRITE SHEET: Wrong tile number in spritesheet XML markup");
+				else {
+					tiles.push_back(tile);
+				}
+			}
+			addAnimation(name, tiles);
+			tiles.clear();
+		}
+	}
+
+	int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask) {
 		if (mask.size() > m_Tiles) {
-			std::stringstream ss;
-			ss << "SPRITE SHEET: Mask size mismatch. Texture: " << m_Path;
-			Log::message(LOG_LEVEL::LOG_FATAL, ss.str());
-			ASSERT(mask.size() <= m_Tiles)
+			PRX_ERROR("SPRITE SHEET: Mask size mismatch./n->SHEET PATH: ", getFilePath());
+			return -1;
 		}
 		m_Animations.emplace_back(name, mask.size(), mask);
-		return static_cast<unsigned>(m_Animations.size() - 1);
+		auto id = static_cast<unsigned>(m_Animations.size() - 1);
+		m_AnimationList[std::string(name)] = id;
+		return id;
 	}
 
-	const TexCoords& SpriteSheet::getTexCoords(unsigned int animationID) const {
-		auto currentTime = m_CurrentApplication->getTime();
-		// TODO: handle error when passed id of not existing object
-		const Animation& animation = m_Animations[animationID];
+	const UV* SpriteSheet::getTexCoords(unsigned int animationID) const {
+		if (isInitialized()) {
+			auto currentTime = Application::getInstance()->getTime();
+			try {
+				const Animation& animation = m_Animations.at(animationID);
 
-		if (currentTime - animation.timeElapsed > animation.timePerState) {
-			animation.currentState == animation.framesNumber - 1 ? 
-										animation.currentState= 0 : animation.currentState++;
-			// TODO: time variables types
-			animation.timeElapsed = static_cast<__int64>(currentTime);
+				if (currentTime - animation.timeElapsed > animation.timePerState) {
+					animation.currentState == animation.framesNumber - 1 ?
+						animation.currentState = 0 : animation.currentState++;
+					// TODO: time variables types
+					animation.timeElapsed = static_cast<__int64>(currentTime);
+				}
+				return &m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
+
+			} catch (std::out_of_range& e) {
+				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID./n-> ANIM_ID: ", animationID,
+							"/n ->SHEET PATH: ", getFilePath());
+				return nullptr;
+			}
+		} else {
+			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet./n-> PATH: ", getFilePath());
+			return nullptr;
 		}
-		return m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
+	}
+
+	const UV* SpriteSheet::getTexCoords(const std::string& animationName) const {
+		if (isInitialized()) {
+			auto currentTime = Application::getInstance()->getTime();
+			try {
+				const Animation& animation = m_Animations.at(m_AnimationList.find(animationName.c_str())->second);
+
+				if (currentTime - animation.timeElapsed > animation.timePerState) {
+					animation.currentState == animation.framesNumber - 1 ?
+						animation.currentState = 0 : animation.currentState++;
+					// TODO: time variables types
+					animation.timeElapsed = static_cast<__int64>(currentTime);
+				}
+				return &m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
+
+			}
+			catch (std::out_of_range& e) {
+				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID./n-> NAME: ", animationName,
+					"/n ->SHEET PATH: ", getFilePath());
+				return nullptr;
+			}
+		}
+		else {
+			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet./n-> PATH: ", getFilePath());
+			return nullptr;
+		}
 	}
 
 	void SpriteSheet::resetAnimations() {
@@ -90,48 +205,10 @@ namespace prx {
 	void SpriteSheet::reflect(bool reflect) {
 		if (m_Reflected && !reflect) {
 			m_Reflected = false;
-			m_CurrentUVBuffer = m_TexCoords;
+			m_CurrentUVBuffer = m_UV;
 		} else if (!m_Reflected && reflect) {
 			m_Reflected = true;
-			m_CurrentUVBuffer = m_ReflectedTexCoords;
+			m_CurrentUVBuffer = m_ReflectedUV;
 		}
-	}
-
-	unsigned SpriteSheet::load() {
-		auto image = load_image(m_Path);
-
-		m_Width = image->getWigth();
-		m_Height = image->getHeight();
-
-		unsigned int result;
-		GLCall(glGenTextures(1, &result));
-
-		GLCall(glBindTexture(GL_TEXTURE_2D, result));
-
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-		GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-
-		GLenum internalFormat;
-		if (image->getFormat() == GL_RGB) {
-			internalFormat = GL_RGB8;
-			m_Format = TextureFormat::RGB;
-		}
-		else if (image->getFormat() == GL_RGBA) {
-			internalFormat = GL_RGBA8;
-			m_Format = TextureFormat::RGBA;
-		}
-		else {
-			Log::message(LOG_LEVEL::LOG_FATAL, "TEXTURE: Could not create texture. Incorrect data format");
-			ASSERT(false);
-		}
-
-		//GLCall(glTexStorage2D(GL_TEXTURE_2D, 1, internalFormat, m_Width, m_Height));
-		//GLCall(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
-		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-
-		return result;
 	}
 }

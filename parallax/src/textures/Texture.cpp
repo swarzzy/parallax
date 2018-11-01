@@ -31,18 +31,10 @@ namespace prx {
 	}
 
 	void Texture::initInternal() {
-			GLCall(glGenTextures(1, &m_TexID));
-
-			updateParameters();
-
-			GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
-
 			if (m_Pixels != nullptr)
 				loadFromBitmap(m_Pixels, m_PixelsWidth, m_PixelsHeight, m_PixelsFormat);
 			else
 				loadFromFile();
-
-			GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 
 	void Texture::destroyInternal() {

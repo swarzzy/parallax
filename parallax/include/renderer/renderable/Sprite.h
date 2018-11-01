@@ -9,6 +9,7 @@ namespace prx {
 	class TextureBase;
 
 	class Sprite: public Renderable2D {
+		PRX_DISALLOW_COPY_AND_MOVE(Sprite)
 		public:
 			Sprite(const hpm::vec2& size, unsigned int color);
 			Sprite(const hpm::vec2& size, const TextureBase* texture);
@@ -16,14 +17,6 @@ namespace prx {
 			Sprite(float width, float height, const TextureBase* texture);
 
 			void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) override;
-
-		public:
-			Sprite(const Sprite& other) = delete;
-			Sprite(const Sprite&& other) = delete;
-			Sprite(Sprite&& other) = delete;
-			const Sprite& operator=(const Sprite& other) = delete;
-			const Sprite& operator=(const Sprite&& other) = delete;
-			const Sprite& operator=(Sprite&& other) = delete;
 		};
 	}
 #endif

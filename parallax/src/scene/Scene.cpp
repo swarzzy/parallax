@@ -5,6 +5,8 @@
 #include <scene/Layer.h>
 #include <scene/SpriteNode.h>
 #include <scene/LabelNode.h>
+#include <textures/SpriteSheet.h>
+#include <scene/AnimatedSpriteNode.h>
 
 namespace prx {
 
@@ -46,6 +48,15 @@ namespace prx {
 	SpriteNode* Scene::createSprite(float width, float height, std::string_view texturePath, Node* parent) {
 		auto texture = get_resource<Texture>(texturePath);
 		SpriteNode* node = new SpriteNode(width, height, texture, this, parent);
+		return node;
+	}
+
+	AnimatedSpriteNode* Scene::createAnimation(float width, float height, 
+												std::string_view spritesheetPath, 
+												std::string_view startAnimation, 
+												Node* parent) {
+		auto spritesheet = get_resource<SpriteSheet>(spritesheetPath);
+		AnimatedSpriteNode* node = new AnimatedSpriteNode(width, height, spritesheet, std::string(startAnimation),  this, parent);
 		return node;
 	}
 

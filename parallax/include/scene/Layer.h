@@ -12,9 +12,8 @@ namespace prx {
 	private:
 		Scene*	m_ParentScene;
 
-		explicit Layer(Scene* scene, int depth);
-
 	public:
+		Layer(Scene* scene, int depth);
 		virtual ~Layer() {};
 
 		void update() override;
