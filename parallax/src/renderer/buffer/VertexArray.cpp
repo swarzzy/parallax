@@ -7,6 +7,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4312)
+
 namespace prx {
 
 	VertexArray::VertexArray() {

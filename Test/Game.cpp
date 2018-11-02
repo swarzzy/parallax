@@ -35,28 +35,8 @@ void Game::init() {
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
 
-	
 	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run", m_Layer);
 	m_Hero->loopAnimation("run");
-	//std::knuth_b rand;
-	//std::uniform_int_distribution<unsigned int> colorDistrib(0, 255);
-	//m_Group = new Group(m_Layer);
-	//m_Group->setPosition(300, 300);
-	////m_Group->setAnchorPoint(0.5, 0.5);
-	//m_Group->enableVisibilityTest(false);
-	////m_Group->setPosition(100, 100);
-	
-	//float step = 0.1;
-	//int counter = 0;
-	//for (float x = 0; x < 600; x += 3) {// 3, 1.0
-	//	for (float y = 0; y < 600; y += 3) {
-	//		unsigned int color = 255 << 24 | colorDistrib(rand) << 16 | colorDistrib(rand) << 8 | colorDistrib(rand);
-	//		auto t = new SpriteNode(x, y, 1, 1, color, m_Group);
-	//		step += 0.0001f;
-	//		counter++;
-	//	}
-	//}
-	//m_Group->setPosition(20, 20);
 	
 	Director::getInstance()->setCurrentScene("Scene");
 	Director::getInstance()->playScene();
@@ -107,7 +87,6 @@ void Game::update() {
 			}
 	}
 		m_Hero->setPosition(m_HeroPos);
-	//m_Scene->setCameraPosition(m_CameraPosition);
 	Director::getInstance()->update();
 }
 	
