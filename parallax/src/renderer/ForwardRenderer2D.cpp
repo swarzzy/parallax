@@ -1,10 +1,10 @@
-#include <renderer/ForwardRenderer2D.h>
-#include <utils/error_handling/GLErrorHandler.h>
-#include <Fonts/Font.h>
-#include <renderer/buffer/IndexBuffer.h>
-#include <renderer/FrameBuffer2D.h>
-#include <renderer/renderable/Renderable2D.h>
-#include <shading/ShaderManager.h>
+#include "ForwardRenderer2D.h"
+#include "../utils/error_handling/GLErrorHandler.h"
+#include "../Fonts/Font.h"
+#include "../renderer/buffer/IndexBuffer.h"
+#include "FrameBuffer2D.h"
+#include "renderable/Renderable2D.h"
+#include "../shading/ShaderManager.h"
 
 namespace prx {
 	prx::ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix, RenderTarget rendertarget)

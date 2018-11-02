@@ -5,7 +5,7 @@
 #include "../ext/GL/glew.h"
 #include "../ParallaxKeys.h"
 #include <hypermath.h>
-#include "utils/Singleton.h"
+#include "../utils/Singleton.h"
 #include "../Common.h"
 
 namespace prx {

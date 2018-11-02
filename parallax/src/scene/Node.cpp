@@ -1,5 +1,5 @@
-#include <scene/Node.h>
-#include <scene/Scene.h>
+#include "Node.h"
+#include "Scene.h"
 
 namespace prx {
 	void Node::visibilityTestAnchor() {

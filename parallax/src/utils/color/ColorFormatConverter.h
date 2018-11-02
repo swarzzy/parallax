@@ -6,6 +6,9 @@
 
 #include "../log/Log.h"
 
+#pragma warning(push)
+#pragma warning(disable:4244)
+
 namespace prx {
 	class ColorFormatConverter {
 	public:
@@ -34,15 +37,15 @@ namespace prx {
 
 		static unsigned int rgb(unsigned int r, unsigned int g, unsigned int b) {
 			if (r > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid r - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid r - channel value");
 				r = 255;
 			}
 			if (g > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid g - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid g - channel value");
 				g = 255;
 			}
 			if (b > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid b - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid b - channel value");
 				b = 255;
 			}
 
@@ -53,19 +56,19 @@ namespace prx {
 
 		static unsigned int rgba(unsigned int r, unsigned int g, unsigned int b, float a) {
 			if (r > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid r - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid r - channel value");
 				r = 255;
 			}
 			if (g > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid g - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid g - channel value");
 				g = 255;
 			}
 			if (b > 255) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid b - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid b - channel value");
 				b = 255;
 			}
 			if (a > 1.0) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid a - channel value", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid a - channel value");
 				a = 1.0;
 			}
 
@@ -79,7 +82,7 @@ namespace prx {
 		unsigned int hex(std::string_view hex)
 		{
 			if (hex[0] != '#' || (hex.length() != 7 || hex.length() != 9)) {
-				Log::message("COLOR_FORMAT_CONVERTER: Invalid hex color code", LOG_WARNING);
+				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid hex color code");
 				return 255 << 24 | 255 << 16 | 255 << 8 | 255;
 			}
 
@@ -109,3 +112,4 @@ namespace prx {
 	};
 }
 #endif
+#pragma warning(pop)

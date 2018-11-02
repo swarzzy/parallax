@@ -1,5 +1,5 @@
-#include <scene/components/TransformComponent2D.h>
-#include "utils/log/Log.h"
+#include "TransformComponent2D.h"
+#include "../../utils/log/Log.h"
 
 namespace prx {
 	TransformComponent2D::TransformComponent2D()

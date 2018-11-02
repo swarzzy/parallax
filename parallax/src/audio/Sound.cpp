@@ -1,8 +1,8 @@
-#include <audio/Sound.h>
+#include "Sound.h"
 
-#include <utils/log/Log.h>
-#include <window/Window.h>
-#include "audio/AudioEngine.h"
+#include "AudioEngine.h"
+#include "../utils/log/Log.h"
+#include "../window/Window.h"
 
 namespace prx {
 	

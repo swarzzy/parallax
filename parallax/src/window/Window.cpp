@@ -1,9 +1,9 @@
-#include <window/Window.h>
+#include "Window.h"
 
-#include <utils/log/Log.h>
-#include <utils/error_handling/GLErrorHandler.h>
-#include <scene/Director.h>
-#include <audio/AudioEngine.h>
+#include "../utils/log/Log.h"
+#include "../utils/error_handling/GLErrorHandler.h"
+#include "../scene/Director.h"
+#include "../audio/AudioEngine.h"
 
 namespace prx {
 

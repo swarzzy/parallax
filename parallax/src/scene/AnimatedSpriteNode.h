@@ -1,11 +1,10 @@
 #pragma once
 #include "Node.h"
-#include "../renderer/renderable/AnimatedSprite.h"
 #include "../resources/ResourceHandler.h"
+#include "../textures/SpriteSheet.h"
+#include "../renderer/renderable/AnimatedSprite.h"
 
 namespace prx {
-	
-	class SpriteSheet;
 	
 	class AnimatedSpriteNode final : public Node {
 	private:

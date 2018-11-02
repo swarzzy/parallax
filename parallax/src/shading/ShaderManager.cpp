@@ -1,5 +1,5 @@
-#include <shading/ShaderManager.h>
-#include "utils/SimpleHash.h"
+#include "ShaderManager.h"
+#include "../utils/SimpleHash.h"
 
 namespace prx {
 

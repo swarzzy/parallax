@@ -1,7 +1,6 @@
-#include <textures/TextureBase.h>
-#include <resources/ImageLoader.h>
-#include <utils/error/ImageLoadingException.h>
-#include "textures/Texture.h"
+#include "TextureBase.h"
+#include "../resources/ImageLoader.h"
+#include "../utils/error/ImageLoadingException.h"
 
 namespace prx {
 

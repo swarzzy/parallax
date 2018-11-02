@@ -1,6 +1,6 @@
-#include <camera/Camera2D.h>
-#include <scene/Layer.h>
-#include <scene/Director.h>
+#include "../camera/Camera2D.h"
+#include "../scene/Layer.h"
+#include "../scene/Director.h"
 
 namespace prx {
 	Camera2D::Camera2D() 

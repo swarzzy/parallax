@@ -1,12 +1,12 @@
-#include <scene/Scene.h>
-#include <window/Window.h>
-#include <renderer/Renderer2D.h>
-#include <camera/Camera2D.h>
-#include <scene/Layer.h>
-#include <scene/SpriteNode.h>
-#include <scene/LabelNode.h>
-#include <textures/SpriteSheet.h>
-#include <scene/AnimatedSpriteNode.h>
+#include "Scene.h"
+#include "../window/Window.h"
+#include "../renderer/Renderer2D.h"
+#include "../camera/Camera2D.h"
+#include "../scene/Layer.h"
+#include "../scene/SpriteNode.h"
+#include "../scene/LabelNode.h"
+#include "../textures/SpriteSheet.h"
+#include "../scene/AnimatedSpriteNode.h"
 
 namespace prx {
 

@@ -1,10 +1,10 @@
-#include <textures/TextureAtlas.h>
+#include "TextureAtlas.h"
 
-#include <utils/log/Log.h>
-#include <utils/error_handling/GLErrorHandler.h>
-#include <resources/ImageLoader.h>
-#include <textures/Texture.h>
-#include "utils/error/ImageLoadingException.h"
+#include "../utils/log/Log.h"
+#include "../utils/error_handling/GLErrorHandler.h"
+#include "../resources/ImageLoader.h"
+#include "../textures/Texture.h"
+#include "../utils/error/ImageLoadingException.h"
 
 namespace prx {
 	TextureAtlas::TextureAtlas(unsigned int width, unsigned int height, TextureFormat format)

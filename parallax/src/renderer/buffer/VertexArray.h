@@ -1,12 +1,12 @@
 #pragma once
-#ifndef _VERTEXARRAY_H_
-#define _VERTEXARRAY_H_
-
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
+#ifndef _PARALLAX_RENDERER_BUFFERS_VERTEXARRAY_H_
+#define _PARALLAX_RENDERER_BUFFERS_VERTEXARRAY_H_
 
 namespace prx {
+
+	class VertexBuffer;
+	class IndexBuffer;
+	class VertexBufferLayout;
 
 	class VertexArray {
 	private:

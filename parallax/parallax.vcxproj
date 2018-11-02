@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\camera\Camera2D.cpp" />
     <ClCompile Include="src\Fonts\FontManager.cpp" />
     <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="src\ext\ftgl\texture-atlas.c" />
     <ClCompile Include="src\ext\ftgl\vector.c" />
     <ClCompile Include="src\Fonts\Font.cpp" />
-    <ClCompile Include="src\Parallax.cpp" />
     <ClCompile Include="src\renderer\ForwardRenderer2D.cpp" />
     <ClCompile Include="src\renderer\buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\renderer\renderable\Label.cpp" />
@@ -55,172 +55,66 @@
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\audio\AudioEngine.h" />
-    <ClInclude Include="include\audio\Sound.h" />
-    <ClInclude Include="include\camera\Camera2D.h" />
-    <ClInclude Include="include\Common.h" />
-    <ClInclude Include="include\event\UI\ButtonListener.h" />
-    <ClInclude Include="include\event\UI\Listener.h" />
-    <ClInclude Include="include\event\UI\OnClickListener.h" />
-    <ClInclude Include="include\ext\freetype\freetype\config\ftconfig.h" />
-    <ClInclude Include="include\ext\freetype\freetype\config\ftheader.h" />
-    <ClInclude Include="include\ext\freetype\freetype\config\ftmodule.h" />
-    <ClInclude Include="include\ext\freetype\freetype\config\ftoption.h" />
-    <ClInclude Include="include\ext\freetype\freetype\config\ftstdlib.h" />
-    <ClInclude Include="include\ext\freetype\freetype\freetype.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftadvanc.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftbbox.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftbdf.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftbitmap.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftbzip2.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftcache.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftchapters.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftcid.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftdriver.h" />
-    <ClInclude Include="include\ext\freetype\freetype\fterrdef.h" />
-    <ClInclude Include="include\ext\freetype\freetype\fterrors.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftfntfmt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftgasp.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftglyph.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftgxval.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftgzip.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftimage.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftincrem.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftlcdfil.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftlist.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftlzw.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftmac.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftmm.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftmodapi.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftmoderr.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftotval.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftoutln.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftparams.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftpfr.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftrender.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftsizes.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftsnames.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftstroke.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftsynth.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftsystem.h" />
-    <ClInclude Include="include\ext\freetype\freetype\fttrigon.h" />
-    <ClInclude Include="include\ext\freetype\freetype\fttypes.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ftwinfnt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\autohint.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\cffotypes.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\cfftypes.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftcalc.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftdebug.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftdrv.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftgloadr.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\fthash.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftmemory.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftobjs.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftpic.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftpsprop.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftrfork.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftserv.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftstream.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\fttrace.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\ftvalid.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\internal.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\psaux.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\pshints.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svbdf.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svcfftl.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svcid.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svfntfmt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svgldict.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svgxval.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svkern.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svmetric.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svmm.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svotval.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svpfr.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svpostnm.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svprop.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svpscmap.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svpsinfo.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svsfnt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svttcmap.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svtteng.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svttglyf.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\services\svwinfnt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\sfnt.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\t1types.h" />
-    <ClInclude Include="include\ext\freetype\freetype\internal\tttypes.h" />
-    <ClInclude Include="include\ext\freetype\freetype\t1tables.h" />
-    <ClInclude Include="include\ext\freetype\freetype\ttnameid.h" />
-    <ClInclude Include="include\ext\freetype\freetype\tttables.h" />
-    <ClInclude Include="include\ext\freetype\freetype\tttags.h" />
-    <ClInclude Include="include\ext\freetype\ft2build.h" />
-    <ClInclude Include="include\ext\ftgl\texture-atlas.h" />
-    <ClInclude Include="include\ext\ftgl\vec234.h" />
-    <ClInclude Include="include\ext\ftgl\vector.h" />
-    <ClInclude Include="include\ext\GLFW\glfw3.h" />
-    <ClInclude Include="include\ext\GLFW\glfw3native.h" />
-    <ClInclude Include="include\ext\GL\eglew.h" />
-    <ClInclude Include="include\ext\GL\glew.h" />
-    <ClInclude Include="include\ext\GL\glxew.h" />
-    <ClInclude Include="include\ext\GL\wglew.h" />
-    <ClInclude Include="include\Fonts\Font.h" />
-    <ClInclude Include="include\Fonts\FontManager.h" />
-    <ClInclude Include="include\Parallax.h" />
-    <ClInclude Include="include\renderer\ForwardRenderer2D.h" />
-    <ClInclude Include="include\renderer\buffer\IndexBuffer.h" />
-    <ClInclude Include="include\renderer\buffer\VertexArray.h" />
-    <ClInclude Include="include\renderer\buffer\VertexBuffer.h" />
-    <ClInclude Include="include\renderer\buffer\VertexBufferLayout.h" />
-    <ClInclude Include="include\renderer\FrameBuffer2D.h" />
-    <ClInclude Include="include\renderer\renderable\AnimatedSprite.h" />
-    <ClInclude Include="include\renderer\renderable\Label.h" />
-    <ClInclude Include="include\renderer\renderable\Renderable2D.h" />
-    <ClInclude Include="include\renderer\renderable\Sprite.h" />
-    <ClInclude Include="include\renderer\FrameBufferBase.h" />
-    <ClInclude Include="include\renderer\Renderer2D.h" />
-    <ClInclude Include="include\Fonts\DefaultFont.h" />
-    <ClInclude Include="include\resources\FileReader.h" />
-    <ClInclude Include="include\resources\ImageLoader.h" />
-    <ClInclude Include="include\resources\Resource.h" />
-    <ClInclude Include="include\resources\ResourceHandler.h" />
-    <ClInclude Include="include\scene\AnimatedSpriteNode.h" />
-    <ClInclude Include="include\scene\components\TransformComponent2D.h" />
-    <ClInclude Include="include\scene\Director.h" />
-    <ClInclude Include="include\scene\Group.h" />
-    <ClInclude Include="include\scene\LabelNode.h" />
-    <ClInclude Include="include\scene\Layer.h" />
-    <ClInclude Include="include\scene\Node.h" />
-    <ClInclude Include="include\scene\Scene.h" />
-    <ClInclude Include="include\scene\SpriteNode.h" />
-    <ClInclude Include="include\shading\ShaderManager.h" />
-    <ClInclude Include="include\shading\Shader.h" />
-    <ClInclude Include="include\textures\SpriteSheet.h" />
-    <ClInclude Include="include\textures\Texture.h" />
-    <ClInclude Include="include\textures\TextureAtlas.h" />
-    <ClInclude Include="include\textures\TextureBase.h" />
-    <ClInclude Include="include\utils\color\ColorFormatConverter.h" />
-    <ClInclude Include="include\utils\error\FileReadException.h" />
-    <ClInclude Include="include\utils\error\ImageLoadingException.h" />
-    <ClInclude Include="include\utils\error\ParallaxException.h" />
-    <ClInclude Include="include\utils\error\UninitializedResourceUsedException.h" />
-    <ClInclude Include="include\utils\error_handling\ErrorHandler.h" />
-    <ClInclude Include="include\utils\error_handling\FTErrorHandler.h" />
-    <ClInclude Include="include\utils\error_handling\GLErrorHandler.h" />
-    <ClInclude Include="include\utils\log\Log.h" />
-    <ClInclude Include="include\utils\SimpleHash.h" />
-    <ClInclude Include="include\utils\Singleton.h" />
-    <ClInclude Include="include\utils\StringUtils.h" />
-    <ClInclude Include="include\utils\timing\ScopedTimer.h" />
-    <ClInclude Include="include\utils\timing\SimpleTimer.h" />
-    <ClInclude Include="include\ParallaxKeys.h" />
-    <ClInclude Include="include\window\Window.h" />
+    <ClInclude Include="src\Application\Application.h" />
+    <ClInclude Include="src\audio\AudioEngine.h" />
+    <ClInclude Include="src\audio\Sound.h" />
+    <ClInclude Include="src\camera\Camera2D.h" />
+    <ClInclude Include="src\Common.h" />
+    <ClInclude Include="src\ext\freetype\ft2build.h" />
+    <ClInclude Include="src\ext\ftgl\texture-atlas.h" />
+    <ClInclude Include="src\Fonts\DefaultFont.h" />
+    <ClInclude Include="src\Fonts\Font.h" />
+    <ClInclude Include="src\Fonts\FontManager.h" />
+    <ClInclude Include="src\parallax.h" />
+    <ClInclude Include="src\ParallaxKeys.h" />
+    <ClInclude Include="src\renderer\buffer\IndexBuffer.h" />
+    <ClInclude Include="src\renderer\buffer\VertexArray.h" />
+    <ClInclude Include="src\renderer\buffer\VertexBuffer.h" />
+    <ClInclude Include="src\renderer\buffer\VertexBufferLayout.h" />
+    <ClInclude Include="src\renderer\ForwardRenderer2D.h" />
+    <ClInclude Include="src\renderer\FrameBuffer2D.h" />
+    <ClInclude Include="src\renderer\FrameBufferBase.h" />
+    <ClInclude Include="src\renderer\renderable\AnimatedSprite.h" />
+    <ClInclude Include="src\renderer\renderable\Label.h" />
+    <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
+    <ClInclude Include="src\renderer\renderable\Sprite.h" />
+    <ClInclude Include="src\renderer\Renderer2D.h" />
+    <ClInclude Include="src\resources\FileReader.h" />
     <ClInclude Include="src\resources\fonts\Font.h" />
-    <ClInclude Include="include\resources\ResourceManager.h" />
+    <ClInclude Include="src\resources\ImageLoader.h" />
+    <ClInclude Include="src\resources\Resource.h" />
+    <ClInclude Include="src\resources\ResourceHandler.h" />
+    <ClInclude Include="src\resources\ResourceManager.h" />
+    <ClInclude Include="src\scene\AnimatedSpriteNode.h" />
+    <ClInclude Include="src\scene\components\TransformComponent2D.h" />
+    <ClInclude Include="src\scene\Director.h" />
+    <ClInclude Include="src\scene\Group.h" />
+    <ClInclude Include="src\scene\LabelNode.h" />
+    <ClInclude Include="src\scene\Layer.h" />
+    <ClInclude Include="src\scene\Node.h" />
+    <ClInclude Include="src\scene\Scene.h" />
+    <ClInclude Include="src\scene\SpriteNode.h" />
+    <ClInclude Include="src\shading\Shader.h" />
+    <ClInclude Include="src\shading\ShaderManager.h" />
+    <ClInclude Include="src\textures\SpriteSheet.h" />
+    <ClInclude Include="src\textures\Texture.h" />
+    <ClInclude Include="src\textures\TextureAtlas.h" />
+    <ClInclude Include="src\textures\TextureBase.h" />
+    <ClInclude Include="src\utils\color\ColorFormatConverter.h" />
+    <ClInclude Include="src\utils\error\FileReadException.h" />
+    <ClInclude Include="src\utils\error\ImageLoadingException.h" />
+    <ClInclude Include="src\utils\error\ParallaxException.h" />
+    <ClInclude Include="src\utils\error\UninitializedResourceUsedException.h" />
     <ClInclude Include="src\utils\error_handling\ErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\FTErrorHandler.h" />
     <ClInclude Include="src\utils\error_handling\GLErrorHandler.h" />
+    <ClInclude Include="src\utils\log\Log.h" />
+    <ClInclude Include="src\utils\SimpleHash.h" />
+    <ClInclude Include="src\utils\Singleton.h" />
+    <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="src\utils\timing\ScopedTimer.h" />
     <ClInclude Include="src\utils\timing\SimpleTimer.h" />
+    <ClInclude Include="src\window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hypermath\hypermath.vcxproj">
@@ -228,11 +122,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\scene\components\TransformComponent2D.inl" />
-    <None Include="include\scene\Node.inl" />
-    <None Include="include\utils\Singleton.inl" />
+    <None Include="src\scene\components\TransformComponent2D.inl" />
+    <None Include="src\scene\Node.inl" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
+    <None Include="src\utils\Singleton.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -287,14 +181,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\include\ext\freetype;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\include;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\ext;$(SolutionDir)parallax\include\ext\freetype;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
@@ -331,7 +225,8 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenAL32.lib;gorilla.lib;freetype.lib;opengl32.lib;glfw3.lib;glew32s.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
     <ProjectReference>
@@ -379,7 +274,8 @@
       <AdditionalDependencies>libvorbis.lib;OpenAL32.lib;glew32s.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>OpenAL32.lib;gorilla.lib;freetype.lib;glew32s.lib;opengl32.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

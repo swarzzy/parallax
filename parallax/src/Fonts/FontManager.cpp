@@ -1,6 +1,6 @@
-#include <Fonts/FontManager.h>
-#include <Fonts/DefaultFont.h>
-#include <Fonts/Font.h>
+#include "FontManager.h"
+#include "DefaultFont.h"
+#include "Font.h"
 
 namespace prx {
 	FontManager::FontManager(float scale) 

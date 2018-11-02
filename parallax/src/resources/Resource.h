@@ -94,7 +94,7 @@ namespace prx {
 		if (!m_Initialized) {
 			m_Initialized = true;
 			initInternal();
-			PRX_INFO("Resource initialized\n-> FILE: ", m_FilePath);
+			//PRX_INFO("Resource initialized\n-> FILE: ", m_FilePath);
 		}
 	}
 
@@ -106,7 +106,7 @@ namespace prx {
 					PRX_WARN("RESOURCE: User counter less than zero!\n-> PATH: ", m_FilePath);
 				m_Initialized = false;
 				destroyInternal();
-				PRX_INFO("Resource destroyed\n-> FILE: ", m_FilePath);
+				//PRX_INFO("Resource destroyed\n-> FILE: ", m_FilePath);
 			}
 		}
 	}

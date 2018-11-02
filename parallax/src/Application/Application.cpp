@@ -1,26 +1,28 @@
-#include <Parallax.h>
-#include <resources/ResourceManager.h>
-#include <scene/Director.h>
-#include <audio/AudioEngine.h>
-#include <Fonts/FontManager.h>
+#include "Application.h"
+#include "../resources/ResourceManager.h"
+#include "../scene/Director.h"
+#include "../audio/AudioEngine.h"
+#include "../Fonts/FontManager.h"
+#include "../shading/ShaderManager.h"
+#include "../window/Window.h"
 
 namespace prx {
 
 	Application* Application::m_CurrentApplication = nullptr;
-	
-	Application::Application() 
-	: m_DeltaTime(1.0), 
-	  m_LastFrameTime(0.0), 
-	  m_FPS(0), 
-	  m_UPS(0), 
-	  m_Time(0) 
+
+	Application::Application()
+		: m_DeltaTime(1.0),
+		m_LastFrameTime(0.0),
+		m_FPS(0),
+		m_UPS(0),
+		m_Time(0)
 	{
 		if (m_CurrentApplication != nullptr) {
 			PRX_FATAL("APPLICATION: Only one application can exist at the same time.");
 		}
 		m_CurrentApplication = this;
 	};
-	
+
 	Application::~Application() {
 		//destroy();
 		Director::destroy();
@@ -49,7 +51,7 @@ namespace prx {
 
 	void Application::run() {
 		auto window = Window::getInstance();
-		
+
 		m_Timer = new SimpleTimer();
 		m_Time = m_Timer->elapsed();
 

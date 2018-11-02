@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _SPRITE_H_
-#define _SPRITE_H_
+#ifndef _PARALLAX_RENDERER_RENDERABLE_SPRITE_H_
+#define _PARALLAX_RENDERER_RENDERABLE_SPRITE_H_
 
 #include "Renderable2D.h"
 

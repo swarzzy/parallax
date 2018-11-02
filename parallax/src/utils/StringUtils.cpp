@@ -1,6 +1,6 @@
-#include <utils/StringUtils.h>
+#include "StringUtils.h"
 
-#include <shading/ShaderManager.h>
+#include "../shading/ShaderManager.h"
 
 namespace prx::utils {
 	std::string StringUtils::toString(ShaderType type) {

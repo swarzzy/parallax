@@ -1,5 +1,5 @@
-#include <renderer/renderable/Sprite.h>
-#include <renderer/Renderer2D.h>
+#include "Sprite.h"
+#include "../Renderer2D.h"
 
 namespace prx {
 

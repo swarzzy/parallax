@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _INDEXBUFFER_H_
-#define _INDEXBUFFER_H_
+#ifndef _PARALLAX_RENDERER_BUFFER_INDEXBUFFER_H_
+#define _PARALLAX_RENDERER_BUFFER_INDEXBUFFER_H_
 
 namespace prx {
 

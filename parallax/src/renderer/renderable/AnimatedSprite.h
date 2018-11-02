@@ -2,10 +2,13 @@
 #ifndef _PARALLAX_RENDERER_RENDERABLES_ANIMATED_SPRITE_H_
 #define _PARALLAX_RENDERER_RENDERABLES_ANIMATED_SPRITE_H_
 #include "Sprite.h"
-#include "../../textures/SpriteSheet.h"
+//#include "../../textures/SpriteSheet.h"
+#include "../../Common.h"
 
 
 namespace prx {
+
+	class SpriteSheet;
 	
 	enum class AnimationState { PLAY, LOOP, STOP };
 
@@ -34,11 +37,11 @@ namespace prx {
 
 		void reflect(bool reflect) noexcept override;
 
-		inline void loopAnimation(unsigned int ID) noexcept;
-		inline void playAnimation(unsigned int ID) noexcept;
-		inline void loopAnimation(const std::string& animationName) noexcept;
-		inline void playAnimation(const std::string& animationName) noexcept;
-		inline void stopAnimation() noexcept;
+		void loopAnimation(unsigned int ID) noexcept;
+		void playAnimation(unsigned int ID) noexcept;
+		void loopAnimation(const std::string& animationName) noexcept;
+		void playAnimation(const std::string& animationName) noexcept;
+		void stopAnimation() noexcept;
 		
 		inline AnimationState getAnimationState();
 	
@@ -46,32 +49,6 @@ namespace prx {
 		void setDefaultUVs() noexcept override;
 		void setReflectDefaultUVs() noexcept override {};
 	};
-
-	inline void AnimatedSprite::loopAnimation(unsigned ID) noexcept {
-		m_AnimationID = ID;
-		m_AnimationState = AnimationState::LOOP;
-	}
-
-	inline void AnimatedSprite::loopAnimation(const std::string& animationName) noexcept {
-		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
-		m_AnimationState = AnimationState::LOOP;
-	}
-
-
-	inline void AnimatedSprite::playAnimation(unsigned ID) noexcept {
-		m_AnimationID = ID;
-		m_AnimationState = AnimationState::PLAY;
-	}
-
-	inline void AnimatedSprite::playAnimation(const std::string& animationName) noexcept {
-		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
-		m_AnimationState = AnimationState::PLAY;
-	}
-
-
-	inline void AnimatedSprite::stopAnimation() noexcept {
-		m_AnimationState = AnimationState::STOP;
-	}
 
 	inline AnimationState AnimatedSprite::getAnimationState() {
 		return m_AnimationState;

@@ -1,15 +1,15 @@
-#include <Fonts/Font.h>
+#include "Font.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <utils/log/Log.h>
+#include "../utils/log/Log.h"
 
-#include <utils/error_handling/FTErrorHandler.h>
-#include <utils/error_handling/GLErrorHandler.h>
+#include "../utils/error_handling/FTErrorHandler.h"
+#include "../utils/error_handling/GLErrorHandler.h"
 
-#include <ext/ftgl/texture-atlas.h>
-#include <textures/Texture.h>
+#include "../ext/ftgl/texture-atlas.h"
+#include "../textures/Texture.h"
 
 namespace prx {
 	Font::Font(std::string_view filepath, std::string_view name, int size, float scale) 

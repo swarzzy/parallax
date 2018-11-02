@@ -1,10 +1,10 @@
-#include <shading/Shader.h>
+#include "Shader.h"
 
 #include <optional>
 #include <string>
 
-#include <resources/FileReader.h>
-#include <utils/log/Log.h>
+#include "../resources/FileReader.h"
+#include "../utils/log/Log.h"
 
 namespace prx {
 

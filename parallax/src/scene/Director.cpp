@@ -1,9 +1,9 @@
-#include <scene/Director.h>
-#include <utils/log/Log.h>
-#include <window/Window.h>
-#include <utils/error_handling/GLErrorHandler.h>
-#include <scene/Scene.h>
-#include <renderer/ForwardRenderer2D.h>
+#include "Director.h"
+#include "../utils/log/Log.h"
+#include "../window/Window.h"
+#include "../utils/error_handling/GLErrorHandler.h"
+#include "../scene/Scene.h"
+#include "../renderer/ForwardRenderer2D.h"
 
 namespace prx {
 

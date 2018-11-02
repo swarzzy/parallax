@@ -1,7 +1,12 @@
-#include <renderer/buffer/VertexArray.h>
+#include "VertexArray.h"
 
-#include <utils/error_handling/GLErrorHandler.h>
+#include "../../utils/error_handling/GLErrorHandler.h"
+#include "VertexBufferLayout.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
+#pragma warning(push)
+#pragma warning(disable:4312)
 namespace prx {
 
 	VertexArray::VertexArray() {
@@ -49,3 +54,4 @@ namespace prx {
 		GLCall(glBindVertexArray(0));
 	}
 }
+#pragma warning(pop)

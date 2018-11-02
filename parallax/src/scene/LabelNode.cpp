@@ -1,4 +1,4 @@
-#include <scene/LabelNode.h>
+#include "LabelNode.h"
 
 namespace prx {
 	LabelNode::LabelNode(Scene* scene, std::string_view text, unsigned color, Node * parent)

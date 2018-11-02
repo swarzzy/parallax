@@ -1,9 +1,10 @@
-#include <textures/SpriteSheet.h>
-#include <resources/ImageLoader.h>
-#include <utils/error/UninitializedResourceUsedException.h>
-#include <ext/rapidxml/rapidxml.hpp>
-#include <resources/FileReader.h>
-#include "scene/Node.h"
+#include "SpriteSheet.h"
+#include "../resources/ImageLoader.h"
+#include "../utils/error/UninitializedResourceUsedException.h"
+#include "../resources/FileReader.h"
+#include "../scene/Node.h"
+
+#include "../ext/rapidxml/rapidxml.hpp"
 
 namespace prx {
 
@@ -105,7 +106,7 @@ namespace prx {
 		}
 		
 		xml_document<> doc;
-		xml_node<> * rootNode;
+		xml_node<>* rootNode;
 		
 		doc.parse<0>(const_cast<char*>(file.c_str()));
 		
@@ -137,7 +138,7 @@ namespace prx {
 
 	int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask, float duration) {
 		if (mask.size() > m_Tiles) {
-			PRX_ERROR("SPRITE SHEET: Mask size mismatch./n->SHEET PATH: ", getFilePath());
+			PRX_ERROR("SPRITE SHEET: Mask size mismatch.\n->SHEET PATH: ", getFilePath());
 			return -1;
 		}
 		m_Animations.emplace_back(name, mask.size(), mask, duration);
@@ -171,12 +172,12 @@ namespace prx {
 				return &m_CurrentUVBuffer[animation.UVIndices[animation.currentState]];
 
 			} catch (std::out_of_range& e) {
-				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID./n-> ANIM_ID: ", animationID,
-							"/n ->SHEET PATH: ", getFilePath());
+				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID.\n-> ANIM_ID: ", animationID,
+							"\n ->SHEET PATH: ", getFilePath(), "\n-> INFO:", e.what());
 				return nullptr;
 			}
 		} else {
-			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet./n-> PATH: ", getFilePath());
+			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet.\n-> PATH: ", getFilePath());
 			return nullptr;
 		}
 	}
@@ -197,13 +198,13 @@ namespace prx {
 
 			}
 			catch (std::out_of_range& e) {
-				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID./n-> NAME: ", animationName,
-					"/n ->SHEET PATH: ", getFilePath());
+				PRX_ERROR("SPRITE SHEET: Failed to get UVs. Wrong animation ID.\n-> NAME: ", animationName,
+					"\n ->SHEET PATH: ", getFilePath(), "\n-> INFO: ", e.what());
 				return nullptr;
 			}
 		}
 		else {
-			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet./n-> PATH: ", getFilePath());
+			PRX_ERROR("SPRITE SHEET: Using uninitialized spritesheet.\n-> PATH: ", getFilePath());
 			return nullptr;
 		}
 	}

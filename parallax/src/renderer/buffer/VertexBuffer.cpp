@@ -1,8 +1,8 @@
-#include <renderer/buffer/VertexBuffer.h>
+#include "VertexBuffer.h"
 
-#include <utils/error_handling/GLErrorHandler.h>
+#include "../../utils/error_handling/GLErrorHandler.h"
 
-#include <ext/GL/glew.h>
+#include "../../ext/GL/glew.h"
 
 namespace prx {
 

@@ -5,7 +5,7 @@
 #include <string>
 
 #include "TextureBase.h"
-#include "../Parallax.h"
+#include "../Application/Application.h"
 #include <unordered_map>
 
 namespace prx {
@@ -43,12 +43,12 @@ namespace prx {
 			  timeElapsed(0),
 			  duration(_duration)
 		{
-			timePerState = 1000 * duration / framesNumber;
+			timePerState = static_cast<unsigned>(1000 * duration) / framesNumber;
 		};
 
 		inline void setDuration(float duration) noexcept {
 			this->duration = duration;
-			timePerState = 1000 * duration / framesNumber;
+			timePerState = static_cast<unsigned>(1000 * duration) / framesNumber;
 		}
 	};
 

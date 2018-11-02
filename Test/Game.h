@@ -1,17 +1,7 @@
 #pragma once
-#include "../parallax/include/Parallax.h"
-#include "../parallax/include/scene/SpriteNode.h"
-#include "../parallax/include/scene/Scene.h"
-#include "../parallax/include/renderer/renderable/Label.h"
-#include "../parallax/include/scene/LabelNode.h"
-#include "../parallax/include/renderer/renderable/AnimatedSprite.h"
-#include "../parallax/include/camera/Camera2D.h"
-#include "../parallax/include/scene/Layer.h"
-#include "../parallax/include/scene/AnimatedSpriteNode.h"
-#include "../parallax/include/scene/Group.h"
-#include "../parallax/include/scene/Director.h"
+#include <parallax.h>
+#include <hypermath.h>
 
-//#include "../parallax/include/shading/Shader.h"
 using namespace prx;
 class Game : public prx::Application {
 public:

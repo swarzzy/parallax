@@ -1,7 +1,7 @@
-#include <scene/SpriteNode.h>
-#include <renderer/Renderer2D.h>
-#include <resources/ResourceHandler.h>
-#include <scene/Scene.h>
+#include "SpriteNode.h"
+#include "../renderer/Renderer2D.h"
+#include "../resources/ResourceHandler.h"
+#include "../scene/Scene.h"
 
 namespace prx {
 	SpriteNode::SpriteNode(float x, float y, float width, float height,

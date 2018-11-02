@@ -4,6 +4,9 @@
 #include "ResourceManager.h"
 #include "../audio/Sound.h"
 
+#pragma warning(push)
+#pragma warning(disable:4521)
+#pragma warning(disable:4522)
 namespace prx {
 	template<typename Res>
 	class ResourceHandler final {
@@ -252,3 +255,4 @@ namespace prx {
 		return m_Resource != nullptr && m_Resource->m_RefCounter == 1;
 	}
 }
+#pragma warning(pop)

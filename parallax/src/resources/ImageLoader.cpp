@@ -1,4 +1,4 @@
-#include <resources/ImageLoader.h>
+#include "ImageLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../ext/stb/stb_image.h"

@@ -1,5 +1,4 @@
 #pragma once
-#include "../renderer/renderable/Renderable2D.h"
 #include "../renderer/renderable/Label.h"
 #include "Node.h"
 #include "../Common.h"

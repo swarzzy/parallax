@@ -1,4 +1,5 @@
-#include <renderer/renderable/AnimatedSprite.h>
+#include "AnimatedSprite.h"
+#include "../../textures/SpriteSheet.h"
 
 namespace prx {
 	AnimatedSprite::AnimatedSprite(const hpm::vec2& size, SpriteSheet* texture, const std::string& animationName) 
@@ -102,5 +103,31 @@ namespace prx {
 		m_UVs[5] = tc->rtY;
 		m_UVs[6] = tc->rbX;
 		m_UVs[7] = tc->rbY;
+	}
+
+	void AnimatedSprite::loopAnimation(unsigned ID) noexcept {
+		m_AnimationID = ID;
+		m_AnimationState = AnimationState::LOOP;
+	}
+
+	void AnimatedSprite::loopAnimation(const std::string& animationName) noexcept {
+		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
+		m_AnimationState = AnimationState::LOOP;
+	}
+
+
+	void AnimatedSprite::playAnimation(unsigned ID) noexcept {
+		m_AnimationID = ID;
+		m_AnimationState = AnimationState::PLAY;
+	}
+
+	void AnimatedSprite::playAnimation(const std::string& animationName) noexcept {
+		m_AnimationID = m_SpriteSheet->getAnimationID(animationName);
+		m_AnimationState = AnimationState::PLAY;
+	}
+
+
+	void AnimatedSprite::stopAnimation() noexcept {
+		m_AnimationState = AnimationState::STOP;
 	}
 }

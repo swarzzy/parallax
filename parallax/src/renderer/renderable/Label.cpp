@@ -1,6 +1,6 @@
-#include <renderer/renderable/Label.h>
-#include <renderer/Renderer2D.h>
-#include "Fonts/FontManager.h"
+#include "Label.h"
+#include "../Renderer2D.h"
+#include "../../Fonts/FontManager.h"
 
 namespace prx {
 	Label::Label(std::string_view text, const Font* font,  unsigned int color)

@@ -1,6 +1,6 @@
-#include <scene/Layer.h>
-#include <scene/Scene.h>
-#include <scene/Director.h>
+#include "Layer.h"
+#include "Scene.h"
+#include "Director.h"
 
 namespace prx {
 	Layer::Layer(Scene* scene, int depth)

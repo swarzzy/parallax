@@ -1,5 +1,6 @@
 #pragma once
 #include <exception>
+#include <string>
 
 namespace prx {
 	class ParallaxException : public std::exception {

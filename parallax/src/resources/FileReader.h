@@ -2,10 +2,8 @@
 #ifndef _FILEREADER_H_
 #define _FILEREADER_H_
 
-#include <string_view> 
-// TODO: Get rid of this
 #include <optional>
-#include "utils/error/FileReadException.h"
+#include "../utils/error/FileReadException.h"
 
 namespace prx {
 

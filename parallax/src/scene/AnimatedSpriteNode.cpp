@@ -1,6 +1,6 @@
-#include <scene/AnimatedSpriteNode.h>
-#include <renderer/renderable/AnimatedSprite.h>
-#include <textures/SpriteSheet.h>
+#include "AnimatedSpriteNode.h"
+#include "../renderer/renderable/AnimatedSprite.h"
+#include "../textures/SpriteSheet.h"
 
 namespace prx {
 	AnimatedSpriteNode::AnimatedSpriteNode(float x, float y, float width, float height,

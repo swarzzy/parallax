@@ -1,8 +1,4 @@
 #include "Game.h"
-#include "../parallax/include/resources/ResourceHandler.h"
-#include "../parallax/include/textures/SpriteSheet.h"
-#include "../parallax/include/scene/LabelNode.h"
-#include "../parallax/include/audio/Sound.h"
 
 void Game::init() {
 	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000);
