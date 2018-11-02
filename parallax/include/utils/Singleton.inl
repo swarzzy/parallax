@@ -23,5 +23,4 @@ namespace prx {
 		delete m_Object;
 		m_Object = nullptr;
 	}
-
 }

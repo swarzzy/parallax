@@ -1,3 +1,5 @@
+ ###--GLOBAL--###
+
  --- SSE in hypermath ???
  --- constants header ???
  --- kerning
@@ -5,3 +7,7 @@
  --- inverse method in matrix class
  --- disabling anchor points (usefull for non renderable nodes)
  --- global texture default parameters settings
+
+  ###--SPRITESHEET--###
+  --- key frames
+  --- callbacks

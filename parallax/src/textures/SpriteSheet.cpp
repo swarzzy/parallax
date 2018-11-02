@@ -120,6 +120,7 @@ namespace prx {
 		std::vector<unsigned> tiles;
 		for (xml_node<>* animationNode = rootNode->first_node("animation"); animationNode; animationNode = animationNode->next_sibling()) {
 			const char* name = animationNode->first_attribute("name")->value();
+			float duration = std::stof(animationNode->first_attribute("duration")->value());
 			for (xml_node<> * tileNode = animationNode->first_node("tile"); tileNode; tileNode = tileNode->next_sibling())
 			{
 				unsigned tile = std::stoi(tileNode->value());
@@ -129,20 +130,30 @@ namespace prx {
 					tiles.push_back(tile);
 				}
 			}
-			addAnimation(name, tiles);
+			addAnimation(name, tiles, duration);
 			tiles.clear();
 		}
 	}
 
-	int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask) {
+	int SpriteSheet::addAnimation(std::string_view name, const std::vector<unsigned int>& mask, float duration) {
 		if (mask.size() > m_Tiles) {
 			PRX_ERROR("SPRITE SHEET: Mask size mismatch./n->SHEET PATH: ", getFilePath());
 			return -1;
 		}
-		m_Animations.emplace_back(name, mask.size(), mask);
+		m_Animations.emplace_back(name, mask.size(), mask, duration);
 		auto id = static_cast<unsigned>(m_Animations.size() - 1);
 		m_AnimationList[std::string(name)] = id;
 		return id;
+	}
+
+	void SpriteSheet::setDuration(std::string_view animationName, float duration) {
+		try {
+			Animation& animation = m_Animations.at(m_AnimationList.find(std::string(animationName))->second);
+			animation.setDuration(duration);
+		} catch (std::out_of_range& e) {
+			PRX_ERROR("SPRITE SHEET: Failded to set animation duration. Wrong animation name.\n-> NAME: ", animationName,
+						"\n-> INFO: ", e.what());
+		}
 	}
 
 	const UV* SpriteSheet::getTexCoords(unsigned int animationID) const {

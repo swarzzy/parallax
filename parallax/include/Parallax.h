@@ -47,6 +47,8 @@ namespace prx {
 		virtual void update() {};
 		// As fast as possible
 		virtual void render() = 0;
+		// Once before application destructed
+		virtual void destroy() {};
 
 
 	private:

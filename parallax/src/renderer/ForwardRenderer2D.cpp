@@ -286,7 +286,7 @@ namespace prx {
 	void ForwardRenderer2D::drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) {
 		
 		float width = renderable->getWidth();
-		float height = renderable->getWidth();
+		float height = renderable->getHeight();
 		unsigned int color = renderable->getColor();
 		
 		unsigned int texID = renderable->getTexID();

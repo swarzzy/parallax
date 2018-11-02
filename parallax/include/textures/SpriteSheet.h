@@ -33,17 +33,23 @@ namespace prx {
 		
 		mutable unsigned int		currentState;
 		mutable unsigned long long	timeElapsed;
+		float						duration; // in seconds
 
-		Animation(std::string_view _name, unsigned int _framesNumber, std::vector<unsigned int> _UVIndices)
+		Animation(std::string_view _name, unsigned int _framesNumber, std::vector<unsigned int> _UVIndices, float _duration = 1.0)
 			: name(_name), 
 			  framesNumber(_framesNumber), 
 			  UVIndices(_UVIndices),
 			  currentState(0), 
-			  timeElapsed(0) 
+			  timeElapsed(0),
+			  duration(_duration)
 		{
-			// TODO: Duration
-			timePerState = 1000 / framesNumber;
+			timePerState = 1000 * duration / framesNumber;
 		};
+
+		inline void setDuration(float duration) noexcept {
+			this->duration = duration;
+			timePerState = 1000 * duration / framesNumber;
+		}
 	};
 
 	class SpriteSheet final : public TextureBase {
@@ -67,7 +73,8 @@ namespace prx {
 		SpriteSheet(std::string_view path, unsigned int columns, unsigned int rows, bool reflected = false);
 		~SpriteSheet();
 
-		int addAnimation(std::string_view name, const std::vector<unsigned int>& mask);
+		int addAnimation(std::string_view name, const std::vector<unsigned int>& mask, float duration = 1.0f);
+		void setDuration(std::string_view animationName, float duration);
 
 		const UV* getTexCoords(unsigned int animationID) const;
 		const UV* getTexCoords(const std::string& animationName) const;

@@ -22,13 +22,14 @@ namespace prx {
 	};
 	
 	Application::~Application() {
-		ResourceManager::getInstance()->clean();
-		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
+		//destroy();
+		Director::destroy();
+		AudioEngine::destroy();
 		FontManager::destroy();
 		ShaderManager::clear();
+		ResourceManager::getInstance()->clean();
 		ResourceManager::destroy();
-		AudioEngine::destroy();
-		Director::destroy();
+		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
 		delete m_Timer;
 		Window::destroy();
 		m_CurrentApplication = nullptr;
@@ -89,6 +90,7 @@ namespace prx {
 			render();
 			window->updateRender();
 		}
+		destroy();
 	}
 
 

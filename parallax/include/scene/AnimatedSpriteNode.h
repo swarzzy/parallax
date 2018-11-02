@@ -42,6 +42,7 @@ namespace prx {
 		~AnimatedSpriteNode();
 
 		inline void reflect(bool reflect) noexcept;
+		inline void setDuration(std::string_view animation, float duration) noexcept;
 
 		inline void loopAnimation(unsigned int ID) noexcept;
 		inline void playAnimation(unsigned int ID) noexcept;
@@ -67,6 +68,11 @@ namespace prx {
 	inline void AnimatedSpriteNode::reflect(bool reflect) noexcept {
 		m_AnimatedSprite->reflect(reflect);
 	}
+
+	inline void AnimatedSpriteNode::setDuration(std::string_view animation, float duration) noexcept {
+		m_SpriteSheet->setDuration(animation, duration);
+	}
+
 
 	inline void AnimatedSpriteNode::loopAnimation(unsigned ID) noexcept {
 		m_AnimatedSprite->loopAnimation(ID);

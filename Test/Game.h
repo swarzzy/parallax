@@ -15,25 +15,21 @@
 using namespace prx;
 class Game : public prx::Application {
 public:
-	Window* m_Window;
-	Shader* m_Shader;
 	ResourceHandler<Sound> m_Sound;
 	LabelNode* m_FPSCounter;
 	LabelNode* m_UPSCounter;
 	Scene* m_Scene;
-	Scene* m_Scene2;
-	SpriteNode* m_Background;
-	Renderer2D* m_Renderer;
 	SpriteNode* m_Sun;
 	SpriteNode* m_BluePlanet;
 	SpriteNode* m_BrownPlanet;
-	SpriteNode* m_Clouds;
 	AnimatedSpriteNode* m_Hero;
 	Camera2D* m_Camera;
 	hpm::vec2 m_CameraPosition;
 	Layer* m_Layer;
 	Layer* m_UILayer;
 	Group* m_Group;
+	hpm::vec2 m_HeroPos;
+	hpm::vec2 m_PrevHeroPos;
 public:
 	Game(std::string_view path) : m_Sound(nullptr) {}
 	~Game() {};
@@ -42,4 +38,5 @@ public:
 	void tick() override;
 	void update() override;
 	void render() override;
+	void destroy() override;
 };
