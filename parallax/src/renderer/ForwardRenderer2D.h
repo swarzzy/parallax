@@ -49,7 +49,7 @@ namespace prx {
 		// OpenGL might actually not free memory
 		void destroy() override;
 
-		void setProjectionMatrix(const hpm::mat4& projMatrix);
+		void setProjectionMatrix(const hpm::mat4& projMatrix) override;
 
 		void begin() override;
 

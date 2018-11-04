@@ -11,28 +11,23 @@ namespace prx {
 		m_VisibilityTestEnabled = false;
 		if (scene != nullptr)
 			scene->addChild(this);
+		m_Depth = depth;
 	}
 
 	void Layer::update() {
 		if (m_Initialized) {
 			if (!m_Frozen) {
 
+				updateInternal();
+
 				if (m_DepthUpdate) {
 					if (m_ParentScene != nullptr)
 						m_ParentScene->sortRequest();
-					// TODO: remove this
-					else if (m_Parent != nullptr)
-						m_Depth = m_Parent->getDepth();
-					PRX_INFO("depth update ", m_ID);
-				}
-
-				updateInternal();
-
-				if (m_DepthUpdate)
 					for (auto child : m_Children) {
 						child->depthUpdateQuery();
 						child->update();
 					}
+				}
 				else {
 					for (auto child : m_Children) {
 						child->update();
@@ -46,7 +41,6 @@ namespace prx {
 	}
 
 	void Layer::setDepth(int depth) {
-		if (m_ParentScene != nullptr) {
 			if (depth >= Director::minDepthValue() && depth <= Director::maxDepthValue()) {
 				m_Depth = depth;
 				m_DepthUpdate = true;
@@ -55,6 +49,5 @@ namespace prx {
 				PRX_WARN("LAYER: Incorrect depth value. Value sould be between: ",
 					Director::minDepthValue(), " and ", Director::maxDepthValue(), ".");
 			}
-		}
 	}
 }

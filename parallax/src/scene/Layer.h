@@ -16,7 +16,7 @@ namespace prx {
 		Layer(Scene* scene, int depth);
 		virtual ~Layer() {};
 
-		void update() override;
+		void update() override final;
 
 		void setDepth(int depth);
 

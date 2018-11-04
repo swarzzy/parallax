@@ -20,6 +20,7 @@ public:
 	Group* m_Group;
 	hpm::vec2 m_HeroPos;
 	hpm::vec2 m_PrevHeroPos;
+	Layer* IMLayer;
 public:
 	Game(std::string_view path) : m_Sound(nullptr) {}
 	~Game() {};

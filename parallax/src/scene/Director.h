@@ -8,6 +8,7 @@
 namespace prx {
 
 	class Scene;
+	class ImGUIWidget;
 
 	enum class SceneState {
 		PLAY, STOP
@@ -26,6 +27,10 @@ namespace prx {
 		std::map<unsigned, Scene*> m_Scenes;
 		std::map<std::string, unsigned> m_ScenesList;
 
+#ifdef PARALLAX_USING_IMGUI
+		std::vector<ImGUIWidget*> m_DebugWidgets;
+#endif
+
 		Scene*		m_CurrentScene;
 		SceneState	m_SceneState;
 
@@ -36,6 +41,10 @@ namespace prx {
 
 		ForwardRenderer2D* m_Renderer;
 
+#ifdef PARALLAX_USING_IMGUI
+		bool m_DebugLayerEnabled;
+#endif
+
 		Director();
 	public:
 		static int minDepthValue() noexcept;
@@ -45,6 +54,9 @@ namespace prx {
 
 		void update();
 		void render();
+
+		void addDebugWidget(ImGUIWidget* widget);
+		void enableDebugLayer(bool enabled);
 
 		unsigned int createScene(std::string_view name);
 		Scene* getScene(std::string_view name);

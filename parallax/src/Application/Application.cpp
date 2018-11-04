@@ -5,6 +5,11 @@
 #include "../Fonts/FontManager.h"
 #include "../shading/ShaderManager.h"
 #include "../window/Window.h"
+#ifdef PARALLAX_USING_IMGUI
+#include "../ext/imgui/imgui.h"
+#include "../ext/imgui/imgui_impl_opengl3.h"
+#include "../ext/imgui/imgui_impl_glfw.h"
+#endif
 
 namespace prx {
 
@@ -31,6 +36,12 @@ namespace prx {
 		ShaderManager::clear();
 		ResourceManager::getInstance()->clean();
 		ResourceManager::destroy();
+
+#ifdef PARALLAX_USING_IMGUI
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+#endif
 		Log::exportToFile(LogLevel::LOG_INFO, "log.txt");
 		delete m_Timer;
 		Window::destroy();
@@ -47,6 +58,16 @@ namespace prx {
 		ResourceManager::initialize();
 		FontManager::initialize(1.0f);
 		Director::initialize();
+
+#ifdef PARALLAX_USING_IMGUI
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui_ImplGlfw_InitForOpenGL(Window::getInstance()->getWindowPointer(), false);
+		ImGui_ImplOpenGL3_Init("#version 330 core");
+		ImGui::StyleColorsDark();
+		ImGui_ImplOpenGL3_NewFrame();
+#endif
 	}
 
 	void Application::run() {
@@ -105,5 +126,15 @@ namespace prx {
 		ResourceManager::initialize();
 		FontManager::initialize(1.0f);
 		Director::initialize();
+
+#ifdef PARALLAX_USING_IMGUI
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui_ImplGlfw_InitForOpenGL(Window::getInstance()->getWindowPointer(), false);
+		ImGui_ImplOpenGL3_Init("#version 330 core");
+		ImGui::StyleColorsDark();
+		ImGui_ImplOpenGL3_NewFrame();
+#endif
 	}
 }

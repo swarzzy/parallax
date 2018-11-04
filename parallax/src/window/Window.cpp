@@ -4,8 +4,10 @@
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../scene/Director.h"
 #include "../audio/AudioEngine.h"
+#ifdef PARALLAX_USING_IMGUI
 #include "../ext/imgui/imgui.h"
 #include "../ext/imgui/imgui_impl_glfw.h"
+#endif
 
 namespace prx {
 
@@ -225,8 +227,10 @@ namespace prx {
 			else if (action == PARALLAX_RELEASE)
 				win->m_KeysCurrentState[key] = false;
 
+#ifdef PARALLAX_USING_IMGUI
 			// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
 			ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mode);
+#endif
 		}
 		else {
 			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
@@ -247,8 +251,10 @@ namespace prx {
 			else if (action == PARALLAX_RELEASE)
 				win->m_MouseButtonsCurrentState[button] = false;
 
+#ifdef PARALLAX_USING_IMGUI
 			// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
 			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+#endif
 		}
 		else {
 			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
@@ -260,8 +266,10 @@ namespace prx {
 		win->m_ScrollOffsetX += static_cast<float>(xoffset);
 		win->m_ScrollOffsetY += static_cast<float>(yoffset);
 
+#ifdef PARALLAX_USING_IMGUI
 		// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
 		ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+#endif
 	}
 
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -273,8 +281,10 @@ namespace prx {
 	}
 
 	void character_callback(GLFWwindow* window, unsigned int codepoint) {
+#ifdef PARALLAX_USING_IMGUI
 		// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
 		ImGui_ImplGlfw_CharCallback(window, codepoint);
+#endif
 	}
 }
 

@@ -37,4 +37,5 @@
 #include "utils/Singleton.h"
 #include "utils/SimpleHash.h"
 #include "utils/StringUtils.h"
+#include "utils/imgui_widgets/ImGUIWidget.h"
 #endif

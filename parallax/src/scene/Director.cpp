@@ -4,6 +4,13 @@
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../scene/Scene.h"
 #include "../renderer/ForwardRenderer2D.h"
+#include "../camera/Camera2D.h"
+#ifdef PARALLAX_USING_IMGUI
+#include "../utils/imgui_widgets/ImGUIWidget.h"
+#include "../ext/imgui/imgui.h"
+#include "../ext/imgui/imgui_impl_opengl3.h"
+#include "../ext/imgui/imgui_impl_glfw.h"
+#endif
 
 namespace prx {
 
@@ -16,12 +23,15 @@ namespace prx {
 	}
 
 	Director::Director()
-		: Singleton<prx::Director>(),
-		  m_CurrentScene(nullptr),
-		  m_SceneState(SceneState::STOP),
-		  m_CurrentCameraPosition(0.0f),
-		  m_CurrentCameraViewSpaceSize(0.0f),
-		  m_ViewportSize(0.0f)
+		: Singleton<prx::Director>()
+		, m_CurrentScene(nullptr)
+		, m_SceneState(SceneState::STOP)
+		, m_CurrentCameraPosition(0.0f)
+		, m_CurrentCameraViewSpaceSize(0.0f)
+		, m_ViewportSize(0.0f)
+#ifdef PARALLAX_USING_IMGUI
+		, m_DebugLayerEnabled(false)
+#endif
 	{
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -43,11 +53,38 @@ namespace prx {
 	void Director::update() {
 		if (m_SceneState == SceneState::PLAY)
 		m_CurrentScene->update();
+		// TODO: Update only when projection matrix changed
+		m_Renderer->setProjectionMatrix(m_CurrentScene->getCamera().getProjectionMatrix());
 	}
 
 	void Director::render() {
 		if (m_SceneState == SceneState::PLAY)
 			m_CurrentScene->draw();
+
+#ifdef PARALLAX_USING_IMGUI
+		if (m_DebugLayerEnabled) {
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			for (auto widget : m_DebugWidgets)
+				widget->show();
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
+#endif
+	}
+
+	void Director::addDebugWidget(ImGUIWidget* widget) {
+#ifdef PARALLAX_USING_IMGUI
+		m_DebugWidgets.push_back(widget);
+#endif
+	}
+
+	void Director::enableDebugLayer(bool enabled) {
+#ifdef PARALLAX_USING_IMGUI
+		m_DebugLayerEnabled = enabled;
+#endif
 	}
 
 	unsigned Director::createScene(std::string_view name) {

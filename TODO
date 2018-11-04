@@ -1,4 +1,4 @@
- ###--GLOBAL--###
+ #### GLOBAL ####
 
  --- SSE in hypermath ???
  --- constants header ???
@@ -8,6 +8,12 @@
  --- disabling anchor points (usefull for non renderable nodes)
  --- global texture default parameters settings
 
-  ###--SPRITESHEET--###
+  #### SPRITESHEET ####
   --- key frames
   --- callbacks
+
+  #### DIRECTOR ####
+  --- Update projection matrix in renderer only when it was changed
+
+  #### SCENE ####
+ --- Maybe move sorting from draw methos to update

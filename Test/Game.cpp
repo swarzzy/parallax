@@ -2,18 +2,10 @@
 #include "../parallax/src/ext/imgui/imgui.h"
 #include "../parallax/src/ext/imgui/imgui_impl_glfw.h"
 #include "../parallax/src/ext/imgui/imgui_impl_opengl3.h"
+#include "TestWidget.h"
 
 void Game::init() {
 	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000);
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	ImGui_ImplGlfw_InitForOpenGL(Window::getInstance()->getWindowPointer(), false);
-	ImGui_ImplOpenGL3_Init("#version 330 core");
-
-	ImGui::StyleColorsDark();
 
 	m_Sound = get_resource<Sound>("res/audio/test.ogg");
 	m_Sound->init();
@@ -49,7 +41,7 @@ void Game::init() {
 
 	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run", m_Layer);
 	m_Hero->loopAnimation("run");
-	
+	Director::getInstance()->addDebugWidget(new TestWidget());
 	Director::getInstance()->setCurrentScene("Scene");
 	Director::getInstance()->playScene();
 	m_HeroPos = hpm::vec2(0.0f);
@@ -61,6 +53,7 @@ void Game::tick() {
 }
 
 void Game::update() {
+	
 	m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
 	m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
 
@@ -98,27 +91,22 @@ void Game::update() {
 				m_Hero->loopAnimation("idle");
 			}
 	}
+
+	static bool flag = true;
+	if (Window::getInstance()->isKeyPressed(PARALLAX_KEY_TAB)) {
+		flag = !flag;
+		Director::getInstance()->enableDebugLayer(flag);
+	}
+
 		m_Hero->setPosition(m_HeroPos);
 	Director::getInstance()->update();
+	
+	
 }
 	
 void Game::render() {
-
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	bool show_demo_window = true;
-	ImGui::ShowDemoWindow(&show_demo_window);
-
 	Director::getInstance()->render();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Game::destroy() {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
 }
