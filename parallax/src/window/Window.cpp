@@ -4,6 +4,8 @@
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../scene/Director.h"
 #include "../audio/AudioEngine.h"
+#include "../ext/imgui/imgui.h"
+#include "../ext/imgui/imgui_impl_glfw.h"
 
 namespace prx {
 
@@ -12,6 +14,7 @@ namespace prx {
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	void character_callback(GLFWwindow* window, unsigned int codepoint);
 
 	Window* Window::m_CurrentWindow = nullptr;
 
@@ -28,7 +31,6 @@ namespace prx {
 			glfwTerminate();
 		m_CurrentWindow = this;
 	}
-
 
 	bool Window::init() {
 		
@@ -63,6 +65,8 @@ namespace prx {
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
 		glfwSetScrollCallback(m_Window, scroll_callback);
 		glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
+		glfwSetCharCallback(m_Window, character_callback);
+		
 		glfwSwapInterval(0);
 
 		glfwSetWindowUserPointer(m_Window, this);
@@ -220,6 +224,9 @@ namespace prx {
 				win->m_KeysCurrentState[key] = true;
 			else if (action == PARALLAX_RELEASE)
 				win->m_KeysCurrentState[key] = false;
+
+			// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
+			ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mode);
 		}
 		else {
 			PRX_WARN("WINDOW: Invalid key number/n-> KEYNUM: ", key);
@@ -239,6 +246,9 @@ namespace prx {
 				win->m_MouseButtonsCurrentState[button] = true;
 			else if (action == PARALLAX_RELEASE)
 				win->m_MouseButtonsCurrentState[button] = false;
+
+			// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
+			ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 		}
 		else {
 			PRX_WARN("WINDOW: Invalid mouse button number/n-> BTNNUM: ", button);
@@ -249,6 +259,9 @@ namespace prx {
 		Window* win = static_cast<Window*>(glfwGetWindowUserPointer(window));
 		win->m_ScrollOffsetX += static_cast<float>(xoffset);
 		win->m_ScrollOffsetY += static_cast<float>(yoffset);
+
+		// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
+		ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 	}
 
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -257,6 +270,11 @@ namespace prx {
 		win->m_Height = height;
 		if (Director::getInstance() != nullptr)
 			Director::getInstance()->setViewport(hpm::vec2(static_cast<float>(width), static_cast<float>(height)));
+	}
+
+	void character_callback(GLFWwindow* window, unsigned int codepoint) {
+		// Calling ImGUI inside callbacks so ImGUI and parallax desn`t steal callbacks from each other
+		ImGui_ImplGlfw_CharCallback(window, codepoint);
 	}
 }
 

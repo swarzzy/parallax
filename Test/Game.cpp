@@ -1,7 +1,19 @@
 #include "Game.h"
+#include "../parallax/src/ext/imgui/imgui.h"
+#include "../parallax/src/ext/imgui/imgui_impl_glfw.h"
+#include "../parallax/src/ext/imgui/imgui_impl_opengl3.h"
 
 void Game::init() {
 	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	ImGui_ImplGlfw_InitForOpenGL(Window::getInstance()->getWindowPointer(), false);
+	ImGui_ImplOpenGL3_Init("#version 330 core");
+
+	ImGui::StyleColorsDark();
 
 	m_Sound = get_resource<Sound>("res/audio/test.ogg");
 	m_Sound->init();
@@ -91,8 +103,22 @@ void Game::update() {
 }
 	
 void Game::render() {
+
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	bool show_demo_window = true;
+	ImGui::ShowDemoWindow(&show_demo_window);
+
 	Director::getInstance()->render();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Game::destroy() {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }

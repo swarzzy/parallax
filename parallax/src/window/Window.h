@@ -56,6 +56,7 @@ namespace prx {
 
 		~Window();
 
+		// Deprecated
 		static inline const Window& getCurrentWindow() { return *m_CurrentWindow; };
 
 		void updateRender();
@@ -79,8 +80,7 @@ namespace prx {
 		bool isMouseButtonPressed	(unsigned button) const;
 		bool isMouseButtonReleased	(unsigned button) const;
 
-		// Deprecated
-		PRX_DEPRECATED inline GLFWwindow* getWindowPointer() { return m_Window; };
+		inline GLFWwindow* getWindowPointer() { return m_Window; };
 		
 		inline unsigned getWidth() const  { return m_Width; };
 		inline unsigned getHeight() const { return m_Height; };
@@ -98,6 +98,7 @@ namespace prx {
 		friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 		friend static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 		friend static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+		friend static void character_callback(GLFWwindow* window, unsigned int codepoint);
 	};
 }
 #endif

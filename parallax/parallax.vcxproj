@@ -21,6 +21,12 @@
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\camera\Camera2D.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\ext\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Fonts\FontManager.cpp" />
     <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
@@ -62,6 +68,14 @@
     <ClInclude Include="src\Common.h" />
     <ClInclude Include="src\ext\freetype\ft2build.h" />
     <ClInclude Include="src\ext\ftgl\texture-atlas.h" />
+    <ClInclude Include="src\ext\imgui\imconfig.h" />
+    <ClInclude Include="src\ext\imgui\imgui.h" />
+    <ClInclude Include="src\ext\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\ext\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\ext\imgui\imgui_internal.h" />
+    <ClInclude Include="src\ext\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\ext\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\ext\imgui\imstb_truetype.h" />
     <ClInclude Include="src\Fonts\DefaultFont.h" />
     <ClInclude Include="src\Fonts\Font.h" />
     <ClInclude Include="src\Fonts\FontManager.h" />
@@ -181,14 +195,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\src\ext;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
     <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)parallax\src\ext\freetype;$(SolutionDir)hypermath\src;$(SolutionDir)parallax\src\ext;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)parallax\lib;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)build\intermediates\$(Platform)\$(Configuration)\parallax\</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\parallax\</OutDir>
@@ -217,7 +231,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;PARALLAX_API_OPENGL;PARALLAX_ENABLE_MEMORY_LOGGING;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;PARALLAX_API_OPENGL;PARALLAX_ENABLE_MEMORY_LOGGING;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;IMGUI_IMPL_OPENGL_LOADER_GLEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
@@ -261,7 +275,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;IMGUI_IMPL_OPENGL_LOADER_GLEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
