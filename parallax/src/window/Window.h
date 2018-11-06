@@ -28,10 +28,13 @@ namespace prx {
 		std::string	 m_Title;
 		unsigned	 m_Width;
 		unsigned	 m_Height;
+		unsigned	 m_AspectRatioNum;
+		unsigned	 m_AspectRatioDenom;
 		GLFWwindow*	 m_Window;
 		GLFWmonitor* m_Monitor;
 		hpm::vec3	 m_ClearColor;
 		bool		 m_FullScreen;
+		bool		 m_Resizable;
 
 		bool m_KeysCurrentState	[PARALLAX_INPUT_MAX_KEYS];
 		bool m_KeysPrevState	[PARALLAX_INPUT_MAX_KEYS];
@@ -49,7 +52,7 @@ namespace prx {
 		float m_ScrollOffsetX, 
 			  m_ScrollOffsetY;
 		
-		Window(std::string_view title, unsigned width, unsigned height, bool fullscreen);
+		Window(std::string_view title, unsigned width, unsigned height, bool fullscreen, bool resizeble = false);
 
 	public:
 		friend class Singleton<Window>;
@@ -66,12 +69,14 @@ namespace prx {
 		void clear(unsigned int flags);
 
 		void resize(unsigned width, unsigned height);
+		// Set aspect ratio of the window if both parameters passed as zero it set no aspect ratio
+		void setAspectRatio(unsigned width, unsigned height);
 
 		void enableFullScreen(bool fullscreen);
 
 		bool isClosed() const;
+		void closeWindow();
 
-		// TODO: button defines
 		bool isKeyHeld		(unsigned key) const;
 		bool isKeyPressed	(unsigned key) const;
 		bool isKeyReleased	(unsigned key) const;

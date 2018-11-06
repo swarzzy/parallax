@@ -23,8 +23,14 @@ namespace prx {
 
 
 		void parallaxInit();
-		void parallaxInit(std::string_view title, int width, int height, bool fullscreen,
-			LOG_LEVEL logLevel, unsigned int clearColor);
+		void parallaxInit(std::string_view title, 
+						  int width, 
+						  int height, 
+						  bool fullscreen,
+						  LogLevel logLevel, 
+						  unsigned int clearColor,
+						  bool resizable
+						 );
 
 		// Once at start
 		virtual void init() = 0;

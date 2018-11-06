@@ -6,7 +6,7 @@
 #include "../renderer/ForwardRenderer2D.h"
 #include "../camera/Camera2D.h"
 #ifdef PARALLAX_USING_IMGUI
-#include "../utils/imgui_widgets/ImGUIWidget.h"
+#include "../utils/imgui_widgets/DefaultDebugWidget.h"
 #include "../ext/imgui/imgui.h"
 #include "../ext/imgui/imgui_impl_opengl3.h"
 #include "../ext/imgui/imgui_impl_glfw.h"
@@ -33,6 +33,9 @@ namespace prx {
 		, m_DebugLayerEnabled(false)
 #endif
 	{
+#ifdef PARALLAX_USING_IMGUI
+		m_DebugWidgets.push_back(new DefaultDebugWidget());
+#endif
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
@@ -48,6 +51,10 @@ namespace prx {
 
 		for (auto scene : m_Scenes)
 			delete scene.second;
+
+#ifdef PARALLAX_USING_IMGUI
+		delete m_DebugWidgets[DEFAULT_DEBUG_WIDGET_LOCATION];
+#endif
 	}
 
 	void Director::update() {
@@ -75,7 +82,7 @@ namespace prx {
 #endif
 	}
 
-	void Director::addDebugWidget(ImGUIWidget* widget) {
+	void Director::addDebugWidget(ImGuiWidget* widget) {
 #ifdef PARALLAX_USING_IMGUI
 		m_DebugWidgets.push_back(widget);
 #endif
@@ -174,7 +181,8 @@ namespace prx {
 	void Director::setViewport(hpm::vec2 size) {
 		m_ViewportSize = size;
 		GLCall(glViewport(0, 0, static_cast<unsigned>(size.x), static_cast<unsigned>(size.y)));
-		updateViewport();
+		// TODO: Maybe not setting camera projection matrix when resizing window and make matrix independent. It should be setting by user
+		//updateViewport();
 	}
 
 	void Director::updateViewport() {

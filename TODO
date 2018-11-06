@@ -1,19 +1,24 @@
- #### GLOBAL ####
+#### GLOBAL ####
+--- SSE in hypermath ???
+--- kerning
+--- parallax allocator
+--- inverse method in matrix class
+--- disabling anchor points (usefull for non renderable nodes)
+--- global texture default parameters settings
 
- --- SSE in hypermath ???
- --- constants header ???
- --- kerning
- --- parallax allocator
- --- inverse method in matrix class
- --- disabling anchor points (usefull for non renderable nodes)
- --- global texture default parameters settings
+#### SPRITESHEET ####
+--- key frames
+--- callbacks
 
-  #### SPRITESHEET ####
-  --- key frames
-  --- callbacks
+#### DIRECTOR ####
+--- Update projection matrix in renderer only when it was changed
+--- Make projection matrix independent from viewport. Its should be set by user
+--- Get rid of garbage collection on first init
+--- Make addDebugWidget method memory safe
+--- GC policies
 
-  #### DIRECTOR ####
-  --- Update projection matrix in renderer only when it was changed
+#### SCENE ####
+--- Maybe move sorting from draw methos to update
 
-  #### SCENE ####
- --- Maybe move sorting from draw methos to update
+#### WINDOW ####
+--- Destroy window propperly i.e glfwDestroyWindow

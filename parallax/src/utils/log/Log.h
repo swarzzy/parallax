@@ -18,7 +18,6 @@
 //------------------------
 // - printDirect method to print direct to the console
 // - direct file exporting to export messages in runtime
-// - export to file in PRX_FATAL and PRX_ASSERT
 // - log destinations
 // - Replace cout with printf
 
@@ -56,15 +55,15 @@ namespace prx {
 			: m_Level(level), m_Message(message) {};
 	};
 
-	static std::array<ConsoleColor, 4> CONSOLE_COLORS  = { ConsoleColor::WHITE,
-														   ConsoleColor::YELLOW,
-														   ConsoleColor::RED,
-														   ConsoleColor::RED };
+	static const std::array<ConsoleColor, 4> CONSOLE_COLORS = { ConsoleColor::WHITE,
+																ConsoleColor::YELLOW,
+																ConsoleColor::RED,
+																ConsoleColor::RED };
 
-	static std::array<std::string, 4> LOG_LEVEL_STRINGS = { "INFO ",
-														    "WARN ",
-														    "ERROR",
-														    "FATAL" };
+	static const std::array<std::string, 4> LOG_LEVEL_STRINGS = { "INFO ",
+																  "WARN ",
+																  "ERROR",
+																  "FATAL" };
 
 	class Log {
 	private:
@@ -88,6 +87,8 @@ namespace prx {
 		inline static void setLevel(LogLevel level);
 
 		inline static void exportToFile(LogLevel level, std::string_view path);
+
+		inline static const std::vector<LogMessage>& getBuffer() noexcept;
 		
 	private:
 
@@ -199,6 +200,10 @@ namespace prx {
 			}
 		}
 		stream.close();
+	}
+
+	inline const std::vector<LogMessage>& Log::getBuffer() noexcept {
+		return m_LogBuffer;
 	}
 
 	inline void Log::printBuffer(std::ostream& stream, LogLevel level, ConsoleColor color) {

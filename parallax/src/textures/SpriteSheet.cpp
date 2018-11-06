@@ -1,3 +1,4 @@
+
 #include "SpriteSheet.h"
 #include "../resources/ImageLoader.h"
 #include "../utils/error/UninitializedResourceUsedException.h"

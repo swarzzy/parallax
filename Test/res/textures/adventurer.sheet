@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <spritesheet file="res/textures/adventurer.png" columns="8" rows="12">
-   <animation name="idle" duration="1.0">
+   <animation name="idle" duration="0.5">
     	<tile>0</tile>
     	<tile>1</tile>
     	<tile>2</tile>

@@ -8,7 +8,7 @@
 namespace prx {
 
 	class Scene;
-	class ImGUIWidget;
+	class ImGuiWidget;
 
 	enum class SceneState {
 		PLAY, STOP
@@ -20,15 +20,19 @@ namespace prx {
 		friend class Singleton<Director>;
 
 	private:
-		inline static int MIN_DEPTH_VALUE = -10;
-		inline static int MAX_DEPTH_VALUE = 10;
+		inline static const int MIN_DEPTH_VALUE = -10;
+		inline static const int MAX_DEPTH_VALUE = 10;
+
+#ifdef PARALLAX_USING_IMGUI
+		inline static const unsigned DEFAULT_DEBUG_WIDGET_LOCATION = 0;
+#endif
 
 	private:
 		std::map<unsigned, Scene*> m_Scenes;
 		std::map<std::string, unsigned> m_ScenesList;
 
 #ifdef PARALLAX_USING_IMGUI
-		std::vector<ImGUIWidget*> m_DebugWidgets;
+		std::vector<ImGuiWidget*> m_DebugWidgets;
 #endif
 
 		Scene*		m_CurrentScene;
@@ -55,7 +59,8 @@ namespace prx {
 		void update();
 		void render();
 
-		void addDebugWidget(ImGUIWidget* widget);
+		// TODO: Make it memory safe (smart pointers?)
+		void addDebugWidget(ImGuiWidget* widget);
 		void enableDebugLayer(bool enabled);
 
 		unsigned int createScene(std::string_view name);

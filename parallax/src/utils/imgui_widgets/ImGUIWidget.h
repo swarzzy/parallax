@@ -1,10 +1,10 @@
 #pragma once
 
 namespace prx {
-	class ImGUIWidget {
+	class ImGuiWidget {
 	public:
-		ImGUIWidget() {};
-		virtual ~ImGUIWidget() {};
+		ImGuiWidget() {};
+		virtual ~ImGuiWidget() {};
 
 		virtual void show() = 0;
 	};

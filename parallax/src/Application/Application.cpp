@@ -49,10 +49,10 @@ namespace prx {
 	}
 
 	void Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
-		LogLevel logLevel, unsigned int clearColor) {
+									LogLevel logLevel, unsigned int clearColor, bool resizable) {
 		Log::init();
 		Log::setLevel(logLevel);
-		Window::initialize(title, width, height, fullscreen);
+		Window::initialize(title, width, height, fullscreen, resizable);
 		Window::getInstance()->setClearColor(clearColor);
 		AudioEngine::initialize();
 		ResourceManager::initialize();
@@ -112,6 +112,9 @@ namespace prx {
 			framesPerTick++;
 			render();
 			window->updateRender();
+			//static_cast<int>()
+			//reinterpret_cast()
+			//dynamic_cast()
 		}
 		destroy();
 	}

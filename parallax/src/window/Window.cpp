@@ -20,14 +20,17 @@ namespace prx {
 
 	Window* Window::m_CurrentWindow = nullptr;
 
-	Window::Window(std::string_view title, unsigned width, unsigned height, bool fullscreen)
+	Window::Window(std::string_view title, unsigned width, unsigned height, bool fullscreen, bool resizeble)
 		: m_Title(title), 
 		  m_Width(width),
-		  m_Height(height), 
+		  m_Height(height),
+		  m_AspectRatioNum(0),
+		  m_AspectRatioDenom(0),
 		  m_ClearColor(hpm::vec3(0.0f, 0.0f, 0.0f)),
 		  m_FullScreen(fullscreen), 
 		  m_ScrollOffsetX(0), 
-		  m_ScrollOffsetY(0) 
+		  m_ScrollOffsetY(0),
+		  m_Resizable(resizeble)
 	{
 		if (!init())
 			glfwTerminate();
@@ -41,6 +44,9 @@ namespace prx {
 			PRX_ERROR("PARALLAX: Failed to init GLFW");
 			return false;
 		}
+
+		// Setting window hints
+		glfwWindowHint(GLFW_RESIZABLE, m_Resizable);
 
 		//Getting monitor configuration
 		m_Monitor = glfwGetPrimaryMonitor();
@@ -99,12 +105,17 @@ namespace prx {
 		return true;
 	}
 	Window::~Window() {
+		// TODO: Destroy window propperly
 		glfwTerminate();
 		m_CurrentWindow = nullptr;
 	}
 
 	bool Window::isClosed() const {
 		return glfwWindowShouldClose(m_Window);
+	}
+
+	void Window::closeWindow() {
+		glfwSetWindowShouldClose(m_Window, true);
 	}
 
 	bool Window::isKeyHeld(GLenum key) const {
@@ -204,7 +215,20 @@ namespace prx {
 		m_Width  = width;
 		m_Height = height;
 		glfwSetWindowSize(m_Window, width, height);
-		GLCall(glViewport(0, 0, width, height));
+		//GLCall(glViewport(0, 0, width, height));
+	}
+
+	void Window::setAspectRatio(unsigned num, unsigned denom) {
+		if (num == 0 && denom == 0) {
+			glfwSetWindowAspectRatio(m_Window, GLFW_DONT_CARE, GLFW_DONT_CARE);
+			m_AspectRatioNum = 0;
+			m_AspectRatioDenom = 0;
+		}
+		else {
+			glfwSetWindowAspectRatio(m_Window, num, denom);
+			m_AspectRatioNum = num;
+			m_AspectRatioDenom = denom;
+		}
 	}
 
 	void Window::enableFullScreen(bool fullscreen) {

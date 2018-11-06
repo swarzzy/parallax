@@ -1,11 +1,8 @@
 #include "Game.h"
-#include "../parallax/src/ext/imgui/imgui.h"
-#include "../parallax/src/ext/imgui/imgui_impl_glfw.h"
-#include "../parallax/src/ext/imgui/imgui_impl_opengl3.h"
-#include "TestWidget.h"
 
 void Game::init() {
-	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000);
+	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000, true);
+	Window::getInstance()->setAspectRatio(1, 1);
 
 	m_Sound = get_resource<Sound>("res/audio/test.ogg");
 	m_Sound->init();
@@ -34,14 +31,13 @@ void Game::init() {
 	
 	m_FPSCounter = m_Scene->createLabel("", 0xffffffff);
 	m_UPSCounter = m_Scene->createLabel("", 0xffffffff);
-	m_FPSCounter->setPosition(4, 577);
-	m_UPSCounter->setPosition(4, 555);
+	m_FPSCounter->setPosition(4, 560);
+	m_UPSCounter->setPosition(4, 537);
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
 
 	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run", m_Layer);
 	m_Hero->loopAnimation("run");
-	Director::getInstance()->addDebugWidget(new TestWidget());
 	Director::getInstance()->setCurrentScene("Scene");
 	Director::getInstance()->playScene();
 	m_HeroPos = hpm::vec2(0.0f);
@@ -54,8 +50,8 @@ void Game::tick() {
 
 void Game::update() {
 	
-	m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
-	m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
+	//m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
+	//m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
 
 	m_Sun->setRotation(-getTime() / 80, -50);
 	m_BluePlanet->setRotation(getTime() / 40, 60);
@@ -95,7 +91,7 @@ void Game::update() {
 	static bool flag = true;
 	if (Window::getInstance()->isKeyPressed(PARALLAX_KEY_TAB)) {
 		flag = !flag;
-		Director::getInstance()->enableDebugLayer(flag);
+		Director::getInstance()->enableDebugLayer(!flag);
 	}
 
 		m_Hero->setPosition(m_HeroPos);

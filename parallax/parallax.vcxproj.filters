@@ -356,6 +356,9 @@
     <ClInclude Include="src\utils\imgui_widgets\ImGUIWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\imgui_widgets\DefaultDebugWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
