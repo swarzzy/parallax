@@ -61,11 +61,15 @@ namespace prx {
 	}
 
 	Group* Scene::createGroup(Node* parent) {
-		return new Group(this);
+		return new Group(this, parent);
 	}
 
 	LabelNode* Scene::createLabel(std::string_view text, unsigned color, Node* parent) {
 		return new LabelNode(this, text, color, parent);
+	}
+
+	LabelNode* Scene::createLabel(std::string_view text, Font* font, unsigned color, Node* parent) {
+		return new LabelNode(this, text, font, color, parent);
 	}
 
 	Layer* Scene::createLayer(int depth) {

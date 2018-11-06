@@ -81,7 +81,7 @@ namespace prx {
 
 		unsigned int hex(std::string_view hex)
 		{
-			if (hex[0] != '#' || (hex.length() != 7 || hex.length() != 9)) {
+			if (!(hex[0] == '#' && ((hex.length() == 7 || hex.length() == 9)))) {
 				PRX_WARN("COLOR_FORMAT_CONVERTER: Invalid hex color code");
 				return 255 << 24 | 255 << 16 | 255 << 8 | 255;
 			}

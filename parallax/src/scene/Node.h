@@ -87,6 +87,7 @@ namespace prx {
 		virtual inline void setRotation(float angle, float radius = 0) noexcept;
 		virtual inline void setAnchorPoint(hpm::vec2 anchorPoint) noexcept;
 		virtual inline void setAnchorPoint(float x, float y) noexcept;
+		virtual inline void setColor(unsigned color) noexcept {};
 
 		virtual inline void hide(bool hide) noexcept;
 		inline bool isHidden() const noexcept;

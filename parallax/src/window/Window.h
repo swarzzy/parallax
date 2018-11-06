@@ -70,7 +70,7 @@ namespace prx {
 
 		void resize(unsigned width, unsigned height);
 		// Set aspect ratio of the window if both parameters passed as zero it set no aspect ratio
-		void setAspectRatio(unsigned width, unsigned height);
+		void setAspectRatio(unsigned num, unsigned denom);
 
 		void enableFullScreen(bool fullscreen);
 

@@ -41,6 +41,8 @@ namespace prx {
 		inline const Sprite& getSprite() const noexcept;
 		inline ResourceHandler<Texture> getTexture() const noexcept;
 
+		void setColor(unsigned color) noexcept override;
+
 	private:
 		void initInternal() override;
 		void drawInternal() override;
@@ -54,5 +56,10 @@ namespace prx {
 	inline ResourceHandler<Texture> SpriteNode::getTexture() const noexcept {
 		return m_Texture;
 	}
+
+	inline void SpriteNode::setColor(unsigned color) noexcept {
+		m_Sprite->setColor(color);
+	}
+
 
 }

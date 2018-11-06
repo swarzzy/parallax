@@ -20,10 +20,20 @@ namespace prx {
 		~LabelNode();
 
 		inline Label& getLabel() const noexcept;
+
+		inline void setColor(unsigned color) noexcept override;
+		inline void setFont(const Font* font) noexcept;
 	};
 
 	inline Label& LabelNode::getLabel() const noexcept {
 		return *m_Label;
 	}
 
+	inline void LabelNode::setColor(unsigned color) noexcept {
+		m_Label->setColor(color);
+	}
+
+	inline void LabelNode::setFont(const Font* font) noexcept {
+		m_Label->setFont(font);
+	}
 }
