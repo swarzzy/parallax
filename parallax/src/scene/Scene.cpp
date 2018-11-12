@@ -51,10 +51,12 @@ namespace prx {
 		return node;
 	}
 
-	AnimatedSpriteNode* Scene::createAnimation(float width, float height, 
-												std::string_view spritesheetPath, 
-												std::string_view startAnimation, 
-												Node* parent) {
+	SpriteNode* Scene::createSprite(float width, float height, unsigned color, Node* parent) {
+		SpriteNode* node = new SpriteNode(width, height, color, this, parent);
+		return node;
+	}
+
+	AnimatedSpriteNode* Scene::createAnimation(float width, float height, std::string_view spritesheetPath, std::string_view startAnimation, Node* parent) {
 		auto spritesheet = get_resource<SpriteSheet>(spritesheetPath);
 		AnimatedSpriteNode* node = new AnimatedSpriteNode(width, height, spritesheet, std::string(startAnimation),  this, parent);
 		return node;

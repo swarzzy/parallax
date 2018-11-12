@@ -370,15 +370,15 @@ namespace prx {
 				ch = characters.at(character);
 			} 
 			catch (std::out_of_range& e) {
-				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas./n-> EXCEPTION: ", e.what());
+				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas.\n-> EXCEPTION: ", e.what());
 				return;
 			}
 			
-			float xpos = (QUAD_DEFAULT_POSITION_X + cursor + ch.Bearing.x) * scale;
-			float ypos = (QUAD_DEFAULT_POSITION_Y - (ch.Size.y - ch.Bearing.y)) * scale;
+			float xpos = (QUAD_DEFAULT_POSITION_X + cursor + ch.Bearing.x);// *scale;
+			float ypos = (QUAD_DEFAULT_POSITION_Y - (ch.Size.y - ch.Bearing.y));// *scale;
 
-			float w = ch.Size.x * scale;
-			float h = ch.Size.y * scale;
+			float w = ch.Size.x;// *scale;
+			float h = ch.Size.y;// *scale;
 
 			m_Buffer->vertex = worldMatrix * hpm::vec2(xpos, ypos);
 			m_Buffer->depth  = depth;
@@ -432,7 +432,7 @@ namespace prx {
 				ch = characters.at(character);
 			}
 			catch (std::out_of_range& e) {
-				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas./n-> EXCEPTION: ", e.what());
+				PRX_ERROR("Renderer2D: Couldn`t find character in font atlas.\n-> EXCEPTION: ", e.what());
 				return;
 			}
 

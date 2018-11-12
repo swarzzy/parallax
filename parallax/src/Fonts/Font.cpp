@@ -17,7 +17,10 @@ namespace prx {
 		  m_Name(name),
 		  m_Size(size), 
 		  m_Scale(scale), 
-		  m_FontAtlas(nullptr)
+		  m_FontAtlas(nullptr),
+		  m_LoadedFromFile(true),
+		  m_BinaryData(nullptr),
+		  m_BinaryDataSize(0)
 	{
 		loadFontFromFile();
 	}
@@ -27,13 +30,27 @@ namespace prx {
 		  m_Name(name),
 		  m_Size(size), 
 		  m_Scale(scale), 
-		  m_FontAtlas(nullptr) 
+		  m_FontAtlas(nullptr),
+		  m_LoadedFromFile(false),
+		  m_BinaryData(data),
+		  m_BinaryDataSize(dataSize)
 	{
-		loadFontFromBinary(data, dataSize);
+		loadFontFromBinary(m_BinaryData, m_BinaryDataSize);
 	}
 
 	Font::~Font() {
 		delete m_FontAtlas;
+	}
+
+	void Font::reloadWithNewScale(float scale) {
+		delete m_FontAtlas;
+		m_Characters.clear();
+
+		m_Scale = scale;
+		if (m_LoadedFromFile)
+			loadFontFromFile();
+		else
+			loadFontFromBinary(m_BinaryData, m_BinaryDataSize);
 	}
 
 	void Font::loadFontFromBinary(const unsigned char* data, long size) {
@@ -45,7 +62,7 @@ namespace prx {
 		FTCall(FT_Init_FreeType(&ft));
 		FTCall(FT_New_Memory_Face(ft, data, size, 0, &face));
 
-		FTCall(FT_Set_Pixel_Sizes(face, 0, m_Size));
+		FTCall(FT_Set_Pixel_Sizes(face, 0, static_cast<unsigned>(m_Size * m_Scale)));
 
 		//GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
@@ -58,7 +75,7 @@ namespace prx {
 		static_cast<int>(((0.0) * 0x10000L)),
 		static_cast<int>(((-1.0) * 0x10000L)) };
 
-		FT_Set_Transform(face, &matrix, NULL);
+		FT_Set_Transform(face, &matrix, nullptr);
 
 		for (int i = 0; i < 128; i++) {
 
@@ -116,7 +133,7 @@ namespace prx {
 		FTCall(FT_Init_FreeType(&ft));
 		FTCall(FT_New_Face(ft, m_FilePath.c_str(), 0, &face));
 
-		FTCall(FT_Set_Pixel_Sizes(face, 0, m_Size));
+		FTCall(FT_Set_Pixel_Sizes(face, 0, static_cast<unsigned>(m_Size * m_Scale)));
 
 		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 

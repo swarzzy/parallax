@@ -17,22 +17,29 @@ namespace prx {
 
 		Character(hpm::vec4 coords, hpm::vec2 size, hpm::vec2 bearing, long advance)
 			: AtlasCoords(coords), Size(size), Bearing(bearing), Advance(advance) {};
-		Character() {};
+		Character() {}; // TODO: Get rid of this constructor (only renderer uses it for no reason)
 	};
 
 	class Font {
+		//PRX_DISALLOW_COPY_AND_MOVE(Font)
 	private: 
 		std::string					m_FilePath;
 		std::string					m_Name;
 		unsigned int				m_Size;
 		float						m_Scale;
 		std::map<char, Character>	m_Characters;
+		TextureAtlas*				m_FontAtlas;
+		bool						m_LoadedFromFile;
+
+		const unsigned char*		m_BinaryData;
+		size_t						m_BinaryDataSize;
 
 	public:
-		TextureAtlas*				m_FontAtlas;
 		Font(std::string_view filepath, std::string_view name, int size, float scale = 1.0f);
 		Font(std::string_view name, const unsigned char* data, long dataSize, int size, float scale = 1.0f);
 		~Font();
+
+		void reloadWithNewScale(float scale);
 
 		inline const std::string&				getFilePath()	const { return m_FilePath;	 };
 		inline const std::string&				getName()		const { return m_Name;		 };

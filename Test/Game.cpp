@@ -96,6 +96,18 @@ void Game::update() {
 
 		m_Hero->setPosition(m_HeroPos);
 	Director::getInstance()->update();
+
+	static float fontScale = 1.0;
+
+	if (Window::getInstance()->isKeyPressed(PARALLAX_KEY_UP)) {
+		fontScale += 0.3;
+		FontManager::getInstance()->reload(fontScale);
+	}
+
+	if (Window::getInstance()->isKeyPressed(PARALLAX_KEY_DOWN)) {
+		fontScale -= 0.3;
+		FontManager::getInstance()->reload(fontScale);
+	}
 	
 	
 }

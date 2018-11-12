@@ -2,7 +2,8 @@
 
 #include "../Common.h"
 #include "../utils/Singleton.h"
-#include <vector>
+
+#include <unordered_map>
 
 namespace prx {
 
@@ -15,18 +16,18 @@ namespace prx {
 
 	private:
 
-		static const unsigned DEFAULT_FONT_SIZE = 30;
+		static const unsigned	DEFAULT_FONT_SIZE = 30;
+		static const char*		DEFAULT_FONT_NAME;
 
-		std::vector<Font> m_Fonts;
-		std::vector<Font> m_DefaultFonts;
-		float m_Scale;
+		std::unordered_map<prx_id_t, Font*> m_Fonts;
+		Font*								m_DefaultFont;
+		float								m_Scale;
 
 		FontManager(float scale);
 
 	public:
 		~FontManager();
 
-		// !!!Makes all pointers invalid
 		void reload(float scale);
 		inline float getScale() const noexcept;
 
@@ -37,10 +38,12 @@ namespace prx {
 		Font* getDefault(unsigned size);
 
 		void clean();
+
+	private:
+		void loadDefault();
 	};
 
 	inline float FontManager::getScale() const noexcept {
 		return m_Scale;
 	}
 }
-
