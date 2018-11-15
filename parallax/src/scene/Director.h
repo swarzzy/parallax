@@ -4,6 +4,7 @@
 #include <hypermath.h>
 #include "../utils/Singleton.h"
 #include "../renderer/ForwardRenderer2D.h"
+#include "../utils/imgui_widgets/DefaultDebugWidget.h"
 
 namespace prx {
 
@@ -23,16 +24,13 @@ namespace prx {
 		inline static const int MIN_DEPTH_VALUE = -10;
 		inline static const int MAX_DEPTH_VALUE = 10;
 
-#ifdef PARALLAX_USING_IMGUI
-		inline static const unsigned DEFAULT_DEBUG_WIDGET_LOCATION = 0;
-#endif
-
 	private:
 		std::map<unsigned, Scene*> m_Scenes;
 		std::map<std::string, unsigned> m_ScenesList;
 
 #ifdef PARALLAX_USING_IMGUI
-		std::vector<ImGuiWidget*> m_DebugWidgets;
+		DefaultDebugWidget* m_DebugLayer;
+		std::vector<ImGuiWidget*> m_DebugMenuItems;
 #endif
 
 		Scene*		m_CurrentScene;
@@ -60,7 +58,9 @@ namespace prx {
 		void render();
 
 		// TODO: Make it memory safe (smart pointers?)
-		void addDebugWidget(ImGuiWidget* widget);
+		void addDebugMenuItem(ImGuiWidget* widget);
+		void clearDebugMenu();
+
 		void enableDebugLayer(bool enabled);
 
 		unsigned int createScene(std::string_view name);
@@ -80,5 +80,10 @@ namespace prx {
 
 		void setViewport(hpm::vec2 size);
 		void updateViewport();
+
+	private:
+#ifdef PARALLAX_USING_IMGUI
+		void showDebugLayer();
+#endif
 	};
 }

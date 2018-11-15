@@ -181,6 +181,7 @@ namespace prx {
 		return m_Camera->getViewSpaceSize();
 	}
 
+
 	void Scene::addChild(Layer* child) {
 		if (child != nullptr) {
 			m_Layers.push_back(child);

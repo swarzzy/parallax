@@ -34,7 +34,7 @@ namespace prx {
 #endif
 	{
 #ifdef PARALLAX_USING_IMGUI
-		m_DebugWidgets.push_back(new DefaultDebugWidget());
+		m_DebugLayer = new DefaultDebugWidget();
 #endif
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -53,7 +53,7 @@ namespace prx {
 			delete scene.second;
 
 #ifdef PARALLAX_USING_IMGUI
-		delete m_DebugWidgets[DEFAULT_DEBUG_WIDGET_LOCATION];
+		delete m_DebugLayer;
 #endif
 	}
 
@@ -69,22 +69,19 @@ namespace prx {
 			m_CurrentScene->draw();
 
 #ifdef PARALLAX_USING_IMGUI
-		if (m_DebugLayerEnabled) {
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
-
-			for (auto widget : m_DebugWidgets)
-				widget->show();
-
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		}
+		showDebugLayer();
 #endif
 	}
 
-	void Director::addDebugWidget(ImGuiWidget* widget) {
+	void Director::addDebugMenuItem(ImGuiWidget* widget) {
 #ifdef PARALLAX_USING_IMGUI
-		m_DebugWidgets.push_back(widget);
+		m_DebugMenuItems.push_back(widget);
+#endif
+	}
+
+	void Director::clearDebugMenu() {
+#ifdef PARALLAX_USING_IMGUI
+		m_DebugMenuItems.clear();
 #endif
 	}
 
@@ -189,4 +186,27 @@ namespace prx {
 		for (auto iterator : m_Scenes)
 			iterator.second->setCameraViewSpaceSize(m_ViewportSize);
 	}
+
+#ifdef PARALLAX_USING_IMGUI
+	void Director::showDebugLayer() {
+		if (m_DebugLayerEnabled) {
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			m_DebugLayer->show();
+
+			if (m_DebugLayer->isDebugMenuEnabled()) {
+				ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiCond_FirstUseEver);
+				if (ImGui::Begin("DebugMenu")) {
+					for (auto item : m_DebugMenuItems)
+						item->show();
+					ImGui::End();
+				}
+			}
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
+	}
+#endif
 }

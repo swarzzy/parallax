@@ -38,4 +38,5 @@
 #include "utils/SimpleHash.h"
 #include "utils/StringUtils.h"
 #include "utils/imgui_widgets/ImGUIWidget.h"
+#include "renderer/light/Light2D.h"
 #endif

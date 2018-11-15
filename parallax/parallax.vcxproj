@@ -28,6 +28,7 @@
     <ClCompile Include="src\ext\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\ext\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Fonts\FontManager.cpp" />
+    <ClCompile Include="src\renderer\light\Light2D.cpp" />
     <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
     <ClCompile Include="src\scene\components\TransformComponent2D.cpp" />
@@ -57,6 +58,9 @@
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
     <ClCompile Include="src\textures\TextureBase.cpp" />
+    <ClCompile Include="src\utils\imgui_widgets\SliderFloat.cpp" />
+    <ClCompile Include="src\utils\imgui_widgets\SliderInt.cpp" />
+    <ClCompile Include="src\utils\imgui_widgets\ToggleButton.cpp" />
     <ClCompile Include="src\utils\StringUtils.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
@@ -88,6 +92,7 @@
     <ClInclude Include="src\renderer\ForwardRenderer2D.h" />
     <ClInclude Include="src\renderer\FrameBuffer2D.h" />
     <ClInclude Include="src\renderer\FrameBufferBase.h" />
+    <ClInclude Include="src\renderer\light\Light2D.h" />
     <ClInclude Include="src\renderer\renderable\AnimatedSprite.h" />
     <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
@@ -114,6 +119,9 @@
     <ClInclude Include="src\textures\Texture.h" />
     <ClInclude Include="src\textures\TextureAtlas.h" />
     <ClInclude Include="src\textures\TextureBase.h" />
+    <ClInclude Include="src\utils\imgui_widgets\SliderFloat.h" />
+    <ClInclude Include="src\utils\imgui_widgets\SliderInt.h" />
+    <ClInclude Include="src\utils\imgui_widgets\ToggleButton.h" />
     <ClInclude Include="src\utils\imgui_widgets\ImGUIWidget.h" />
     <ClInclude Include="src\utils\color\ColorFormatConverter.h" />
     <ClInclude Include="src\utils\error\FileReadException.h" />
@@ -138,6 +146,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\renderer\light\Light2D.inl" />
     <None Include="src\scene\components\TransformComponent2D.inl" />
     <None Include="src\scene\Node.inl" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />

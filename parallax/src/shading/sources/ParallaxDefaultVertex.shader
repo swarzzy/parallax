@@ -11,10 +11,8 @@ out vec4  v_color;
 out vec2  v_position;
 out vec2  v_UV;
 out float v_texID;
-out vec2  v_maskUV;
 
 uniform mat4 u_ProjectionMatrix = mat4(1.0f);
-uniform mat4 u_MaskMatrix = mat4(1.0f);
 
 void main() {
 	v_color = a_color;
@@ -22,6 +20,5 @@ void main() {
 	v_position = a_coord.xy;
 	v_texID = a_texID;
 	gl_Position = u_ProjectionMatrix * vec4(a_coord, a_depth, 1.0);
-	v_maskUV = (u_MaskMatrix * gl_Position).xy * 0.5 + 0.5;
 }
 )"

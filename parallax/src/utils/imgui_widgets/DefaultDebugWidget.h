@@ -12,14 +12,19 @@ namespace prx {
 	private:
 		bool m_LogFlag;
 		bool m_InfoFlag;
+		bool m_DebugMenu;
 	public:
 		DefaultDebugWidget()
 			: ImGuiWidget(),
 			m_LogFlag(false),
-			m_InfoFlag(false)
+			m_InfoFlag(false),
+			m_DebugMenu(false)
 		{}
 
-	private:
+		bool isDebugMenuEnabled() const {
+			return m_DebugMenu;
+		};
+
 		void show() override {
 			//ImGui::ShowDemoWindow();
 			if (ImGui::BeginMainMenuBar())
@@ -34,6 +39,7 @@ namespace prx {
 				{
 					if (ImGui::MenuItem("Log", nullptr, &m_LogFlag)) {}
 					if (ImGui::MenuItem("Info", nullptr, &m_InfoFlag)) {}
+					if (ImGui::MenuItem("Debug menu", nullptr, &m_DebugMenu)) {}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMainMenuBar();

@@ -89,6 +89,7 @@ namespace prx {
 		inline unsigned getID() const noexcept;
 		inline const std::string& getName() const noexcept;
 		inline bool isInitialized() const noexcept;
+		inline Renderer2D* getRenderer() const;
 
 	private:
 		void addChild(Layer* child);
@@ -110,5 +111,9 @@ namespace prx {
 
 	inline bool Scene::isInitialized() const noexcept {
 		return m_Initialized;
+	}
+
+	inline Renderer2D* Scene::getRenderer() const {
+		return m_Renderer;
 	}
 }

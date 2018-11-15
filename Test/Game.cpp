@@ -1,4 +1,7 @@
 #include "Game.h"
+#include "utils/imgui_widgets/ToggleButton.h"
+#include "utils/imgui_widgets/SliderFloat.h"
+#include "utils/imgui_widgets/SliderInt.h"
 
 void Game::init() {
 	parallaxInit("parallax", 600, 600, false, LogLevel::LOG_INFO, 0xff000000, true);
@@ -16,12 +19,14 @@ void Game::init() {
 	m_UILayer = m_Scene->createLayer(1);
 
 	m_Group = m_Scene->createGroup();
+	auto background = m_Scene->createSprite(600, 600, "res/textures/background.png", m_Layer);
 	m_Group->setParent(m_Layer);
 	m_Group->setPosition(400, 400);
 
 	m_Sun = m_Scene->createSprite(100, 100, "res/textures/sun.png");
 	m_Sun->setParent(m_Group);
 	m_Sun->setPosition(0, 0);
+
 
 	m_BluePlanet = m_Scene->createSprite(50, 50, "res/textures/blue_planet.png");
 	m_BluePlanet->setParent(m_Group);
@@ -35,12 +40,19 @@ void Game::init() {
 	m_UPSCounter->setPosition(4, 537);
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
+	Director::getInstance()->addDebugMenuItem(new ToggleButton("Button", &btn));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider", &slider, 0.0f, 600.0f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider2", &slider2, 0.0f, 600.0f));
 
 	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run", m_Layer);
 	m_Hero->loopAnimation("run");
 	Director::getInstance()->setCurrentScene("Scene");
 	Director::getInstance()->playScene();
 	m_HeroPos = hpm::vec2(0.0f);
+
+	btn = false;
+	slider = 0.0f;
+	slider2 = 0.0f;
 }
 
 void Game::tick() {
@@ -49,7 +61,7 @@ void Game::tick() {
 }
 
 void Game::update() {
-	
+	m_Group->setPosition(slider, slider2);
 	//m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
 	//m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
 

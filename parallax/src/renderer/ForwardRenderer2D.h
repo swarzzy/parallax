@@ -11,13 +11,14 @@ namespace prx {
 	class Shader;
 	
 	class ForwardRenderer2D final : public Renderer2D {
+		PRX_DISALLOW_COPY_AND_MOVE(ForwardRenderer2D)
 	public:
 		static const unsigned int	MAX_RENDERABLES		= 60000;
 		static const unsigned int	VERTEX_SIZE			= sizeof(VertexData);
 		static const unsigned int	RENDERABLE_SIZE		= VERTEX_SIZE * 4;
 		static const unsigned int	INDEX_BUFFER_SIZE	= MAX_RENDERABLES * 6;
 		static const unsigned int	BUFFER_SIZE			= RENDERABLE_SIZE * MAX_RENDERABLES;
-		static const unsigned int	MAX_TEXTURE_SLOTS	= 32 - 1; // Mask hold the last slot
+		static const unsigned int	MAX_TEXTURE_SLOTS	= 32;
 
 		static const unsigned int	SHADER_VERTEX_INDEX	= 0;
 		static const unsigned int	SHADER_DEPTH_INDEX  = 1;

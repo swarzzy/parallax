@@ -22,6 +22,9 @@ public:
 	hpm::vec2 m_PrevHeroPos;
 	Layer* IMLayer;
 	Font* m_Font;
+	bool btn;
+	float slider;
+	float slider2;
 public:
 	Game(std::string_view path) : m_Sound(nullptr) {}
 	~Game() {};

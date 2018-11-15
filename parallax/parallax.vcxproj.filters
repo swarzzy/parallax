@@ -147,6 +147,18 @@
     <ClCompile Include="src\ext\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\light\Light2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\imgui_widgets\ToggleButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\imgui_widgets\SliderFloat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\imgui_widgets\SliderInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\resources\fonts\Font.h">
@@ -359,6 +371,18 @@
     <ClInclude Include="src\utils\imgui_widgets\DefaultDebugWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\light\Light2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\imgui_widgets\ToggleButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\imgui_widgets\SliderFloat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\imgui_widgets\SliderInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
@@ -370,6 +394,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="src\utils\Singleton.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="src\renderer\light\Light2D.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

@@ -16,12 +16,14 @@
 --- Get rid of garbage collection on first init
 --- Make addDebugWidget method memory safe
 --- GC policies
+--- make USING_IMGUI marco fully operational
 
 #### SCENE #####################################################################
 --- Maybe move sorting from draw methos to update
 
 #### WINDOW ####################################################################
 --- Destroy window propperly i.e glfwDestroyWindow
+--- Bug with culling at right edge of the screen with m_Group pos x at 600
 
 #### NODE ######################################################################
 --- Multiply by world mat in update and store vertices coord as some quad struct

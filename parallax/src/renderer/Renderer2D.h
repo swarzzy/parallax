@@ -5,9 +5,11 @@
 
 namespace prx {
 	
+	// Forward declarations
 	class Renderable2D;
 	class FrameBuffer2D;
 	class Font;
+	class Light2D;
 
 	struct VertexData {
 		hpm::vec2		vertex;
@@ -23,17 +25,15 @@ namespace prx {
 	};
 
 	class Renderer2D {
+		PRX_DISALLOW_COPY_AND_MOVE(Renderer2D)
 	protected:
 		inline static const float	 QUAD_DEFAULT_POSITION_X = 0.0f;
 		inline static const float	 QUAD_DEFAULT_POSITION_Y = 0.0f;
 		inline static const unsigned NULL_COLOR = 0xffffffff;
 
-		inline static const hpm::mat4 DEFAULT_PROJECTION_MATRIX = 
-			hpm::mat4::ortho(0.0f, 800.0f, 600.0f, 0.0f, -10.0f, 10.0f);
-		inline static const char* DEFAULT_MASK_NAME = "parallax_default_renderer_mask_name";
+		inline static const hpm::mat4 DEFAULT_PROJECTION_MATRIX = hpm::mat4::ortho(0.0f, 800.0f, 600.0f, 0.0f, -10.0f, 10.0f);
 
 	protected:
-		Texture*				m_Mask;
 		RenderTarget			m_RenderTarget;
 		FrameBuffer2D*			m_FrameBuffer;
 
@@ -45,9 +45,6 @@ namespace prx {
 
 		virtual void init() {};
 		virtual void destroy() {};
-
-		virtual void setMask(Texture* mask) noexcept;
-		inline virtual void defaultMask() noexcept;
 
 		virtual void setProjectionMatrix(const hpm::mat4& projMatrix) = 0;
 
@@ -68,27 +65,9 @@ namespace prx {
 
 		virtual void end() {};
 		virtual void flush() = 0;
-
-	public:
-		Renderer2D(const Renderer2D& other) = delete;
-		Renderer2D(const Renderer2D&& other) = delete;
-		Renderer2D(Renderer2D&& other) = delete;
-		Renderer2D& operator=(const Renderer2D& other) = delete;
-		Renderer2D& operator=(const Renderer2D&& other) = delete;
-		Renderer2D& operator=(Renderer2D&& other) = delete;
 	};
 
 	inline Renderer2D::Renderer2D(RenderTarget rendertarget, FrameBuffer2D* frameBuffer) noexcept
-		: m_Mask(nullptr), m_RenderTarget(rendertarget), m_FrameBuffer(frameBuffer)
+		: m_RenderTarget(rendertarget), m_FrameBuffer(frameBuffer)
 	{}
-
-	inline void Renderer2D::defaultMask() noexcept {
-		unsigned char maskData[3] = { 255, 255, 255 };
-		m_Mask = new Texture(maskData, 1, 1, TextureFormat::RGB);
-		m_Mask->init();
-	}
-
-	inline void Renderer2D::setMask(Texture* mask) noexcept {
-		m_Mask = mask;
-	}
 }

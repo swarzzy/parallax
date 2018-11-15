@@ -5,6 +5,8 @@
 #include "FrameBuffer2D.h"
 #include "renderable/Renderable2D.h"
 #include "../shading/ShaderManager.h"
+#include "light/Light2D.h"
+#include "../utils/color/ColorFormatConverter.h"
 
 namespace prx {
 	prx::ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix, RenderTarget rendertarget)
@@ -28,8 +30,6 @@ namespace prx {
 			delete m_IBO;
 
 			ShaderManager::deleteShader(m_ShaderID);
-
-			delete m_Mask;
 
 			m_Initialized = false;
 		}
@@ -107,8 +107,6 @@ namespace prx {
 			m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
 			m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
 			m_Shader->unbind();
-
-			defaultMask();
 		}
 	}
 
@@ -119,8 +117,6 @@ namespace prx {
 			delete m_IBO;
 
 			ShaderManager::deleteShader(m_ShaderID);
-
-			delete m_Mask;
 
 			m_Initialized = false;
 		}
@@ -514,8 +510,6 @@ namespace prx {
 			GLCall(glActiveTexture(GL_TEXTURE0 + i));
 			GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]));
 		}
-		GLCall(glActiveTexture(GL_TEXTURE31));
-		m_Mask->bind();
 		
 		GLCall(glBindVertexArray(m_VAO));
 		m_IBO->Bind();
@@ -525,6 +519,7 @@ namespace prx {
 			m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
 			m_ProjMatrixNeedsUpdate = false;
 		}
+
 
 		if (m_RenderTarget == RenderTarget::BUFFER) {
 			m_FrameBuffer->bind();
