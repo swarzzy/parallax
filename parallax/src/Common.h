@@ -9,7 +9,10 @@
 	TypeName& operator=(const TypeName&& other) = delete;\
 	TypeName& operator=(TypeName&& TypeName) = delete;
 
+
+// Typedefs
 typedef unsigned int  prx_id_t;
 typedef unsigned char byte;
+typedef unsigned int  color_t;
 
 #define PRX_DEPRECATED [[deprecated]]

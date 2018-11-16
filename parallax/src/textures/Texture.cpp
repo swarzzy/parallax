@@ -9,7 +9,8 @@ namespace prx {
 		  m_Pixels(nullptr),
 		  m_PixelsWidth(0),
 		  m_PixelsHeight(0),
-		  m_PixelsFormat(TextureFormat::RED)
+		  m_PixelsFormat(TextureFormat::RED),
+		  m_FromBitmap(false)
 	{}
 
 	Texture::Texture(byte* data, unsigned int width, unsigned int height, TextureFormat format)
@@ -18,12 +19,23 @@ namespace prx {
 		  m_Pixels(nullptr),
 		  m_PixelsWidth(width),
 		  m_PixelsHeight(height),
-		  m_PixelsFormat(format)
+		  m_PixelsFormat(format),
+		  m_FromBitmap(true)
 	{
 		unsigned storageSize = m_PixelsWidth * m_PixelsHeight * TextureBase::getFormatDepth(m_PixelsFormat);
 		m_Pixels = new byte[storageSize];
 		memcpy(m_Pixels, data, storageSize * sizeof(byte));
 	}
+
+	Texture::Texture(std::string_view name, unsigned width, unsigned height, TextureFormat format) 
+		: TextureBase(name),
+		m_Pixels(nullptr),
+		m_PixelsWidth(width),
+		m_PixelsHeight(height),
+		m_PixelsFormat(format),
+		m_FromBitmap(true)
+	{}
+	
 
 	Texture::~Texture() {
 		unload();
@@ -31,10 +43,13 @@ namespace prx {
 	}
 
 	void Texture::initInternal() {
+		if (m_FromBitmap) {
 			if (m_Pixels != nullptr)
 				loadFromBitmap(m_Pixels, m_PixelsWidth, m_PixelsHeight, m_PixelsFormat);
 			else
-				loadFromFile();
+				loadEmpty(m_PixelsWidth, m_PixelsHeight, m_PixelsFormat);
+		} else
+			loadFromFile();
 	}
 
 	void Texture::destroyInternal() {

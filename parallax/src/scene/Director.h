@@ -67,6 +67,8 @@ namespace prx {
 		Scene* getScene(std::string_view name);
 		Scene* getScene(unsigned ID);
 
+		const hpm::vec2& getViewport() const;
+
 		void setCurrentScene(std::string_view name);
 		void setCurrentScene(unsigned ID);
 

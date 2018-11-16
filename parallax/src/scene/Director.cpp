@@ -108,6 +108,10 @@ namespace prx {
 		return result->second;
 	}
 
+	const hpm::vec2& Director::getViewport() const {
+		return m_ViewportSize;
+	}
+
 	void Director::setCurrentScene(std::string_view name) {
 		if (m_CurrentScene != nullptr)
 			m_CurrentScene->destroy();

@@ -92,7 +92,9 @@ namespace prx {
 
 		unsigned internalFormat;
 		unsigned pixelsFormat;
+		unsigned type = GL_UNSIGNED_BYTE;
 
+		// TODO: Make it dedicated method
 		if (m_Format == TextureFormat::RGB) {
 			internalFormat = GL_RGB8;
 			pixelsFormat = GL_RGB;
@@ -104,6 +106,13 @@ namespace prx {
 		else if (m_Format == TextureFormat::RED) {
 			internalFormat = GL_RED;
 			pixelsFormat = GL_RED;
+		} else if (m_Format == TextureFormat::DEPTH) {
+			internalFormat = GL_DEPTH_COMPONENT32;
+			pixelsFormat = GL_DEPTH_COMPONENT;
+		} else if (m_Format == TextureFormat::DEPTH_STENCIL) {
+			internalFormat = GL_DEPTH24_STENCIL8;
+			pixelsFormat = GL_DEPTH_STENCIL;
+			type = GL_UNSIGNED_INT_24_8;
 		}
 		else {
 			PRX_FATAL("TEXTURE: Could not create texture from memory. Incorrect data format");
@@ -117,7 +126,7 @@ namespace prx {
 
 		//GLCall(glTexStorage2D(GL_TEXTURE_2D, 1, internalFormat, m_Width, m_Height));
 		//GLCall(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, image->getFormat(), GL_UNSIGNED_BYTE, image->getPixels()));
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, GL_UNSIGNED_BYTE, pixels));
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, type, pixels));
 
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}
@@ -129,26 +138,28 @@ namespace prx {
 		
 		unsigned internalFormat;
 		unsigned pixelsFormat;
-
-		byte* data = nullptr;
+		unsigned type = GL_UNSIGNED_BYTE;
 
 		if (m_Format == TextureFormat::RGB) {
 			internalFormat = GL_RGB8;
 			pixelsFormat = GL_RGB;
-			data = new byte[m_Width * m_Height * 3];
-			memset(data, EMPTY_TEXTURE_COLOR, m_Width * m_Height * 3 * sizeof(byte));
 		}
 		else if (m_Format == TextureFormat::RGBA) {
 			internalFormat = GL_RGBA8;
 			pixelsFormat = GL_RGBA;
-			data = new byte[m_Width * m_Height * 4];
-			memset(data, EMPTY_TEXTURE_COLOR, m_Width * m_Height * 4 * sizeof(byte));
 		}
 		else if (m_Format == TextureFormat::RED) {
 			internalFormat = GL_RED;
 			pixelsFormat = GL_RED;
-			data = new byte[m_Width * m_Height * 1];
-			memset(data, EMPTY_TEXTURE_COLOR, m_Width * m_Height * 1 * sizeof(byte));
+		}
+		else if (m_Format == TextureFormat::DEPTH) {
+			internalFormat = GL_DEPTH_COMPONENT32;
+			pixelsFormat = GL_DEPTH_COMPONENT;
+		}
+		else if (m_Format == TextureFormat::DEPTH_STENCIL) {
+			internalFormat = GL_DEPTH24_STENCIL8;
+			pixelsFormat = GL_DEPTH_STENCIL;
+			type = GL_UNSIGNED_INT_24_8;
 		}
 		else {
 			PRX_FATAL("TEXTURE: Could not create texture from memory. Incorrect data format");
@@ -160,7 +171,7 @@ namespace prx {
 
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID));
 
-		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, GL_UNSIGNED_BYTE, data));
+		GLCall(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, pixelsFormat, type, nullptr));
 
 		GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 	}

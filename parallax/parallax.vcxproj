@@ -28,6 +28,7 @@
     <ClCompile Include="src\ext\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\ext\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Fonts\FontManager.cpp" />
+    <ClCompile Include="src\renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\renderer\light\Light2D.cpp" />
     <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="src\renderer\buffer\VertexBuffer.h" />
     <ClInclude Include="src\renderer\buffer\VertexBufferLayout.h" />
     <ClInclude Include="src\renderer\ForwardRenderer2D.h" />
+    <ClInclude Include="src\renderer\FrameBuffer.h" />
     <ClInclude Include="src\renderer\FrameBuffer2D.h" />
     <ClInclude Include="src\renderer\FrameBufferBase.h" />
     <ClInclude Include="src\renderer\light\Light2D.h" />

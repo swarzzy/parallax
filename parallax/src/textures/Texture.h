@@ -14,12 +14,15 @@ namespace prx {
 		unsigned		m_PixelsWidth;
 		unsigned		m_PixelsHeight;
 		TextureFormat	m_PixelsFormat;
+		bool			m_FromBitmap;
 
 	public:
 
 		Texture() : TextureBase("") {};
 		explicit Texture(std::string_view path);
 		Texture(byte* data, unsigned int width, unsigned int height, TextureFormat format);
+		// TODO: Make textures from bitmaps compatible with resource manager
+		Texture(std::string_view name, unsigned int width, unsigned int height, TextureFormat format);
 		~Texture();
 
 		void initInternal() override;

@@ -10,7 +10,7 @@
 namespace prx {
 
 	enum class TextureFormat {
-		RED, RGB, RGBA
+		RED, RGB, RGBA, DEPTH, DEPTH_STENCIL
 	};
 
 	enum class TextureWrap {
