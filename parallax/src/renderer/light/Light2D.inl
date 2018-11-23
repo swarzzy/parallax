@@ -1,3 +1,4 @@
+#include "Light2D.h"
 namespace prx {
 	inline void Light2D::setPosition(hpm::vec2 position) {
 		m_Position = position;
@@ -15,12 +16,13 @@ namespace prx {
 		m_Color = color;
 	}
 
-	inline void Light2D::setBrightness(float brightness) {
-		m_Brightness = brightness;
+	inline void Light2D::setIntensity(float intensity) {
+		m_Intensity = intensity;
 	}
 
 	inline void Light2D::setRadius(float radius) {
 		m_Radius = radius;
+		calcVolumeRadius();
 	}
 
 	inline const hpm::vec2& Light2D::getPosition() const {
@@ -35,11 +37,15 @@ namespace prx {
 		return m_Color;
 	}
 
-	inline float Light2D::getBrightness() const {
-		return m_Brightness;
+	inline float Light2D::getIntensity() const {
+		return m_Intensity;
 	}
 
 	inline float Light2D::getRadius() const {
 		return m_Radius;
+	}
+
+	inline float Light2D::getVolumeRadius() const {
+		return m_VolumeRadius;
 	}
 }

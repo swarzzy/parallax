@@ -33,7 +33,6 @@ namespace prx {
 		Director::destroy();
 		AudioEngine::destroy();
 		FontManager::destroy();
-		ShaderManager::clear();
 		ResourceManager::getInstance()->clean();
 		ResourceManager::destroy();
 
@@ -48,16 +47,15 @@ namespace prx {
 		m_CurrentApplication = nullptr;
 	}
 
-	void Application::parallaxInit(std::string_view title, int width, int height, bool fullscreen,
-									LogLevel logLevel, unsigned int clearColor, bool resizable) {
+	void Application::InitializeParallax(WindowProperties properties, RendererType renderertype, LogLevel loglevel) {
 		Log::init();
-		Log::setLevel(logLevel);
-		Window::initialize(title, width, height, fullscreen, resizable);
-		Window::getInstance()->setClearColor(clearColor);
+		Log::setLevel(loglevel);
+		Window::initialize(properties.title, properties.width, properties.height, properties.fullscreen, properties.resizable);
+		Window::getInstance()->setClearColor(0xff000000);
 		AudioEngine::initialize();
 		ResourceManager::initialize();
 		FontManager::initialize(1.0f);
-		Director::initialize();
+		Director::initialize(renderertype);
 
 #ifdef PARALLAX_USING_IMGUI
 		IMGUI_CHECKVERSION();
@@ -112,15 +110,12 @@ namespace prx {
 			framesPerTick++;
 			render();
 			window->updateRender();
-			//static_cast<int>()
-			//reinterpret_cast()
-			//dynamic_cast()
 		}
 		destroy();
 	}
 
 
-	void Application::parallaxInit() {
+	/*void Application::parallaxInit() {
 		Log::init();
 		Log::setLevel(LogLevel::LOG_INFO);
 		Window::initialize("parallax", 800, 600, false);
@@ -139,5 +134,5 @@ namespace prx {
 		ImGui::StyleColorsDark();
 		ImGui_ImplOpenGL3_NewFrame();
 #endif
-	}
+	}*/
 }

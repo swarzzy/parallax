@@ -224,6 +224,17 @@ namespace prx {
 		}
 	}
 
+	void Shader::setUniform(std::string_view uniformName, hpm::vec3* vec3Arr, unsigned count) {
+		auto loc = getUniformLocation(uniformName);
+		if (loc) {
+			GLCall(glUniform3fv(loc.value(), count, reinterpret_cast<float*>(vec3Arr)));
+		}
+		else {
+			PRX_ERROR("(Shader): Could not set uniform with name ", uniformName,
+				". In shader with OpenGL ID = ", m_ID, ".");
+		}
+	}
+
 	void Shader::setUniform(std::string_view uniformName, int* floatArr, unsigned int count) {
 		auto loc = getUniformLocation(uniformName);
 		if (loc) {

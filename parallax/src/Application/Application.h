@@ -3,8 +3,19 @@
 #include "../utils/timing/SimpleTimer.h"
 #include "../utils/log/Log.h"
 #include "../shading/Shader.h"
+#include "../Common.h"
 
 namespace prx {
+	enum class RendererType;
+
+	struct WindowProperties {
+		std::string title;
+		uint width;
+		uint height;
+		bool fullscreen;
+		bool resizable;
+	};
+
 	class Application {
 	private:
 		static Application* m_CurrentApplication;
@@ -22,15 +33,8 @@ namespace prx {
 		virtual ~Application();
 
 
-		void parallaxInit();
-		void parallaxInit(std::string_view title, 
-						  int width, 
-						  int height, 
-						  bool fullscreen,
-						  LogLevel logLevel, 
-						  unsigned int clearColor,
-						  bool resizable
-						 );
+		//void parallaxInit();
+		void InitializeParallax(WindowProperties properties, RendererType renderertype, LogLevel loglevel);
 
 		// Once at start
 		virtual void init() = 0;

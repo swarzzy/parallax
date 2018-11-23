@@ -5,10 +5,12 @@
 --- inverse method in matrix class
 --- disabling anchor points (usefull for non renderable nodes)
 --- global texture default parameters settings
+--- setting up propper face orientation
 
 #### SPRITESHEET ###############################################################
 --- key frames
 --- callbacks
+
 
 #### DIRECTOR ##################################################################
 --- Update projection matrix in renderer only when it was changed
@@ -18,15 +20,24 @@
 --- GC policies
 --- make USING_IMGUI marco fully operational
 
+
 #### SCENE #####################################################################
 --- Maybe move sorting from draw methos to update
+
 
 #### WINDOW ####################################################################
 --- Destroy window propperly i.e glfwDestroyWindow
 --- Bug with culling at right edge of the screen with m_Group pos x at 600
 
+
 #### NODE ######################################################################
 --- Multiply by world mat in update and store vertices coord as some quad struct
 
+
 #### FONT ######################################################################
 --- Wrong filepath in font loading failation handle
+
+
+#### SHADER ####################################################################
+--- Whole class refactoring
+--- Whole shader manager class refsctoring (it may should return shared pointers and not hold any shader objects, only load them)

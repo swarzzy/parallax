@@ -4,31 +4,40 @@
 #include <map>
 
 #include "Shader.h"
+#include "../utils/Singleton.h"
 
 namespace prx {
 	
 	enum class ShaderType {
-		FORWARD_RENDERER_DEFAULT
+		FORWARD_RENDERER_DEFAULT,
+		DEFFERED_RENDERER_GEOMETRY_PASS_DEFAULT,
+		DEFFERED_RENDERER_LIGHTNING_PASS_DEFAULT,
+		DEFFERED_RENDERER_LIGHTNING_PASS_DEFAULT_DBG,
+		DEFFERED_RENDERER_AMBIENT_PASS_DEFAULT
 	};
 
-	class ShaderManager {
+	class ShaderManager final : public Singleton<ShaderManager> {
+		PRX_DISALLOW_COPY_AND_MOVE(ShaderManager)
+	public:
+		friend class Singleton<ShaderManager>;
 	private:
 		static unsigned int m_GlobalShaderCounter;
 		
-		static std::map<unsigned int, Shader> m_Shaders;
+		std::map<unsigned int, std::shared_ptr<Shader>> m_Shaders;
 		
 	public:
-		ShaderManager() = delete;
+		ShaderManager();
+		~ShaderManager();
 
-		static unsigned int loadShader(std::string_view vertexPath, std::string_view fragmentPath);
+		unsigned int loadShader(std::string_view vertexPath, std::string_view fragmentPath);
 
-		static unsigned int loadShader(ShaderType shader);
+		unsigned int loadShader(ShaderType shader);
 
-		static Shader* getShader(unsigned int id);
+		std::shared_ptr<Shader> getShader(unsigned int id);
 
-		static void deleteShader(unsigned int id);
+		void deleteUnused();
 		
-		static void clear();
+		void clear();
 	};
 }
 #endif

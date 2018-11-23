@@ -14,5 +14,6 @@
 typedef unsigned int  prx_id_t;
 typedef unsigned char byte;
 typedef unsigned int  color_t;
+using uint = unsigned int;
 
 #define PRX_DEPRECATED [[deprecated]]

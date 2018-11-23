@@ -33,7 +33,7 @@ namespace hpm {
 		result.elems[1 + 1 * 4] = 2.0f / (top - bottom);
 		result.elems[2 + 2 * 4] = -2.0f / (far - near);
 
-		result.elems[0 + 3 * 4] = -(left + right) / (right - left);
+		result.elems[0 + 3 * 4] = -(right + left) / (right - left);
 		result.elems[1 + 3 * 4] = -(bottom + top) / (top - bottom);
 		result.elems[2 + 3 * 4] = -(far + near)	 / (far - near);
 		result.elems[3 + 3 * 4] = 1.0f;

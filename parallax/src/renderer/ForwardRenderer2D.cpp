@@ -1,17 +1,14 @@
 #include "ForwardRenderer2D.h"
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../Fonts/Font.h"
-#include "../renderer/buffer/IndexBuffer.h"
-#include "FrameBuffer2D.h"
+#include "../renderer/API/IndexBuffer.h"
 #include "renderable/Renderable2D.h"
 #include "../shading/ShaderManager.h"
-#include "light/Light2D.h"
 #include "../utils/color/ColorFormatConverter.h"
 
 namespace prx {
-	prx::ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix, RenderTarget rendertarget)
-		: Renderer2D(rendertarget),
-		  m_VAO(0),
+	ForwardRenderer2D::ForwardRenderer2D(const hpm::mat4& projectionMatrix)
+		: m_VAO(0),
 		  m_VBO(0),
 		  m_IBO(nullptr),
 		  m_IndexCount(0),
@@ -19,107 +16,40 @@ namespace prx {
 		  m_ShaderID(0),
 		  m_Shader(nullptr),
 		  m_ProjectionMatrix(projectionMatrix),
-		  m_ProjMatrixNeedsUpdate(false),
-		  m_Initialized(false)
-	{}
+		  m_ProjMatrixNeedsUpdate(false)
+	{
+		init();
+	}
+
+	void ForwardRenderer2D::initialize(const hpm::mat4& projection) {
+		if (s_Instance != nullptr)
+			PRX_ERROR("DEFFERED RENDERER: Renderer already initialized");
+		else
+				s_Instance = new ForwardRenderer2D(projection);
+	}
+
+	ForwardRenderer2D* ForwardRenderer2D::getInstance() {
+		PRX_ASSERT(s_Instance, "DEFFERERD RENDERER: Trying to use uninitialized renderer.");
+		return s_Instance;
+	}
+
+	void ForwardRenderer2D::destroy() {
+		delete s_Instance;
+		s_Instance = nullptr;
+	}
 
 	ForwardRenderer2D::~ForwardRenderer2D() {
-		if (m_Initialized) {
-			GLCall(glDeleteBuffers(1, &m_VAO));
-			GLCall(glDeleteBuffers(1, &m_VBO));
-			delete m_IBO;
+		GLCall(glDeleteBuffers(1, &m_VAO));
+		GLCall(glDeleteBuffers(1, &m_VBO));
+		delete m_IBO;
 
-			ShaderManager::deleteShader(m_ShaderID);
-
-			m_Initialized = false;
-		}
+		// TODO: delete shaders
+		//ShaderManager::getInstance()->deleteUnused();
 	}
 
 	void ForwardRenderer2D::setProjectionMatrix(const hpm::mat4& projMatrix) {
 		m_ProjectionMatrix = projMatrix;
 		m_ProjMatrixNeedsUpdate = true;
-	}
-
-	void ForwardRenderer2D::init() {
-		if (!m_Initialized) {
-			m_Initialized = true;
-			GLCall(glGenVertexArrays(1, &m_VAO));
-			GLCall(glGenBuffers(1, &m_VBO));
-
-			GLCall(glBindVertexArray(m_VAO));
-			GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
-			GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
-
-			GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_DEPTH_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_TEXID_INDEX));
-			GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
-
-			GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
-				VERTEX_SIZE, static_cast<const void*>(NULL)));
-
-			GLCall(glVertexAttribPointer(SHADER_DEPTH_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::depth))));
-
-			GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
-
-			GLCall(glVertexAttribPointer(SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
-				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texID))));
-
-			GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, VERTEX_SIZE,
-				reinterpret_cast<const void*>(offsetof(VertexData, VertexData::color))));
-
-			GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-
-
-			unsigned int* indices = new unsigned int[INDEX_BUFFER_SIZE];
-
-			unsigned int offset = 0;
-			for (unsigned int i = 0; i < INDEX_BUFFER_SIZE; i += 6) {
-				indices[i] = offset + 0;
-				indices[i + 1] = offset + 1;
-				indices[i + 2] = offset + 2;
-
-				indices[i + 3] = offset + 2;
-				indices[i + 4] = offset + 3;
-				indices[i + 5] = offset + 0;
-
-				offset += 4;
-			}
-
-			m_IBO = new IndexBuffer(indices, INDEX_BUFFER_SIZE);
-			m_IBO->Bind();
-
-			delete[] indices;
-
-			GLCall(glBindVertexArray(0));
-
-			m_ShaderID = ShaderManager::loadShader(ShaderType::FORWARD_RENDERER_DEFAULT);
-			m_Shader = ShaderManager::getShader(m_ShaderID);
-
-			int samplerIndices[32];
-			for (int i = 0; i < 32; i++)
-				samplerIndices[i] = i;
-
-			m_Shader->bind();
-			m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
-			m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
-			m_Shader->unbind();
-		}
-	}
-
-	void ForwardRenderer2D::destroy() {
-		if (m_Initialized) {
-			GLCall(glDeleteBuffers(1, &m_VAO));
-			GLCall(glDeleteBuffers(1, &m_VBO));
-			delete m_IBO;
-
-			ShaderManager::deleteShader(m_ShaderID);
-
-			m_Initialized = false;
-		}
 	}
 
 	void ForwardRenderer2D::begin() {
@@ -413,7 +343,7 @@ namespace prx {
 		}
 	}
 
-	void ForwardRenderer2D::drawString(std::string_view text, const hpm::vec2& position, float depth, const Font* font, unsigned color) {
+	/*void ForwardRenderer2D::drawString(const hpm::vec2& position, std::string_view text, float depth, const Font* font, unsigned int color) {
 		auto&		 characters = font->getCharacters();
 		unsigned int atlasID = font->getFontAtlas().getID();
 		float		 scale = font->getScale();
@@ -473,6 +403,74 @@ namespace prx {
 			m_IndexCount += 6;
 			cursor += (ch.Advance >> 6);
 		}
+	}*/
+
+	void ForwardRenderer2D::init() {
+		GLCall(glGenVertexArrays(1, &m_VAO));
+		GLCall(glGenBuffers(1, &m_VBO));
+
+		GLCall(glBindVertexArray(m_VAO));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_VBO));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW));
+
+		GLCall(glEnableVertexAttribArray(SHADER_VERTEX_INDEX));
+		GLCall(glEnableVertexAttribArray(SHADER_DEPTH_INDEX));
+		GLCall(glEnableVertexAttribArray(SHADER_UV_INDEX));
+		GLCall(glEnableVertexAttribArray(SHADER_TEXID_INDEX));
+		GLCall(glEnableVertexAttribArray(SHADER_COLOR_INDEX));
+
+		GLCall(glVertexAttribPointer(SHADER_VERTEX_INDEX, 2, GL_FLOAT, GL_FALSE,
+			VERTEX_SIZE, static_cast<const void*>(NULL)));
+
+		GLCall(glVertexAttribPointer(SHADER_DEPTH_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::depth))));
+
+		GLCall(glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::UVs))));
+
+		GLCall(glVertexAttribPointer(SHADER_TEXID_INDEX, 1, GL_FLOAT, GL_FALSE, VERTEX_SIZE,
+			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::texID))));
+
+		GLCall(glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, VERTEX_SIZE,
+			reinterpret_cast<const void*>(offsetof(VertexData, VertexData::color))));
+
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+
+		unsigned int* indices = new unsigned int[INDEX_BUFFER_SIZE];
+
+		unsigned int offset = 0;
+		for (unsigned int i = 0; i < INDEX_BUFFER_SIZE; i += 6) {
+			indices[i] = offset + 0;
+			indices[i + 1] = offset + 1;
+			indices[i + 2] = offset + 2;
+
+			indices[i + 3] = offset + 2;
+			indices[i + 4] = offset + 3;
+			indices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
+
+		m_IBO = new IndexBuffer(indices, INDEX_BUFFER_SIZE);
+		m_IBO->bind();
+
+		delete[] indices;
+
+		GLCall(glBindVertexArray(0));
+
+		m_ShaderID = ShaderManager::getInstance()->loadShader(ShaderType::FORWARD_RENDERER_DEFAULT);
+		m_Shader = ShaderManager::getInstance()->getShader(m_ShaderID);
+
+		int samplerIndices[32];
+		for (int i = 0; i < 32; i++)
+			samplerIndices[i] = i;
+
+		m_Shader->bind();
+		m_Shader->setUniform("u_textures[0]", samplerIndices, 32);
+		m_Shader->setUniform("u_ProjectionMatrix", m_ProjectionMatrix);
+		m_Shader->unbind();
+
 	}
 
 	float ForwardRenderer2D::submitTexture(unsigned texID) {
@@ -512,7 +510,7 @@ namespace prx {
 		}
 		
 		GLCall(glBindVertexArray(m_VAO));
-		m_IBO->Bind();
+		m_IBO->bind();
 
 		m_Shader->bind();
 		if (m_ProjMatrixNeedsUpdate) {
@@ -520,39 +518,13 @@ namespace prx {
 			m_ProjMatrixNeedsUpdate = false;
 		}
 
-
-		if (m_RenderTarget == RenderTarget::BUFFER) {
-			m_FrameBuffer->bind();
-			//m_FrameBuffer->clear();
-
-			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
-
-			m_FrameBuffer->unbind();
-		} 
-		else {
-			GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
-		}
+		GLCall(glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, NULL));
 		
 		m_Shader->unbind();
 
-		m_IBO->Unbind();
+		m_IBO->unbind();
 		GLCall(glBindVertexArray(0));
 
 		m_IndexCount = 0;
-	}
-
-	void ForwardRenderer2D::setFrameBuffer(FrameBuffer2D* framebuffer) {
-		if (framebuffer->validate()) {
-			m_FrameBuffer = framebuffer;
-			return;
-		}
-		PRX_ERROR("RENDERER: Failed to set framebuffer. Framebuffer is incomplete.");
-	}
-
-	void ForwardRenderer2D::setRenderTarget(RenderTarget target) {
-		if (target == RenderTarget::BUFFER && m_FrameBuffer == nullptr) {
-			PRX_ERROR("RENDERER: Failed to set buffer as render target. Buffer was nullptr");
-		}
-		m_RenderTarget = target;
 	}
 }

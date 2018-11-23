@@ -27,8 +27,9 @@ namespace prx {
 		memcpy(m_Pixels, data, storageSize * sizeof(byte));
 	}
 
-	Texture::Texture(std::string_view name, unsigned width, unsigned height, TextureFormat format) 
-		: TextureBase(name),
+	
+	Texture::Texture(unsigned width, unsigned height, TextureFormat format) 
+		: TextureBase(),
 		m_Pixels(nullptr),
 		m_PixelsWidth(width),
 		m_PixelsHeight(height),

@@ -4,7 +4,9 @@
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../scene/Scene.h"
 #include "../renderer/ForwardRenderer2D.h"
+#include "../renderer/DefferedRenderer2D.h"
 #include "../camera/Camera2D.h"
+#include "../shading/ShaderManager.h"
 #ifdef PARALLAX_USING_IMGUI
 #include "../utils/imgui_widgets/DefaultDebugWidget.h"
 #include "../ext/imgui/imgui.h"
@@ -22,8 +24,10 @@ namespace prx {
 		return MAX_DEPTH_VALUE;
 	}
 
-	Director::Director()
+	Director::Director(RendererType renderer)
 		: Singleton<prx::Director>()
+		, m_RendererType(renderer)
+		, m_Renderer(nullptr)
 		, m_CurrentScene(nullptr)
 		, m_SceneState(SceneState::STOP)
 		, m_CurrentCameraPosition(0.0f)
@@ -38,16 +42,25 @@ namespace prx {
 #endif
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		//GLCall(glEnable(GL_DEPTH_TEST));
 
 		m_ViewportSize = Window::getCurrentWindow().getSize();
-		m_Renderer = new ForwardRenderer2D(hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0,
-											static_cast<float>(minDepthValue()), static_cast<float>(maxDepthValue())));
-		m_Renderer->init();
+		hpm::mat4 ortho = hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0, static_cast<float>(maxDepthValue()), static_cast<float>(minDepthValue()));
+
+		// Init rendering API
+		ShaderManager::initialize();
+
+		// Init renderer
+		switch(m_RendererType) {
+		case RendererType::FORWARD_RENDERER : {ForwardRenderer2D::initialize(ortho); m_Renderer = ForwardRenderer2D::getInstance(); break; }
+		case RendererType::DEFFERED_RENDERER: {DefferedRenderer2D::initialize(ortho); m_Renderer = DefferedRenderer2D::getInstance(); break; }
+		}
 	}
 
 	Director::~Director() {
-		m_Renderer->destroy();
-		delete m_Renderer;
+		ForwardRenderer2D::destroy();
+		DefferedRenderer2D::destroy();
+		ShaderManager::destroy();
 
 		for (auto scene : m_Scenes)
 			delete scene.second;

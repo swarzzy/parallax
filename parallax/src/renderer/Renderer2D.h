@@ -2,6 +2,7 @@
 
 #include <hypermath.h>
 #include "../textures/Texture.h"
+#include "../utils/Singleton.h"
 
 namespace prx {
 	
@@ -10,6 +11,7 @@ namespace prx {
 	class FrameBuffer2D;
 	class Font;
 	class Light2D;
+	class AmbientLight2D;
 
 	struct VertexData {
 		hpm::vec2		vertex;
@@ -32,24 +34,16 @@ namespace prx {
 		inline static const unsigned NULL_COLOR = 0xffffffff;
 
 		inline static const hpm::mat4 DEFAULT_PROJECTION_MATRIX = hpm::mat4::ortho(0.0f, 800.0f, 600.0f, 0.0f, -10.0f, 10.0f);
-
 	protected:
-		RenderTarget			m_RenderTarget;
-		FrameBuffer2D*			m_FrameBuffer;
-
-	protected:
-		inline Renderer2D(RenderTarget rendertarget = RenderTarget::SCREEN, FrameBuffer2D* frameBuffer = nullptr) noexcept;
+		Renderer2D() noexcept {};
 
 	public:
 		virtual ~Renderer2D() noexcept {};
 
-		virtual void init() {};
-		virtual void destroy() {};
-
 		virtual void setProjectionMatrix(const hpm::mat4& projMatrix) = 0;
 
-		virtual void setRenderTarget(RenderTarget target) = 0;
-		virtual void setFrameBuffer(FrameBuffer2D* framebuffer) = 0;
+		virtual void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) = 0;
+		virtual void submitLight(const std::shared_ptr<Light2D>& light) = 0;
 		
 		virtual void begin() {};
 
@@ -60,14 +54,10 @@ namespace prx {
 
 		virtual void drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) = 0;
 
-		virtual void drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) {};
-		virtual void drawString(std::string_view text, const hpm::vec2& position, float depth, const Font* font, unsigned int color) {};
+		virtual void drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) = 0;
+		//virtual void drawString(const hpm::vec2& position, std::string_view text, float depth, const Font* font, unsigned int color) = 0;
 
 		virtual void end() {};
 		virtual void flush() = 0;
 	};
-
-	inline Renderer2D::Renderer2D(RenderTarget rendertarget, FrameBuffer2D* frameBuffer) noexcept
-		: m_RenderTarget(rendertarget), m_FrameBuffer(frameBuffer)
-	{}
 }

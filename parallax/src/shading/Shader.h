@@ -56,6 +56,7 @@ namespace prx {
 		void setUniform(std::string_view uniformName, int intNum);
 		void setUniform(std::string_view uniformName, unsigned int uintNum);
 		void setUniform(std::string_view uniformName, float* floatArr, unsigned int count);
+		void setUniform(std::string_view uniformName, hpm::vec3* vec3Arr, unsigned int count);
 		void setUniform(std::string_view uniformName, int* floatArr, unsigned int count);
 		//void setUniform(const std::string& uniformName, hpm::mat3 mat);
 	

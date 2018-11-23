@@ -136,7 +136,7 @@ namespace prx {
 							} while(false)
 
 #define PRX_ASSERT(x, ...)  do {											  \
-							if(!x) {										  \
+							if(!(x)) {										  \
 							prx::Log::message(prx::LogLevel::LOG_FATAL,	      \
 							"*********************************\n",			  \
 							"       \t ASSERTION FAILED!\n",				  \

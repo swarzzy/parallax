@@ -15,7 +15,6 @@
 #include "renderer/renderable/Label.h"
 #include "renderer/Renderer2D.h"
 #include "renderer/ForwardRenderer2D.h"
-#include "renderer/FrameBuffer2D.h"
 #include "resources/FileReader.h"
 #include "resources/ImageLoader.h"
 #include "resources/ResourceManager.h"

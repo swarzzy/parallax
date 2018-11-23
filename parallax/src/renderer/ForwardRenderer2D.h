@@ -9,7 +9,7 @@ namespace prx {
 	class IndexBuffer;
 	class FrameBuffer2D;
 	class Shader;
-	
+
 	class ForwardRenderer2D final : public Renderer2D {
 		PRX_DISALLOW_COPY_AND_MOVE(ForwardRenderer2D)
 	public:
@@ -27,6 +27,11 @@ namespace prx {
 		static const unsigned int	SHADER_COLOR_INDEX	= 4;
 
 	private:
+// =========================================
+// INSTANCE
+		inline static ForwardRenderer2D* s_Instance = nullptr;
+// =========================================
+
 		inline static const float	 EMPTY_TEXTURE_SLOT	= 0.0f;
 
 		unsigned int				m_VAO;
@@ -36,21 +41,27 @@ namespace prx {
 		int							m_IndexCount;
 		VertexData*					m_Buffer;
 		unsigned					m_ShaderID;
-		Shader*						m_Shader;
+		std::shared_ptr<Shader>		m_Shader;
 		hpm::mat4					m_ProjectionMatrix;
 		bool						m_ProjMatrixNeedsUpdate;
-		bool						m_Initialized;
 
+		ForwardRenderer2D(const hpm::mat4& projectionMatrix);
 	public:
-		ForwardRenderer2D(const hpm::mat4& projectionMatrix = DEFAULT_PROJECTION_MATRIX, 
-						  RenderTarget rendertarget = RenderTarget::SCREEN);
+// =========================================
+// STATIC INTERFACE
+		static void initialize(const hpm::mat4& projection);
+		static ForwardRenderer2D* getInstance();
+		static void destroy();
+// STATIC INTERFACE
+// =========================================
+
 		~ForwardRenderer2D();
 
-		void init() override;
-		// OpenGL might actually not free memory
-		void destroy() override;
-
 		void setProjectionMatrix(const hpm::mat4& projMatrix) override;
+
+		// Forward renderer doesn`t support lightning
+		void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) override {};
+		void submitLight(const std::shared_ptr<Light2D>& light) override {};
 
 		void begin() override;
 
@@ -62,15 +73,13 @@ namespace prx {
 		void drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) override;
 
 		void drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) override;
-		void drawString(std::string_view text, const hpm::vec2& position, float depth, const Font* font, unsigned int color) override;
+		//void drawString(const hpm::vec2& position, std::string_view text,  float depth, const Font* font, unsigned int color) override;
 	
 		void end() override;
 		void flush() override;
 
-		void setFrameBuffer(FrameBuffer2D* framebuffer) override;
-		void setRenderTarget(RenderTarget target) override;
-
 	private:
+		void init();
 		float submitTexture(unsigned texID);
 	};
 }

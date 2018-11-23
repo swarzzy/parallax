@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spritesheet file="res/textures/adventurer.png" columns="8" rows="12">
+   <animation name="idle" duration="0.5">
+    	<tile>0</tile>
+    	<tile>1</tile>
+    	<tile>2</tile>
+    	<tile>3</tile>
+   </animation>
+   <animation name="crouch" duration="1.0">
+    	<tile>4</tile>
+    	<tile>5</tile>
+    	<tile>6</tile>
+    	<tile>7</tile>
+   </animation>
+    <animation name="crouch" duration="1.0">
+    	<tile>4</tile>
+    	<tile>5</tile>
+    	<tile>6</tile>
+    	<tile>7</tile>
+   </animation>
+   <animation name="run" duration="1.0">
+    	<tile>8</tile>
+    	<tile>9</tile>
+    	<tile>10</tile>
+    	<tile>11</tile>
+    	<tile>12</tile>
+    	<tile>13</tile>
+   </animation>
+   <animation name="jump" duration="1.0">
+    	<tile>14</tile>
+    	<tile>15</tile>
+    	<tile>16</tile>
+    	<tile>17</tile>
+   </animation>
+   <animation name="roll" duration="1.0">
+    	<tile>18</tile>
+    	<tile>19</tile>
+    	<tile>20</tile>
+    	<tile>21</tile>
+   </animation>
+   <animation name="fall" duration="1.0">
+    	<tile>22</tile>
+    	<tile>23</tile>
+   </animation>
+   <animation name="rollup" duration="1.0">
+    	<tile>24</tile>
+    	<tile>25</tile>
+    	<tile>26</tile>
+    	<tile>27</tile>
+    	<tile>28</tile>
+   </animation>
+   <animation name="hang" duration="1.0">
+    	<tile>29</tile>
+    	<tile>30</tile>
+    	<tile>31</tile>
+    	<tile>32</tile>
+   </animation>
+   <animation name="climb" duration="1.0">
+    	<tile>33</tile>
+    	<tile>34</tile>
+    	<tile>35</tile>
+    	<tile>36</tile>
+    	<tile>37</tile>
+   </animation>
+   <animation name="climb" duration="1.0">
+    	<tile>33</tile>
+    	<tile>34</tile>
+    	<tile>35</tile>
+    	<tile>36</tile>
+    	<tile>37</tile>
+   </animation>
+   <animation name="idle_ready" duration="1.0">
+    	<tile>38</tile>
+    	<tile>39</tile>
+    	<tile>40</tile>
+    	<tile>41</tile>
+   </animation>
+   <animation name="idle_ready" duration="1.0">
+    	<tile>38</tile>
+    	<tile>39</tile>
+    	<tile>40</tile>
+    	<tile>41</tile>
+   </animation>
+   <animation name="attack_1" duration="1.0">
+    	<tile>42</tile>
+    	<tile>43</tile>
+    	<tile>44</tile>
+    	<tile>45</tile>
+    	<tile>46</tile>
+   </animation>
+</spritesheet>

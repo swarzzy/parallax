@@ -47,6 +47,7 @@ namespace prx {
 		bool				m_Initialized;
 		
 	public:
+		// Scene now doesn`t know that renderer is singleton so passing it every renderer we need
 		Scene(std::string_view name, Renderer2D* renderer);
 		~Scene();
 

@@ -15,7 +15,12 @@ namespace prx {
 		PLAY, STOP
 	};
 
-	class Director final : public Singleton<Director>{
+	enum class RendererType {
+		FORWARD_RENDERER,
+		DEFFERED_RENDERER
+	};
+
+	class Director final : public Singleton<Director> {
 		PRX_DISALLOW_COPY_AND_MOVE(Director)
 	public:
 		friend class Singleton<Director>;
@@ -27,6 +32,9 @@ namespace prx {
 	private:
 		std::map<unsigned, Scene*> m_Scenes;
 		std::map<std::string, unsigned> m_ScenesList;
+
+		RendererType m_RendererType;
+		Renderer2D* m_Renderer;
 
 #ifdef PARALLAX_USING_IMGUI
 		DefaultDebugWidget* m_DebugLayer;
@@ -41,13 +49,11 @@ namespace prx {
 
 		hpm::vec2	m_ViewportSize;
 
-		ForwardRenderer2D* m_Renderer;
-
 #ifdef PARALLAX_USING_IMGUI
 		bool m_DebugLayerEnabled;
 #endif
 
-		Director();
+		Director(RendererType renderer);
 	public:
 		static int minDepthValue() noexcept;
 		static int maxDepthValue() noexcept;
