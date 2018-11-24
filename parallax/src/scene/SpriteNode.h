@@ -38,7 +38,7 @@ namespace prx {
 		
 		~SpriteNode();
 
-		inline const Sprite& getSprite() const noexcept;
+		inline Sprite& getSprite() const noexcept;
 		inline ResourceHandler<Texture> getTexture() const noexcept;
 
 		void setColor(unsigned color) noexcept override;
@@ -49,7 +49,7 @@ namespace prx {
 		void destroyInternal() override;
 	};
 	
-	inline const Sprite& SpriteNode::getSprite() const noexcept {
+	inline Sprite& SpriteNode::getSprite() const noexcept {
 		return *m_Sprite;
 	}
 

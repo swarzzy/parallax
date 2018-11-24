@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\hypermath.h" />
+    <ClInclude Include="src\hypermath\functions.h" />
     <ClInclude Include="src\hypermath\mat3.h" />
     <ClInclude Include="src\hypermath\mat4.h" />
     <ClInclude Include="src\hypermath\trigFunctions.h" />

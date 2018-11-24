@@ -13,4 +13,7 @@
 
 // trigonometry
 #include "hypermath/trigFunctions.h"
+
+// functions
+#include "hypermath/functions.h"
 #endif

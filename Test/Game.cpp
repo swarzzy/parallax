@@ -5,6 +5,7 @@
 #include "renderer/DefferedRenderer2D.h"
 #include "renderer/light/AmbientLight2D.h"
 
+
 void Game::init() {
 	InitializeParallax({ "parallax", 600, 600, false, false }, RendererType::DEFFERED_RENDERER, LogLevel::LOG_INFO);
 	Window::getInstance()->setAspectRatio(600, 600);
@@ -27,9 +28,11 @@ void Game::init() {
 	m_Group->setParent(layer2);
 	m_Group->setPosition(400, 400);
 
-	m_Sun = m_Scene->createSprite(100, 100, "res/textures/sun.png");
+	m_Sun = m_Scene->createSprite(1000, 100, "res/textures/sun.png");
 	m_Sun->setParent(m_Group);
 	m_Sun->setPosition(0, 0);
+	m_Sun->getSprite().getTexture()->setParameters(TextureWrap::REPEAT, TextureFilter::NEAREST);
+	m_Sun->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING);
 
 
 	m_BluePlanet = m_Scene->createSprite(50, 50, "res/textures/blue_planet.png");
@@ -61,17 +64,18 @@ void Game::init() {
 	slider2 = 0.0f;
 
 	m_Light1 = std::make_shared<Light2D>(hpm::vec2(200, 250), 2, 0xffffffff, 1.0, 100);
-	m_Light2 = std::make_shared<Light2D>(hpm::vec2(300, 350), 3, 0xff00ff00, 0.5, 80);
+	//m_Light2 = std::make_shared<Light2D>(hpm::vec2(300, 350), 3, 0xff00ff00, 0.5, 80);
+	//auto l = std::make_shared<TorchLight2D>(hpm::vec2(400, 300), 5, 0xffffffff, 1.0, 200, 0, 0);
+	m_Light2 = std::make_shared<TorchLight2D>(hpm::vec2(400, 300), 5, 0xffffffff, 200, hpm::vec2(0.5, 1.0), 1.0);
 	m_Light3 = std::make_shared<Light2D>(hpm::vec2(100, 100), 0, 0xff0000ff, 1.0, 70);
 	m_Light4 = std::make_shared<Light2D>(hpm::vec2(500, 500), 1, 0xffffffff, 1.0, 100);
 
-	
 	m_DebugMode = 0;
 
 	Director::getInstance()->addDebugMenuItem(new ToggleButton("Debug light", &m_DebugMode));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("c", &c, 0.0f, 200.0f));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("l", &l, 0.0001f, 0.2f));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("q", &q, 0.0000008f, 1.9f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("speed", &c, 0.0f, 1.0f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("low bound", &l, 0.0f, 2.0f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("high bound", &q, 0.0f, 3.0f));
 
 
 	DefferedRenderer2D::getInstance()->setAmbientLight(std::make_shared<AmbientLight2D>(0xffffffff, 0.2));
@@ -88,6 +92,9 @@ void Game::update() {
 	m_Group->setPosition(slider, slider2);
 	//m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
 	//m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
+	m_Light2->setFlickeringSpeed(c);
+	m_Light2->setFlickeringRange({ l, q });
+	m_Light2->update();
 
 	m_Sun->setRotation(-getTime() / 80, -50);
 	m_BluePlanet->setRotation(getTime() / 40, 60);

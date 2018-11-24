@@ -34,7 +34,7 @@ namespace prx {
 		setDefaultUVs();
 	}
 
-	Renderable2D::Renderable2D(const hpm::vec2& size, const TextureBase* texture, bool reflected) noexcept
+	Renderable2D::Renderable2D(const hpm::vec2& size, TextureBase* texture, bool reflected) noexcept
 		: m_Width(size.x),
 		  m_Height(size.y),
 		  m_Color(Renderer2D::NULL_COLOR),
@@ -44,7 +44,7 @@ namespace prx {
 		setDefaultUVs();
 	}
 
-	Renderable2D::Renderable2D(float width, float height, const TextureBase* texture, bool reflected) noexcept
+	Renderable2D::Renderable2D(float width, float height, TextureBase* texture, bool reflected) noexcept
 		: m_Width(width),
 		  m_Height(height),
 		  m_Color(Renderer2D::NULL_COLOR),

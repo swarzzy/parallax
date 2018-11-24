@@ -21,7 +21,7 @@ namespace prx {
 	class VertexBufferLayout;
 	class Shader;
 	class Texture;
-	class Light2D;
+	class Light2DBase;
 	class AmbientLight2D;
 
 	class DefferedRenderer2D final : public Renderer2D{
@@ -94,9 +94,9 @@ namespace prx {
 // LIGHTNING
 // =========================================
 		struct {
-			std::vector<internal::DFR2D::DFR2DLightInfo>	lightsData;
-			std::vector<hpm::vec2>							lightsGeometry; // layout of this array retrieves DFRLightVertex structure
-			std::shared_ptr<AmbientLight2D>					ambientLightSource;
+			std::vector<internal::DFR2D::DFR2DLightProperties>	lightsData;
+			std::vector<hpm::vec2>								lightsGeometry; // layout of this array retrieves DFRLightVertex structure
+			internal::DFR2D::DFR2DLightProperties				ambientLightProperties;
 		} m_Lightning;
 
 // =========================================
@@ -128,8 +128,8 @@ namespace prx {
 
 		void setProjectionMatrix(const hpm::mat4& projMatrix) override;
 
-		void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight);
-		void submitLight(const std::shared_ptr<Light2D>& light);
+		void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) override;
+		void submitLight(const std::shared_ptr<Light2DBase>& light) override;
 
 		void begin() override;
 
@@ -159,14 +159,12 @@ namespace prx {
 
 		float submitTexture(unsigned texID);
 
-		void genLightVolumeInternal(const hpm::vec2& position, float radius);
+		void genLightVolumeInternal(const internal::DFR2D::DFR2DLightVolumeProperties& properties);
 		
 		void fillLightBuffers();
 
 		void geometryPass();
 		void ambientPass();
 		void lightningPass();
-
-		hpm::vec3 convertColorToVec(color_t color);
 	};
 }

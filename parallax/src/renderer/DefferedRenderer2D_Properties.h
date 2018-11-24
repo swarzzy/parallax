@@ -31,12 +31,17 @@ namespace prx::internal::DFR2D {
 		hpm::vec2	coords;
 	};
 
-	struct DFR2DLightInfo {
+	struct DFR2DLightProperties {
 		hpm::vec3 color;	// 0N
 		float radius;
 		hpm::vec2 position; // 4N
 		float intensity;
 		float depth;
 							// 8N
+	};
+
+	struct DFR2DLightVolumeProperties {
+		hpm::vec2 position;
+		float radius;
 	};
 }

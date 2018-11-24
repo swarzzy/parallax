@@ -15,15 +15,15 @@ namespace prx {
 		float				m_Height;
 		unsigned int		m_Color;
 		mutable float		m_UVs[8];
-		const TextureBase*	m_Texture;
+		TextureBase*	m_Texture;
 		bool				m_Reflected;
 
 	protected:
 		Renderable2D() noexcept;
 		Renderable2D(const hpm::vec2& size, unsigned int color, bool reflected = false) noexcept;
 		Renderable2D(float width, float height, unsigned int color, bool reflected = false) noexcept;
-		Renderable2D(const hpm::vec2& size, const TextureBase* texture, bool reflected = false) noexcept;
-		Renderable2D(float width, float height, const TextureBase* texture, bool reflected = false) noexcept;
+		Renderable2D(const hpm::vec2& size, TextureBase* texture, bool reflected = false) noexcept;
+		Renderable2D(float width, float height, TextureBase* texture, bool reflected = false) noexcept;
 
 	public:
 		virtual ~Renderable2D() = default;
@@ -40,7 +40,7 @@ namespace prx {
 		inline float getHeight() const noexcept;
 		inline unsigned int	getColor() const noexcept;
 		inline virtual const float*	getUVs() const noexcept;
-		inline const TextureBase* getTexture() const noexcept;
+		inline TextureBase* getTexture() const noexcept;
 		
 		inline unsigned int getTexID() const noexcept;
 
@@ -102,7 +102,7 @@ namespace prx {
 		return m_UVs;
 	}
 
-	inline const TextureBase* Renderable2D::getTexture() const noexcept {
+	inline TextureBase* Renderable2D::getTexture() const noexcept {
 		return m_Texture;
 	}
 

@@ -8,17 +8,35 @@ namespace prx {
 	
 	class TextureBase;
 
+	enum class SpriteWrapMode {
+		STRETCHING,
+		TEXTURE_WRAPPING
+	};
+
 	class Sprite: public Renderable2D {
 		PRX_DISALLOW_COPY_AND_MOVE(Sprite)
-		public:
-			Sprite(const hpm::vec2& size, unsigned int color);
-			Sprite(const hpm::vec2& size, const TextureBase* texture);
-			Sprite(float width, float height, unsigned int color);
-			Sprite(float width, float height, const TextureBase* texture);
+	private:
+		SpriteWrapMode m_WrapMode;
+	public:
+		Sprite(const hpm::vec2& size, unsigned int color);
+		Sprite(const hpm::vec2& size, TextureBase* texture);
+		Sprite(float width, float height, unsigned int color);
+		Sprite(float width, float height, TextureBase* texture);
 
-			void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) override;
-		};
-	}
+		void setWrapMode(SpriteWrapMode mode);
+
+		void reflect(bool reflect) noexcept override;
+
+		void submit(Renderer2D* renderer, const hpm::mat3& worldMatrix, float depth) override;
+
+	private:
+		// Reimplementing all that stuff here because of mess on renderable 
+		void setUV();
+		void setReflectedUV();
+		void setQuadUV();
+		void setReflectedQuadUV();
+	};
+}
 #endif
 
 

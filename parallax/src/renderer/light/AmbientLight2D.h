@@ -1,33 +1,20 @@
 #pragma once
-#include "../../Common.h"
+
+#include "Light2DBase.h"
 
 namespace prx {
-	class AmbientLight2D final {
+	class AmbientLight2D final : public Light2DBase {
 		PRX_DISALLOW_COPY_AND_MOVE(AmbientLight2D)
-	private:
-		color_t m_Color;
-		float	m_Intensity;
 
 	public:
-		AmbientLight2D(color_t color, float intensity)
-			: m_Color(color)
-			, m_Intensity(intensity)
+		AmbientLight2D()
+			: Light2DBase()
 		{}
 
-		inline void setColor(color_t color) {
-			m_Color = color;
-		}
+		AmbientLight2D(color_t color, float intensity)
+			: Light2DBase({ 0.0f, 0.0f }, 0.0f, color, intensity, 0.0f)
+		{}
 
-		inline void setIntensity(float intensity) {
-			m_Intensity = intensity;
-		}
-
-		inline color_t getColor() const {
-			return m_Color;
-		}
-
-		inline float getIntensity() const {
-			return m_Intensity;
-		}
+		void update() override {}
 	};
 }

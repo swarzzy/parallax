@@ -32,7 +32,8 @@
     <ClCompile Include="src\renderer\API\FrameBuffer.cpp" />
     <ClCompile Include="src\renderer\API\UniformBuffer.cpp" />
     <ClCompile Include="src\renderer\DefferedRenderer2D.cpp" />
-    <ClCompile Include="src\renderer\light\Light2D.cpp" />
+    <ClCompile Include="src\renderer\light\Light2DBase.cpp" />
+    <ClCompile Include="src\renderer\light\TorchLight2D.cpp" />
     <ClCompile Include="src\renderer\renderable\AnimatedSprite.cpp" />
     <ClCompile Include="src\scene\AnimatedSpriteNode.cpp" />
     <ClCompile Include="src\scene\components\TransformComponent2D.cpp" />
@@ -97,6 +98,8 @@
     <ClInclude Include="src\renderer\API\FrameBuffer.h" />
     <ClInclude Include="src\renderer\light\AmbientLight2D.h" />
     <ClInclude Include="src\renderer\light\Light2D.h" />
+    <ClInclude Include="src\renderer\light\Light2DBase.h" />
+    <ClInclude Include="src\renderer\light\TorchLight2D.h" />
     <ClInclude Include="src\renderer\renderable\AnimatedSprite.h" />
     <ClInclude Include="src\renderer\renderable\Label.h" />
     <ClInclude Include="src\renderer\renderable\Renderable2D.h" />
@@ -146,6 +149,7 @@
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="src\utils\timing\ScopedTimer.h" />
     <ClInclude Include="src\utils\timing\SimpleTimer.h" />
+    <ClInclude Include="src\utils\Utils.h" />
     <ClInclude Include="src\window\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +158,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\renderer\light\Light2D.inl" />
+    <None Include="src\renderer\light\Light2DBase.inl" />
     <None Include="src\scene\components\TransformComponent2D.inl" />
     <None Include="src\scene\Node.inl" />
     <None Include="src\shading\sources\ParallaxDefaultFragment.shader" />

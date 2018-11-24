@@ -10,7 +10,7 @@ namespace prx {
 	class Renderable2D;
 	class FrameBuffer2D;
 	class Font;
-	class Light2D;
+	class Light2DBase;
 	class AmbientLight2D;
 
 	struct VertexData {
@@ -28,7 +28,7 @@ namespace prx {
 
 	class Renderer2D {
 		PRX_DISALLOW_COPY_AND_MOVE(Renderer2D)
-	protected:
+	public:
 		inline static const float	 QUAD_DEFAULT_POSITION_X = 0.0f;
 		inline static const float	 QUAD_DEFAULT_POSITION_Y = 0.0f;
 		inline static const unsigned NULL_COLOR = 0xffffffff;
@@ -43,7 +43,7 @@ namespace prx {
 		virtual void setProjectionMatrix(const hpm::mat4& projMatrix) = 0;
 
 		virtual void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) = 0;
-		virtual void submitLight(const std::shared_ptr<Light2D>& light) = 0;
+		virtual void submitLight(const std::shared_ptr<Light2DBase>& light) = 0;
 		
 		virtual void begin() {};
 

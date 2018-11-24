@@ -61,7 +61,7 @@ namespace prx {
 
 		// Forward renderer doesn`t support lightning
 		void setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) override {};
-		void submitLight(const std::shared_ptr<Light2D>& light) override {};
+		void submitLight(const std::shared_ptr<Light2DBase>& light) override {};
 
 		void begin() override;
 

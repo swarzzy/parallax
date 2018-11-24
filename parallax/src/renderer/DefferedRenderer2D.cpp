@@ -1,4 +1,5 @@
 #include "DefferedRenderer2D.h"
+#include "../utils/Utils.h"
 #include "../scene/Director.h"
 #include "API/VertexBuffer.h"
 #include "API/IndexBuffer.h"
@@ -30,7 +31,7 @@ namespace prx {
 	const size_t		DefferedRenderer2D::LIGHT_VOLUME_VERTEX_SIZE	= sizeof(internal::DFR2D::DFR2DLightVertex);
 	const size_t		DefferedRenderer2D::LIGHT_VERTEX_BUFFER_SIZE	= LIGHT_VOLUME_VERTEX_SIZE * MAX_LIGHT_VOLUME_VERTICES;
 	const size_t		DefferedRenderer2D::LIGHT_INDEX_BUFFER_SIZE		= MAX_LIGHT_VOLUME_VERTICES;
-	const size_t		DefferedRenderer2D::LIGHT_UNIFORM_BUFFER_SIZE	= DFR2D::MAX_LIGHTS * sizeof(internal::DFR2D::DFR2DLightInfo);
+	const size_t		DefferedRenderer2D::LIGHT_UNIFORM_BUFFER_SIZE	= DFR2D::MAX_LIGHTS * sizeof(internal::DFR2D::DFR2DLightProperties);
 
 	DefferedRenderer2D::DefferedRenderer2D(const hpm::mat4& projectionMatrix)
 		: m_Buffers({ nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, 0 })
@@ -88,21 +89,13 @@ namespace prx {
 	}
 
 	void DefferedRenderer2D::setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) {
-		m_Lightning.ambientLightSource = ambientLight;
+		m_Lightning.ambientLightProperties = ambientLight->getLightProperties();
 	}
 
-	void DefferedRenderer2D::submitLight(const std::shared_ptr<Light2D>& light) {
-		internal::DFR2D::DFR2DLightInfo info;
-		info.position = light->getPosition();
-		info.radius = light->getRadius();
-		info.color = convertColorToVec(light->getColor());
-		info.intensity = light->getIntensity();
-		// TODO: optimize this
-		auto result = m_ProjectionMatrix * hpm::vec4(0.0, 0.0, light->getDepth(), 1.0);
-		info.depth = result.z;
-
-		genLightVolumeInternal(light->getPosition(), light->getVolumeRadius());
-		m_Lightning.lightsData.push_back(info);
+	void DefferedRenderer2D::submitLight(const std::shared_ptr<Light2DBase>& light) {
+		m_Lightning.lightsData.push_back(light->getLightProperties());
+		m_Lightning.lightsData.back().depth = (m_ProjectionMatrix * hpm::vec4(0.0, 0.0, m_Lightning.lightsData.back().depth, 1.0)).z;
+		genLightVolumeInternal(light->getLightVolumeProperties());
 	}
 
 	void DefferedRenderer2D::begin() {
@@ -327,7 +320,7 @@ namespace prx {
 
 	void DefferedRenderer2D::init() {
 		// Default ambient light source
-		m_Lightning.ambientLightSource = std::make_shared<AmbientLight2D>(0xffffffff, 1.0f);
+		m_Lightning.ambientLightProperties = { color_to_vec3(0xffffffff), 0.0f, hpm::vec2(0.0f, 0.0f), 0.0f, 0.0f };
 		
 		initVertexBuffers();
 		initIndexBuffers();
@@ -541,19 +534,19 @@ namespace prx {
 		return ts;
 	}
 
-	void DefferedRenderer2D::genLightVolumeInternal(const hpm::vec2& position, float radius) {
-		m_Lightning.lightsGeometry.push_back(position);
+	void DefferedRenderer2D::genLightVolumeInternal(const internal::DFR2D::DFR2DLightVolumeProperties& properties) {
+		m_Lightning.lightsGeometry.push_back(properties.position);
 		int c = 0;
 		for (float i = 0.0f; i < 360.0f; i += DFR2D::LIGHT_VOLUME_CIRCLE_STEP) {
 			c++;
-			m_Lightning.lightsGeometry.emplace_back(position.x + radius * std::cos(hpm::radians(i)), position.y + radius * std::sin(hpm::radians(i)));
+			m_Lightning.lightsGeometry.emplace_back(properties.position.x + properties.radius * std::cos(hpm::radians(i)), properties.position.y + properties.radius * std::sin(hpm::radians(i)));
 		}
 
 		m_Buffers.LPIndexCount += (360.0f / DFR2D::LIGHT_VOLUME_CIRCLE_STEP) * 3 + 1;
 	}
 
 	void DefferedRenderer2D::fillLightBuffers() {
-		m_Buffers.LPUniformBuffer->setData(m_Lightning.lightsData.size() * sizeof(internal::DFR2D::DFR2DLightInfo), m_Lightning.lightsData.data());
+		m_Buffers.LPUniformBuffer->setData(m_Lightning.lightsData.size() * sizeof(internal::DFR2D::DFR2DLightProperties), m_Lightning.lightsData.data());
 		m_Buffers.LPVertexBuffer->setData(m_Lightning.lightsGeometry.size() * sizeof(internal::DFR2D::DFR2DLightVertex), m_Lightning.lightsGeometry.data());
 	}
 
@@ -598,8 +591,8 @@ namespace prx {
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RenderTargets.colorBuffer->getID()));
 
 		m_Shaders.APShader->bind();
-		m_Shaders.APShader->setUniform("u_AmbientColor", convertColorToVec(m_Lightning.ambientLightSource->getColor()));
-		m_Shaders.APShader->setUniform("u_AmbientIntensity", m_Lightning.ambientLightSource->getIntensity());
+		m_Shaders.APShader->setUniform("u_AmbientColor", m_Lightning.ambientLightProperties.color);
+		m_Shaders.APShader->setUniform("u_AmbientIntensity", m_Lightning.ambientLightProperties.intensity);
 		m_Buffers.APVertexBuffer->bind();
 
 		//glDepthMask(GL_FALSE);
@@ -651,15 +644,5 @@ namespace prx {
 		m_Lightning.lightsData.clear();
 
 		m_Buffers.LPIndexCount = 0;
-	}
-
-	hpm::vec3 DefferedRenderer2D::convertColorToVec(color_t color) {
-			auto mask = static_cast<unsigned int>(0x000000ff);
-
-			float r = (color & mask) / 255.0;
-			float g = ((color >> 8)  & mask) / 255.0;
-			float b = ((color >> 16) & mask) / 255.0;
-
-			return hpm::vec3(r, g, b);
 	}
 }

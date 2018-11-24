@@ -1,44 +1,19 @@
 #pragma once
 
-#include <hypermath.h>
-#include "../../Common.h"
+#include "Light2DBase.h"
 
 namespace prx {
-	class Light2D {
+	class Light2D final : public Light2DBase {
 		PRX_DISALLOW_COPY_AND_MOVE(Light2D)
-	private:
-		hpm::vec2 m_Position;
-		float	  m_Depth;
-		unsigned  m_Color;
-		float	  m_Intensity;
-		float	  m_Radius;
-		float	  m_VolumeRadius;
-
 	public:
-		Light2D();
-		Light2D(hpm::vec2 position, float depth, unsigned color, float intensity, float radius);
-		virtual ~Light2D();
+		Light2D()
+			: Light2DBase()
+		{}
 
-		inline void setPosition(hpm::vec2 position);
-		inline void setPosition(float x, float y);
-		inline void setDepth(float depth);
-		inline void setColor(unsigned color);
-		inline void setIntensity(float intensity);
-		inline void setRadius(float radius);
+		Light2D(hpm::vec2 position, float depth, color_t color, float intensity, float radius)
+			: Light2DBase(position, depth, color, intensity, radius)
+		{}
 
-		inline const hpm::vec2& getPosition() const;
-		inline float getDepth() const;
-		inline unsigned getColor() const;
-		inline float getRadius() const;
-		inline float getVolumeRadius() const;
-		inline float getIntensity() const;
-
-	private:
-		void calcVolumeRadius();
+		void update() override {}
 	};
 }
-#include "Light2D.inl"
-
-
-
-

@@ -135,9 +135,6 @@
     <ClCompile Include="src\ext\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\light\Light2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\utils\imgui_widgets\ToggleButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -163,6 +160,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer\API\UniformBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\light\Light2DBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\light\TorchLight2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -359,9 +362,6 @@
     <ClInclude Include="src\utils\imgui_widgets\DefaultDebugWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\light\Light2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\imgui_widgets\ToggleButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -407,6 +407,18 @@
     <ClInclude Include="src\renderer\DefferedRenderer2D_Properties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\light\Light2DBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\light\Light2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\light\TorchLight2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />
@@ -420,7 +432,7 @@
     <None Include="src\utils\Singleton.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\renderer\light\Light2D.inl">
+    <None Include="src\renderer\light\Light2DBase.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

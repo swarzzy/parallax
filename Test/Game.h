@@ -1,6 +1,7 @@
 #pragma once
 #include <parallax.h>
 #include <hypermath.h>
+#include "renderer/light/TorchLight2D.h"
 
 using namespace prx;
 class Game : public prx::Application {
@@ -26,8 +27,8 @@ public:
 	bool btn;
 	float slider;
 	float slider2;
-	std::shared_ptr<Light2D> m_Light1;
-	std::shared_ptr<Light2D> m_Light2;
+	std::shared_ptr<Light2DBase> m_Light1;
+	std::shared_ptr<TorchLight2D> m_Light2;
 	std::shared_ptr<Light2D> m_Light3;
 	std::shared_ptr<Light2D> m_Light4;
 
