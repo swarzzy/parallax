@@ -22,18 +22,27 @@ void Sandbox::init() {
 	m_UILayer = m_Scene->createLayer(2);
 	m_LevelGroup = m_Scene->createGroup(m_LevelLayer);
 
-	auto HWall1 = m_Scene->createSprite(100, 100, "res/textures/level/wall_horizontal.png", m_LevelGroup);
+	auto floor = m_Scene->createSprite(800, 600, "res/textures/level/floor.png", m_LevelGroup);
+	floor->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR);
+	floor->setPosition(0.0, 0.0);
+
+	auto HWall1 = m_Scene->createSprite(800, 100, "res/textures/level/wall_h.png", m_LevelGroup);
+	HWall1->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL);
 	HWall1->setPosition(0, 500);
-	auto HWall2 = m_Scene->createSprite(100, 100, "res/textures/level/wall_horizontal.png", m_LevelGroup);
-	HWall2->setPosition(100, 500);
-	auto HWall3 = m_Scene->createSprite(100, 100, "res/textures/level/wall_horizontal.png", m_LevelGroup);
-	HWall3->setPosition(200, 500);
-	auto HWall4 = m_Scene->createSprite(100, 100, "res/textures/level/wall_horizontal.png", m_LevelGroup);
-	HWall4->setPosition(300, 500);
-	auto HWall5 = m_Scene->createSprite(100, 100, "res/textures/level/wall_horizontal.png", m_LevelGroup);
-	HWall5->setPosition(400, 500);
-	auto VWall = m_Scene->createSprite(120, 120, "res/textures/level/wall_vert.png", m_LevelGroup);
-	VWall->setPosition(0, 500);
+
+	auto VWall1 = m_Scene->createSprite(100, 800, "res/textures/level/wall_v.png", m_LevelGroup);
+	VWall1->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL);
+	VWall1->setPosition(0, 33);
+
+	auto VWall2 = m_Scene->createSprite(100, 800, "res/textures/level/wall_v.png", m_LevelGroup);
+	VWall2->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL);
+	VWall2->setPosition(790, 33);
+
+	auto HWall2 = m_Scene->createSprite(800, 100, "res/textures/level/wall_h.png", m_LevelGroup);
+	HWall2->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL);
+	HWall2->setPosition(0, -57);
+
+	
 
 	
 	//m_Group->setParent(layer2);
@@ -62,7 +71,7 @@ void Sandbox::init() {
 	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider", &slider, 0.0f, 600.0f));
 	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider2", &slider2, 0.0f, 600.0f));
 
-	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run");
+	m_Hero = m_Scene->createAnimation(100, 80, "res/textures/adventurer.sheet", "run", m_LevelLayer);
 	m_Hero->loopAnimation("run");
 	Director::getInstance()->setCurrentScene("Scene");
 	Director::getInstance()->playScene();
@@ -92,8 +101,8 @@ void Sandbox::init() {
 void Sandbox::tick() {
 	m_UPSCounter->getLabel().setText(std::to_string(getUPS()) + " ups");
 	m_FPSCounter->getLabel().setText(std::to_string(getFPS()) + " fps");
-	m_MemCounter->getLabel().setText(std::to_string(internal::MemoryManager::getUsageMb()) + " mb");
-	PRX_INFO(internal::MemoryManager::getUsageMb());
+	//m_MemCounter->getLabel().setText(std::to_string(internal::MemoryManager::getUsageMb()) + " mb");
+	//PRX_INFO(internal::MemoryManager::getUsageMb());
 }
 
 void Sandbox::update() {

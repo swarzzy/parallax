@@ -10,7 +10,10 @@ namespace prx {
 
 	enum class SpriteWrapMode {
 		STRETCHING,
-		TEXTURE_WRAPPING
+		TEXTURE_WRAPPING_HORIZONTAL,
+		TEXTURE_WRAPPING_VERTICAL,
+		TEXTURE_WRAPPING_BOTH_DIR
+
 	};
 
 	class Sprite: public Renderable2D {
@@ -33,8 +36,15 @@ namespace prx {
 		// Reimplementing all that stuff here because of mess on renderable 
 		void setUV();
 		void setReflectedUV();
-		void setQuadUV();
-		void setReflectedQuadUV();
+
+		void setWrapHorizontalUV();
+		void setReflectedWrapHorizontalUV();
+
+		void setWrapVerticalUV();
+		void setReflectedWrapVerticalUV();
+
+		void setWrapBothDirUV();
+		void setReflectedWrapBothDirUV();
 	};
 }
 #endif
