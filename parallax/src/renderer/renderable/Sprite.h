@@ -23,8 +23,10 @@ namespace prx {
 	public:
 		Sprite(const hpm::vec2& size, unsigned int color);
 		Sprite(const hpm::vec2& size, TextureBase* texture);
+		Sprite(const hpm::vec2& size, TextureBase* texture, TextureBase* normalMap);
 		Sprite(float width, float height, unsigned int color);
 		Sprite(float width, float height, TextureBase* texture);
+		Sprite(float width, float height, TextureBase* texture, TextureBase* normalMap);
 
 		void setWrapMode(SpriteWrapMode mode);
 

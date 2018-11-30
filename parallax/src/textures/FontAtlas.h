@@ -1,0 +1,41 @@
+#pragma once
+#ifndef _PARALLAX_TEXTURES_TEXTURES_ATLAS_H_
+#define _PARALLAX_TEXTURES_TEXTURES_ATLAS_H_
+
+#include "../ext/ftgl/texture-atlas.h"
+
+#include "TextureBase.h"
+#include <hypermath.h>
+
+namespace prx {
+	
+	class Texture;
+
+	// Totally bad and unsafe. Works only with fonts.
+	class FontAtlas : public TextureBase {
+	private:
+		ftgl::texture_atlas_t* m_FontAtlas;
+
+	public:
+		FontAtlas(unsigned int width, unsigned int height, TextureFormat format);
+		~FontAtlas();
+
+		// Add a new region to the atlas. Does not affects on actual rendering API texture.
+		hpm::vec4 add(unsigned char* pixels, unsigned int width, unsigned int height, TextureFormat format);
+		// Add a new region to the atlas. Does not affects on actual rendering API texture.
+		hpm::vec4 add(std::string_view path);
+
+		// Create new atlas and copy all data from old
+		// Totally bad and unsafe. Not use it ever! Shifts all old tex coords by 1
+		void resize(unsigned int width, unsigned int height);
+		
+		// Rebuilds actual rendering API texture with new added regions.
+		void update(); // This actually overrides update?
+
+		inline unsigned int getUsage()  const { return static_cast<unsigned int>(m_FontAtlas->used);   };
+		inline unsigned int getWidth()  const noexcept override { return static_cast<unsigned int>(m_FontAtlas->width);  };
+		inline unsigned int getHeight() const noexcept override { return static_cast<unsigned int>(m_FontAtlas->height); };
+	};
+
+}
+#endif

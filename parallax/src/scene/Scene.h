@@ -55,6 +55,7 @@ namespace prx {
 		static const hpm::vec2& getCurrentCameraViewSize() { return currentViewSize; };
 
 		SpriteNode* createSprite(float width, float height, std::string_view texturePath, Node* parent = nullptr);
+		SpriteNode* createSprite(float width, float height, std::string_view texturePath, std::string_view normalMapPath, Node* parent = nullptr);
 		SpriteNode* createSprite(float width, float height, unsigned color, Node* parent = nullptr);
 
 		AnimatedSpriteNode* createAnimation(float width, float height, std::string_view spritesheetPath, std::string_view startAnimation, Node* parent = nullptr);

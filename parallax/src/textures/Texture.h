@@ -21,12 +21,11 @@ namespace prx {
 		Texture() : TextureBase("") {};
 		explicit Texture(std::string_view path);
 		Texture(byte* data, unsigned int width, unsigned int height, TextureFormat format);
-		// TODO: Make textures from bitmaps compatible with resource manager
 		Texture(unsigned int width, unsigned int height, TextureFormat format);
 		~Texture();
 
-		void initInternal() override;
-		void destroyInternal() override;
+		void init() override {};
+		void destroy() override {};
 	};
 }
 #endif

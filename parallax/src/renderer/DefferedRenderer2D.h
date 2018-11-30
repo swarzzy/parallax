@@ -39,6 +39,7 @@ namespace prx {
 		static const size_t			SCREEN_QUAD_BUFFER_SIZE;
 		static const unsigned int	SCREEN_QUAD_TEXTURE_SLOT;
 		static const unsigned int	DEPTH_MAP_TEXTURE_SLOT;
+		static const unsigned int	NORMAL_MAP_TEXTURE_SLOT;
 															
 		static const size_t			MAX_LIGHT_VOLUME_VERTICES;
 		static const size_t			LIGHT_VOLUME_VERTEX_SIZE;
@@ -86,8 +87,9 @@ namespace prx {
 // RENDER TARGETS
 // =========================================
 		struct {
-			std::shared_ptr<Texture>	colorBuffer;
-			std::shared_ptr<Texture>	depthBuffer;
+			std::shared_ptr<Texture> colorBuffer;
+			std::shared_ptr<Texture> depthBuffer;
+			std::shared_ptr<Texture> normalBuffer;
 		} m_RenderTargets;
 
 // =========================================

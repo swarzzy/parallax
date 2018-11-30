@@ -54,13 +54,13 @@ namespace prx {
 	public:
 		virtual ~TextureBase() {};
 
-		inline virtual void bind()	 const noexcept { GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID)); };
-		inline virtual void unbind() const noexcept { GLCall(glBindTexture(GL_TEXTURE_2D, 0)); };
+		virtual inline void bind()	 const noexcept { GLCall(glBindTexture(GL_TEXTURE_2D, m_TexID)); };
+		virtual inline void unbind() const noexcept { GLCall(glBindTexture(GL_TEXTURE_2D, 0)); };
 
-		inline unsigned int  getID()	 const noexcept { return m_TexID;  } 
-		inline unsigned int  getWidth()	 const noexcept { return m_Width;  }
-		inline unsigned int  getHeight() const noexcept { return m_Height; }
-		inline TextureFormat getFormat() const noexcept { return m_Format; }
+		virtual inline unsigned int  getID()	 const noexcept { return m_TexID;  } 
+		virtual inline unsigned int  getWidth()	 const noexcept { return m_Width;  }
+		virtual inline unsigned int  getHeight() const noexcept { return m_Height; }
+		virtual inline TextureFormat getFormat() const noexcept { return m_Format; }
 
 		void setParameters(TextureWrap wrapMode, TextureFilter filterMode);
 
@@ -73,6 +73,7 @@ namespace prx {
 		void updateParameters();
 
 	public:
+		// Constants
 		static unsigned getGLFormat(TextureFormat format);
 		static unsigned getFormatDepth(TextureFormat format);
 

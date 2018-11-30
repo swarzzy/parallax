@@ -66,7 +66,7 @@ namespace prx {
 
 		//GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
-		m_FontAtlas = new TextureAtlas(512, 512, TextureFormat::RED);
+		m_FontAtlas = new FontAtlas(512, 512, TextureFormat::RED);
 
 		// FreeType transformation matrix to flip glyph y-coords 
 		FT_Matrix matrix = {
@@ -137,7 +137,7 @@ namespace prx {
 
 		GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
-		m_FontAtlas = new TextureAtlas(512, 512, TextureFormat::RED);
+		m_FontAtlas = new FontAtlas(512, 512, TextureFormat::RED);
 
 		// FreeType transformation matrix to flip glyph y-coords 
 		FT_Matrix matrix = {

@@ -5,7 +5,7 @@
 #include <map>
 #include <hypermath.h>
 #include "../ext/ftgl/texture-atlas.h"
-#include "../textures/TextureAtlas.h"
+#include "../textures/FontAtlas.h"
 
 namespace prx {
 	
@@ -28,7 +28,7 @@ namespace prx {
 		unsigned int				m_Size;
 		float						m_Scale;
 		std::map<char, Character>	m_Characters;
-		TextureAtlas*				m_FontAtlas;
+		FontAtlas*				m_FontAtlas;
 		bool						m_LoadedFromFile;
 
 		const unsigned char*		m_BinaryData;
@@ -46,7 +46,7 @@ namespace prx {
 		inline unsigned int						getSize()		const { return m_Size;		 };
 		inline float							getScale()		const { return m_Scale;		 };
 		inline const std::map<char, Character>& getCharacters() const { return m_Characters; };
-		inline const TextureAtlas&				getFontAtlas()  const { return *m_FontAtlas; };
+		inline const FontAtlas&				getFontAtlas()  const { return *m_FontAtlas; };
 
 	private:
 		void loadFontFromFile();

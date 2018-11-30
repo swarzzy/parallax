@@ -38,9 +38,9 @@ namespace prx {
 		// TODO: made this pure virtual
 		virtual bool isInitialized() { return false; };
 
-		void init();
+		virtual void init(); // They are virtual because this system are bad and new classes override this methods as empty
 		virtual void update() {};
-		void destroy();
+		virtual void destroy();
 
 		template <typename T>
 		friend class ResourceHandler;

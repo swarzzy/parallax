@@ -11,6 +11,9 @@
 --- key frames
 --- callbacks
 
+#### HYPERMATH #################################################################
+--- Optimized matrix composition methods (like in glm)
+
 
 #### DIRECTOR ##################################################################
 --- Update projection matrix in renderer only when it was changed

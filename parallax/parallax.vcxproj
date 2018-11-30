@@ -46,7 +46,7 @@
     <ClCompile Include="src\scene\SpriteNode.cpp" />
     <ClCompile Include="src\shading\ShaderManager.cpp" />
     <ClCompile Include="src\textures\SpriteSheet.cpp" />
-    <ClCompile Include="src\textures\TextureAtlas.cpp" />
+    <ClCompile Include="src\textures\FontAtlas.cpp" />
     <ClCompile Include="src\audio\Sound.cpp" />
     <ClCompile Include="src\ext\ftgl\texture-atlas.c" />
     <ClCompile Include="src\ext\ftgl\vector.c" />
@@ -60,6 +60,7 @@
     <ClCompile Include="src\resources\FileReader.cpp" />
     <ClCompile Include="src\shading\Shader.cpp" />
     <ClCompile Include="src\textures\Texture.cpp" />
+    <ClCompile Include="src\textures\TextureAtlas.cpp" />
     <ClCompile Include="src\textures\TextureBase.cpp" />
     <ClCompile Include="src\utils\imgui_widgets\SliderFloat.cpp" />
     <ClCompile Include="src\utils\imgui_widgets\SliderInt.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="src\system\MemoryManager.h" />
     <ClInclude Include="src\textures\SpriteSheet.h" />
     <ClInclude Include="src\textures\Texture.h" />
+    <ClInclude Include="src\textures\FontAtlas.h" />
     <ClInclude Include="src\textures\TextureAtlas.h" />
     <ClInclude Include="src\textures\TextureBase.h" />
     <ClInclude Include="src\utils\imgui_widgets\SliderFloat.h" />
@@ -169,7 +171,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{121273BA-5709-42B6-91A1-40A9F1EADF61}</ProjectGuid>
     <RootNamespace>parallax</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

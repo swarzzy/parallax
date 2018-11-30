@@ -8,7 +8,8 @@ namespace prx {
 						   unsigned int color, Scene* scene, Node* parent)
 		: Node(scene, parent, width, height),
 		  m_Sprite(new Sprite(width, height, color)),
-		  m_Texture(nullptr)
+		  m_Texture(nullptr),
+		  m_NormalMap(nullptr)
 	{
 		m_TransformComponent.setPosition(x, y);
 		m_TransformComponent.setSize(width, height);
@@ -18,7 +19,8 @@ namespace prx {
 							ResourceHandler<Texture> texture, Scene* scene, Node* parent)
 		: Node(scene, parent, width, height),
 		  m_Sprite(new Sprite(width, height, texture.get())),
-		  m_Texture(texture)
+		  m_Texture(texture),
+		  m_NormalMap(nullptr)
 	{
 		m_TransformComponent.setPosition(x, y);
 		m_TransformComponent.setSize(width, height);
@@ -28,7 +30,8 @@ namespace prx {
 						   unsigned color, Scene* scene, Node* parent)
 		: Node(scene, parent, width, height),
 		m_Sprite(new Sprite(width, height, color)),
-		m_Texture(nullptr)
+		m_Texture(nullptr),
+		m_NormalMap(nullptr)
 	{
 		m_TransformComponent.setSize(width, height);
 	}
@@ -37,7 +40,18 @@ namespace prx {
 							ResourceHandler<Texture> texture, Scene* scene, Node* parent)
 		: Node(scene, parent, width, height),
 		m_Sprite(new Sprite(width, height, texture.get())),
-		m_Texture(texture)
+		m_Texture(texture),
+		m_NormalMap(nullptr)
+	{
+		m_TransformComponent.setSize(width, height);
+	}
+
+	SpriteNode::SpriteNode(float width, float height, ResourceHandler<Texture> texture,
+							ResourceHandler<Texture> normalMap, Scene* scene, Node* parent)
+		: Node(scene, parent, width, height),
+		m_Sprite(new Sprite(width, height, texture.get(), normalMap.get())),
+		m_Texture(texture),
+		m_NormalMap(normalMap)
 	{
 		m_TransformComponent.setSize(width, height);
 	}

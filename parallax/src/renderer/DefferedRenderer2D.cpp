@@ -26,6 +26,7 @@ namespace prx {
 	const size_t		DefferedRenderer2D::SCREEN_QUAD_BUFFER_SIZE		= (sizeof(hpm::vec2) + sizeof(hpm::vec2)) * 6;
 	const unsigned int	DefferedRenderer2D::SCREEN_QUAD_TEXTURE_SLOT	= 0;
 	const unsigned int	DefferedRenderer2D::DEPTH_MAP_TEXTURE_SLOT		= 1;
+	const unsigned int	DefferedRenderer2D::NORMAL_MAP_TEXTURE_SLOT		= 2;
 
 	const size_t		DefferedRenderer2D::MAX_LIGHT_VOLUME_VERTICES	= DFR2D::MAX_LIGHTS * (360 / DFR2D::LIGHT_VOLUME_CIRCLE_STEP);
 	const size_t		DefferedRenderer2D::LIGHT_VOLUME_VERTEX_SIZE	= sizeof(internal::DFR2D::DFR2DLightVertex);
@@ -115,11 +116,17 @@ namespace prx {
 			const float* UVs = renderable->getUVs();
 			float ts = submitTexture(texID);
 
+			uint normalID = renderable->getNormalMapID();
+			float ns = EMPTY_TEXTURE_SLOT;
+			if (normalID != 0)
+				ns = submitTexture(normalID);
+				
 			m_Buffers.GPVertexBufferPointer->coords = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
 			m_Buffers.GPVertexBufferPointer->depth = depth;
 			m_Buffers.GPVertexBufferPointer->UVs.x = UVs[0];
 			m_Buffers.GPVertexBufferPointer->UVs.y = UVs[1];
 			m_Buffers.GPVertexBufferPointer->texID = ts;
+			m_Buffers.GPVertexBufferPointer->normalID = ns;
 			m_Buffers.GPVertexBufferPointer->color = NULL_COLOR;
 			m_Buffers.GPVertexBufferPointer++;
 
@@ -128,6 +135,7 @@ namespace prx {
 			m_Buffers.GPVertexBufferPointer->UVs.x = UVs[2];
 			m_Buffers.GPVertexBufferPointer->UVs.y = UVs[3];
 			m_Buffers.GPVertexBufferPointer->texID = ts;
+			m_Buffers.GPVertexBufferPointer->normalID = ns;
 			m_Buffers.GPVertexBufferPointer->color = NULL_COLOR;
 			m_Buffers.GPVertexBufferPointer++;
 
@@ -136,6 +144,7 @@ namespace prx {
 			m_Buffers.GPVertexBufferPointer->UVs.x = UVs[4];
 			m_Buffers.GPVertexBufferPointer->UVs.y = UVs[5];
 			m_Buffers.GPVertexBufferPointer->texID = ts;
+			m_Buffers.GPVertexBufferPointer->normalID = ns;
 			m_Buffers.GPVertexBufferPointer->color = NULL_COLOR;
 			m_Buffers.GPVertexBufferPointer++;
 
@@ -144,6 +153,7 @@ namespace prx {
 			m_Buffers.GPVertexBufferPointer->UVs.x = UVs[6];
 			m_Buffers.GPVertexBufferPointer->UVs.y = UVs[7];
 			m_Buffers.GPVertexBufferPointer->texID = ts;
+			m_Buffers.GPVertexBufferPointer->normalID = ns;
 			m_Buffers.GPVertexBufferPointer->color = NULL_COLOR;
 			m_Buffers.GPVertexBufferPointer++;
 
@@ -153,24 +163,28 @@ namespace prx {
 			m_Buffers.GPVertexBufferPointer->coords = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y);
 			m_Buffers.GPVertexBufferPointer->depth = depth;
 			m_Buffers.GPVertexBufferPointer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffers.GPVertexBufferPointer->normalID = EMPTY_TEXTURE_SLOT;
 			m_Buffers.GPVertexBufferPointer->color = color;
 			m_Buffers.GPVertexBufferPointer++;
 
 			m_Buffers.GPVertexBufferPointer->coords = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X, QUAD_DEFAULT_POSITION_Y + height);
 			m_Buffers.GPVertexBufferPointer->depth = depth;
 			m_Buffers.GPVertexBufferPointer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffers.GPVertexBufferPointer->normalID = EMPTY_TEXTURE_SLOT;
 			m_Buffers.GPVertexBufferPointer->color = color;
 			m_Buffers.GPVertexBufferPointer++;
 
 			m_Buffers.GPVertexBufferPointer->coords = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y + height);
 			m_Buffers.GPVertexBufferPointer->depth = depth;
 			m_Buffers.GPVertexBufferPointer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffers.GPVertexBufferPointer->normalID = EMPTY_TEXTURE_SLOT;
 			m_Buffers.GPVertexBufferPointer->color = color;
 			m_Buffers.GPVertexBufferPointer++;
 
 			m_Buffers.GPVertexBufferPointer->coords = worldMat * hpm::vec2(QUAD_DEFAULT_POSITION_X + width, QUAD_DEFAULT_POSITION_Y);
 			m_Buffers.GPVertexBufferPointer->depth = depth;
 			m_Buffers.GPVertexBufferPointer->texID = EMPTY_TEXTURE_SLOT;
+			m_Buffers.GPVertexBufferPointer->normalID = EMPTY_TEXTURE_SLOT;
 			m_Buffers.GPVertexBufferPointer->color = color;
 			m_Buffers.GPVertexBufferPointer++;
 		}
@@ -342,6 +356,7 @@ namespace prx {
 		GPVertexBufferLayout.push<float>(1); // Depth
 		GPVertexBufferLayout.push<float>(2); // UV
 		GPVertexBufferLayout.push<float>(1); // TexID
+		GPVertexBufferLayout.push<float>(1); // NormalID
 		GPVertexBufferLayout.push<byte>(4);  // Color
 
 		m_Buffers.GPVertexBuffer->setLayout(GPVertexBufferLayout);
@@ -442,10 +457,13 @@ namespace prx {
 		// TODO: 2-channel texture for position
 		m_RenderTargets.depthBuffer = std::make_shared<Texture>(viewport.x, viewport.y, TextureFormat::DEPTH);
 
+		m_RenderTargets.normalBuffer = std::make_shared<Texture>(viewport.x, viewport.y, TextureFormat::RGB);
+
 		m_Buffers.GBuffer = new FrameBuffer(viewport.x, viewport.y, DepthStencilType::TEXTURE, DepthStencilFormat::DEPTH_ONLY);
 		m_Buffers.GBuffer->init();
 
 		m_Buffers.GBuffer->attachColorTexture(m_RenderTargets.colorBuffer, 0);	// Color target at location 0
+		m_Buffers.GBuffer->attachColorTexture(m_RenderTargets.normalBuffer, 1); // Normal target at location 1 
 		m_Buffers.GBuffer->attachDepthStencilTexture(m_RenderTargets.depthBuffer);
 
 		PRX_ASSERT(m_Buffers.GBuffer->validate(), "DEFFERED RENDERER: Failed to create framebuffer.");
@@ -483,7 +501,9 @@ namespace prx {
 		m_Shaders.LPShader->bind();
 
 		m_Shaders.LPShader->setUniform(API::PXDFR_LP_Shader::uniformSysTexture(), SCREEN_QUAD_TEXTURE_SLOT);
+		m_Shaders.LPShader->setUniform("sys_NormalMap", NORMAL_MAP_TEXTURE_SLOT);
 		m_Shaders.LPShader->setUniform("sys_DepthTexture", DEPTH_MAP_TEXTURE_SLOT);
+
 		// TODO: Get viewport from opengl
 		m_Shaders.LPShader->setUniform("sys_ViewportSize",hpm::vec2(Window::getInstance()->getWidth(), Window::getInstance()->getHeight()));
 
@@ -548,6 +568,8 @@ namespace prx {
 	void DefferedRenderer2D::fillLightBuffers() {
 		m_Buffers.LPUniformBuffer->setData(m_Lightning.lightsData.size() * sizeof(internal::DFR2D::DFR2DLightProperties), m_Lightning.lightsData.data());
 		m_Buffers.LPVertexBuffer->setData(m_Lightning.lightsGeometry.size() * sizeof(internal::DFR2D::DFR2DLightVertex), m_Lightning.lightsGeometry.data());
+		// NOTE: fix memory leak here
+		//m_Lightning.lightsData.clear();
 	}
 
 	void DefferedRenderer2D::geometryPass() {
@@ -606,6 +628,9 @@ namespace prx {
 	void DefferedRenderer2D::lightningPass() {
 		GLCall(glActiveTexture(GL_TEXTURE1));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RenderTargets.depthBuffer->getID()));
+
+		GLCall(glActiveTexture(GL_TEXTURE2));
+		GLCall(glBindTexture(GL_TEXTURE_2D, m_RenderTargets.normalBuffer->getID()));
 
 		m_Shaders.LPShader->bind();
 		if (m_Flags[0])

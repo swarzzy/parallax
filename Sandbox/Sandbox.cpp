@@ -6,7 +6,7 @@
 #include "renderer/light/AmbientLight2D.h"
 
 void Sandbox::init() {
-	InitializeParallax({ "parallax", 800, 600, false, false }, RendererType::FORWARD_RENDERER, LogLevel::LOG_INFO);
+	InitializeParallax({ "parallax", 800, 600, false, true }, RendererType::DEFFERED_RENDERER, LogLevel::LOG_INFO);
 	Window::getInstance()->setAspectRatio(800, 600);
 	DefferedRenderer2D::initialize(hpm::mat4::identity());
 
@@ -22,11 +22,13 @@ void Sandbox::init() {
 	m_UILayer = m_Scene->createLayer(2);
 	m_LevelGroup = m_Scene->createGroup(m_LevelLayer);
 
+	
+
 	auto floor = m_Scene->createSprite(800, 600, "res/textures/level/floor.png", m_LevelGroup);
 	floor->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR);
 	floor->setPosition(0.0, 0.0);
 
-	auto HWall1 = m_Scene->createSprite(800, 100, "res/textures/level/wall_h.png", m_LevelGroup);
+	auto HWall1 = m_Scene->createSprite(800, 100, "res/textures/level/wall_h.png", "res/textures/level/wall_h_normal.png",  m_LevelGroup);
 	HWall1->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL);
 	HWall1->setPosition(0, 500);
 
@@ -42,22 +44,8 @@ void Sandbox::init() {
 	HWall2->getSprite().setWrapMode(SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL);
 	HWall2->setPosition(0, -57);
 
-	
-
-	
-	//m_Group->setParent(layer2);
-	//m_Group->setPosition(400, 400);
-
-	//m_Sun = m_Scene->createSprite(100, 100, "res/textures/sun.png");
-	//m_Sun->setParent(m_Group);
-	//m_Sun->setPosition(0, 0);
-
-
-	//m_BluePlanet = m_Scene->createSprite(50, 50, "res/textures/blue_planet.png");
-	//m_BluePlanet->setParent(m_Group);
-
-	//m_BrownPlanet = m_Scene->createSprite(30, 30, "res/textures/brown_planet.png", m_BluePlanet);
-	//m_BrownPlanet->setPosition(25, 25);
+	auto brick = m_Scene->createSprite(600, 600, "res/textures/level/brickwall.jpg", "res/textures/level/brickwall_normal.jpg", m_LevelGroup);
+	brick->setPosition(200, 200);
 
 	m_FPSCounter = m_Scene->createLabel("", 0xffffffff);
 	m_UPSCounter = m_Scene->createLabel("", 0xffffffff);
@@ -81,7 +69,7 @@ void Sandbox::init() {
 	slider = 0.0f;
 	slider2 = 0.0f;
 
-	m_Light1 = std::make_shared<Light2D>(hpm::vec2(200, 250), 2, 0xffffffff, 1.0, 100);
+	m_Light1 = std::make_shared<Light2D>(hpm::vec2(200, 250), 2, 0xffffffff, 1.0, 300);
 	m_Light2 = std::make_shared<Light2D>(hpm::vec2(300, 350), 3, 0xff00ff00, 0.5, 80);
 	m_Light3 = std::make_shared<Light2D>(hpm::vec2(100, 100), 0, 0xff0000ff, 1.0, 70);
 	m_Light4 = std::make_shared<Light2D>(hpm::vec2(500, 500), 1, 0xffffffff, 1.0, 100);
@@ -90,30 +78,20 @@ void Sandbox::init() {
 	m_DebugMode = 0;
 
 	Director::getInstance()->addDebugMenuItem(new ToggleButton("Debug light", &m_DebugMode));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("c", &c, 0.0f, 200.0f));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("l", &l, 0.0001f, 0.2f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("c", &c, 0.0f, 800.0f));
+	Director::getInstance()->addDebugMenuItem(new SliderFloat("l", &l, 0.0f, 600.0f));
 	Director::getInstance()->addDebugMenuItem(new SliderFloat("q", &q, 0.0000008f, 1.9f));
 
 
-	DefferedRenderer2D::getInstance()->setAmbientLight(std::make_shared<AmbientLight2D>(0xffffffff, 1.0));
+	DefferedRenderer2D::getInstance()->setAmbientLight(std::make_shared<AmbientLight2D>(0xffffffff, 0.4));
 }
 
 void Sandbox::tick() {
 	m_UPSCounter->getLabel().setText(std::to_string(getUPS()) + " ups");
 	m_FPSCounter->getLabel().setText(std::to_string(getFPS()) + " fps");
-	//m_MemCounter->getLabel().setText(std::to_string(internal::MemoryManager::getUsageMb()) + " mb");
-	//PRX_INFO(internal::MemoryManager::getUsageMb());
 }
 
 void Sandbox::update() {
-	//m_Group->setPosition(slider, slider2);
-	//m_FPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 577));
-	//m_UPSCounter->setPosition(m_Scene->getCameraPosition() + hpm::vec2(4, 555));
-
-	////m_Sun->setRotation(-getTime() / 80, -50);
-	//->setRotation(getTime() / 40, 60);
-	//m_BrownPlanet->setRotation(-getTime() / 10, 20);
-
 	m_PrevHeroPos = m_HeroPos;
 
 	if (Window::getInstance()->isMouseButtonHeld(PARALLAX_MOUSE_BUTTON_1))
@@ -166,22 +144,17 @@ void Sandbox::update() {
 		FontManager::getInstance()->reload(fontScale);
 	}
 
-	m_Light1->setRadius(c);
+	m_Light1->setPosition(c, l);
 	DefferedRenderer2D::getInstance()->debugLights(m_DebugMode);
 
 }
 
 void Sandbox::render() {
-
-	//auto light5 = std::make_shared<Light2D>(hpm::vec2(300, 300), 0, 0xffffffff, 0, 120);
-	//auto light6 = std::make_shared<Light2D>(hpm::vec2(400, 400), 0, 0xffffffff, 0, 130);
-
 	DefferedRenderer2D::getInstance()->submitLight(m_Light1);
 	DefferedRenderer2D::getInstance()->submitLight(m_Light2);
 	DefferedRenderer2D::getInstance()->submitLight(m_Light3);
 	DefferedRenderer2D::getInstance()->submitLight(m_Light4);
-	//DefferedRenderer2D::getInstance()->submitLight(light5);
-	//DefferedRenderer2D::getInstance()->submitLight(light6);
+	
 	Director::getInstance()->render();
 }
 

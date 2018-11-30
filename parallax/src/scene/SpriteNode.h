@@ -12,6 +12,7 @@ namespace prx {
 	private:
 		Sprite* m_Sprite;
 		ResourceHandler<Texture> m_Texture;
+		ResourceHandler<Texture> m_NormalMap;
 	
 	public:
 		SpriteNode(float x, float y,
@@ -33,6 +34,12 @@ namespace prx {
 		
 		SpriteNode(float width, float height,
 				   ResourceHandler<Texture> texture,
+				   Scene* scene,
+				   Node* parent = nullptr);
+
+		SpriteNode(float width, float height,
+				   ResourceHandler<Texture> texture,
+				   ResourceHandler<Texture> normalMap,
 				   Scene* scene,
 				   Node* parent = nullptr);
 		

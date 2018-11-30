@@ -12,7 +12,7 @@ namespace prx {
 		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
-		default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setUV(); }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
 		}
 	}
 
@@ -25,9 +25,23 @@ namespace prx {
 		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
-		default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setUV(); }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
 		}
 	}
+
+	Sprite::Sprite(const hpm::vec2& size, TextureBase* texture, TextureBase* normalMap) 
+		: Renderable2D(size, texture, normalMap)
+		, m_WrapMode(SpriteWrapMode::STRETCHING)
+	{
+		switch (m_WrapMode) {
+		case SpriteWrapMode::STRETCHING: {setUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
+		}
+	}
+	
 
 	Sprite::Sprite(float width, float height, unsigned color) 
 		: Renderable2D(width, height, color)
@@ -38,7 +52,7 @@ namespace prx {
 		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
-		default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setUV(); }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
 		}
 	}
 
@@ -51,7 +65,20 @@ namespace prx {
 		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
 		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
-		default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setUV(); }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
+		}
+	}
+
+	Sprite::Sprite(float width, float height, TextureBase* texture, TextureBase* normalMap)
+		: Renderable2D({ width, height }, texture, normalMap)
+		, m_WrapMode(SpriteWrapMode::STRETCHING)
+	{
+		switch (m_WrapMode) {
+		case SpriteWrapMode::STRETCHING: {setUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
+		case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
+		default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
 		}
 	}
 
@@ -93,7 +120,7 @@ namespace prx {
 			case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setWrapHorizontalUV(); break; }
 			case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setWrapVerticalUV(); break; }
 			case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setWrapBothDirUV(); break; }
-			default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setUV(); }
+			default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setUV(); }
 			}
 		}
 		else if (!m_Reflected && reflect) {
@@ -103,7 +130,7 @@ namespace prx {
 			case SpriteWrapMode::TEXTURE_WRAPPING_HORIZONTAL: {setReflectedWrapHorizontalUV(); break; }
 			case SpriteWrapMode::TEXTURE_WRAPPING_VERTICAL: {setReflectedWrapVerticalUV(); break; }
 			case SpriteWrapMode::TEXTURE_WRAPPING_BOTH_DIR: {setReflectedWrapBothDirUV(); break; }
-			default: {PRX_WARN("SPRITE: Unknown wrappint mode. Setting wrap mode to STRETCHING."); setReflectedUV(); }
+			default: {PRX_WARN("SPRITE: Unknown wrapping mode. Setting wrap mode to STRETCHING."); setReflectedUV(); }
 			}
 		}
 	}

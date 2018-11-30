@@ -51,6 +51,13 @@ namespace prx {
 		return node;
 	}
 
+	SpriteNode* Scene::createSprite(float width, float height, std::string_view texturePath, std::string_view normalMapPath, Node* parent) {
+		auto texture = get_resource<Texture>(texturePath);
+		auto normalMap = get_resource<Texture>(normalMapPath);
+		SpriteNode* node = new SpriteNode(width, height, texture, normalMap, this, parent);
+		return node;
+	}
+
 	SpriteNode* Scene::createSprite(float width, float height, unsigned color, Node* parent) {
 		SpriteNode* node = new SpriteNode(width, height, color, this, parent);
 		return node;

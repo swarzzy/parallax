@@ -43,6 +43,7 @@ namespace prx {
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		//GLCall(glEnable(GL_DEPTH_TEST));
+		//GLCall(glFrontFace(GL_CW));
 
 		m_ViewportSize = Window::getCurrentWindow().getSize();
 		hpm::mat4 ortho = hpm::mat4::ortho(0, m_ViewportSize.x, m_ViewportSize.y, 0, static_cast<float>(maxDepthValue()), static_cast<float>(minDepthValue()));

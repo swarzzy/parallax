@@ -15,7 +15,8 @@ namespace prx {
 		float				m_Height;
 		unsigned int		m_Color;
 		mutable float		m_UVs[8];
-		TextureBase*	m_Texture;
+		TextureBase*		m_Texture;
+		TextureBase*		m_NormalMap;
 		bool				m_Reflected;
 
 	protected:
@@ -24,6 +25,8 @@ namespace prx {
 		Renderable2D(float width, float height, unsigned int color, bool reflected = false) noexcept;
 		Renderable2D(const hpm::vec2& size, TextureBase* texture, bool reflected = false) noexcept;
 		Renderable2D(float width, float height, TextureBase* texture, bool reflected = false) noexcept;
+
+		Renderable2D(const hpm::vec2& size, TextureBase* texture, TextureBase* normalMap, bool reflected = false) noexcept;
 
 	public:
 		virtual ~Renderable2D() = default;
@@ -43,6 +46,7 @@ namespace prx {
 		inline TextureBase* getTexture() const noexcept;
 		
 		inline unsigned int getTexID() const noexcept;
+		inline unsigned int getNormalMapID() const noexcept;
 
 	private:
 		virtual void setDefaultUVs() noexcept;
@@ -109,5 +113,10 @@ namespace prx {
 	inline unsigned Renderable2D::getTexID() const noexcept {
 		return m_Texture == nullptr ? 0 : m_Texture->getID();
 	}
+
+	inline unsigned Renderable2D::getNormalMapID() const noexcept {
+		return m_NormalMap == nullptr ? 0 : m_NormalMap->getID();
+	}
+
 }
 #endif

@@ -11,19 +11,13 @@ namespace prx::DFR2D {
 
 namespace prx::internal::DFR2D {
 	// DefferedRenderer2D pipeline data structs
-	struct DFRVertex {
-		hpm::vec2	coords;
-		float		depth;
-		hpm::vec2	UVs;
-		float		texID;
-		color_t		color;
-	};
 
 	struct DFR2DVertex {
 		hpm::vec2	coords;
 		float		depth;
 		hpm::vec2	UVs;
 		float		texID;
+		float		normalID;
 		color_t		color;
 	};
 

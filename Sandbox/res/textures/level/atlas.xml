@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<textureatlas file="res/textures/adventurer.png">
+	<node name = "floor.png" x = "1.0" y = "1.0" width = "48.0" height = "48.0" />
+	<node name = "wall_h.png" x = "1.0" y = "51.0" width = "46.0" height = "46.0" />
+	<node name = "wall_v.png" x = "1.0" y = "99.0" width = "46.0" height = "46.0"/>
+</textureatlas>

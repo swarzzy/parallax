@@ -8,7 +8,8 @@ namespace prx {
 		: m_Width(0),
 		  m_Height(0),
 		  m_Color(Renderer2D::NULL_COLOR), 
-	      m_Texture(nullptr), 
+	      m_Texture(nullptr),
+		  m_NormalMap(nullptr),
 		  m_Reflected(false) 
 	{
 		setDefaultUVs();
@@ -18,7 +19,8 @@ namespace prx {
 		: m_Width(size.x),
 		  m_Height(size.y),
 		  m_Color(color), 
-		  m_Texture(nullptr), 
+		  m_Texture(nullptr),
+		  m_NormalMap(nullptr),
 		  m_Reflected(reflected) 
 	{
 		setDefaultUVs();
@@ -29,6 +31,7 @@ namespace prx {
 		  m_Height(height),
 		  m_Color(color),
 		  m_Texture(nullptr),
+		  m_NormalMap(nullptr),
 		  m_Reflected(reflected)
 	{
 		setDefaultUVs();
@@ -38,7 +41,8 @@ namespace prx {
 		: m_Width(size.x),
 		  m_Height(size.y),
 		  m_Color(Renderer2D::NULL_COLOR),
-		  m_Texture(texture), 
+		  m_Texture(texture),
+		  m_NormalMap(nullptr),
 		  m_Reflected(reflected) 
 	{
 		setDefaultUVs();
@@ -49,10 +53,23 @@ namespace prx {
 		  m_Height(height),
 		  m_Color(Renderer2D::NULL_COLOR),
 		  m_Texture(texture),
+		  m_NormalMap(nullptr),
 		  m_Reflected(reflected)
 	{
 		setDefaultUVs();
 	}
+
+	Renderable2D::Renderable2D(const hpm::vec2& size, TextureBase* texture, TextureBase* normalMap, bool reflected) noexcept 
+		: m_Width(size.x),
+		m_Height(size.y),
+		m_Color(Renderer2D::NULL_COLOR),
+		m_Texture(texture),
+		m_NormalMap(normalMap),
+		m_Reflected(reflected)
+	{
+		setDefaultUVs();
+	}
+
 
 	void Renderable2D::setDefaultUVs() noexcept {
 		m_UVs[0] = 0.0f;
