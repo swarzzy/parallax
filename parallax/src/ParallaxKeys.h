@@ -4,7 +4,7 @@
 
 #ifdef PARALLAX_API_OPENGL
 
-#include "ext/GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 // Key states
 #define PARALLAX_RELEASE				GLFW_RELEASE

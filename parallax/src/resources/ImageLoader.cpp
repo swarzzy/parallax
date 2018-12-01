@@ -1,7 +1,7 @@
 #include "ImageLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../../ext/stb/stb_image.h"
+#include "../ext/stb/stb_image.h"
 #include "../utils/error/ImageLoadingException.h"
 
 namespace prx {

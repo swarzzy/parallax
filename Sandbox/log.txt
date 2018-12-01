@@ -1,8 +1,0 @@
-[INFO ] 	 PARALLAX ENGINE
--> OPENGL VERSION: 4.5.0 - Build 22.20.16.4799
--> GLSL VERSION: 4.50 - Build 22.20.16.4799
-[ERROR] DEFFERED RENDERER: Renderer already initialized
--> FROM: void __cdecl prx::DefferedRenderer2D::initialize(const struct hpm::mat4 &)
--> FILE: defferedrenderer2d.cpp 
--> LINE: 55
-[INFO ] GARBAGE COLLECTION: 0 items deleted.

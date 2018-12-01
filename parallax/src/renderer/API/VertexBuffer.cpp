@@ -26,7 +26,7 @@
 #include "VertexBuffer.h"
 
 #include "../../utils/error_handling/GLErrorHandler.h"
-#include "../../ext/GL/gl3w.h"
+#include <GL/gl3w.h>
 
 // Disabling reinterpret_cast warnings
 #pragma warning(push)

@@ -4,6 +4,7 @@
 #include "../utils/log/Log.h"
 #include "../window/Window.h"
 
+#ifdef PARALLAX_ENABLE_AUDIO
 namespace prx {
 	
 	void set_flag_and_destroy_on_finish(ga_Handle* in_handle, void* in_context);
@@ -100,3 +101,4 @@ namespace prx {
 		ptr->stop();
 	}
 }
+#endif

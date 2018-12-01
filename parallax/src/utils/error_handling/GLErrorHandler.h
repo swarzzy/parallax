@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "../../ext/GL/gl3w.h"
+#include <GL/gl3w.h>
 #include "../log/Log.h"
 
 // Define PARALLAX_DEBUG to enable debug macros

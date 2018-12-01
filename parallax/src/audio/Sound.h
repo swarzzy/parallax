@@ -4,10 +4,13 @@
 
 #include <string>
 
-#include "../ext/gorilla/ga.h"
-#include "../ext/gorilla/gau.h"
 #include "../resources/Resource.h"
 #include "../Common.h"
+
+#ifdef PARALLAX_ENABLE_AUDIO
+#include "../ext/gorilla/ga.h"
+#include "../ext/gorilla/gau.h"
+
 
 namespace prx {
 	class Window;
@@ -73,4 +76,23 @@ namespace prx {
 		m_Pitch = pitch;
 	}
 }
+#else
+	namespace prx {
+	class Sound final : public Resource {
+		PRX_DISALLOW_COPY_AND_MOVE(Sound)
+	public:
+		Sound(std::string_view filepath) : Resource(filepath){};
+		~Sound() {};
+
+		void play() const {};
+		void loop() const {};
+		void pause() const {};
+		void stop() const {};
+
+		inline void setGain(float gain) noexcept {};
+		inline void setPan(float pan) noexcept {};
+		inline void setPitch(float pitch) noexcept {};
+	};
+}
+#endif
 #endif

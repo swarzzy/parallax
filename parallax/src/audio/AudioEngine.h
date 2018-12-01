@@ -2,6 +2,7 @@
 #include "../utils/Singleton.h"
 #include "../Common.h"
 
+#ifdef PARALLAX_ENABLE_AUDIO
 #include "../ext/gorilla/ga.h"
 #include "../ext/gorilla/gau.h"
 
@@ -58,3 +59,13 @@ namespace prx {
 		return m_gaManager;
 	}
 }
+#else
+namespace prx {
+	class AudioEngine final : public Singleton<AudioEngine> {
+		PRX_DISALLOW_COPY_AND_MOVE(AudioEngine)
+	public:
+		friend class Singleton<AudioEngine>;
+		inline AudioEngine() {};
+	};
+}
+#endif
