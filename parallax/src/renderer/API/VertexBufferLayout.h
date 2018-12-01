@@ -22,7 +22,7 @@
 // -- Support more types
 
 #include<vector>
-#include "../../ext/GL/glew.h"
+#include "../../ext/GL/gl3w.h"
 #include "../../utils/log/Log.h"
 
 namespace prx {

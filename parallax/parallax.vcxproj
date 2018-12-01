@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\camera\Camera2D.cpp" />
+    <ClCompile Include="src\ext\GL\gl3w.c" />
     <ClCompile Include="src\ext\imgui\imgui.cpp" />
     <ClCompile Include="src\ext\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\ext\imgui\imgui_draw.cpp" />
@@ -76,6 +77,8 @@
     <ClInclude Include="src\Common.h" />
     <ClInclude Include="src\ext\freetype\ft2build.h" />
     <ClInclude Include="src\ext\ftgl\texture-atlas.h" />
+    <ClInclude Include="src\ext\GL\gl3w.h" />
+    <ClInclude Include="src\ext\GL\glcorearb.h" />
     <ClInclude Include="src\ext\imgui\imconfig.h" />
     <ClInclude Include="src\ext\imgui\imgui.h" />
     <ClInclude Include="src\ext\imgui\imgui_impl_glfw.h" />
@@ -256,7 +259,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>PARALLAX_DEBUG;PARALLAX_API_OPENGL;PARALLAX_USING_IMGUI;PARALLAX_ENABLE_MEMORY_LOGGING;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;IMGUI_IMPL_OPENGL_LOADER_GLEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PARALLAX_DEBUG;PARALLAX_API_OPENGL;PARALLAX_USING_IMGUI;PARALLAX_ENABLE_MEMORY_LOGGING;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;IMGUI_IMPL_OPENGL_LOADER_GL3W;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
@@ -300,7 +303,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;IMGUI_IMPL_OPENGL_LOADER_GLEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;IMGUI_IMPL_OPENGL_LOADER_GL3W;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>

@@ -93,14 +93,20 @@ namespace prx {
 		m_CursorX = static_cast<int>(m_Width) / 2.0f;
 		m_CursorY = static_cast<int>(m_Height) / 2.0f;
 
-		// Initialize GLEW
-		if (glewInit() != GLEW_OK) {
-			PRX_ERROR("PARALLAX: Failed to initialize GLEW");
+		
+		// Initializing GL3W
+		if (gl3wInit()) {
+			PRX_FATAL("Failed to initialize OpenGL");
+			glfwTerminate();
+			return false;
+		}
+		if (!gl3wIsSupported(3, 2)) {
+			PRX_FATAL("OpenGL 3.2 not supported");
 			glfwTerminate();
 			return false;
 		}
 
-		PRX_INFO("\t PARALLAX ENGINE\n-> OPENGL VERSION: ", glGetString(GL_VERSION), "\n");
+		PRX_INFO("\t PARALLAX ENGINE\n-> OPENGL VERSION: ", glGetString(GL_VERSION), "\n-> GLSL VERSION: ", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		return true;
 	}

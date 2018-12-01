@@ -3,7 +3,7 @@
 #define _PARALLAX_TEXTURES_TEXTURE_BASE_H_
 
 #include "../Common.h"
-#include "../ext/GL/glew.h"
+#include "../ext/GL/gl3w.h"
 #include "../utils/error_handling/GLErrorHandler.h"
 #include "../resources/Resource.h"
 

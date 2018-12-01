@@ -7,7 +7,7 @@
 #include <optional>
 #include <string_view>
 
-#include "../ext/GL/glew.h"
+#include "../ext/GL/gl3w.h"
 
 #include <hypermath.h>
 

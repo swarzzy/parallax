@@ -2,7 +2,7 @@
 #ifndef _PARALLAX_UTILS_IMAGELOADER_H_
 #define _PARALLAX_UTILS_IMAGELOADER_H_
 
-#include "../ext/GL/glew.h"
+#include "../ext/GL/gl3w.h"
 #include "../utils/log/Log.h"
 
 namespace prx {

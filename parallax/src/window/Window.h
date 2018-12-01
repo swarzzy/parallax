@@ -2,7 +2,7 @@
 #ifndef _PARALLAX_WINDOW_WINDOW_H_
 #define _PARALLAX_WINDOW_WINDOW_H_
 
-#include "../ext/GL/glew.h"
+#include "../ext/GL/gl3w.h"
 #include "../ParallaxKeys.h"
 #include <hypermath.h>
 #include "../utils/Singleton.h"
