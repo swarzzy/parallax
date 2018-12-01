@@ -46,6 +46,9 @@ void Sandbox::init() {
 
 	auto brick = m_Scene->createSprite(600, 600, "res/textures/level/brickwall.jpg", "res/textures/level/brickwall_normal.jpg", m_LevelGroup);
 	brick->setPosition(200, 200);
+	
+	auto rock = m_Scene->createSprite(600, 600, "res/textures/level/slate_diff.jpg", "res/textures/level/slate_norm.jpg", m_LevelGroup);
+	rock->setPosition(0, 0);
 
 	m_FPSCounter = m_Scene->createLabel("", 0xffffffff);
 	m_UPSCounter = m_Scene->createLabel("", 0xffffffff);
@@ -144,7 +147,7 @@ void Sandbox::update() {
 		FontManager::getInstance()->reload(fontScale);
 	}
 
-	m_Light1->setPosition(c, l);
+	m_Light1->setPosition(Window::getInstance()->getCursorPos().x, Window::getInstance()->getCursorPos().y);
 	DefferedRenderer2D::getInstance()->debugLights(m_DebugMode);
 
 }
