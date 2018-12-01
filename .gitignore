@@ -16,7 +16,14 @@ CMakeScripts
 cmake_install.cmake
 cmake_uninstall.cmake
 
+# Temp stuff
 Test/log.txt
 Test/imgui.ini
 
 prx_build_tmp/
+imgui.ini
+log.txt
+
+# Libraries that builds from source
+freetype.lib
+glfw3.lib
