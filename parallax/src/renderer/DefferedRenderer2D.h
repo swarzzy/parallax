@@ -151,6 +151,8 @@ namespace prx {
 		
 		void flush() override;
 
+		void setCameraPos(const hpm::vec2& pos);
+
 	private:
 		void init();
 		void initVertexBuffers();
@@ -161,7 +163,7 @@ namespace prx {
 
 		float submitTexture(unsigned texID);
 
-		void genLightVolumeInternal(const internal::DFR2D::DFR2DLightVolumeProperties& properties);
+		void genLightVolumeCircleInternal(const hpm::vec2& position, float radius);
 		
 		void fillLightBuffers();
 

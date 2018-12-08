@@ -4,12 +4,12 @@
 namespace prx {
 	inline void Light2DBase::setPosition(hpm::vec2 position) {
 		m_LightProperties.position = position;
-		m_LightVolumeProperties.position = position;
+		//m_LightVolumeProperties.position = position;
 	}
 
 	inline void Light2DBase::setPosition(float x, float y) {
 		m_LightProperties.position = hpm::vec2(x, y);
-		m_LightVolumeProperties.position = hpm::vec2(x, y);
+		//m_LightVolumeProperties.position = hpm::vec2(x, y);
 	}
 
 	inline void Light2DBase::setDepth(float depth) {

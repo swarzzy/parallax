@@ -35,7 +35,6 @@ namespace prx::internal::DFR2D {
 	};
 
 	struct DFR2DLightVolumeProperties {
-		hpm::vec2 position;
 		float radius;
 	};
 }

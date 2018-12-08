@@ -96,22 +96,23 @@ void Sandbox::tick() {
 
 void Sandbox::update() {
 	m_PrevHeroPos = m_HeroPos;
+	m_LevelGroup->enableVisibilityTest(false);
 
 	if (Window::getInstance()->isMouseButtonHeld(PARALLAX_MOUSE_BUTTON_1))
 		m_Hero->playAnimation("attack_1");
 	else {
 		if (Window::getInstance()->isKeyHeld(PARALLAX_KEY_W)) {
-			m_HeroPos.y += 3.0;
+			m_HeroPos.y += 0.3;
 		}
 		if (Window::getInstance()->isKeyHeld(PARALLAX_KEY_S)) {
-			m_HeroPos.y -= 3.0;
+			m_HeroPos.y -= 0.3;
 		}
 		if (Window::getInstance()->isKeyHeld(PARALLAX_KEY_A)) {
-			m_HeroPos.x -= 3.0;
+			m_HeroPos.x -= 0.3;
 			m_Hero->reflect(true);
 		}
 		if (Window::getInstance()->isKeyHeld(PARALLAX_KEY_D)) {
-			m_HeroPos.x += 3.0;
+			m_HeroPos.x += 0.3;
 			m_Hero->reflect(false);
 		}
 
@@ -132,8 +133,10 @@ void Sandbox::update() {
 		Director::getInstance()->enableDebugLayer(!flag);
 	}
 
-	m_Hero->setPosition(m_HeroPos);
+	//m_Hero->setPosition(m_HeroPos);
 	Director::getInstance()->update();
+	m_Scene->setCameraPosition(m_HeroPos);
+	DefferedRenderer2D::getInstance()->setCameraPos(m_HeroPos);
 
 	static float fontScale = 1.0;
 
@@ -147,16 +150,16 @@ void Sandbox::update() {
 		FontManager::getInstance()->reload(fontScale);
 	}
 
-	m_Light1->setPosition(Window::getInstance()->getCursorPos().x, Window::getInstance()->getCursorPos().y);
+	m_Light1->setPosition(Window::getInstance()->getCursorPos().x + m_HeroPos.x, Window::getInstance()->getCursorPos().y + m_HeroPos.y);
 	DefferedRenderer2D::getInstance()->debugLights(m_DebugMode);
 
 }
 
 void Sandbox::render() {
 	DefferedRenderer2D::getInstance()->submitLight(m_Light1);
-	DefferedRenderer2D::getInstance()->submitLight(m_Light2);
-	DefferedRenderer2D::getInstance()->submitLight(m_Light3);
-	DefferedRenderer2D::getInstance()->submitLight(m_Light4);
+	//DefferedRenderer2D::getInstance()->submitLight(m_Light2);
+	//DefferedRenderer2D::getInstance()->submitLight(m_Light3);
+	//DefferedRenderer2D::getInstance()->submitLight(m_Light4);
 	
 	Director::getInstance()->render();
 }

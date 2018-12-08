@@ -12,5 +12,6 @@ out vec4 out_Color;
 void main() {
 	vec4 textureColor = texture(sys_Texture, v_UV);
 	out_Color = vec4(textureColor.xyz * u_AmbientColor * vec3(u_AmbientIntensity, u_AmbientIntensity, u_AmbientIntensity), 1.0);
+	//out_Color = vec4(v_UV, 1.0, 1.0);
 }
 )"

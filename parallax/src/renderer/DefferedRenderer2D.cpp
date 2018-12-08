@@ -5,9 +5,9 @@
 #include "API/IndexBuffer.h"
 #include "API/FrameBuffer.h"
 #include "API/UniformBuffer.h"
-#include "../../shading/ShaderManager.h"
-#include "../../shading/sources/PXDFR_GP_Shader.h"
-#include "../../shading/sources/PXDFR_LP_Shader.h"
+#include "../shading/ShaderManager.h"
+#include "../shading/sources/PXDFR_GP_Shader.h"
+#include "../shading/sources/PXDFR_LP_Shader.h"
 #include "renderable/Renderable2D.h"
 #include "../Fonts/Font.h"
 #include "../textures/Texture.h"
@@ -96,7 +96,7 @@ namespace prx {
 	void DefferedRenderer2D::submitLight(const std::shared_ptr<Light2DBase>& light) {
 		m_Lightning.lightsData.push_back(light->getLightProperties());
 		m_Lightning.lightsData.back().depth = (m_ProjectionMatrix * hpm::vec4(0.0, 0.0, m_Lightning.lightsData.back().depth, 1.0)).z;
-		genLightVolumeInternal(light->getLightVolumeProperties());
+		genLightVolumeCircleInternal(light->getLightProperties().position, light->getLightProperties().radius);
 	}
 
 	void DefferedRenderer2D::begin() {
@@ -325,11 +325,18 @@ namespace prx {
 	}
 
 	void DefferedRenderer2D::flush() {
+		//m_Buffers.GBuffer->clear(); // NOTE: Should it be here?
 		geometryPass();
 		ambientPass();
 		fillLightBuffers();
 		lightningPass();
 		m_Flags.reset(0); // Setting projection update flag to false
+	}
+
+	void DefferedRenderer2D::setCameraPos(const hpm::vec2& pos) {
+		m_Shaders.LPShader->bind();
+		m_Shaders.LPShader->setUniform("sys_CameraPos", pos);
+		m_Shaders.LPShader->unbind();
 	}
 
 	void DefferedRenderer2D::init() {
@@ -554,12 +561,12 @@ namespace prx {
 		return ts;
 	}
 
-	void DefferedRenderer2D::genLightVolumeInternal(const internal::DFR2D::DFR2DLightVolumeProperties& properties) {
-		m_Lightning.lightsGeometry.push_back(properties.position);
+	void DefferedRenderer2D::genLightVolumeCircleInternal(const hpm::vec2& position, float radius) {
+		m_Lightning.lightsGeometry.push_back(position);
 		int c = 0;
 		for (float i = 0.0f; i < 360.0f; i += DFR2D::LIGHT_VOLUME_CIRCLE_STEP) {
 			c++;
-			m_Lightning.lightsGeometry.emplace_back(properties.position.x + properties.radius * std::cos(hpm::radians(i)), properties.position.y + properties.radius * std::sin(hpm::radians(i)));
+			m_Lightning.lightsGeometry.emplace_back(position.x + radius * std::cos(hpm::radians(i)), position.y + radius * std::sin(hpm::radians(i)));
 		}
 
 		m_Buffers.LPIndexCount += (360.0f / DFR2D::LIGHT_VOLUME_CIRCLE_STEP) * 3 + 1;
@@ -582,7 +589,7 @@ namespace prx {
 
 		// BIND SHADER
 		m_Shaders.GPShader->bind();
-		if (m_Flags[1])
+		if (m_Flags[0])
 			m_Shaders.GPShader->setUniform(API::PXDFR_GP_Shader::uniformSysProjMat(), m_ProjectionMatrix);
 
 		// BIND BUFFERS
