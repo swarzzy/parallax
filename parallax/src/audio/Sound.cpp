@@ -1,5 +1,6 @@
 #include "Sound.h"
 
+#ifdef PARALLAX_ENABLE_AUDIO
 #include "AudioEngine.h"
 #include "../utils/log/Log.h"
 #include "../window/Window.h"
@@ -100,3 +101,4 @@ namespace prx {
 		ptr->stop();
 	}
 }
+#endif

@@ -180,7 +180,10 @@ namespace prx {
 
 	void Window::updateRender() {
 		// Gorilla-audio update
+		// TODO : make it audio engine method
+#ifdef PARALLAX_ENABLE_AUDIO
 		gau_manager_update(AudioEngine::getInstance()->getManager());
+#endif
 
 		// OpenGl update
 		glfwPollEvents();

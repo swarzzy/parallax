@@ -5,3 +5,4 @@
 -> FROM: void __cdecl prx::DefferedRenderer2D::initialize(const struct hpm::mat4 &)
 -> FILE: defferedrenderer2d.cpp 
 -> LINE: 56
+[INFO ] GARBAGE COLLECTION: 0 items deleted.

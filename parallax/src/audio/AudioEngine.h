@@ -2,11 +2,13 @@
 #include "../utils/Singleton.h"
 #include "../Common.h"
 
+#ifdef PARALLAX_ENABLE_AUDIO
 #include "../ext/gorilla/ga.h"
 #include "../ext/gorilla/gau.h"
+#endif
 
 namespace prx {
-
+#ifdef PARALLAX_ENABLE_AUDIO
 	class AudioEngine final : public Singleton<AudioEngine> {
 		PRX_DISALLOW_COPY_AND_MOVE(AudioEngine)
 	public:
@@ -57,4 +59,24 @@ namespace prx {
 	inline gau_Manager* AudioEngine::getManager() noexcept {
 		return m_gaManager;
 	}
+#else
+
+	typedef struct {} ga_Mixer;
+	typedef struct {} gau_Manager;
+
+	class AudioEngine final : public Singleton<AudioEngine> {
+		PRX_DISALLOW_COPY_AND_MOVE(AudioEngine)
+	public:
+		friend class Singleton<AudioEngine>;
+
+		inline AudioEngine() {};
+
+	public:
+		inline ~AudioEngine() {};
+
+		inline ga_Mixer* getMixer() noexcept { return nullptr; };
+		inline gau_Manager* getManager() noexcept { return nullptr; };
+	};
+
+#endif
 }
