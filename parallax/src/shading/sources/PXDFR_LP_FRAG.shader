@@ -18,7 +18,6 @@ layout (std140) uniform ub_Lights {
 
 // TODO: System uniform buffer
 uniform vec2 sys_ViewportSize;
-uniform vec2 sys_CameraPos;
 
 uniform sampler2D sys_Texture;
 uniform sampler2D sys_DepthTexture;
@@ -28,6 +27,7 @@ out vec4 out_Color;
 
 in V_OUT {
 	mat4 projectionMatrix;
+	vec2 cameraPos;
 } f_in;
 
 void main() {
@@ -55,7 +55,7 @@ void main() {
 	float angle = max(dot(normal, toLight), 0.0f);
 
 	// Calculating distance between light and frag in world space
-	vec3 fragPosWorld = vec3(gl_FragCoord.x + sys_CameraPos.x, gl_FragCoord.y + sys_CameraPos.y, 0.0f);
+	vec3 fragPosWorld = vec3(gl_FragCoord.x + f_in.cameraPos.x, gl_FragCoord.y + f_in.cameraPos.y, 0.0f);
 	float distance = length(fragPosWorld - vec3(u_Lights[primitiveID].position, 1.0f));
 
 	// Attenuation function
@@ -71,7 +71,7 @@ void main() {
 							 * attenuation 						// Distance fading
 							 * angle 							// Normal influence
 							 * isLightAboveFrag,				// Checking is light above frag (0.0 if light is below frag)
-							 1.0f);
+							   1.0f);
 
 	out_Color = albedo * lightComponent;
 }

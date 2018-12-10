@@ -151,8 +151,6 @@ namespace prx {
 		
 		void flush() override;
 
-		void setCameraPos(const hpm::vec2& pos);
-
 	private:
 		void init();
 		void initVertexBuffers();

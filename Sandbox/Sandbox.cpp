@@ -4,6 +4,7 @@
 #include "utils/imgui_widgets/SliderInt.h"
 #include "renderer/DefferedRenderer2D.h"
 #include "renderer/light/AmbientLight2D.h"
+#include "renderer/DFR2DMetrics.h"
 
 void Sandbox::init() {
 	InitializeParallax({ "parallax", 800, 600, false, true }, RendererType::DEFFERED_RENDERER, LogLevel::LOG_INFO);
@@ -52,13 +53,13 @@ void Sandbox::init() {
 
 	m_FPSCounter = m_Scene->createLabel("", 0xffffffff);
 	m_UPSCounter = m_Scene->createLabel("", 0xffffffff);
-	m_MemCounter = m_Scene->createLabel("", 0xffffffff);
+	m_RendererMetrics = m_Scene->createLabel("", FontManager::getInstance()->getDefault(10), 0xffffffff);
 	m_FPSCounter->setPosition(4, 560);
 	m_UPSCounter->setPosition(4, 537);
-	m_MemCounter->setPosition(4, 515);
+	m_RendererMetrics->setPosition(4, 515);
 	m_FPSCounter->setParent(m_UILayer);
 	m_UPSCounter->setParent(m_UILayer);
-	m_MemCounter->setParent(m_UILayer);
+	m_RendererMetrics->setParent(m_UILayer);
 	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider", &slider, 0.0f, 600.0f));
 	Director::getInstance()->addDebugMenuItem(new SliderFloat("Slider2", &slider2, 0.0f, 600.0f));
 
@@ -81,15 +82,17 @@ void Sandbox::init() {
 	m_DebugMode = 0;
 
 	Director::getInstance()->addDebugMenuItem(new ToggleButton("Debug light", &m_DebugMode));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("c", &c, 0.0f, 800.0f));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("l", &l, 0.0f, 600.0f));
-	Director::getInstance()->addDebugMenuItem(new SliderFloat("q", &q, 0.0000008f, 1.9f));
+	//Director::getInstance()->addDebugMenuItem(new SliderFloat("c", &c, 0.0f, 800.0f));
+	//Director::getInstance()->addDebugMenuItem(new SliderFloat("l", &l, 0.0f, 600.0f));
+	//Director::getInstance()->addDebugMenuItem(new SliderFloat("q", &q, 0.0000008f, 1.9f));
 
 
 	DefferedRenderer2D::getInstance()->setAmbientLight(std::make_shared<AmbientLight2D>(0xffffffff, 0.4));
 }
 
 void Sandbox::tick() {
+	//PRX_INFO(DFR2DMetrics::getFormatted());
+	//m_RendererMetrics->getLabel().setText(DFR2DMetrics::getFormatted());
 	m_UPSCounter->getLabel().setText(std::to_string(getUPS()) + " ups");
 	m_FPSCounter->getLabel().setText(std::to_string(getFPS()) + " fps");
 }
@@ -136,7 +139,6 @@ void Sandbox::update() {
 	//m_Hero->setPosition(m_HeroPos);
 	Director::getInstance()->update();
 	m_Scene->setCameraPosition(m_HeroPos);
-	DefferedRenderer2D::getInstance()->setCameraPos(m_HeroPos);
 
 	static float fontScale = 1.0;
 
@@ -156,10 +158,11 @@ void Sandbox::update() {
 }
 
 void Sandbox::render() {
+	DFR2DMetrics::newFrame();
 	DefferedRenderer2D::getInstance()->submitLight(m_Light1);
-	//DefferedRenderer2D::getInstance()->submitLight(m_Light2);
-	//DefferedRenderer2D::getInstance()->submitLight(m_Light3);
-	//DefferedRenderer2D::getInstance()->submitLight(m_Light4);
+	DefferedRenderer2D::getInstance()->submitLight(m_Light2);
+	DefferedRenderer2D::getInstance()->submitLight(m_Light3);
+	DefferedRenderer2D::getInstance()->submitLight(m_Light4);
 	
 	Director::getInstance()->render();
 }

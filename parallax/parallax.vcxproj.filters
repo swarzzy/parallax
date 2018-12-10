@@ -425,6 +425,9 @@
     <ClInclude Include="src\textures\TextureAtlas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\DFR2DMetrics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shading\sources\ParallaxDefaultVertex.shader" />

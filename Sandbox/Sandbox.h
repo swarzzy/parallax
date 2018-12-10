@@ -8,7 +8,7 @@ public:
 	ResourceHandler<Sound> m_Sound;
 	LabelNode* m_FPSCounter;
 	LabelNode* m_UPSCounter;
-	LabelNode* m_MemCounter;
+	LabelNode* m_RendererMetrics;
 	Scene* m_Scene;
 	SpriteNode* m_Sun;
 	SpriteNode* m_BluePlanet;

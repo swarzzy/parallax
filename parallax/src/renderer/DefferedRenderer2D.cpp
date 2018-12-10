@@ -13,6 +13,7 @@
 #include "../textures/Texture.h"
 #include "light/Light2D.h"
 #include "light/AmbientLight2D.h"
+#include "DFR2DMetrics.h"
 
 namespace prx {
 
@@ -85,27 +86,45 @@ namespace prx {
 	}
 
 	void DefferedRenderer2D::setProjectionMatrix(const hpm::mat4& projMatrix) {
+		DFR2D_BEGIN_TIMED_BLOCK(setProjectionMatrix);
+
 		m_ProjectionMatrix = projMatrix;
 		m_Flags.set(0, true); // Setting up projection update flag as true
+
+		DFR2D_END_TIMED_BLOCK(setProjectionMatrix);
 	}
 
 	void DefferedRenderer2D::setAmbientLight(const std::shared_ptr<AmbientLight2D>& ambientLight) {
+		DFR2D_BEGIN_TIMED_BLOCK(setAmbientLight);
+
 		m_Lightning.ambientLightProperties = ambientLight->getLightProperties();
+		
+		DFR2D_END_TIMED_BLOCK(setAmbientLight);
 	}
 
 	void DefferedRenderer2D::submitLight(const std::shared_ptr<Light2DBase>& light) {
+		DFR2D_BEGIN_TIMED_BLOCK(submitLight);
+
 		m_Lightning.lightsData.push_back(light->getLightProperties());
 		m_Lightning.lightsData.back().depth = (m_ProjectionMatrix * hpm::vec4(0.0, 0.0, m_Lightning.lightsData.back().depth, 1.0)).z;
 		genLightVolumeCircleInternal(light->getLightProperties().position, light->getLightProperties().radius);
+
+		DFR2D_END_TIMED_BLOCK(submitLight);
 	}
 
 	void DefferedRenderer2D::begin() {
+		DFR2D_BEGIN_TIMED_BLOCK(begin);
+
 		m_Buffers.GPVertexBuffer->bind();
 		m_Buffers.GPVertexBufferPointer = static_cast<internal::DFR2D::DFR2DVertex*>(m_Buffers.GPVertexBuffer->getPointer());
+
 		m_TextureSlots.clear();
+
+		DFR2D_END_TIMED_BLOCK(begin);
 	}
 
 	void DefferedRenderer2D::drawRenderable(const hpm::mat3& worldMat, float depth, const Renderable2D* renderable) {
+		DFR2D_BEGIN_TIMED_BLOCK(drawRenderable);
 
 		float width = renderable->getWidth();
 		float height = renderable->getHeight();
@@ -189,9 +208,12 @@ namespace prx {
 			m_Buffers.GPVertexBufferPointer++;
 		}
 		m_Buffers.GPIndexCount += 6;
+
+		DFR2D_END_TIMED_BLOCK(drawRenderable);
 	}
 
 	void DefferedRenderer2D::drawString(std::string_view text, const hpm::mat3& worldMatrix, float depth, const Font* font, unsigned int color) {
+		DFR2D_BEGIN_TIMED_BLOCK(drawString);
 
 		auto&		 characters = font->getCharacters();
 		unsigned int atlasID = font->getFontAtlas().getID();
@@ -253,6 +275,8 @@ namespace prx {
 			m_Buffers.GPIndexCount += 6;
 			cursor += (ch.Advance >> 6);
 		}
+
+		DFR2D_END_TIMED_BLOCK(drawString);
 	}
 
 	//void DefferedRenderer2D::drawString(const hpm::vec2& position, std::string_view text, float depth, const Font* font, unsigned color) {
@@ -319,24 +343,26 @@ namespace prx {
 	//}
 
 	void DefferedRenderer2D::end() {
+		DFR2D_BEGIN_TIMED_BLOCK(end);
+
 		m_Buffers.GPVertexBuffer->releasePointer();
 		// Not unbind vertex buffer might be faster 
 		m_Buffers.GPVertexBuffer->unbind();
+
+		DFR2D_END_TIMED_BLOCK(end);
 	}
 
 	void DefferedRenderer2D::flush() {
+		DFR2D_BEGIN_TIMED_BLOCK(flush);
+
 		//m_Buffers.GBuffer->clear(); // NOTE: Should it be here?
 		geometryPass();
 		ambientPass();
 		fillLightBuffers();
 		lightningPass();
 		m_Flags.reset(0); // Setting projection update flag to false
-	}
 
-	void DefferedRenderer2D::setCameraPos(const hpm::vec2& pos) {
-		m_Shaders.LPShader->bind();
-		m_Shaders.LPShader->setUniform("sys_CameraPos", pos);
-		m_Shaders.LPShader->unbind();
+		DFR2D_END_TIMED_BLOCK(flush);
 	}
 
 	void DefferedRenderer2D::init() {
@@ -537,6 +563,8 @@ namespace prx {
 	}
 
 	float DefferedRenderer2D::submitTexture(unsigned texID) {
+		// TODO: Time this?
+
 		float ts = 0.0f;
 		bool found = false;
 
@@ -562,6 +590,8 @@ namespace prx {
 	}
 
 	void DefferedRenderer2D::genLightVolumeCircleInternal(const hpm::vec2& position, float radius) {
+		DFR2D_BEGIN_TIMED_BLOCK(genLightVolumeCircleInternal);
+
 		m_Lightning.lightsGeometry.push_back(position);
 		int c = 0;
 		for (float i = 0.0f; i < 360.0f; i += DFR2D::LIGHT_VOLUME_CIRCLE_STEP) {
@@ -570,16 +600,25 @@ namespace prx {
 		}
 
 		m_Buffers.LPIndexCount += (360.0f / DFR2D::LIGHT_VOLUME_CIRCLE_STEP) * 3 + 1;
+
+		DFR2D_END_TIMED_BLOCK(genLightVolumeCircleInternal);
 	}
 
 	void DefferedRenderer2D::fillLightBuffers() {
+		DFR2D_BEGIN_TIMED_BLOCK(fillLightBuffers);
+
+
 		m_Buffers.LPUniformBuffer->setData(m_Lightning.lightsData.size() * sizeof(internal::DFR2D::DFR2DLightProperties), m_Lightning.lightsData.data());
 		m_Buffers.LPVertexBuffer->setData(m_Lightning.lightsGeometry.size() * sizeof(internal::DFR2D::DFR2DLightVertex), m_Lightning.lightsGeometry.data());
 		// NOTE: fix memory leak here
 		//m_Lightning.lightsData.clear();
+
+		DFR2D_END_TIMED_BLOCK(fillLightBuffers);
 	}
 
 	void DefferedRenderer2D::geometryPass() {
+		DFR2D_BEGIN_TIMED_BLOCK(geometryPass);
+
 		// BIND TEXTURES
 		// TODO: Look for glBindTextures
 		for (unsigned i = 0; i < m_TextureSlots.size(); i++) {
@@ -612,13 +651,18 @@ namespace prx {
 		m_Shaders.GPShader->unbind();
 
 		m_Buffers.GPIndexCount = 0;
+
+		DFR2D_END_TIMED_BLOCK(geometryPass);
 	}
 
 	void DefferedRenderer2D::ambientPass() {
+		DFR2D_BEGIN_TIMED_BLOCK(ambientPass);
+
 		// TODO: This may conflict with texture submission in geometry pass
 		GLCall(glActiveTexture(GL_TEXTURE0));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RenderTargets.colorBuffer->getID()));
 
+		// TODO: flag here
 		m_Shaders.APShader->bind();
 		m_Shaders.APShader->setUniform("u_AmbientColor", m_Lightning.ambientLightProperties.color);
 		m_Shaders.APShader->setUniform("u_AmbientIntensity", m_Lightning.ambientLightProperties.intensity);
@@ -630,9 +674,13 @@ namespace prx {
 
 		m_Buffers.APVertexBuffer->unbind();
 		m_Shaders.APShader->unbind();
+
+		DFR2D_END_TIMED_BLOCK(ambientPass);
 	}
 
 	void DefferedRenderer2D::lightningPass() {
+		DFR2D_BEGIN_TIMED_BLOCK(lightningPass);
+
 		GLCall(glActiveTexture(GL_TEXTURE1));
 		GLCall(glBindTexture(GL_TEXTURE_2D, m_RenderTargets.depthBuffer->getID()));
 
@@ -676,5 +724,7 @@ namespace prx {
 		m_Lightning.lightsData.clear();
 
 		m_Buffers.LPIndexCount = 0;
+
+		DFR2D_END_TIMED_BLOCK(lightningPass);
 	}
 }

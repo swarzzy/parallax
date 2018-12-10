@@ -4,6 +4,7 @@
 #include "../../Application/Application.h"
 #include "../../window/Window.h"
 #include "../../ext/imgui/imgui.h"
+#include "../../renderer/DFR2DMetrics.h"
 
 namespace prx {
 
@@ -13,12 +14,16 @@ namespace prx {
 		bool m_LogFlag;
 		bool m_InfoFlag;
 		bool m_DebugMenu;
+		bool m_RendererMetrics;
+		std::string m_MetricsCache;
+		size_t m_MericsUpdateCounter;
 	public:
 		DefaultDebugWidget()
 			: ImGuiWidget(),
 			m_LogFlag(false),
 			m_InfoFlag(false),
-			m_DebugMenu(false)
+			m_DebugMenu(false),
+			m_RendererMetrics(false)
 		{}
 
 		bool isDebugMenuEnabled() const {
@@ -40,6 +45,7 @@ namespace prx {
 					if (ImGui::MenuItem("Log", nullptr, &m_LogFlag)) {}
 					if (ImGui::MenuItem("Info", nullptr, &m_InfoFlag)) {}
 					if (ImGui::MenuItem("Debug menu", nullptr, &m_DebugMenu)) {}
+					if (ImGui::MenuItem("Renderer metrics", nullptr, &m_RendererMetrics)) {}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMainMenuBar();
@@ -71,6 +77,17 @@ namespace prx {
 				ImGui::Text(("Resolution: " + std::to_string(Window::getInstance()->getWidth()) + "x" + std::to_string(Window::getInstance()->getWidth())).c_str());
 				ImGui::Text((std::to_string(Application::getInstance()->getFPS()) + " fps").c_str());
 				ImGui::Text((std::to_string(Application::getInstance()->getUPS()) + " ups").c_str());
+				ImGui::End();
+			}
+			if (m_RendererMetrics) {
+				if (m_MericsUpdateCounter > Application::getInstance()->getFPS()) {
+					m_MetricsCache = DFR2DMetrics::getFormatted();
+					m_MericsUpdateCounter = 0;
+				}
+				m_MericsUpdateCounter++;
+				ImGui::SetNextWindowSize(ImVec2(300, 200), ImGuiCond_FirstUseEver);
+				ImGui::Begin("Renderer metrics", &m_RendererMetrics);
+				ImGui::Text(m_MetricsCache.c_str());
 				ImGui::End();
 			}
 

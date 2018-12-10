@@ -95,6 +95,7 @@
     <ClInclude Include="src\renderer\API\VertexBufferLayout.h" />
     <ClInclude Include="src\renderer\DefferedRenderer2D.h" />
     <ClInclude Include="src\renderer\DefferedRenderer2D_Properties.h" />
+    <ClInclude Include="src\renderer\DFR2DMetrics.h" />
     <ClInclude Include="src\renderer\ForwardRenderer2D.h" />
     <ClInclude Include="src\renderer\API\FrameBuffer.h" />
     <ClInclude Include="src\renderer\light\AmbientLight2D.h" />
@@ -300,7 +301,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
-      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;IMGUI_IMPL_OPENGL_LOADER_GLEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;PARALLAX_API_OPENGL;IMGUI_IMPL_OPENGL_LOADER_GLEW;PARALLAX_USING_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
